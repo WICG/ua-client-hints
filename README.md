@@ -1,6 +1,6 @@
 # Explainer: Reducing `User-Agent` Granularity
 
-Mike West, August 2018
+Mike West, October 2018
 
 _©2018, Google, Inc. All rights reserved._
 

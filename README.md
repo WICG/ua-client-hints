@@ -252,3 +252,12 @@ I think I prefer the second.
 
 (A more verbose alternative could add a `UA-Engine` header, containing values like `Blink`,
 `EdgeHTML`, `Gecko`, or `WebKit`.)
+
+## Wait a minute, I don't see this delegation stuff in the Client Hints spec...
+
+Right. There are more than a few open PRs:
+
+* Fetch integration of Accept-CH opt-in: [whatwg/fetch#773](whatwg/fetch#773)
+* HTML integration of Accept-CH-Lifetime and the ACHL cache: [whatwg/HTML#3774](https://github.com/whatwg/html/issues/3774)
+* Adding new CH features to the CH list in Fetch: [whatwg/fetch#725](https://github.com/whatwg/fetch/issues/725)
+* Other PRs for adding the Feature Policy 3rd party opt-in: [whatwg/fetch#811](https://github.com/whatwg/fetch/issues/811) and [wicg/feature-folicy#220](https://github.com/wicg/feature-policy/issues/220)

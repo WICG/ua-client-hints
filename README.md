@@ -99,7 +99,7 @@ accomplish this as follows:
     `navigator.productSub`, `navigator.vendor`, and `navigator.userAgent` attributes to
     appropriate values for the frozen `User-Agent` string.
 
-3.  Chrome should introduce several new Client Hint header fields:
+3.  Browsers should introduce several new Client Hint header fields:
 
     1.  The `UA` header field represents the user agent's brand and major version. For example:
 

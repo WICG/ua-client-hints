@@ -54,7 +54,8 @@ lines, noting four broad categories of use:
 
 3.  Similarly to #1, OS revisions and architecture can be responsible for specific bugs which can
     be worked around in website's code, and narrowly useful for things like selecting appropriate
-    executables for download (32 vs 64 bit, ARM vs Intel, etc).
+    executables for download (32 vs 64 bit, ARM vs Intel, etc). Model information is likewise useful
+    when bugs are limited to particular kinds of devices.
 
 4.  Sophisticated developers use model/make to tailor their sites to the capabilities of the
     device (e.g. [Facebook Year Class][3]) and to pinpoint performance bugs and regressions which
@@ -128,6 +129,7 @@ accomplish this as follows:
         ```http
         UA-Model: "Pixel 2 XL"
         ```
+        
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
     `navigator.getUserAgent()` method as something like:
 

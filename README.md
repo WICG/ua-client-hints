@@ -102,32 +102,32 @@ accomplish this as follows:
 
 3.  Browsers should introduce several new Client Hint header fields:
 
-    1.  The `UA` header field represents the user agent's brand and major version. For example:
+    1.  The `Sec-UA` header field represents the user agent's brand and major version. For example:
 
         ```http
-        UA: "Chrome 73"
+        Sec-CH-UA: "Chrome 73"
         ```
 
         Note: See the GREASE-like discussion below for how we could anticipate the inevitable lies
         which user agents might want to tell in this field.
 
-    2.  The `UA-Platform` header field represents the platform's brand and major version. For example:
+    2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
-        UA-Platform: "Win 10"
+        Sec-CH-UA-Platform: "Win 10"
         ```
 
-    3.  The `UA-Arch` header field represents the underlying architecture's instruction set and
+    3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
         width. For example:
 
         ```http
-        UA-Arch: "ARM64"
+        Sec-CH-UA-Arch: "ARM64"
         ```
 
-    4.  The `UA-Model` header field represents the user agent's underlying device model. For example:
+    4.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
 
         ```http
-        UA-Model: "Pixel 2 XL"
+        Sec-CH-UA-Model: "Pixel 2 XL"
         ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
@@ -155,10 +155,10 @@ accomplish this as follows:
     between the site's request and the Promise's resolution, if we decided that was a reasonable
     approach.
 
-User agents will attach the `UA` header to every secure outgoing request by default, with a value
+User agents will attach the `Sec-CH-UA` header to every secure outgoing request by default, with a value
 that includes only the major version (e.g. "`Chrome 69`"). Servers can opt-into receiving more
-detailed version information in the `UA` header, along with the other available Client Hints, by
-delivering an `Accept-CH` header or `Accept-CH-Lifetime` header in the usual way.
+detailed version information in the `Sec-CH-UA` header, along with the other available Client Hints, by
+delivering an `Accept-CH` header header in the usual way.
 
 Note the word "secure" in the paragraph above, and the `SecureContext` attribute in the IDL: these
 client hints will not be delivered to plaintext endpoints. Non-secure HTTP will receive only the
@@ -171,7 +171,7 @@ A user agent's initial request to `https://example.com` will include the followi
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-UA: "Chrome 74"
+Sec-CH-UA: "Chrome 74"
 ```
 
 If a server delivers the following response header:
@@ -185,9 +185,9 @@ Then subsequent requests to `https://example.com` will include the following req
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-UA: "Chrome 74.0.3424.124"
-UA-Platform: "macOS 12"
-UA-Arch: "ARM64"
+Sec-CH-UA: "Chrome 74.0.3424.124"
+Sec-CH-UA-Platform: "macOS 12"
+Sec-CH-UA-Arch: "ARM64"
 ```
 
 The user agent can make reasonable decisions about when to honor requests for detailed user agent
@@ -250,7 +250,7 @@ I think we have a few options for the string:
 
 I think I prefer the second.
 
-(A more verbose alternative could add a `UA-Engine` header, containing values like `Blink`,
+(A more verbose alternative could add a `Sec-CH-UA-Engine` header, containing values like `Blink`,
 `EdgeHTML`, `Gecko`, or `WebKit`.)
 
 ## Wait a minute, I don't see this delegation stuff in the Client Hints spec...
@@ -261,3 +261,11 @@ Right. There are more than a few open PRs:
 * HTML integration of Accept-CH-Lifetime and the ACHL cache: [whatwg/HTML#3774](https://github.com/whatwg/html/issues/3774)
 * Adding new CH features to the CH list in Fetch: [whatwg/fetch#725](https://github.com/whatwg/fetch/issues/725)
 * Other PRs for adding the Feature Policy 3rd party opt-in: [whatwg/fetch#811](https://github.com/whatwg/fetch/issues/811) and [wicg/feature-folicy#220](https://github.com/wicg/feature-policy/issues/220)
+
+## What's with the `Sec-CH-` prefix?
+
+Based on some discussion in [w3ctag/design-reviews#320](https://github.com/w3ctag/design-reviews/issues/320#issuecomment-435874298),
+it seems reasonable to forbid access to these headers from JavaScript, and demarcate them as
+browser-controlled client hints so they can be documented and included in requests without triggering
+CORS preflights. A `Sec-CH-` prefix seems like a viable approach. _This bit might shift as the broader
+Client Hints discussions above coalesce into something more solid that lands in specs_.

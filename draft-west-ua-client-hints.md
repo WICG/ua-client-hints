@@ -1,6 +1,6 @@
 ---
 title: User Agent Client Hints
-docname: draft-west-ua-client-hints
+docname: draft-west-ua-client-hints-00
 date: {DATE}
 category: std
 ipr: trust200902
@@ -141,6 +141,30 @@ the underlying device. Rather than broadcasting this data to everyone, all the t
 make reasonable decisions about how to respond to given sites' requests for more granular data,
 reducing the passive fingerprinting surface area exposed to the network.
 
+## Example
+
+A user navigates to `https://example.com/` for the first time. Their user agent sends the following
+header along with the HTTP request:
+
+~~~ example
+  Sec-CH-UA: "Examplary Browser 73"
+~~~
+
+The server is interested in rendering content consistent with the user's underlying platform, and
+asks for a little more information by sending an `Accept-CH` header (Section 2.2.1 of
+{{I-D.ietf-httpwg-client-hints}}) along with the initial response:
+
+~~~ example
+  Accept-CH: UA, Platform
+~~~
+
+In response, the user agent includes more detailed version information, as well as information about
+the underlying platform in the next request:
+
+~~~ example
+  Sec-CH-UA: "Examplary Browser 73.3R8.2H.1"
+  Sec-CH-Platform: "Windows 10"
+~~~
 
 ## Notational Conventions
 
@@ -322,13 +346,14 @@ steps:
 
 5.  Set request's `Sec-CH-UA` header, as described in {{sec-ch-ua}}.
 
-# Security Considerations
+# Security and Privacy Considerations
 
 ## Secure Transport
 
-Client Hints will not be delivered to non-secure endpoints. This means that user agent information
-will not be leaked over plaintext channels, reducing the opportunity for network attackers to build
-a profile of a given agent's behavior over time.
+Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
+Section 2.2.1 of {{I-D.ietf-httpwg-client-hints}}). This means that user agent information will not
+be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
+of a given agent's behavior over time.
 
 ## Delegation
 
@@ -341,6 +366,17 @@ passive fingerprinting.
 *   HTML integration of Accept-CH-Lifetime and the ACHL cache: https://github.com/whatwg/html/issues/3774
 *   Adding new CH features to the CH list in Fetch: https://github.com/whatwg/fetch/issues/725
 *   Other PRs for adding the Feature Policy 3rd party opt-in: https://github.com/whatwg/fetch/issues/811 and https://github.com/wicg/feature-policy/issues/220
+
+## Access Restrictions
+
+The information in the Client Hints defined above reveals quite a bit of information about the user
+agent and the platform/device upon which it runs. User agents ought to exercise judgement before
+granting access to this information, and MAY impose restrictions above and beyond the secure
+transport and delegation requirements noted above. For instance, user agents could choose to reveal
+`platform architecture` only on requests it intends to download, giving the server the opportunity
+to serve the right binary. Likewise, they could offer users control over the values revealed to
+servers, or gate access on explicit user interaction via a permission prompt or via a settings
+interface.
 
 # Implementation Considerations
 
@@ -493,3 +529,10 @@ Author/Change controller:
 Specification document:
 : this specification ({{user-agent}}), and Section 5.5.3 of {{RFC7231}}
 
+--- back
+
+# Changes
+
+## draft-west-ua-client-hints-00
+
+*   This specification sprang, fully-formed, from the head of Zeus.

@@ -152,7 +152,7 @@ header along with the HTTP request:
 
 The server is interested in rendering content consistent with the user's underlying platform, and
 asks for a little more information by sending an `Accept-CH` header (Section 2.2.1 of
-{{I-D.ietf-httpwg-client-hints}}) along with the initial response:
+{{I-D.ietf-httpbis-client-hints}}) along with the initial response:
 
 ~~~ example
   Accept-CH: UA, Platform
@@ -335,7 +335,7 @@ in its HTTP-network-or-cache fetch algorithm.
 To set the user agent metadata for a request (`r`), the user agent MUST execute the following
 steps:
 
-1.  If request's header list does not contain `User-Agent`, then the user agent should append
+1.  If request's header list does not contain `User-Agent`, then the user agent MAY append
     `User-Agent`/default `User-Agent` value to `request`'s header list.
 
 2.  Set request's `Sec-CH-Arch` header, as described in {{sec-ch-arch}}.
@@ -351,14 +351,14 @@ steps:
 ## Secure Transport
 
 Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of {{I-D.ietf-httpwg-client-hints}}). This means that user agent information will not
+Section 2.2.1 of {{I-D.ietf-httpbis-client-hints}}). This means that user agent information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent's behavior over time.
 
 ## Delegation
 
 Client Hints will be delegated from top-level pages via Feature Policy (once a few patches against
-Fetch and Client Hints and Feature Poilicy land. This reduces the likelyhood that user agent
+Fetch and Client Hints and Feature Policy land. This reduces the likelihood that user agent
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.
 

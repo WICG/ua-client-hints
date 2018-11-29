@@ -487,7 +487,7 @@ Applicable protocol:
 : http
 
 Status:
-: standard
+: deprecated
 
 Author/Change controller:
 : IETF

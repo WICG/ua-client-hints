@@ -594,7 +594,7 @@ Internet-Draft           User Agent Client Hints           November 2018
 
    Applicable protocol:  http
 
-   Status:  standard
+   Status:  deprecated
 
    Author/Change controller:  IETF
 

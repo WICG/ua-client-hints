@@ -2,8 +2,6 @@
 
 Mike West, October 2018
 
-_©2018, Google, Inc. All rights reserved._
-
 (_Note: This isn't a proposal that's well thought out, and stamped solidly with the Google Seal of
 Approval. It's a collection of interesting ideas for discussion, nothing more, nothing less._)
 

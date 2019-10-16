@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 83d3ceadc5400c8422976bbcbe49615aace9cf1e" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="aab7343fe5dd531c25d59a38d524a3d82e1eb1c6" name="document-revision">
+  <meta content="f15c25d52a21e232a3cf5c8146f9638d79b7dcd6" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1462,7 +1462,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-11-26">26 November 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-11-27">27 November 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1512,7 +1512,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#sec-ch-model"><span class="secno">2.2</span> <span class="content">The 'Sec-CH-Model' Header Field</span></a>
       <li><a href="#sec-ch-platform"><span class="secno">2.3</span> <span class="content">The 'Sec-CH-Platform' Header Field</span></a>
       <li><a href="#sec-ch-ua"><span class="secno">2.4</span> <span class="content">The 'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#fetch-integration"><span class="secno">2.5</span> <span class="content">Integration with Fetch</span></a>
+      <li><a href="#sec-ch-mobile"><span class="secno">2.5</span> <span class="content">The 'Sec-CH-Mobile' Header Field</span></a>
+      <li><a href="#fetch-integration"><span class="secno">2.6</span> <span class="content">Integration with Fetch</span></a>
      </ol>
     <li>
      <a href="#security-privacy"><span class="secno">3</span> <span class="content">Security and Privacy Considerations</span></a>
@@ -1535,7 +1536,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#iana-model"><span class="secno">5.2</span> <span class="content">'Sec-CH-Model' Header Field</span></a>
       <li><a href="#iana-platform"><span class="secno">5.3</span> <span class="content">'Sec-CH-Platform' Header Field</span></a>
       <li><a href="#iana-ua"><span class="secno">5.4</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#iana-user-agent"><span class="secno">5.5</span> <span class="content">'User-Agent' Header Field</span></a>
+      <li><a href="#iana-mobile"><span class="secno">5.5</span> <span class="content">'Sec-CH-Mobile' Header Field</span></a>
+      <li><a href="#iana-user-agent"><span class="secno">5.6</span> <span class="content">'User-Agent' Header Field</span></a>
      </ol>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1622,7 +1624,7 @@ the underlying platform in the next request:</p>
    <p>The following sections define a number of HTTP request header fields that expose detail about a
 given user agent, which servers can opt-into receiving via the Client Hints infrastructure defined
 in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints">[I-D.ietf-httpbis-client-hints]</a>. The definitions below assume that each user agent has defined
-a number of properties for itself (all of which are strings):</p>
+a number of properties for itself:</p>
    <ul>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-brand">brand</dfn> (for example: "cURL", "Edge", "The World’s Best Web Browser")</p>
@@ -1638,6 +1640,8 @@ a number of properties for itself (all of which are strings):</p>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-architecture">platform architecture</dfn> (for example: "ARM64", or "ia32")</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-model">model</dfn> (for example: "", or "Pixel 2 XL")</p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-mobileness">mobileness</dfn> (for example: ?0 or ?1)</p>
    </ul>
    <p>User agents SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the user agent’s whim.</p>
@@ -1678,6 +1682,7 @@ user agents MUST:</p>
        <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header①">Set a structured header</a> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list①">header list</a> whose name is <code>Sec-CH-Model</code>, and whose value is <code>value</code>.</p>
      </ol>
    </ol>
+   <p class="issue" id="issue-a1588654"><a class="self-link" href="#issue-a1588654"></a> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?</p>
    <h3 class="heading settled" data-level="2.3" id="sec-ch-platform"><span class="secno">2.3. </span><span class="content">The 'Sec-CH-Platform' Header Field</span><a class="self-link" href="#sec-ch-platform"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-platform"><code>Sec-CH-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-platform"></a></dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-④">Structured Header</a> whose value
@@ -1735,17 +1740,37 @@ combinations.</p>
     <li data-md>
      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header③">Set a structured header</a> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list③">header list</a> whose name is <code>Sec-CH-UA</code>, and whose value is <var>value</var>.</p>
    </ol>
-   <h3 class="heading settled" data-level="2.5" id="fetch-integration"><span class="secno">2.5. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
+   <h3 class="heading settled" data-level="2.5" id="sec-ch-mobile"><span class="secno">2.5. </span><span class="content">The 'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#sec-ch-mobile"></a></h3>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-mobile"><code>Sec-CH-Mobile</code><a class="self-link" href="#http-headerdef-sec-ch-mobile"></a></dfn> request header field gives a server information about
+whether or not a user agent prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑧">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4" id="ref-for-section-3.3.4">boolean</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
+   <p>The header’s ABNF is:</p>
+<pre class="language-abnf highlight">  <c- nc>Sec-CH-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
+</pre>
+   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set the <code>Sec-CH-Mobile</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a> (<var>r</var>),
+user agents MUST:</p>
+   <ol>
+    <li data-md>
+     <p>If the request’s client-hints set includes <code>Mobile</code>, then:</p>
+     <ol>
+      <li data-md>
+       <p>Let <code>value</code> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑨">Structured Header</a> whose value is the user agent’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a>.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header④">Set a structured header</a> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list④">header list</a> whose name is <code>Sec-CH-Mobile</code>, and whose value is <code>value</code>.</p>
+     </ol>
+   </ol>
+   <h3 class="heading settled" data-level="2.6" id="fetch-integration"><span class="secno">2.6. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
    <p>The Fetch specification should call into the following algorithm in place of the current Step 5.11
 in its HTTP-network-or-cache fetch algorithm.</p>
    <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-user-agent-metadata-for-a-request">set the user agent metadata for a request<a class="self-link" href="#abstract-opdef-set-the-user-agent-metadata-for-a-request"></a></dfn> (<var>r</var>), the user agent MUST
 execute the following steps:</p>
    <ol>
     <li data-md>
-     <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list④">header list</a> does not <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">contain</a> <code>User-Agent</code>, then the user
-agent MAY append <code>User-Agent</code>/[=default <code>User-Agent</code> value=] to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list⑤">header list</a>.</p>
+     <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list⑤">header list</a> does not <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">contain</a> <code>User-Agent</code>, then the user
+agent MAY append <code>User-Agent</code>/[=default <code>User-Agent</code> value=] to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list⑥">header list</a>.</p>
     <li data-md>
      <p>[$Set the <code>Sec-CH-Arch</code> header for a request$], given <var>r</var>.</p>
+    <li data-md>
+     <p>[$Set the <code>Sec-CH-Mobile</code> header for a request$], given <var>r</var>.</p>
     <li data-md>
      <p>[$Set the <code>Sec-CH-Model</code> header for a request$], given <var>r</var>.</p>
     <li data-md>
@@ -1764,7 +1789,7 @@ of a given agent’s behavior over time.</p>
 Fetch and Client Hints and Feature Policy land. This reduces the likelihood that user agent
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting. The following issues cover the dependencies:</p>
-   <p class="issue" id="issue-b875ecdd"><a class="self-link" href="#issue-b875ecdd"></a> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a>'s <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-client-hints-set">client-hints set</dfn>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a></p>
+   <p class="issue" id="issue-b875ecdd"><a class="self-link" href="#issue-b875ecdd"></a> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a>'s <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-client-hints-set">client-hints set</dfn>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a></p>
    <p class="issue" id="issue-f1dbe325"><a class="self-link" href="#issue-f1dbe325"></a> HTML integration of Accept-CH-Lifetime and the ACHL cache <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a></p>
    <p class="issue" id="issue-ad33bb81"><a class="self-link" href="#issue-ad33bb81"></a> Adding new CH features to the CH list in Fetch <a href="https://github.com/whatwg/fetch/issues/725">&lt;https://github.com/whatwg/fetch/issues/725></a></p>
    <p class="issue" id="issue-4794e88a"><a class="self-link" href="#issue-4794e88a"></a> 3rd-party opt-in <a href="https://github.com/whatwg/fetch/issues/811">&lt;https://github.com/whatwg/fetch/issues/811></a></p>
@@ -1895,7 +1920,28 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-ua">§ 2.4 The 'Sec-CH-UA' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.5" id="iana-user-agent"><span class="secno">5.5. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
+   <h3 class="heading settled" data-level="5.5" id="iana-mobile"><span class="secno">5.5. </span><span class="content">'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
+   <p>Header field name:</p>
+   <dl>
+    <dt data-md>Sec-CH-Mobile
+   </dl>
+   <p>Applicable protocol:</p>
+   <dl>
+    <dt data-md>http
+   </dl>
+   <p>Status:</p>
+   <dl>
+    <dt data-md>standard
+   </dl>
+   <p>Author/Change controller:</p>
+   <dl>
+    <dt data-md>IETF
+   </dl>
+   <p>Specification document:</p>
+   <dl>
+    <dt data-md>this specification (<a href="#sec-ch-mobile">§ 2.5 The 'Sec-CH-Mobile' Header Field</a>)
+   </dl>
+   <h3 class="heading settled" data-level="5.6" id="iana-user-agent"><span class="secno">5.6. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>User-Agent
@@ -2053,24 +2099,27 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <li><a href="#request-client-hints-set">client-hints set</a><span>, in §3.2</span>
    <li><a href="#user-agent-full-version">full version</a><span>, in §2</span>
    <li><a href="#user-agent-major-version">major version</a><span>, in §2</span>
+   <li><a href="#user-agent-mobileness">mobileness</a><span>, in §2</span>
    <li><a href="#user-agent-model">model</a><span>, in §2</span>
    <li><a href="#user-agent-platform-architecture">platform architecture</a><span>, in §2</span>
    <li><a href="#user-agent-platform-brand">platform brand</a><span>, in §2</span>
    <li><a href="#user-agent-platform-version">platform version</a><span>, in §2</span>
    <li><a href="#http-headerdef-sec-ch-arch">Sec-CH-Arch</a><span>, in §2.1</span>
+   <li><a href="#http-headerdef-sec-ch-mobile">Sec-CH-Mobile</a><span>, in §2.5</span>
    <li><a href="#http-headerdef-sec-ch-model">Sec-CH-Model</a><span>, in §2.2</span>
    <li><a href="#http-headerdef-sec-ch-platform">Sec-CH-Platform</a><span>, in §2.3</span>
    <li><a href="#http-headerdef-sec-ch-ua">Sec-CH-UA</a><span>, in §2.4</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request">set the Sec-CH-Arch header for a request</a><span>, in §2.1</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set the Sec-CH-Mobile header for a request</a><span>, in §2.5</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request">set the Sec-CH-Model header for a request</a><span>, in §2.2</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set the Sec-CH-Platform header for a request</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set the Sec-CH-UA header for a request</a><span>, in §2.4</span>
-   <li><a href="#abstract-opdef-set-the-user-agent-metadata-for-a-request">set the user agent metadata for a request</a><span>, in §2.5</span>
+   <li><a href="#abstract-opdef-set-the-user-agent-metadata-for-a-request">set the user agent metadata for a request</a><span>, in §2.6</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-header-list-contains">
    <a href="https://fetch.spec.whatwg.org/#header-list-contains">https://fetch.spec.whatwg.org/#header-list-contains</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-header-list-contains">2.5. Integration with Fetch</a>
+    <li><a href="#ref-for-header-list-contains">2.6. Integration with Fetch</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-header-list">
@@ -2080,7 +2129,8 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-concept-request-header-list①">2.2. The 'Sec-CH-Model' Header Field</a>
     <li><a href="#ref-for-concept-request-header-list②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-concept-request-header-list③">2.4. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-concept-request-header-list④">2.5. Integration with Fetch</a> <a href="#ref-for-concept-request-header-list⑤">(2)</a>
+    <li><a href="#ref-for-concept-request-header-list④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#ref-for-concept-request-header-list⑤">2.6. Integration with Fetch</a> <a href="#ref-for-concept-request-header-list⑥">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request">
@@ -2090,7 +2140,8 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-concept-request①">2.2. The 'Sec-CH-Model' Header Field</a>
     <li><a href="#ref-for-concept-request②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-concept-request③">2.4. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-concept-request④">3.2. Delegation</a>
+    <li><a href="#ref-for-concept-request④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#ref-for-concept-request⑤">3.2. Delegation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-list-set-structured-header">
@@ -2100,6 +2151,13 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-concept-header-list-set-structured-header①">2.2. The 'Sec-CH-Model' Header Field</a>
     <li><a href="#ref-for-concept-header-list-set-structured-header②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-concept-header-list-set-structured-header③">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-concept-header-list-set-structured-header④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-section-3.3.4">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-3.3.4">2.5. The 'Sec-CH-Mobile' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.1">
@@ -2123,6 +2181,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#termref-for-">2.2. The 'Sec-CH-Model' Header Field</a> <a href="#termref-for-">(2)</a>
     <li><a href="#termref-for-">2.3. The 'Sec-CH-Platform' Header Field</a> <a href="#termref-for-">(2)</a>
     <li><a href="#termref-for-">2.4. The 'Sec-CH-UA' Header Field</a> <a href="#termref-for-">(2)</a>
+    <li><a href="#termref-for-">2.5. The 'Sec-CH-Mobile' Header Field</a> <a href="#termref-for-">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-append">
@@ -2160,6 +2219,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <li>
     <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-section-3.3.4" style="color:initial">boolean</span>
      <li><span class="dfn-paneled" id="term-for-section-3.1" style="color:initial">list</span>
      <li><span class="dfn-paneled" id="term-for-section-3.3.3" style="color:initial">string</span>
      <li><span class="dfn-paneled" id="term-for-" style="color:initial">structured header</span>
@@ -2201,6 +2261,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-a1588654"> ↵ </a></div>
    <div class="issue"> Should we split the version out into a separate <code>Sec-CH-UA-Version</code> header? Or keep it here? <a href="https://github.com/wicg/ua-client-hints/issues/7">&lt;https://github.com/wicg/ua-client-hints/issues/7></a><a href="#issue-af2ff260"> ↵ </a></div>
    <div class="issue"> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a>'s <span>client-hints set</span>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a><a href="#issue-b875ecdd"> ↵ </a></div>
    <div class="issue"> HTML integration of Accept-CH-Lifetime and the ACHL cache <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a><a href="#issue-f1dbe325"> ↵ </a></div>
@@ -2250,6 +2311,12 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <b><a href="#user-agent-model">#user-agent-model</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-model">2.2. The 'Sec-CH-Model' Header Field</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="user-agent-mobileness">
+   <b><a href="#user-agent-mobileness">#user-agent-mobileness</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-user-agent-mobileness">2.5. The 'Sec-CH-Mobile' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="request-client-hints-set">

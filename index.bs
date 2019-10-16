@@ -167,7 +167,7 @@ User Agent Hints {#http-ua-hints}
 The following sections define a number of HTTP request header fields that expose detail about a
 given user agent, which servers can opt-into receiving via the Client Hints infrastructure defined
 in [[I-D.ietf-httpbis-client-hints]]. The definitions below assume that each user agent has defined
-a number of properties for itself (all of which are strings):
+a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> (for example: "cURL", "Edge", "The World's Best Web Browser")
 *   <dfn for="user agent" export>major version</dfn> (for example: "72", "3", or "28")
@@ -176,6 +176,7 @@ a number of properties for itself (all of which are strings):
 *   <dfn for="user agent" export>platform version</dfn> (for example: "10", "12", or "17G")
 *   <dfn for="user agent" export>platform architecture</dfn> (for example: "ARM64", or "ia32")
 *   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
+*   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
 
 User agents SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the user agent's whim.
@@ -230,6 +231,8 @@ user agents MUST:
 
     2.  [=header list/Set a structured header=] in |r|'s [=request/header list=] whose name is
         `Sec-CH-Model`, and whose value is `value`.
+
+ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-Mobile` is enough, and we don't need to expose the model?
 
 
 The 'Sec-CH-Platform' Header Field {#sec-ch-platform}
@@ -306,6 +309,31 @@ user agents MUST:
 6.  [=header list/Set a structured header=] in |r|'s [=request/header list=] whose name is
     `Sec-CH-UA`, and whose value is |value|.
 
+The 'Sec-CH-Mobile' Header Field {#sec-ch-mobile}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-Mobile`</dfn> request header field gives a server information about
+whether or not a user agent prefers a "mobile" user experience. It is a [=Structured Header=]
+whose value MUST be a [=structured header/boolean=] [[I-D.ietf-httpbis-header-structure]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-Mobile = sh-boolean
+```
+
+To <dfn abstract-op>set the `Sec-CH-Mobile` header for a request</dfn>, given a [=request=] (|r|),
+user agents MUST:
+
+1.  If the request's client-hints set includes `Mobile`, then:
+
+    1.  Let `value` be a [=Structured Header=] whose value is the user agent's
+        [=user agent/mobileness=].
+
+    2.  [=header list/Set a structured header=] in |r|'s [=request/header list=] whose name is
+        `Sec-CH-Mobile`, and whose value is `value`.
+
+
 Integration with Fetch {#fetch-integration}
 ----------------------
 
@@ -319,6 +347,8 @@ execute the following steps:
     agent MAY append `User-Agent`/[=default `User-Agent` value=] to |r|'s [=request/header list=].
 
 2.  [$Set the `Sec-CH-Arch` header for a request$], given |r|.
+
+3.  [$Set the `Sec-CH-Mobile` header for a request$], given |r|.
 
 3.  [$Set the `Sec-CH-Model` header for a request$], given |r|.
 
@@ -499,6 +529,24 @@ Author/Change controller:
 
 Specification document:
 : this specification ([[#sec-ch-ua]])
+
+'Sec-CH-Mobile' Header Field {#iana-mobile}
+----------------------------
+
+Header field name:
+: Sec-CH-Mobile
+
+Applicable protocol:
+: http
+
+Status:
+: standard
+
+Author/Change controller:
+: IETF
+
+Specification document:
+: this specification ([[#sec-ch-mobile]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

@@ -96,7 +96,8 @@ accomplish this as follows:
 
 2.  Similarly, user agents would freeze the `navigator.appVersion`, `navigator.platform`,
     `navigator.productSub`, `navigator.vendor`, and `navigator.userAgent` attributes to
-    appropriate values for the frozen `User-Agent` string.
+    appropriate values for the frozen `User-Agent` string, along with a `navigator.mobile` attribute signifiying if
+    a user agent wants a "mobile" UX.
 
 3.  Browsers should introduce several new Client Hint header fields:
 
@@ -127,6 +128,13 @@ accomplish this as follows:
         ```http
         Sec-CH-UA-Model: "Pixel 2 XL"
         ```
+
+    5.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a specifically "mobile"
+        UX.
+
+        ```http
+        Sec-CH-UA-Mobile: ?1
+        ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
     `navigator.getUserAgent()` method as something like:
@@ -144,6 +152,7 @@ accomplish this as follows:
       readonly attribute DOMString platform;       // "Win 10"
       readonly attribute DOMString architecture;   // "ARM64"
       readonly attribute DOMString model;          // ""
+      readonly attribute bool mobile;              // false
     };
     ```
 
@@ -267,3 +276,15 @@ it seems reasonable to forbid access to these headers from JavaScript, and demar
 browser-controlled client hints so they can be documented and included in requests without triggering
 CORS preflights. A `Sec-CH-` prefix seems like a viable approach. _This bit might shift as the broader
 Client Hints discussions above coalesce into something more solid that lands in specs_.
+
+## How does `Sec-CH-UA-Mobile` define "mobile"?
+
+This is a tough question. The motiviation for the header is that a majority of user-agent header 
+sniffing is used by the server to decide if a "desktop" or "mobile" UX should be served. This is
+currently implicitly defined in most modern browsers because they have two distinct UIs, a 
+"desktop" version (i.e. Windows, Mac OS, etc.) and a "mobile" version (i.e. Android, iOS). In general,
+most browsers will also explicitly send "Mobile" in user-agent strings on "mobile" platforms. As
+such, servers will usually use the platform or presence of this "mobile" identifier. It's also worth
+pointing out that most modern browsers also have an explicit "request desktop site" UI element in their
+mobile versions which should be honored. In a more general sense, though, a "mobile" experience could be
+seen as a UX designed with smaller screens and touch-based interface in mind.

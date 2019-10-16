@@ -179,7 +179,7 @@ shown here.
 The following sections define a number of HTTP request header fields that expose detail about a
 given user agent, which servers can opt-into receiving via the Client Hints infrastructure defined
 in {{I-D.ietf-httpbis-client-hints}}. The definitions below assume that each user agent has defined
-a number of properties for itself (all of which are strings):
+a number of properties for itself:
 
 *   `brand` (for example: "cURL", "Edge", "The World's Best Web Browser")
 *   `major version` (for example: "72", "3", or "28")
@@ -188,6 +188,7 @@ a number of properties for itself (all of which are strings):
 *   `platform version` (for example: "10", "12", or "17G")
 *   `platform architecture` (for example: "ARM64", or "ia32")
 *   `model` (for example: "", or "Pixel 2 XL")
+*   `mobile` (for example: ?0 or ?1)
 
 User agents SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the user agent's whim.
@@ -259,6 +260,30 @@ To generate a `Sec-CH-Platform` header value for a given request, user agents MU
 
     2.  Set a header in request's header list whose name is `Sec-CH-Platform`, and whose value is
         `value`.
+
+
+## The 'Sec-CH-Mobile' Header Field {#sec-ch-mobile}
+
+The `Sec-CH-Mobile` request header field gives a server information about whether or not a user agent
+prefers a "mobile" user experience. It is a Structured Header ({{I-D.ietf-httpbis-header-structure}})
+whose value MUST be a boolean ({{I-D.ietf-httpbis-header-structure}}, Section 3.7).
+
+The header's ABNF is:
+
+~~~ abnf7230
+  Sec-CH-Mobile = sh-boolean
+~~~
+
+To generate a `Sec-CH-Mobile` header value for a given request, user agents MUST:
+
+1.  If the request's client-hints set includes `Mobile`, then:
+
+    1.  Let `value` be a Structured Header whose value indicated a boolean preference for `mobile`
+        user experiences.
+
+    2.  Set a header in request's header list whose name is `Sec-CH-Mobile`, and whose value is
+        `value`.
+
 
 ## The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 
@@ -452,6 +477,23 @@ Author/Change controller:
 
 Specification document:
 : this specification ({{sec-ch-platform}})
+
+## 'Sec-CH-Platform' Header Field
+
+Header field name:
+: Sec-CH-Mobile
+
+Applicable protocol:
+: http
+
+Status:
+: standard
+
+Author/Change controller:
+: IETF
+
+Specification document:
+: this specification ({{sec-ch-mobile}})
 
 ## 'Sec-CH-UA' Header Field
 

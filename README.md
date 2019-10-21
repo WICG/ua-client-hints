@@ -96,8 +96,7 @@ accomplish this as follows:
 
 2.  Similarly, user agents would freeze the `navigator.appVersion`, `navigator.platform`,
     `navigator.productSub`, `navigator.vendor`, and `navigator.userAgent` attributes to
-    appropriate values for the frozen `User-Agent` string, along with a `navigator.mobile` attribute signifiying if
-    a user agent wants a "mobile" UX.
+    appropriate values for the frozen `User-Agent` string.
 
 3.  Browsers should introduce several new Client Hint header fields:
 

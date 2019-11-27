@@ -327,6 +327,9 @@ execute the following steps:
 5.  [$Set the `Sec-CH-UA` header for a request$], given |r|.
 
 
+IDL
+=====
+
 Security and Privacy Considerations {#security-privacy}
 ===================================
 

@@ -377,8 +377,7 @@ Navigator includes NavigatorUA;
 
 Processing model {#processing}
 --------------
-<dfn method for="NavigatorUA"><code>getUserAgent()</code></dfn> method *must*
-run these steps:
+<dfn method for="NavigatorUA"><code>getUserAgent()</code></dfn> method MUST run these steps:
 
 1. Let |UAData| be a new {{NavigatorUAData}} object.
 2. Set |UAData|'s {{NavigatorUAData/brand}} to the value of the user agent's [=user agent/brand=].
@@ -394,7 +393,9 @@ run these steps:
 9. If |settings|'s [=environment settings object/client-hints set=] [=list/contains=] `UA`, then
     set |version| to be the value of the user agent's [=user agent/full version=].
 10. Set |UAData|'s {{NavigatorUAData/version}} to the value of |version|.
-11. Return |UAData|.
+11. Let |promise| be [=a new promise=].
+12. Resolve |promise| with |UAData| [=in parallel=].
+13. Return |promise|.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

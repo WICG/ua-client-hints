@@ -388,14 +388,13 @@ Processing model {#processing}
 5. Set |UAData|'s {{NavigatorUAData/model}} to the value of the user agent's [=user agent/model=].
 6. Set |UAData|'s {{NavigatorUAData/mobile}} to the value of the user agent's
     [=user agent/mobileness=].
-7. Let |version| be the value of the user agent's [=user agent/major version=].
-8. Let |settings| be the [=context object=]’s [=relevant settings object=].
-9. If |settings|'s [=environment settings object/client-hints set=] [=list/contains=] `UA`, then
-    set |version| to be the value of the user agent's [=user agent/full version=].
-10. Set |UAData|'s {{NavigatorUAData/version}} to the value of |version|.
-11. Let |promise| be [=a new promise=].
-12. Resolve |promise| with |UAData| [=in parallel=].
-13. Return |promise|.
+7. Let |version| be the value of the user agent's [=user agent/full version=].
+8. Set |UAData|'s {{NavigatorUAData/version}} to the value of |version|.
+9. Let |promise| be [=a new promise=].
+10. Resolve |promise| with |UAData| [=in parallel=].
+11. Return |promise|.
+
+ISSUE: Provide a method to only access the UA's major version.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================
@@ -419,9 +418,7 @@ passive fingerprinting. The following issues cover the dependencies:
 ISSUE(whatwg/fetch#773): Fetch integration of Accept-CH opt-in, and the definition of a
 [=request=]'s <dfn for="request">client-hints set</dfn>.
 
-ISSUE(whatwg/html#3774): HTML integration of Accept-CH-Lifetime and the ACHL cache and the
-definition of an [=environment settings object=]'s
-<dfn for="environment settings object">client-hints set</dfn>.
+ISSUE(whatwg/html#3774): HTML integration of Accept-CH-Lifetime and the ACHL cache.
 
 ISSUE(whatwg/fetch#725): Adding new CH features to the CH list in Fetch
 

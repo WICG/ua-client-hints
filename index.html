@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 83d3ceadc5400c8422976bbcbe49615aace9cf1e" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="f15c25d52a21e232a3cf5c8146f9638d79b7dcd6" name="document-revision">
+  <meta content="76dbcec1d73d679a9e7f36e791a60c96cae25268" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1515,29 +1515,30 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#sec-ch-mobile"><span class="secno">2.5</span> <span class="content">The 'Sec-CH-Mobile' Header Field</span></a>
       <li><a href="#fetch-integration"><span class="secno">2.6</span> <span class="content">Integration with Fetch</span></a>
      </ol>
+    <li><a href="#idl"><span class="secno">3</span> <span class="content">IDL</span></a>
     <li>
-     <a href="#security-privacy"><span class="secno">3</span> <span class="content">Security and Privacy Considerations</span></a>
+     <a href="#security-privacy"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#secure-transport"><span class="secno">3.1</span> <span class="content">Secure Transport</span></a>
-      <li><a href="#delegation"><span class="secno">3.2</span> <span class="content">Delegation</span></a>
-      <li><a href="#access"><span class="secno">3.3</span> <span class="content">Access Restrictions</span></a>
+      <li><a href="#secure-transport"><span class="secno">4.1</span> <span class="content">Secure Transport</span></a>
+      <li><a href="#delegation"><span class="secno">4.2</span> <span class="content">Delegation</span></a>
+      <li><a href="#access"><span class="secno">4.3</span> <span class="content">Access Restrictions</span></a>
      </ol>
     <li>
-     <a href="#impl-considerations"><span class="secno">4</span> <span class="content">Implementation Considerations</span></a>
+     <a href="#impl-considerations"><span class="secno">5</span> <span class="content">Implementation Considerations</span></a>
      <ol class="toc">
-      <li><a href="#user-agent"><span class="secno">4.1</span> <span class="content">The 'User-Agent' Header</span></a>
-      <li><a href="#grease"><span class="secno">4.2</span> <span class="content">GREASE-like UA Strings</span></a>
-      <li><a href="#sec-ch"><span class="secno">4.3</span> <span class="content">The 'Sec-CH-' prefix</span></a>
+      <li><a href="#user-agent"><span class="secno">5.1</span> <span class="content">The 'User-Agent' Header</span></a>
+      <li><a href="#grease"><span class="secno">5.2</span> <span class="content">GREASE-like UA Strings</span></a>
+      <li><a href="#sec-ch"><span class="secno">5.3</span> <span class="content">The 'Sec-CH-' prefix</span></a>
      </ol>
     <li>
-     <a href="#iana"><span class="secno">5</span> <span class="content">IANA Considerations</span></a>
+     <a href="#iana"><span class="secno">6</span> <span class="content">IANA Considerations</span></a>
      <ol class="toc">
-      <li><a href="#iana-arch"><span class="secno">5.1</span> <span class="content">'Sec-CH-Arch' Header Field</span></a>
-      <li><a href="#iana-model"><span class="secno">5.2</span> <span class="content">'Sec-CH-Model' Header Field</span></a>
-      <li><a href="#iana-platform"><span class="secno">5.3</span> <span class="content">'Sec-CH-Platform' Header Field</span></a>
-      <li><a href="#iana-ua"><span class="secno">5.4</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#iana-mobile"><span class="secno">5.5</span> <span class="content">'Sec-CH-Mobile' Header Field</span></a>
-      <li><a href="#iana-user-agent"><span class="secno">5.6</span> <span class="content">'User-Agent' Header Field</span></a>
+      <li><a href="#iana-arch"><span class="secno">6.1</span> <span class="content">'Sec-CH-Arch' Header Field</span></a>
+      <li><a href="#iana-model"><span class="secno">6.2</span> <span class="content">'Sec-CH-Model' Header Field</span></a>
+      <li><a href="#iana-platform"><span class="secno">6.3</span> <span class="content">'Sec-CH-Platform' Header Field</span></a>
+      <li><a href="#iana-ua"><span class="secno">6.4</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
+      <li><a href="#iana-mobile"><span class="secno">6.5</span> <span class="content">'Sec-CH-Mobile' Header Field</span></a>
+      <li><a href="#iana-user-agent"><span class="secno">6.6</span> <span class="content">'User-Agent' Header Field</span></a>
      </ol>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1736,7 +1737,7 @@ combinations.</p>
       <li data-md>
        <p>Randomize the order of the items in <var>value</var>.</p>
      </ol>
-     <p class="note" role="note"><span>Note:</span> See <a href="#grease">§ 4.2 GREASE-like UA Strings</a> for more details on why these steps might be appropriate.</p>
+     <p class="note" role="note"><span>Note:</span> See <a href="#grease">§ 5.2 GREASE-like UA Strings</a> for more details on why these steps might be appropriate.</p>
     <li data-md>
      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header③">Set a structured header</a> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list③">header list</a> whose name is <code>Sec-CH-UA</code>, and whose value is <var>value</var>.</p>
    </ol>
@@ -1778,13 +1779,15 @@ agent MAY append <code>User-Agent</code>/[=default <code>User-Agent</code> value
     <li data-md>
      <p>[$Set the <code>Sec-CH-UA</code> header for a request$], given <var>r</var>.</p>
    </ol>
-   <h2 class="heading settled" data-level="3" id="security-privacy"><span class="secno">3. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
-   <h3 class="heading settled" data-level="3.1" id="secure-transport"><span class="secno">3.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
+   <h2 class="heading settled" data-level="3" id="idl"><span class="secno">3. </span><span class="content">IDL</span><a class="self-link" href="#idl"></a></h2>
+   <p class="issue" id="issue-7ac8b6f0"><a class="self-link" href="#issue-7ac8b6f0"></a> Yoav should write all this.</p>
+   <h2 class="heading settled" data-level="4" id="security-privacy"><span class="secno">4. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
+   <h3 class="heading settled" data-level="4.1" id="secure-transport"><span class="secno">4.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
 Section 2.2.1 of <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints">[I-D.ietf-httpbis-client-hints]</a>). This means that user agent information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent’s behavior over time.</p>
-   <h3 class="heading settled" data-level="3.2" id="delegation"><span class="secno">3.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
+   <h3 class="heading settled" data-level="4.2" id="delegation"><span class="secno">4.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
    <p>Client Hints will be delegated from top-level pages via Feature Policy (once a few patches against
 Fetch and Client Hints and Feature Policy land. This reduces the likelihood that user agent
 information will be delivered along with subresource requests, which reduces the potential for
@@ -1795,7 +1798,7 @@ passive fingerprinting. The following issues cover the dependencies:</p>
    <p class="issue" id="issue-4794e88a"><a class="self-link" href="#issue-4794e88a"></a> 3rd-party opt-in <a href="https://github.com/whatwg/fetch/issues/811">&lt;https://github.com/whatwg/fetch/issues/811></a></p>
    <p class="issue" id="issue-4794e88a①"><a class="self-link" href="#issue-4794e88a①"></a> 3rd-party opt-in <a href="https://github.com/wicg/feature-policy/issues/220">&lt;https://github.com/wicg/feature-policy/issues/220></a></p>
    <p class="issue" id="issue-4b5acc88"><a class="self-link" href="#issue-4b5acc88"></a> These are all out of date. Yoav will fix them.</p>
-   <h3 class="heading settled" data-level="3.3" id="access"><span class="secno">3.3. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
+   <h3 class="heading settled" data-level="4.3" id="access"><span class="secno">4.3. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
 agent and the platform/device upon which it runs. User agents ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
@@ -1803,8 +1806,8 @@ transport and delegation requirements noted above. For instance, user agents cou
 opportunity to serve the right binary. Likewise, they could offer users control over the values
 revealed to servers, or gate access on explicit user interaction via a permission prompt or via a
 settings interface.</p>
-   <h2 class="heading settled" data-level="4" id="impl-considerations"><span class="secno">4. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
-   <h3 class="heading settled" data-level="4.1" id="user-agent"><span class="secno">4.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
+   <h2 class="heading settled" data-level="5" id="impl-considerations"><span class="secno">5. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
+   <h3 class="heading settled" data-level="5.1" id="user-agent"><span class="secno">5.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
    <p>User agents SHOULD deprecate the <code>User-Agent</code> header in favor of the Client Hints model described in
 this document. The header, however, is likely to be impossible to remove entirely in the near-term,
 as existing sites' content negotiation code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015">[Rossi2015]</a> for a recent example of a new browser’s struggles in this area).</p>
@@ -1812,7 +1815,7 @@ as existing sites' content negotiation code will continue to require its presenc
 "like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.</p>
-   <h3 class="heading settled" data-level="4.2" id="grease"><span class="secno">4.2. </span><span class="content">GREASE-like UA Strings</span><a class="self-link" href="#grease"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="grease"><span class="secno">5.2. </span><span class="content">GREASE-like UA Strings</span><a class="self-link" href="#grease"></a></h3>
    <p>History has shown us that there are real incentives for user agents to lie about their branding
 in order to thread the needle of sites' sniffing scripts. While I’m optimistic that we can reset
 expectations around sniffing by freezing the thing that’s sniffed-upon today, and creating a sane 
@@ -1825,18 +1828,18 @@ Randomly including additional, intentionally incorrect, comma-separated entries 
 ordering (similar conceptually to <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>) could encourage standardized processing
 if the <code>UA</code> string by servers, and reduce the chance that we ossify on a few required strings.
 For example, Chrome 73’s <code>Sec-CH-UA</code> header might be <code>"Chrome 73", "NotBrowser 12"</code>, or <code>"BrowsingIsFun Version 12b", "Chrome 73"</code>, or something completely different.</p>
-   <h3 class="heading settled" data-level="4.3" id="sec-ch"><span class="secno">4.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Based on some discussion in https://github.com/w3ctag/design-reviews/issues/320, it seems
 reasonable to forbid access to these headers from JavaScript, and demarcate them as
 browser-controlled client hints so they can be documented and included in requests without
 triggering CORS preflights. A <code>Sec-CH-</code> prefix seems like a viable approach, but this bit might
 shift as the broader Client Hints discussions above coalesce into something more solid that lands
 in specs.</p>
-   <h2 class="heading settled" data-level="5" id="iana"><span class="secno">5. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
+   <h2 class="heading settled" data-level="6" id="iana"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
    <p>This document intends to define the <code>Sec-CH-Arch</code>, <code>Sec-CH-Model</code>, <code>Sec-CH-Platform</code>, and <code>Sec-CH-UA</code> HTTP request header fields, and register them in the permanent message header
 field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>).</p>
    <p>It also intends to deprecate the <code>User-Agent</code> header field.</p>
-   <h3 class="heading settled" data-level="5.1" id="iana-arch"><span class="secno">5.1. </span><span class="content">'Sec-CH-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
+   <h3 class="heading settled" data-level="6.1" id="iana-arch"><span class="secno">6.1. </span><span class="content">'Sec-CH-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>Sec-CH-Arch
@@ -1857,7 +1860,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-arch">§ 2.1 The 'Sec-CH-Arch' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.2" id="iana-model"><span class="secno">5.2. </span><span class="content">'Sec-CH-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
+   <h3 class="heading settled" data-level="6.2" id="iana-model"><span class="secno">6.2. </span><span class="content">'Sec-CH-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>Sec-CH-Model
@@ -1878,7 +1881,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-ua">§ 2.4 The 'Sec-CH-UA' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.3" id="iana-platform"><span class="secno">5.3. </span><span class="content">'Sec-CH-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="iana-platform"><span class="secno">6.3. </span><span class="content">'Sec-CH-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>Sec-CH-Platform
@@ -1899,7 +1902,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-platform">§ 2.3 The 'Sec-CH-Platform' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.4" id="iana-ua"><span class="secno">5.4. </span><span class="content">'Sec-CH-UA' Header Field</span><a class="self-link" href="#iana-ua"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="iana-ua"><span class="secno">6.4. </span><span class="content">'Sec-CH-UA' Header Field</span><a class="self-link" href="#iana-ua"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>Sec-CH-UA
@@ -1920,7 +1923,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-ua">§ 2.4 The 'Sec-CH-UA' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.5" id="iana-mobile"><span class="secno">5.5. </span><span class="content">'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
+   <h3 class="heading settled" data-level="6.5" id="iana-mobile"><span class="secno">6.5. </span><span class="content">'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>Sec-CH-Mobile
@@ -1941,7 +1944,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-mobile">§ 2.5 The 'Sec-CH-Mobile' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="5.6" id="iana-user-agent"><span class="secno">5.6. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
+   <h3 class="heading settled" data-level="6.6" id="iana-user-agent"><span class="secno">6.6. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
    <p>Header field name:</p>
    <dl>
     <dt data-md>User-Agent
@@ -1960,7 +1963,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    </dl>
    <p>Specification document:</p>
    <dl>
-    <dt data-md>this specification (<a href="#user-agent">§ 4.1 The 'User-Agent' Header</a>), and Section 5.5.3 of <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>
+    <dt data-md>this specification (<a href="#user-agent">§ 5.1 The 'User-Agent' Header</a>), and Section 5.5.3 of <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>
    </dl>
   </main>
 <script>
@@ -2096,7 +2099,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#user-agent-brand">brand</a><span>, in §2</span>
-   <li><a href="#request-client-hints-set">client-hints set</a><span>, in §3.2</span>
+   <li><a href="#request-client-hints-set">client-hints set</a><span>, in §4.2</span>
    <li><a href="#user-agent-full-version">full version</a><span>, in §2</span>
    <li><a href="#user-agent-major-version">major version</a><span>, in §2</span>
    <li><a href="#user-agent-mobileness">mobileness</a><span>, in §2</span>
@@ -2141,7 +2144,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-concept-request②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-concept-request③">2.4. The 'Sec-CH-UA' Header Field</a>
     <li><a href="#ref-for-concept-request④">2.5. The 'Sec-CH-Mobile' Header Field</a>
-    <li><a href="#ref-for-concept-request⑤">3.2. Delegation</a>
+    <li><a href="#ref-for-concept-request⑤">4.2. Delegation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-list-set-structured-header">
@@ -2263,6 +2266,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <div style="counter-reset:issue">
    <div class="issue"> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-a1588654"> ↵ </a></div>
    <div class="issue"> Should we split the version out into a separate <code>Sec-CH-UA-Version</code> header? Or keep it here? <a href="https://github.com/wicg/ua-client-hints/issues/7">&lt;https://github.com/wicg/ua-client-hints/issues/7></a><a href="#issue-af2ff260"> ↵ </a></div>
+   <div class="issue"> Yoav should write all this.<a href="#issue-7ac8b6f0"> ↵ </a></div>
    <div class="issue"> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a>'s <span>client-hints set</span>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a><a href="#issue-b875ecdd"> ↵ </a></div>
    <div class="issue"> HTML integration of Accept-CH-Lifetime and the ACHL cache <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a><a href="#issue-f1dbe325"> ↵ </a></div>
    <div class="issue"> Adding new CH features to the CH list in Fetch <a href="https://github.com/whatwg/fetch/issues/725">&lt;https://github.com/whatwg/fetch/issues/725></a><a href="#issue-ad33bb81"> ↵ </a></div>
@@ -2304,7 +2308,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <b><a href="#user-agent-platform-architecture">#user-agent-platform-architecture</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-platform-architecture">2.1. The 'Sec-CH-Arch' Header Field</a>
-    <li><a href="#ref-for-user-agent-platform-architecture①">3.3. Access Restrictions</a>
+    <li><a href="#ref-for-user-agent-platform-architecture①">4.3. Access Restrictions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-model">

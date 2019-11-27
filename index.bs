@@ -357,8 +357,10 @@ execute the following steps:
 5.  [$Set the `Sec-CH-UA` header for a request$], given |r|.
 
 
-IDL
-=====
+IDL {#idl} 
+===
+
+ISSUE: Yoav should write all this.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

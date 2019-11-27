@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 set -e # Exit with nonzero exit code if anything fails
 
 SOURCE_BRANCH="master"
@@ -50,14 +51,9 @@ git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
 ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
-echo "ENCRYPTED_KEY_VAR "$ENCRYPTED_KEY_VAR
 ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
-echo "ENCRYPTED_IV_VAR "$ENCRYPTED_IV_VAR
 ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
-echo "ENCRYPTED_KEY "$ENCRYPTED_KEY
 ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
-echo "ENCRYPTED_IV "$ENCRYPTED_IV
-echo "gonna run openssl___"$ENCRYPTED_IV"___"
 openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in ../deploy_key.enc -out ../deploy_key -d
 chmod 600 ../deploy_key
 eval `ssh-agent -s`

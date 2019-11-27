@@ -15,4 +15,4 @@ script:
 env:
   global:
   - ENCRYPTION_LABEL: "65f8a8b9947d"
-  - COMMIT_AUTHOR_EMAIL: "travis-ci@w3.org"
+  - COMMIT_AUTHOR_EMAIL: "yoav@yoav.ws"

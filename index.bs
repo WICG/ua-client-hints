@@ -172,8 +172,7 @@ a number of properties for itself:
 *   <dfn for="user agent" export>brand</dfn> (for example: "cURL", "Edge", "The World's Best Web Browser")
 *   <dfn for="user agent" export>major version</dfn> (for example: "72", "3", or "28")
 *   <dfn for="user agent" export>full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")
-*   <dfn for="user agent" export>platform brand</dfn> (for example: "Windows NT", "iOS", or "AmazingOS")
-*   <dfn for="user agent" export>platform version</dfn> (for example: "10", "12", or "17G")
+*   <dfn for="user agent" export>platform brand and version</dfn> (for example: "Windows NT 6.0", "iOS 15", or "AmazingOS 17G")
 *   <dfn for="user agent" export>platform architecture</dfn> (for example: "ARM64", or "ia32")
 *   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
@@ -253,9 +252,8 @@ user agents MUST:
 
 1.  If |r|'s [=request/client-hints set=] [=list/contains=] `Platform`, then:
 
-    1.  Let `value` be a [=Structured Header=] object whose value is the [=string/concatenation=]
-        of the user agent's [=user agent/platform brand=], a U+0020 SPACE character, and the user
-        agent's [=user agent/platform version=].
+    1.  Let `value` be a [=Structured Header=] object whose value is the user agent's
+        [=user agent/platform brand and version=].
 
     2.  [=header list/Set a structured header=] in |r|'s [=request/header list=] whose name is
         `Sec-CH-Platform`, and whose value is `value`.
@@ -325,7 +323,7 @@ The header's ABNF is:
 To <dfn abstract-op>set the `Sec-CH-Mobile` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
-1.  If the request's client-hints set includes `Mobile`, then:
+1.  If the |r|'s [=request/client-hints set=] [=list/contains=] `Mobile`, then:
 
     1.  Let `value` be a [=Structured Header=] whose value is the user agent's
         [=user agent/mobileness=].
@@ -357,10 +355,46 @@ execute the following steps:
 5.  [$Set the `Sec-CH-UA` header for a request$], given |r|.
 
 
-IDL {#idl} 
-===
+Interface {#interface} 
+=================
 
-ISSUE: Yoav should write all this.
+<pre class="idl">
+[Exposed=Window]
+interface NavigatorUAData {
+  readonly attribute DOMString brand;
+  readonly attribute DOMString version;
+  readonly attribute DOMString platform;
+  readonly attribute DOMString architecture;
+  readonly attribute DOMString model;
+  readonly attribute boolean mobile;
+};
+interface mixin NavigatorUA {
+  [SecureContext] Promise&lt;NavigatorUAData&gt; getUserAgent();
+};
+Navigator includes NavigatorUA;
+
+</pre>
+
+Processing model {#processing}
+--------------
+<dfn method for="NavigatorUA"><code>getUserAgent()</code></dfn> method *must*
+run these steps:
+
+1. Let |UAData| be a new {{NavigatorUAData}} object.
+2. Set |UAData|'s {{NavigatorUAData/brand}} to the value of the user agent's [=user agent/brand=].
+3. Set |UAData|'s {{NavigatorUAData/platform}} to the value of the user agent's
+    [=user agent/platform brand and version=].
+4. Set |UAData|'s {{NavigatorUAData/architecture}} to the value of the user
+    agent's [=user agent/platform architecture=].
+5. Set |UAData|'s {{NavigatorUAData/model}} to the value of the user agent's [=user agent/model=].
+6. Set |UAData|'s {{NavigatorUAData/mobile}} to the value of the user agent's
+    [=user agent/mobileness=].
+7. Let |version| be the value of the user agent's [=user agent/major version=].
+8. Let |settings| be the [=context object=]’s [=relevant settings object=].
+9. If |settings|'s [=environment settings object/client-hints set=] [=list/contains=] `UA`, then
+    set |version| to be the value of the user agent's [=user agent/full version=].
+10. Set |UAData|'s {{NavigatorUAData/version}} to the value of |version|.
+11. Return |UAData|.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================
@@ -384,7 +418,9 @@ passive fingerprinting. The following issues cover the dependencies:
 ISSUE(whatwg/fetch#773): Fetch integration of Accept-CH opt-in, and the definition of a
 [=request=]'s <dfn for="request">client-hints set</dfn>.
 
-ISSUE(whatwg/html#3774): HTML integration of Accept-CH-Lifetime and the ACHL cache
+ISSUE(whatwg/html#3774): HTML integration of Accept-CH-Lifetime and the ACHL cache and the
+definition of an [=environment settings object=]'s
+<dfn for="environment settings object">client-hints set</dfn>.
 
 ISSUE(whatwg/fetch#725): Adding new CH features to the CH list in Fetch
 

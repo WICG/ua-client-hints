@@ -1,7 +1,0 @@
-# For the gh-pages branch, we don't need anything special except to
-# have travis run.  That's what the branches: section is for.
-
-language: generic
-branches:
-  only:
-    - gh-pages

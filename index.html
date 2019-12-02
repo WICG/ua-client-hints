@@ -1029,7 +1029,7 @@ Possible extra rowspan handling
 		}
 	/* } */
 
-	@supports (display:grid) and (display:contents) {
+	@supports (display:grid) {
 		/* Use #toc over .toc to override non-@supports rules. */
 		#toc {
 			display: grid;
@@ -1213,9 +1213,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 83d3ceadc5400c8422976bbcbe49615aace9cf1e" name="generator">
+  <meta content="Bikeshed version 872cce6d3026423d677f3bd5837f1a1a46299a04" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="76dbcec1d73d679a9e7f36e791a60c96cae25268" name="document-revision">
+  <meta content="96afbcf331c1f1585582581c37036aee6a89ccc8" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1401,7 +1401,7 @@ pre .property::before, pre .property::after {
 .dfn-paneled { cursor: pointer; }
 </style>
 <style>/* style-syntax-highlighting */
-
+pre.idl.highlight { color: #708090; }
 .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
 code.highlight { padding: .1em; border-radius: .3em; }
 pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
@@ -1515,7 +1515,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#sec-ch-mobile"><span class="secno">2.5</span> <span class="content">The 'Sec-CH-Mobile' Header Field</span></a>
       <li><a href="#fetch-integration"><span class="secno">2.6</span> <span class="content">Integration with Fetch</span></a>
      </ol>
-    <li><a href="#idl"><span class="secno">3</span> <span class="content">IDL</span></a>
+    <li>
+     <a href="#interface"><span class="secno">3</span> <span class="content">Interface</span></a>
+     <ol class="toc">
+      <li><a href="#processing"><span class="secno">3.1</span> <span class="content">Processing model</span></a>
+     </ol>
     <li>
      <a href="#security-privacy"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
@@ -1552,6 +1556,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
+    <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
     <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
@@ -1634,9 +1639,7 @@ a number of properties for itself:</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-full-version">full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-brand">platform brand</dfn> (for example: "Windows NT", "iOS", or "AmazingOS")</p>
-    <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-version">platform version</dfn> (for example: "10", "12", or "17G")</p>
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-brand-and-version">platform brand and version</dfn> (for example: "Windows NT 6.0", "iOS 15", or "AmazingOS 17G")</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-architecture">platform architecture</dfn> (for example: "ARM64", or "ia32")</p>
     <li data-md>
@@ -1698,8 +1701,7 @@ user agents MUST:</p>
      <p>If <var>r</var>’s <a data-link-type="dfn" href="#request-client-hints-set" id="ref-for-request-client-hints-set②">client-hints set</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> <code>Platform</code>, then:</p>
      <ol>
       <li data-md>
-       <p>Let <code>value</code> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑤">Structured Header</a> object whose value is the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-concatenate" id="ref-for-string-concatenate">concatenation</a> of the user agent’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>, a U+0020 SPACE character, and the user
-agent’s <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a>.</p>
+       <p>Let <code>value</code> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑤">Structured Header</a> object whose value is the user agent’s <a data-link-type="dfn" href="#user-agent-platform-brand-and-version" id="ref-for-user-agent-platform-brand-and-version">platform brand and version</a>.</p>
       <li data-md>
        <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header②">Set a structured header</a> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list②">header list</a> whose name is <code>Sec-CH-Platform</code>, and whose value is <code>value</code>.</p>
      </ol>
@@ -1724,7 +1726,7 @@ user agents MUST:</p>
     <li data-md>
      <p>Let <var>version</var> be the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version">full version</a> if <var>r</var>’s <a data-link-type="dfn" href="#request-client-hints-set" id="ref-for-request-client-hints-set③">client-hints set</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> <code>UA</code>, and the user agent’s <a data-link-type="dfn" href="#user-agent-major-version" id="ref-for-user-agent-major-version">major version</a> otherwise.</p>
     <li data-md>
-     <p>Let <var>ua</var> be a string whose value is the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-concatenate" id="ref-for-string-concatenate①">concatenation</a> of the user agent’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">brand</a>, a U+0020 SPACE character, and <var>version</var>.</p>
+     <p>Let <var>ua</var> be a string whose value is the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-concatenate" id="ref-for-string-concatenate">concatenation</a> of the user agent’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">brand</a>, a U+0020 SPACE character, and <var>version</var>.</p>
      <p class="issue" id="issue-af2ff260"><a class="self-link" href="#issue-af2ff260"></a> Should we split the version out into a separate <code>Sec-CH-UA-Version</code> header? Or keep it here? <a href="https://github.com/wicg/ua-client-hints/issues/7">&lt;https://github.com/wicg/ua-client-hints/issues/7></a></p>
     <li data-md>
      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append">Append</a> <var>ua</var> to <var>value</var>.</p>
@@ -1751,7 +1753,7 @@ whether or not a user agent prefers a "mobile" user experience. It is a <a data-
 user agents MUST:</p>
    <ol>
     <li data-md>
-     <p>If the request’s client-hints set includes <code>Mobile</code>, then:</p>
+     <p>If the <var>r</var>’s <a data-link-type="dfn" href="#request-client-hints-set" id="ref-for-request-client-hints-set④">client-hints set</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> <code>Mobile</code>, then:</p>
      <ol>
       <li data-md>
        <p>Let <code>value</code> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑨">Structured Header</a> whose value is the user agent’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a>.</p>
@@ -1779,8 +1781,54 @@ agent MAY append <code>User-Agent</code>/[=default <code>User-Agent</code> value
     <li data-md>
      <p>[$Set the <code>Sec-CH-UA</code> header for a request$], given <var>r</var>.</p>
    </ol>
-   <h2 class="heading settled" data-level="3" id="idl"><span class="secno">3. </span><span class="content">IDL</span><a class="self-link" href="#idl"></a></h2>
-   <p class="issue" id="issue-7ac8b6f0"><a class="self-link" href="#issue-7ac8b6f0"></a> Yoav should write all this.</p>
+   <h2 class="heading settled" data-level="3" id="interface"><span class="secno">3. </span><span class="content">Interface</span><a class="self-link" href="#interface"></a></h2>
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+<c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatoruadata"><code><c- g>NavigatorUAData</c-></code></dfn> {
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-navigatoruadata-brand"><code><c- g>brand</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-navigatoruadata-version"><code><c- g>version</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-navigatoruadata-platform"><code><c- g>platform</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-navigatoruadata-architecture"><code><c- g>architecture</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-navigatoruadata-model"><code><c- g>model</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="boolean" id="dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></dfn>;
+};
+<c- b>interface</c-> <c- b>mixin</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatorua"><code><c- g>NavigatorUA</c-></code></dfn> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata"><c- n>NavigatorUAData</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-navigatorua-getuseragent" id="ref-for-dom-navigatorua-getuseragent"><c- g>getUserAgent</c-></a>();
+};
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua"><c- n>NavigatorUA</c-></a>;
+
+</pre>
+   <h3 class="heading settled" data-level="3.1" id="processing"><span class="secno">3.1. </span><span class="content">Processing model</span><a class="self-link" href="#processing"></a></h3>
+    <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-getuseragent"><code>getUserAgent()</code></dfn> method MUST run these steps: 
+   <ol>
+    <li data-md>
+     <p>Let <var>UAData</var> be a new <code class="idl"><a data-link-type="idl" href="#navigatoruadata" id="ref-for-navigatoruadata①">NavigatorUAData</a></code> object.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brand" id="ref-for-dom-navigatoruadata-brand">brand</a></code> to the value of the user agent’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand①">brand</a>.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> to the value of the user agent’s <a data-link-type="dfn" href="#user-agent-platform-brand-and-version" id="ref-for-user-agent-platform-brand-and-version①">platform brand and version</a>.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-architecture" id="ref-for-dom-navigatoruadata-architecture">architecture</a></code> to the value of the user
+agent’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture①">platform architecture</a>.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-model" id="ref-for-dom-navigatoruadata-model">model</a></code> to the value of the user agent’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model①">model</a>.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> to the value of the user agent’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness①">mobileness</a>.</p>
+    <li data-md>
+     <p>Let <var>version</var> be the value of the user agent’s <a data-link-type="dfn" href="#user-agent-major-version" id="ref-for-user-agent-major-version①">major version</a>.</p>
+    <li data-md>
+     <p>Let <var>settings</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
+    <li data-md>
+     <p>If <var>settings</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set">client-hints set</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain⑤">contains</a> <code>UA</code>, then
+set <var>version</var> to be the value of the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version①">full version</a>.</p>
+    <li data-md>
+     <p>Set <var>UAData</var>’s <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-version" id="ref-for-dom-navigatoruadata-version">version</a></code> to the value of <var>version</var>.</p>
+    <li data-md>
+     <p>Let <var>promise</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
+    <li data-md>
+     <p>Resolve <var>promise</var> with <var>UAData</var> <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>.</p>
+    <li data-md>
+     <p>Return <var>promise</var>.</p>
+   </ol>
    <h2 class="heading settled" data-level="4" id="security-privacy"><span class="secno">4. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="secure-transport"><span class="secno">4.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
@@ -1793,7 +1841,8 @@ Fetch and Client Hints and Feature Policy land. This reduces the likelihood that
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting. The following issues cover the dependencies:</p>
    <p class="issue" id="issue-b875ecdd"><a class="self-link" href="#issue-b875ecdd"></a> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a>'s <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-client-hints-set">client-hints set</dfn>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a></p>
-   <p class="issue" id="issue-f1dbe325"><a class="self-link" href="#issue-f1dbe325"></a> HTML integration of Accept-CH-Lifetime and the ACHL cache <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a></p>
+   <p class="issue" id="issue-2c4c94cd"><a class="self-link" href="#issue-2c4c94cd"></a> HTML integration of Accept-CH-Lifetime and the ACHL cache and the
+definition of an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>'s <dfn class="dfn-paneled" data-dfn-for="environment settings object" data-dfn-type="dfn" data-noexport id="environment-settings-object-client-hints-set">client-hints set</dfn>. <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a></p>
    <p class="issue" id="issue-ad33bb81"><a class="self-link" href="#issue-ad33bb81"></a> Adding new CH features to the CH list in Fetch <a href="https://github.com/whatwg/fetch/issues/725">&lt;https://github.com/whatwg/fetch/issues/725></a></p>
    <p class="issue" id="issue-4794e88a"><a class="self-link" href="#issue-4794e88a"></a> 3rd-party opt-in <a href="https://github.com/whatwg/fetch/issues/811">&lt;https://github.com/whatwg/fetch/issues/811></a></p>
    <p class="issue" id="issue-4794e88a①"><a class="self-link" href="#issue-4794e88a①"></a> 3rd-party opt-in <a href="https://github.com/wicg/feature-policy/issues/220">&lt;https://github.com/wicg/feature-policy/issues/220></a></p>
@@ -1802,7 +1851,7 @@ passive fingerprinting. The following issues cover the dependencies:</p>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
 agent and the platform/device upon which it runs. User agents ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, user agents could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture①">platform architecture</a> only on requests it intends to download, giving the server the
+transport and delegation requirements noted above. For instance, user agents could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture②">platform architecture</a> only on requests it intends to download, giving the server the
 opportunity to serve the right binary. Likewise, they could offer users control over the values
 revealed to servers, or gate access on explicit user interaction via a permission prompt or via a
 settings interface.</p>
@@ -2098,15 +2147,35 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#user-agent-brand">brand</a><span>, in §2</span>
-   <li><a href="#request-client-hints-set">client-hints set</a><span>, in §4.2</span>
+   <li><a href="#dom-navigatoruadata-architecture">architecture</a><span>, in §3</span>
+   <li>
+    brand
+    <ul>
+     <li><a href="#dom-navigatoruadata-brand">attribute for NavigatorUAData</a><span>, in §3</span>
+     <li><a href="#user-agent-brand">dfn for user agent</a><span>, in §2</span>
+    </ul>
+   <li>
+    client-hints set
+    <ul>
+     <li><a href="#environment-settings-object-client-hints-set">dfn for environment settings object</a><span>, in §4.2</span>
+     <li><a href="#request-client-hints-set">dfn for request</a><span>, in §4.2</span>
+    </ul>
    <li><a href="#user-agent-full-version">full version</a><span>, in §2</span>
+   <li><a href="#dom-navigatorua-getuseragent">getUserAgent()</a><span>, in §3.1</span>
    <li><a href="#user-agent-major-version">major version</a><span>, in §2</span>
+   <li><a href="#dom-navigatoruadata-mobile">mobile</a><span>, in §3</span>
    <li><a href="#user-agent-mobileness">mobileness</a><span>, in §2</span>
-   <li><a href="#user-agent-model">model</a><span>, in §2</span>
+   <li>
+    model
+    <ul>
+     <li><a href="#dom-navigatoruadata-model">attribute for NavigatorUAData</a><span>, in §3</span>
+     <li><a href="#user-agent-model">dfn for user agent</a><span>, in §2</span>
+    </ul>
+   <li><a href="#navigatorua">NavigatorUA</a><span>, in §3</span>
+   <li><a href="#navigatoruadata">NavigatorUAData</a><span>, in §3</span>
+   <li><a href="#dom-navigatoruadata-platform">platform</a><span>, in §3</span>
    <li><a href="#user-agent-platform-architecture">platform architecture</a><span>, in §2</span>
-   <li><a href="#user-agent-platform-brand">platform brand</a><span>, in §2</span>
-   <li><a href="#user-agent-platform-version">platform version</a><span>, in §2</span>
+   <li><a href="#user-agent-platform-brand-and-version">platform brand and version</a><span>, in §2</span>
    <li><a href="#http-headerdef-sec-ch-arch">Sec-CH-Arch</a><span>, in §2.1</span>
    <li><a href="#http-headerdef-sec-ch-mobile">Sec-CH-Mobile</a><span>, in §2.5</span>
    <li><a href="#http-headerdef-sec-ch-model">Sec-CH-Model</a><span>, in §2.2</span>
@@ -2118,7 +2187,14 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <li><a href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set the Sec-CH-Platform header for a request</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set the Sec-CH-UA header for a request</a><span>, in §2.4</span>
    <li><a href="#abstract-opdef-set-the-user-agent-metadata-for-a-request">set the user agent metadata for a request</a><span>, in §2.6</span>
+   <li><a href="#dom-navigatoruadata-version">version</a><span>, in §3</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-context-object">
+   <a href="https://dom.spec.whatwg.org/#context-object">https://dom.spec.whatwg.org/#context-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-context-object">3.1. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-header-list-contains">
    <a href="https://fetch.spec.whatwg.org/#header-list-contains">https://fetch.spec.whatwg.org/#header-list-contains</a><b>Referenced in:</b>
    <ul>
@@ -2155,6 +2231,30 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-concept-header-list-set-structured-header②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-concept-header-list-set-structured-header③">2.4. The 'Sec-CH-UA' Header Field</a>
     <li><a href="#ref-for-concept-header-list-set-structured-header④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-navigator">
+   <a href="https://html.spec.whatwg.org/multipage/system-state.html#navigator">https://html.spec.whatwg.org/multipage/system-state.html#navigator</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigator">3. Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-environment-settings-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment-settings-object">4.2. Delegation</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-in-parallel">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel">https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-in-parallel">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-relevant-settings-object">3.1. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.3.4">
@@ -2196,8 +2296,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <aside class="dfn-panel" data-for="term-for-string-concatenate">
    <a href="https://infra.spec.whatwg.org/#string-concatenate">https://infra.spec.whatwg.org/#string-concatenate</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-string-concatenate">2.3. The 'Sec-CH-Platform' Header Field</a>
-    <li><a href="#ref-for-string-concatenate①">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-string-concatenate">2.4. The 'Sec-CH-UA' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-contain">
@@ -2207,10 +2306,47 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-list-contain①">2.2. The 'Sec-CH-Model' Header Field</a>
     <li><a href="#ref-for-list-contain②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-list-contain③">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-list-contain④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#ref-for-list-contain⑤">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-DOMString">
+   <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-DOMString">3. Interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-Exposed">
+   <a href="https://heycam.github.io/webidl/#Exposed">https://heycam.github.io/webidl/#Exposed</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-Exposed">3. Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-SecureContext">
+   <a href="https://heycam.github.io/webidl/#SecureContext">https://heycam.github.io/webidl/#SecureContext</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-SecureContext">3. Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-a-new-promise">
+   <a href="https://heycam.github.io/webidl/#a-new-promise">https://heycam.github.io/webidl/#a-new-promise</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-a-new-promise">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-boolean">
+   <a href="https://heycam.github.io/webidl/#idl-boolean">https://heycam.github.io/webidl/#idl-boolean</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-boolean">3. Interface</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
+   <li>
+    <a data-link-type="biblio">[DOM]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-context-object" style="color:initial">context object</span>
+    </ul>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
@@ -2218,6 +2354,14 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
      <li><span class="dfn-paneled" id="term-for-concept-request-header-list" style="color:initial">header list</span>
      <li><span class="dfn-paneled" id="term-for-concept-request" style="color:initial">request</span>
      <li><span class="dfn-paneled" id="term-for-concept-header-list-set-structured-header" style="color:initial">set a structured header</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-navigator" style="color:initial">Navigator</span>
+     <li><span class="dfn-paneled" id="term-for-environment-settings-object" style="color:initial">environment settings object</span>
+     <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
+     <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
     </ul>
    <li>
     <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
@@ -2234,16 +2378,31 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
      <li><span class="dfn-paneled" id="term-for-string-concatenate" style="color:initial">concatenation</span>
      <li><span class="dfn-paneled" id="term-for-list-contain" style="color:initial">contain</span>
     </ul>
+   <li>
+    <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
+     <li><span class="dfn-paneled" id="term-for-Exposed" style="color:initial">Exposed</span>
+     <li><span class="dfn-paneled" id="term-for-SecureContext" style="color:initial">SecureContext</span>
+     <li><span class="dfn-paneled" id="term-for-a-new-promise" style="color:initial">a new promise</span>
+     <li><span class="dfn-paneled" id="term-for-idl-boolean" style="color:initial">boolean</span>
+    </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-dom">[DOM]
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]
    <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">Structured Headers for HTTP</a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-webidl">[WebIDL]
+   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -2262,13 +2421,30 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dt id="biblio-rossi2015">[Rossi2015]
    <dd><a href="https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s">The Microsoft Edge Rendering Engine that makes the Web just work</a>. URL: <a href="https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s">https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s</a>
   </dl>
+  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+<c- b>interface</c-> <a href="#navigatoruadata"><code><c- g>NavigatorUAData</c-></code></a> {
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-navigatoruadata-brand"><code><c- g>brand</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-navigatoruadata-version"><code><c- g>version</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-navigatoruadata-platform"><code><c- g>platform</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-navigatoruadata-architecture"><code><c- g>architecture</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-navigatoruadata-model"><code><c- g>model</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
+};
+<c- b>interface</c-> <c- b>mixin</c-> <a href="#navigatorua"><code><c- g>NavigatorUA</c-></code></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata②"><c- n>NavigatorUAData</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-navigatorua-getuseragent" id="ref-for-dom-navigatorua-getuseragent①"><c- g>getUserAgent</c-></a>();
+};
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①"><c- n>NavigatorUA</c-></a>;
+
+
+</pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-a1588654"> ↵ </a></div>
    <div class="issue"> Should we split the version out into a separate <code>Sec-CH-UA-Version</code> header? Or keep it here? <a href="https://github.com/wicg/ua-client-hints/issues/7">&lt;https://github.com/wicg/ua-client-hints/issues/7></a><a href="#issue-af2ff260"> ↵ </a></div>
-   <div class="issue"> Yoav should write all this.<a href="#issue-7ac8b6f0"> ↵ </a></div>
    <div class="issue"> Fetch integration of Accept-CH opt-in, and the definition of a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a>'s <span>client-hints set</span>. <a href="https://github.com/whatwg/fetch/issues/773">&lt;https://github.com/whatwg/fetch/issues/773></a><a href="#issue-b875ecdd"> ↵ </a></div>
-   <div class="issue"> HTML integration of Accept-CH-Lifetime and the ACHL cache <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a><a href="#issue-f1dbe325"> ↵ </a></div>
+   <div class="issue"> HTML integration of Accept-CH-Lifetime and the ACHL cache and the
+definition of an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object">environment settings object</a>'s <span>client-hints set</span>. <a href="https://github.com/whatwg/html/issues/3774">&lt;https://github.com/whatwg/html/issues/3774></a><a href="#issue-2c4c94cd"> ↵ </a></div>
    <div class="issue"> Adding new CH features to the CH list in Fetch <a href="https://github.com/whatwg/fetch/issues/725">&lt;https://github.com/whatwg/fetch/issues/725></a><a href="#issue-ad33bb81"> ↵ </a></div>
    <div class="issue"> 3rd-party opt-in <a href="https://github.com/whatwg/fetch/issues/811">&lt;https://github.com/whatwg/fetch/issues/811></a><a href="#issue-4794e88a"> ↵ </a></div>
    <div class="issue"> 3rd-party opt-in <a href="https://github.com/wicg/feature-policy/issues/220">&lt;https://github.com/wicg/feature-policy/issues/220></a><a href="#issue-4794e88a①"> ↵ </a></div>
@@ -2278,49 +2454,105 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-brand">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-user-agent-brand①">3.1. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-major-version">
    <b><a href="#user-agent-major-version">#user-agent-major-version</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-major-version">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-user-agent-major-version①">3.1. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-full-version">
    <b><a href="#user-agent-full-version">#user-agent-full-version</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-full-version">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-user-agent-full-version①">3.1. Processing model</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="user-agent-platform-brand">
-   <b><a href="#user-agent-platform-brand">#user-agent-platform-brand</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="user-agent-platform-brand-and-version">
+   <b><a href="#user-agent-platform-brand-and-version">#user-agent-platform-brand-and-version</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-platform-brand">2.3. The 'Sec-CH-Platform' Header Field</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="user-agent-platform-version">
-   <b><a href="#user-agent-platform-version">#user-agent-platform-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-platform-version">2.3. The 'Sec-CH-Platform' Header Field</a>
+    <li><a href="#ref-for-user-agent-platform-brand-and-version">2.3. The 'Sec-CH-Platform' Header Field</a>
+    <li><a href="#ref-for-user-agent-platform-brand-and-version①">3.1. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-platform-architecture">
    <b><a href="#user-agent-platform-architecture">#user-agent-platform-architecture</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-platform-architecture">2.1. The 'Sec-CH-Arch' Header Field</a>
-    <li><a href="#ref-for-user-agent-platform-architecture①">4.3. Access Restrictions</a>
+    <li><a href="#ref-for-user-agent-platform-architecture①">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-platform-architecture②">4.3. Access Restrictions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-model">
    <b><a href="#user-agent-model">#user-agent-model</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-model">2.2. The 'Sec-CH-Model' Header Field</a>
+    <li><a href="#ref-for-user-agent-model①">3.1. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-mobileness">
    <b><a href="#user-agent-mobileness">#user-agent-mobileness</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-mobileness">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#ref-for-user-agent-mobileness①">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="navigatoruadata">
+   <b><a href="#navigatoruadata">#navigatoruadata</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigatoruadata">3. Interface</a>
+    <li><a href="#ref-for-navigatoruadata①">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-brand">
+   <b><a href="#dom-navigatoruadata-brand">#dom-navigatoruadata-brand</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-brand">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-version">
+   <b><a href="#dom-navigatoruadata-version">#dom-navigatoruadata-version</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-version">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-platform">
+   <b><a href="#dom-navigatoruadata-platform">#dom-navigatoruadata-platform</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-platform">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-architecture">
+   <b><a href="#dom-navigatoruadata-architecture">#dom-navigatoruadata-architecture</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-architecture">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-model">
+   <b><a href="#dom-navigatoruadata-model">#dom-navigatoruadata-model</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-model">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-mobile">
+   <b><a href="#dom-navigatoruadata-mobile">#dom-navigatoruadata-mobile</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruadata-mobile">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="navigatorua">
+   <b><a href="#navigatorua">#navigatorua</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigatorua">3. Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatorua-getuseragent">
+   <b><a href="#dom-navigatorua-getuseragent">#dom-navigatorua-getuseragent</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatorua-getuseragent">3. Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="request-client-hints-set">
@@ -2330,6 +2562,13 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-request-client-hints-set①">2.2. The 'Sec-CH-Model' Header Field</a>
     <li><a href="#ref-for-request-client-hints-set②">2.3. The 'Sec-CH-Platform' Header Field</a>
     <li><a href="#ref-for-request-client-hints-set③">2.4. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-request-client-hints-set④">2.5. The 'Sec-CH-Mobile' Header Field</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="environment-settings-object-client-hints-set">
+   <b><a href="#environment-settings-object-client-hints-set">#environment-settings-object-client-hints-set</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment-settings-object-client-hints-set">3.1. Processing model</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

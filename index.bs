@@ -19,6 +19,7 @@ Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="link-defaults">
 spec:fetch; type:dfn; for:/; text:request
+spec:webidl; type:dfn; text:resolve
 </pre>
 <pre class="anchors">
 urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec: I-D.ietf-httpbis-header-structure
@@ -379,20 +380,28 @@ Processing model {#processing}
 --------------
 <dfn method for="NavigatorUA"><code>getUserAgent()</code></dfn> method MUST run these steps:
 
-1. Let |UAData| be a new {{NavigatorUAData}} object.
-2. Set |UAData|'s {{NavigatorUAData/brand}} to the value of the user agent's [=user agent/brand=].
-3. Set |UAData|'s {{NavigatorUAData/platform}} to the value of the user agent's
-    [=user agent/platform brand and version=].
-4. Set |UAData|'s {{NavigatorUAData/architecture}} to the value of the user
-    agent's [=user agent/platform architecture=].
-5. Set |UAData|'s {{NavigatorUAData/model}} to the value of the user agent's [=user agent/model=].
-6. Set |UAData|'s {{NavigatorUAData/mobile}} to the value of the user agent's
-    [=user agent/mobileness=].
-7. Let |version| be the value of the user agent's [=user agent/full version=].
-8. Set |UAData|'s {{NavigatorUAData/version}} to the value of |version|.
-9. Let |promise| be [=a new promise=].
-10. Resolve |promise| with |UAData| [=in parallel=].
-11. Return |promise|.
+1. Let |p| be a [=a new promise=].
+
+2.  Run the following steps [=in parallel=]:
+
+    1.  Let |UAData| be a new {{NavigatorUAData}} object whose values are initialized as follows:
+
+        :   {{NavigatorUAData/brand}}
+        ::  The user agent's [=user agent/brand=].
+        :   {{NavigatorUAData/platform}}
+        ::  The user agent's [=user agent/platform brand and version=].
+        :   {{NavigatorUAData/architecture}}
+        ::  The user agent's [=user agent/platform architecture=].
+        :   {{NavigatorUAData/model}}
+        ::  The user agent's [=user agent/model=].
+        :   {{NavigatorUAData/mobile}}
+        ::  The user agent's [=user agent/mobileness=].
+        :   {{NavigatorUAData/version}}
+        ::  The user agent's [=user agent/full version=].
+
+    2.  [=Resolve=] |p| with |UAData|.
+
+3.  Return |p|.
 
 ISSUE: Provide a method to only access the UA's major version.
 

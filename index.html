@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version e1a165f1c2fb1cc2aceb87e110984a42830c36fa" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="1d049036239da39a900abfb224ed1a73efbb803a" name="document-revision">
+  <meta content="f2e8b1948204a8294d314efd312655ee2f4a619e" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1462,7 +1462,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-12-02">2 December 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-12-04">4 December 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1655,7 +1655,7 @@ the architecture of the platform on which a given user agent is executing. It is
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-Arch</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-arch-header-for-a-request">set the <code>Sec-CH-Arch</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> (<var>r</var>),
+   <p>To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="set-arch" id="abstract-opdef-set-the-sec-ch-arch-header-for-a-request">set the <code>Sec-CH-Arch</code> header for a request</dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> (<var>r</var>),
 user agents MUST:</p>
    <ol>
     <li data-md>
@@ -1674,7 +1674,7 @@ be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbi
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-Model</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-model-header-for-a-request">set the <code>Sec-CH-Model</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a> (<var>r</var>),
+   <p>To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="set-model" id="abstract-opdef-set-the-sec-ch-model-header-for-a-request">set the <code>Sec-CH-Model</code> header for a request</dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a> (<var>r</var>),
 user agents MUST:</p>
    <ol>
     <li data-md>
@@ -1694,7 +1694,7 @@ MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-h
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-Platform</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set the <code>Sec-CH-Platform</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a> (<var>r</var>),
+   <p>To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="set-platform" id="abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set the <code>Sec-CH-Platform</code> header for a request</dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a> (<var>r</var>),
 user agents MUST:</p>
    <ol>
     <li data-md>
@@ -1718,7 +1718,7 @@ will include only the user agent’s branding information, and the major version
 are fairly clearly sniffable by "examining the structure of other headers and by testing for the
 availability and semantics of the features introduced or modified between releases of a particular
 browser" <a data-link-type="biblio" href="#biblio-janc2014">[Janc2014]</a>).</p>
-   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set the <code>Sec-CH-UA</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">request</a> (<var>r</var>),
+   <p>To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="set-ua" id="abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set the <code>Sec-CH-UA</code> header for a request</dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">request</a> (<var>r</var>),
 user agents MUST:</p>
    <ol>
     <li data-md>
@@ -1749,7 +1749,7 @@ whether or not a user agent prefers a "mobile" user experience. It is a <a data-
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
 </pre>
-   <p>To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set the <code>Sec-CH-Mobile</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a> (<var>r</var>),
+   <p>To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="set-mobile" id="abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set the <code>Sec-CH-Mobile</code> header for a request</dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a> (<var>r</var>),
 user agents MUST:</p>
    <ol>
     <li data-md>
@@ -1771,15 +1771,15 @@ execute the following steps:</p>
      <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list⑤">header list</a> does not <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">contain</a> <code>User-Agent</code>, then the user
 agent MAY append <code>User-Agent</code>/[=default <code>User-Agent</code> value=] to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list⑥">header list</a>.</p>
     <li data-md>
-     <p>[$Set the <code>Sec-CH-Arch</code> header for a request$], given <var>r</var>.</p>
+     <p><a data-link-type="abstract-op" href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request" id="ref-for-abstract-opdef-set-the-sec-ch-arch-header-for-a-request">Set the <code>Sec-CH-Arch</code> header for a request</a>, given <var>r</var>.</p>
     <li data-md>
-     <p>[$Set the <code>Sec-CH-Mobile</code> header for a request$], given <var>r</var>.</p>
+     <p><a data-link-type="abstract-op" href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request" id="ref-for-abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">Set the <code>Sec-CH-Mobile</code> header for a request</a>, given <var>r</var>.</p>
     <li data-md>
-     <p>[$Set the <code>Sec-CH-Model</code> header for a request$], given <var>r</var>.</p>
+     <p><a data-link-type="abstract-op" href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request" id="ref-for-abstract-opdef-set-the-sec-ch-model-header-for-a-request">Set the <code>Sec-CH-Model</code> header for a request</a>, given <var>r</var>.</p>
     <li data-md>
-     <p>[$Set the <code>Sec-CH-Platform</code> header for a request$], given <var>r</var>.</p>
+     <p><a data-link-type="abstract-op" href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request" id="ref-for-abstract-opdef-set-the-sec-ch-platform-header-for-a-request">Set the <code>Sec-CH-Platform</code> header for a request</a>, given <var>r</var>.</p>
     <li data-md>
-     <p>[$Set the <code>Sec-CH-UA</code> header for a request$], given <var>r</var>.</p>
+     <p><a data-link-type="abstract-op" href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request" id="ref-for-abstract-opdef-set-the-sec-ch-ua-header-for-a-request">Set the <code>Sec-CH-UA</code> header for a request</a>, given <var>r</var>.</p>
    </ol>
    <h2 class="heading settled" data-level="3" id="interface"><span class="secno">3. </span><span class="content">Interface</span><a class="self-link" href="#interface"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
@@ -2180,12 +2180,17 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <li><a href="#http-headerdef-sec-ch-model">Sec-CH-Model</a><span>, in §2.2</span>
    <li><a href="#http-headerdef-sec-ch-platform">Sec-CH-Platform</a><span>, in §2.3</span>
    <li><a href="#http-headerdef-sec-ch-ua">Sec-CH-UA</a><span>, in §2.4</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request">set-arch</a><span>, in §2.1</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set-mobile</a><span>, in §2.5</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request">set-model</a><span>, in §2.2</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set-platform</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request">set the Sec-CH-Arch header for a request</a><span>, in §2.1</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">set the Sec-CH-Mobile header for a request</a><span>, in §2.5</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request">set the Sec-CH-Model header for a request</a><span>, in §2.2</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request">set the Sec-CH-Platform header for a request</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set the Sec-CH-UA header for a request</a><span>, in §2.4</span>
    <li><a href="#abstract-opdef-set-the-user-agent-metadata-for-a-request">set the user agent metadata for a request</a><span>, in §2.6</span>
+   <li><a href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request">set-ua</a><span>, in §2.4</span>
    <li><a href="#dom-navigatoruadata-version">version</a><span>, in §3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-header-list-contains">
@@ -2475,6 +2480,36 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <ul>
     <li><a href="#ref-for-user-agent-mobileness">2.5. The 'Sec-CH-Mobile' Header Field</a>
     <li><a href="#ref-for-user-agent-mobileness①">3.1. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-the-sec-ch-arch-header-for-a-request">
+   <b><a href="#abstract-opdef-set-the-sec-ch-arch-header-for-a-request">#abstract-opdef-set-the-sec-ch-arch-header-for-a-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-the-sec-ch-arch-header-for-a-request">2.6. Integration with Fetch</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-the-sec-ch-model-header-for-a-request">
+   <b><a href="#abstract-opdef-set-the-sec-ch-model-header-for-a-request">#abstract-opdef-set-the-sec-ch-model-header-for-a-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-the-sec-ch-model-header-for-a-request">2.6. Integration with Fetch</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-the-sec-ch-platform-header-for-a-request">
+   <b><a href="#abstract-opdef-set-the-sec-ch-platform-header-for-a-request">#abstract-opdef-set-the-sec-ch-platform-header-for-a-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-the-sec-ch-platform-header-for-a-request">2.6. Integration with Fetch</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-the-sec-ch-ua-header-for-a-request">
+   <b><a href="#abstract-opdef-set-the-sec-ch-ua-header-for-a-request">#abstract-opdef-set-the-sec-ch-ua-header-for-a-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-the-sec-ch-ua-header-for-a-request">2.6. Integration with Fetch</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">
+   <b><a href="#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">#abstract-opdef-set-the-sec-ch-mobile-header-for-a-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-the-sec-ch-mobile-header-for-a-request">2.6. Integration with Fetch</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="navigatoruadata">

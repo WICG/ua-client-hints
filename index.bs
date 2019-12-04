@@ -196,7 +196,7 @@ The header's ABNF is:
   Sec-CH-Arch = sh-string
 ~~~
 
-To <dfn abstract-op>set the `Sec-CH-Arch` header for a request</dfn>, given a [=request=] (|r|),
+To <dfn abstract-op local-lt="set-arch">set the `Sec-CH-Arch` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
 1.  If |r|'s [=request/client-hints set=] [=list/contains=] `Arch`, then:
@@ -221,7 +221,7 @@ The header's ABNF is:
   Sec-CH-Model = sh-string
 ```
 
-To <dfn abstract-op>set the `Sec-CH-Model` header for a request</dfn>, given a [=request=] (|r|),
+To <dfn abstract-op local-lt="set-model">set the `Sec-CH-Model` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
 1.  If |r|'s [=request/client-hints set=] [=list/contains=] `Model`, then:
@@ -248,7 +248,7 @@ The header's ABNF is:
   Sec-CH-Platform = sh-string
 ```
 
-To <dfn abstract-op>set the `Sec-CH-Platform` header for a request</dfn>, given a [=request=] (|r|),
+To <dfn abstract-op local-lt="set-platform">set the `Sec-CH-Platform` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
 1.  If |r|'s [=request/client-hints set=] [=list/contains=] `Platform`, then:
@@ -279,7 +279,7 @@ are fairly clearly sniffable by "examining the structure of other headers and by
 availability and semantics of the features introduced or modified between releases of a particular
 browser" [[Janc2014]]).
 
-To <dfn abstract-op>set the `Sec-CH-UA` header for a request</dfn>, given a [=request=] (|r|),
+To <dfn abstract-op local-lt="set-ua">set the `Sec-CH-UA` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
 1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
@@ -321,7 +321,7 @@ The header's ABNF is:
   Sec-CH-Mobile = sh-boolean
 ```
 
-To <dfn abstract-op>set the `Sec-CH-Mobile` header for a request</dfn>, given a [=request=] (|r|),
+To <dfn abstract-op local-lt="set-mobile">set the `Sec-CH-Mobile` header for a request</dfn>, given a [=request=] (|r|),
 user agents MUST:
 
 1.  If the |r|'s [=request/client-hints set=] [=list/contains=] `Mobile`, then:
@@ -345,15 +345,15 @@ execute the following steps:
 1.  If |r|'s [=request/header list=] does not [=header list/contain=] `User-Agent`, then the user
     agent MAY append `User-Agent`/[=default `User-Agent` value=] to |r|'s [=request/header list=].
 
-2.  [$Set the `Sec-CH-Arch` header for a request$], given |r|.
+2.  <a abstract-op lt="set-arch">Set the `Sec-CH-Arch` header for a request</a>, given |r|.
 
-3.  [$Set the `Sec-CH-Mobile` header for a request$], given |r|.
+3.  <a abstract-op lt="set-mobile">Set the `Sec-CH-Mobile` header for a request</a>, given |r|.
 
-3.  [$Set the `Sec-CH-Model` header for a request$], given |r|.
+3.  <a abstract-op lt="set-model">Set the `Sec-CH-Model` header for a request</a>, given |r|.
 
-4.  [$Set the `Sec-CH-Platform` header for a request$], given |r|.
+4.  <a abstract-op lt="set-platform">Set the `Sec-CH-Platform` header for a request</a>, given |r|.
 
-5.  [$Set the `Sec-CH-UA` header for a request$], given |r|.
+5.  <a abstract-op lt="set-ua">Set the `Sec-CH-UA` header for a request</a>, given |r|.
 
 
 Interface {#interface} 

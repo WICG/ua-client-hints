@@ -1,10 +1,5 @@
 # Explainer: Reducing `User-Agent` Granularity
 
-Mike West, October 2018
-
-(_Note: This isn't a proposal that's well thought out, and stamped solidly with the Google Seal of
-Approval. It's a collection of interesting ideas for discussion, nothing more, nothing less._)
-
 ## A Problem
 
 User agents identify themselves to servers as part of each HTTP request via the `User-Agent` header.
@@ -109,30 +104,30 @@ accomplish this as follows:
         Note: See the GREASE-like discussion below for how we could anticipate the inevitable lies
         which user agents might want to tell in this field.
 
-    2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
+    2.  The `Sec-CH-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
-        Sec-CH-UA-Platform: "Win 10"
+        Sec-CH-Platform: "Win 10"
         ```
 
-    3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
+    3.  The `Sec-CH-Arch` header field represents the underlying architecture's instruction set and
         width. For example:
 
         ```http
-        Sec-CH-UA-Arch: "ARM64"
+        Sec-CH-Arch: "ARM64"
         ```
 
-    4.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
+    4.  The `Sec-CH-Model` header field represents the user agent's underlying device model. For example:
 
         ```http
-        Sec-CH-UA-Model: "Pixel 2 XL"
+        Sec-CH-Model: "Pixel 2 XL"
         ```
 
-    5.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a specifically "mobile"
+    5.  The `Sec-CH-Mobile` header field represents whether the user agent should receive a specifically "mobile"
         UX.
 
         ```http
-        Sec-CH-UA-Mobile: ?1
+        Sec-CH-Mobile: ?1
         ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
@@ -183,7 +178,7 @@ Sec-CH-UA: "Chrome 74"
 If a server delivers the following response header:
 
 ```http
-Accept-CH: UA, UA-Platform, UA-Arch
+Accept-CH: UA, Platform, Arch
 ```
 
 Then subsequent requests to `https://example.com` will include the following request headers:
@@ -192,8 +187,8 @@ Then subsequent requests to `https://example.com` will include the following req
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
 Sec-CH-UA: "Chrome 74.0.3424.124"
-Sec-CH-UA-Platform: "macOS 12"
-Sec-CH-UA-Arch: "ARM64"
+Sec-CH-Platform: "macOS 12"
+Sec-CH-Arch: "ARM64"
 ```
 
 The user agent can make reasonable decisions about when to honor requests for detailed user agent
@@ -247,36 +242,29 @@ browser on iOS) are interesting cases in which the underlying browser engine on 
 doesn't match the engine that the relevant browser built themselves. What should we do in these
 cases?
 
-I think we have a few options for the string:
+We have a few options for the string:
 
 1.  `"Chrome 73"`, which has the least entropy, but also sets poor expectations.
 2.  `"CriOS 73"` (or `"Chrome on iOS 73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.
 3.  `"CriOS 73", "Safari 12"`, which is interesting.
 4.  `"Chrome 73", "Safari 12"`, which is more interesting.
 
-I think I prefer the second.
 
-(A more verbose alternative could add a `Sec-CH-UA-Engine` header, containing values like `Blink`,
+(A more verbose alternative could add a `Sec-CH-Engine` header, containing values like `Blink`,
 `EdgeHTML`, `Gecko`, or `WebKit`.)
 
-## Wait a minute, I don't see this delegation stuff in the Client Hints spec...
+## Wait a minute, where is the Client Hints infrastructure specified?
 
-Right. There are more than a few open PRs:
-
-* Fetch integration of Accept-CH opt-in: [whatwg/fetch#773](whatwg/fetch#773)
-* HTML integration of Accept-CH-Lifetime and the ACHL cache: [whatwg/HTML#3774](https://github.com/whatwg/html/issues/3774)
-* Adding new CH features to the CH list in Fetch: [whatwg/fetch#725](https://github.com/whatwg/fetch/issues/725)
-* Other PRs for adding the Feature Policy 3rd party opt-in: [whatwg/fetch#811](https://github.com/whatwg/fetch/issues/811) and [wicg/feature-folicy#220](https://github.com/wicg/feature-policy/issues/220)
+The infrastructure is specified as a separate [document](https://wicg.github.io/client-hints-infrastructure), and integration with Fetch and HTML happens there.
 
 ## What's with the `Sec-CH-` prefix?
 
 Based on some discussion in [w3ctag/design-reviews#320](https://github.com/w3ctag/design-reviews/issues/320#issuecomment-435874298),
 it seems reasonable to forbid access to these headers from JavaScript, and demarcate them as
 browser-controlled client hints so they can be documented and included in requests without triggering
-CORS preflights. A `Sec-CH-` prefix seems like a viable approach. _This bit might shift as the broader
-Client Hints discussions above coalesce into something more solid that lands in specs_.
+CORS preflights. A `Sec-CH-` prefix seems like a viable approach. 
 
-## How does `Sec-CH-UA-Mobile` define "mobile"?
+## How does `Sec-CH-Mobile` define "mobile"?
 
 This is a tough question. The motiviation for the header is that a majority of user-agent header 
 sniffing is used by the server to decide if a "desktop" or "mobile" UX should be served. This is

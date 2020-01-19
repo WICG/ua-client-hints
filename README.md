@@ -104,30 +104,30 @@ accomplish this as follows:
         Note: See the GREASE-like discussion below for how we could anticipate the inevitable lies
         which user agents might want to tell in this field.
 
-    2.  The `Sec-CH-Platform` header field represents the platform's brand and major version. For example:
+    2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
-        Sec-CH-Platform: "Win 10"
+        Sec-CH-UA-Platform: "Win 10"
         ```
 
-    3.  The `Sec-CH-Arch` header field represents the underlying architecture's instruction set and
+    3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
         width. For example:
 
         ```http
-        Sec-CH-Arch: "ARM64"
+        Sec-CH-UA-Arch: "ARM64"
         ```
 
-    4.  The `Sec-CH-Model` header field represents the user agent's underlying device model. For example:
+    4.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
 
         ```http
-        Sec-CH-Model: "Pixel 2 XL"
+        Sec-CH-UA-Model: "Pixel 2 XL"
         ```
 
-    5.  The `Sec-CH-Mobile` header field represents whether the user agent should receive a specifically "mobile"
+    5.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a specifically "mobile"
         UX.
 
         ```http
-        Sec-CH-Mobile: ?1
+        Sec-CH-UA-Mobile: ?1
         ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
@@ -178,7 +178,7 @@ Sec-CH-UA: "Chrome 74"
 If a server delivers the following response header:
 
 ```http
-Accept-CH: UA, Platform, Arch
+Accept-CH: UA, UA-Platform, UA-Arch
 ```
 
 Then subsequent requests to `https://example.com` will include the following request headers:
@@ -187,8 +187,8 @@ Then subsequent requests to `https://example.com` will include the following req
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
 Sec-CH-UA: "Chrome 74.0.3424.124"
-Sec-CH-Platform: "macOS 12"
-Sec-CH-Arch: "ARM64"
+Sec-CH-UA-Platform: "macOS 12"
+Sec-CH-UA-Arch: "ARM64"
 ```
 
 The user agent can make reasonable decisions about when to honor requests for detailed user agent
@@ -250,7 +250,7 @@ We have a few options for the string:
 4.  `"Chrome 73", "Safari 12"`, which is more interesting.
 
 
-(A more verbose alternative could add a `Sec-CH-Engine` header, containing values like `Blink`,
+(A more verbose alternative could add a `Sec-CH-UA-Engine` header, containing values like `Blink`,
 `EdgeHTML`, `Gecko`, or `WebKit`.)
 
 ## Wait a minute, where is the Client Hints infrastructure specified?
@@ -264,7 +264,7 @@ it seems reasonable to forbid access to these headers from JavaScript, and demar
 browser-controlled client hints so they can be documented and included in requests without triggering
 CORS preflights. A `Sec-CH-` prefix seems like a viable approach. 
 
-## How does `Sec-CH-Mobile` define "mobile"?
+## How does `Sec-CH-UA-Mobile` define "mobile"?
 
 This is a tough question. The motiviation for the header is that a majority of user-agent header 
 sniffing is used by the server to decide if a "desktop" or "mobile" UX should be served. This is

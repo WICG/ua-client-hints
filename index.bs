@@ -158,7 +158,7 @@ the underlying platform in the next request:
 
 ``` http
   Sec-CH-UA: "Examplary Browser 73.3R8.2H.1"
-  Sec-CH-Platform: "Windows 10"
+  Sec-CH-UA-Platform: "Windows 10"
 ```
 
 
@@ -182,10 +182,10 @@ User agents SHOULD keep these strings short and to the point, but servers MUST a
 values for each, as they are all values constructed at the user agent's whim.
 
 
-The 'Sec-CH-Arch' Header Field {#sec-ch-arch}
+The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}
 ------------------------------
 
-The <dfn http-header>`Sec-CH-Arch`</dfn> request header field gives a server information about
+The <dfn http-header>`Sec-CH-UA-Arch`</dfn> request header field gives a server information about
 the architecture of the platform on which a given user agent is executing. It is a
 [=Structured Header=] whose value MUST be a [=structured header/string=]
 [[I-D.ietf-httpbis-header-structure]].
@@ -193,37 +193,37 @@ the architecture of the platform on which a given user agent is executing. It is
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-Arch = sh-string
+  Sec-CH-UA-Arch = sh-string
 ~~~
 
 
-The 'Sec-CH-Model' Header Field {#sec-ch-model}
+The 'Sec-CH-UA-Model' Header Field {#sec-ch-model}
 -------------------------------
 
-The <dfn http-header>`Sec-CH-Model`</dfn> request header field gives a server information about
+The <dfn http-header>`Sec-CH-UA-Model`</dfn> request header field gives a server information about
 the device on which a given user agent is executing. It is a [=Structured Header=] whose value MUST
 be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
 
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-Model = sh-string
+  Sec-CH-UA-Model = sh-string
 ```
 
-ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-Mobile` is enough, and we don't need to expose the model?
+ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
 
 
-The 'Sec-CH-Platform' Header Field {#sec-ch-platform}
+The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
 ----------------------------------
 
-The <dfn http-header>`Sec-CH-Platform`</dfn> request header field gives a server information about
+The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a [=Structured Header=] whose value
 MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
 
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-Platform = sh-string
+  Sec-CH-UA-Platform = sh-string
 ```
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
@@ -274,17 +274,17 @@ user agents MUST:
 
 6.  Return |value|.
 
-The 'Sec-CH-Mobile' Header Field {#sec-ch-mobile}
+The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
 --------------------------------
 
-The <dfn http-header>`Sec-CH-Mobile`</dfn> request header field gives a server information about
+The <dfn http-header>`Sec-CH-UA-Mobile`</dfn> request header field gives a server information about
 whether or not a user agent prefers a "mobile" user experience. It is a [=Structured Header=]
 whose value MUST be a [=structured header/boolean=] [[I-D.ietf-httpbis-header-structure]].
 
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-Mobile = sh-boolean
+  Sec-CH-UA-Mobile = sh-boolean
 ```
 
 
@@ -422,17 +422,17 @@ in specs.
 IANA Considerations {#iana}
 ===================
 
-This document intends to define the `Sec-CH-Arch`, `Sec-CH-Model`, `Sec-CH-Platform`, and
+This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, and
 `Sec-CH-UA` HTTP request header fields, and register them in the permanent message header
 field registry ([[RFC3864]]).
 
 It also intends to deprecate the `User-Agent` header field.
 
-'Sec-CH-Arch' Header Field {#iana-arch}
+'Sec-CH-UA-Arch' Header Field {#iana-arch}
 --------------------------
 
 Header field name:
-: Sec-CH-Arch
+: Sec-CH-UA-Arch
 
 Applicable protocol:
 : http
@@ -446,11 +446,11 @@ Author/Change controller:
 Specification document:
 : this specification ([[#sec-ch-arch]])
 
-'Sec-CH-Model' Header Field {#iana-model}
+'Sec-CH-UA-Model' Header Field {#iana-model}
 ---------------------------
 
 Header field name:
-: Sec-CH-Model
+: Sec-CH-UA-Model
 
 Applicable protocol:
 : http
@@ -464,11 +464,11 @@ Author/Change controller:
 Specification document:
 : this specification ([[#sec-ch-ua]])
 
-'Sec-CH-Platform' Header Field {#iana-platform}
+'Sec-CH-UA-Platform' Header Field {#iana-platform}
 ------------------------------
 
 Header field name:
-: Sec-CH-Platform
+: Sec-CH-UA-Platform
 
 Applicable protocol:
 : http
@@ -500,11 +500,11 @@ Author/Change controller:
 Specification document:
 : this specification ([[#sec-ch-ua]])
 
-'Sec-CH-Mobile' Header Field {#iana-mobile}
+'Sec-CH-UA-Mobile' Header Field {#iana-mobile}
 ----------------------------
 
 Header field name:
-: Sec-CH-Mobile
+: Sec-CH-UA-Mobile
 
 Applicable protocol:
 : http

@@ -37,7 +37,7 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
 <pre class="biblio">
 {
   "FacebookYearClass": {
-    "href": "https://code.fb.com/android/year-class-a-classifiation-system-for-android/",
+    "href": "https://engineering.fb.com/android/year-class-a-classification-system-for-android/",
     "title": "Year class: A classification system for Android",
     "authors": [ "Chris Marra", "Daniel Weaver" ]
   },

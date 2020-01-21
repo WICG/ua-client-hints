@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 811139e88557b020c23cfc4db749a6220e4f7dcb" name="generator">
+  <meta content="Bikeshed version 8dfdf2ed5fc6ab13df001e8912368d1a94aa49dd" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="25061262ee9927472e2e50fa826c9b55b82f383f" name="document-revision">
+  <meta content="eab92095367862696993ec76ea2af557e7341568" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1517,11 +1517,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li>
      <a href="#http-ua-hints"><span class="secno">2</span> <span class="content">User Agent Hints</span></a>
      <ol class="toc">
-      <li><a href="#sec-ch-arch"><span class="secno">2.1</span> <span class="content">The 'Sec-CH-Arch' Header Field</span></a>
-      <li><a href="#sec-ch-model"><span class="secno">2.2</span> <span class="content">The 'Sec-CH-Model' Header Field</span></a>
-      <li><a href="#sec-ch-platform"><span class="secno">2.3</span> <span class="content">The 'Sec-CH-Platform' Header Field</span></a>
+      <li><a href="#sec-ch-arch"><span class="secno">2.1</span> <span class="content">The 'Sec-CH-UA-Arch' Header Field</span></a>
+      <li><a href="#sec-ch-model"><span class="secno">2.2</span> <span class="content">The 'Sec-CH-UA-Model' Header Field</span></a>
+      <li><a href="#sec-ch-platform"><span class="secno">2.3</span> <span class="content">The 'Sec-CH-UA-Platform' Header Field</span></a>
       <li><a href="#sec-ch-ua"><span class="secno">2.4</span> <span class="content">The 'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#sec-ch-mobile"><span class="secno">2.5</span> <span class="content">The 'Sec-CH-Mobile' Header Field</span></a>
+      <li><a href="#sec-ch-mobile"><span class="secno">2.5</span> <span class="content">The 'Sec-CH-UA-Mobile' Header Field</span></a>
       <li><a href="#fetch-integration"><span class="secno">2.6</span> <span class="content">Integration with Fetch</span></a>
      </ol>
     <li>
@@ -1546,11 +1546,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li>
      <a href="#iana"><span class="secno">6</span> <span class="content">IANA Considerations</span></a>
      <ol class="toc">
-      <li><a href="#iana-arch"><span class="secno">6.1</span> <span class="content">'Sec-CH-Arch' Header Field</span></a>
-      <li><a href="#iana-model"><span class="secno">6.2</span> <span class="content">'Sec-CH-Model' Header Field</span></a>
-      <li><a href="#iana-platform"><span class="secno">6.3</span> <span class="content">'Sec-CH-Platform' Header Field</span></a>
+      <li><a href="#iana-arch"><span class="secno">6.1</span> <span class="content">'Sec-CH-UA-Arch' Header Field</span></a>
+      <li><a href="#iana-model"><span class="secno">6.2</span> <span class="content">'Sec-CH-UA-Model' Header Field</span></a>
+      <li><a href="#iana-platform"><span class="secno">6.3</span> <span class="content">'Sec-CH-UA-Platform' Header Field</span></a>
       <li><a href="#iana-ua"><span class="secno">6.4</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#iana-mobile"><span class="secno">6.5</span> <span class="content">'Sec-CH-Mobile' Header Field</span></a>
+      <li><a href="#iana-mobile"><span class="secno">6.5</span> <span class="content">'Sec-CH-UA-Mobile' Header Field</span></a>
       <li><a href="#iana-user-agent"><span class="secno">6.6</span> <span class="content">'User-Agent' Header Field</span></a>
      </ol>
     <li>
@@ -1633,7 +1633,7 @@ asks for a little more information by sending an <code>Accept-CH</code> header (
    <p>In response, the user agent includes more detailed version information, as well as information about
 the underlying platform in the next request:</p>
 <pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser 73.3R8.2H.1"
-  Sec-CH-Platform: "Windows 10"
+  Sec-CH-UA-Platform: "Windows 10"
 </pre>
    <h2 class="heading settled" data-level="2" id="http-ua-hints"><span class="secno">2. </span><span class="content">User Agent Hints</span><a class="self-link" href="#http-ua-hints"></a></h2>
    <p>The following sections define a number of HTTP request header fields that expose detail about a
@@ -1658,26 +1658,26 @@ a number of properties for itself:</p>
    </ul>
    <p>User agents SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the user agent’s whim.</p>
-   <h3 class="heading settled" data-level="2.1" id="sec-ch-arch"><span class="secno">2.1. </span><span class="content">The 'Sec-CH-Arch' Header Field</span><a class="self-link" href="#sec-ch-arch"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-arch"><code>Sec-CH-Arch</code><a class="self-link" href="#http-headerdef-sec-ch-arch"></a></dfn> request header field gives a server information about
+   <h3 class="heading settled" data-level="2.1" id="sec-ch-arch"><span class="secno">2.1. </span><span class="content">The 'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#sec-ch-arch"></a></h3>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-arch"><code>Sec-CH-UA-Arch</code><a class="self-link" href="#http-headerdef-sec-ch-ua-arch"></a></dfn> request header field gives a server information about
 the architecture of the platform on which a given user agent is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
    <p>The header’s ABNF is:</p>
-<pre class="language-abnf highlight">  <c- nc>Sec-CH-Arch</c-> <c- o>=</c-> <c- nc>sh-string</c->
+<pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Arch</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <h3 class="heading settled" data-level="2.2" id="sec-ch-model"><span class="secno">2.2. </span><span class="content">The 'Sec-CH-Model' Header Field</span><a class="self-link" href="#sec-ch-model"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-model"><code>Sec-CH-Model</code><a class="self-link" href="#http-headerdef-sec-ch-model"></a></dfn> request header field gives a server information about
+   <h3 class="heading settled" data-level="2.2" id="sec-ch-model"><span class="secno">2.2. </span><span class="content">The 'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#sec-ch-model"></a></h3>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-model"><code>Sec-CH-UA-Model</code><a class="self-link" href="#http-headerdef-sec-ch-ua-model"></a></dfn> request header field gives a server information about
 the device on which a given user agent is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value MUST
 be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3①">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
    <p>The header’s ABNF is:</p>
-<pre class="language-abnf highlight">  <c- nc>Sec-CH-Model</c-> <c- o>=</c-> <c- nc>sh-string</c->
+<pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Model</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <p class="issue" id="issue-a1588654"><a class="self-link" href="#issue-a1588654"></a> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?</p>
-   <h3 class="heading settled" data-level="2.3" id="sec-ch-platform"><span class="secno">2.3. </span><span class="content">The 'Sec-CH-Platform' Header Field</span><a class="self-link" href="#sec-ch-platform"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-platform"><code>Sec-CH-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-platform"></a></dfn> request header field gives a server information about
+   <p class="issue" id="issue-1a9c4c0c"><a class="self-link" href="#issue-1a9c4c0c"></a> Perhaps <code>Sec-CH-UA-Mobile</code> is enough, and we don’t need to expose the model?</p>
+   <h3 class="heading settled" data-level="2.3" id="sec-ch-platform"><span class="secno">2.3. </span><span class="content">The 'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#sec-ch-platform"></a></h3>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform"></a></dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-②">Structured Header</a> whose value
 MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
    <p>The header’s ABNF is:</p>
-<pre class="language-abnf highlight">  <c- nc>Sec-CH-Platform</c-> <c- o>=</c-> <c- nc>sh-string</c->
+<pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Platform</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
    <h3 class="heading settled" data-level="2.4" id="sec-ch-ua"><span class="secno">2.4. </span><span class="content">The 'Sec-CH-UA' Header Field</span><a class="self-link" href="#sec-ch-ua"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code><a class="self-link" href="#http-headerdef-sec-ch-ua"></a></dfn> request header field gives a server information about a
@@ -1716,11 +1716,11 @@ combinations.</p>
     <li data-md>
      <p>Return <var>value</var>.</p>
    </ol>
-   <h3 class="heading settled" data-level="2.5" id="sec-ch-mobile"><span class="secno">2.5. </span><span class="content">The 'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#sec-ch-mobile"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-mobile"><code>Sec-CH-Mobile</code><a class="self-link" href="#http-headerdef-sec-ch-mobile"></a></dfn> request header field gives a server information about
+   <h3 class="heading settled" data-level="2.5" id="sec-ch-mobile"><span class="secno">2.5. </span><span class="content">The 'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#sec-ch-mobile"></a></h3>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-mobile"><code>Sec-CH-UA-Mobile</code><a class="self-link" href="#http-headerdef-sec-ch-ua-mobile"></a></dfn> request header field gives a server information about
 whether or not a user agent prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑤">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4" id="ref-for-section-3.3.4">boolean</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
    <p>The header’s ABNF is:</p>
-<pre class="language-abnf highlight">  <c- nc>Sec-CH-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
+<pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
 </pre>
    <h3 class="heading settled" data-level="2.6" id="fetch-integration"><span class="secno">2.6. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
     Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. 
@@ -1826,13 +1826,13 @@ triggering CORS preflights. A <code>Sec-CH-</code> prefix seems like a viable ap
 shift as the broader Client Hints discussions above coalesce into something more solid that lands
 in specs.</p>
    <h2 class="heading settled" data-level="6" id="iana"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
-   <p>This document intends to define the <code>Sec-CH-Arch</code>, <code>Sec-CH-Model</code>, <code>Sec-CH-Platform</code>, and <code>Sec-CH-UA</code> HTTP request header fields, and register them in the permanent message header
+   <p>This document intends to define the <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, and <code>Sec-CH-UA</code> HTTP request header fields, and register them in the permanent message header
 field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>).</p>
    <p>It also intends to deprecate the <code>User-Agent</code> header field.</p>
-   <h3 class="heading settled" data-level="6.1" id="iana-arch"><span class="secno">6.1. </span><span class="content">'Sec-CH-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
+   <h3 class="heading settled" data-level="6.1" id="iana-arch"><span class="secno">6.1. </span><span class="content">'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
    <p>Header field name:</p>
    <dl>
-    <dt data-md>Sec-CH-Arch
+    <dt data-md>Sec-CH-UA-Arch
    </dl>
    <p>Applicable protocol:</p>
    <dl>
@@ -1848,12 +1848,12 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    </dl>
    <p>Specification document:</p>
    <dl>
-    <dt data-md>this specification (<a href="#sec-ch-arch">§ 2.1 The 'Sec-CH-Arch' Header Field</a>)
+    <dt data-md>this specification (<a href="#sec-ch-arch">§ 2.1 The 'Sec-CH-UA-Arch' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="6.2" id="iana-model"><span class="secno">6.2. </span><span class="content">'Sec-CH-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
+   <h3 class="heading settled" data-level="6.2" id="iana-model"><span class="secno">6.2. </span><span class="content">'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
    <p>Header field name:</p>
    <dl>
-    <dt data-md>Sec-CH-Model
+    <dt data-md>Sec-CH-UA-Model
    </dl>
    <p>Applicable protocol:</p>
    <dl>
@@ -1871,10 +1871,10 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-ua">§ 2.4 The 'Sec-CH-UA' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="6.3" id="iana-platform"><span class="secno">6.3. </span><span class="content">'Sec-CH-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="iana-platform"><span class="secno">6.3. </span><span class="content">'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
    <p>Header field name:</p>
    <dl>
-    <dt data-md>Sec-CH-Platform
+    <dt data-md>Sec-CH-UA-Platform
    </dl>
    <p>Applicable protocol:</p>
    <dl>
@@ -1890,7 +1890,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    </dl>
    <p>Specification document:</p>
    <dl>
-    <dt data-md>this specification (<a href="#sec-ch-platform">§ 2.3 The 'Sec-CH-Platform' Header Field</a>)
+    <dt data-md>this specification (<a href="#sec-ch-platform">§ 2.3 The 'Sec-CH-UA-Platform' Header Field</a>)
    </dl>
    <h3 class="heading settled" data-level="6.4" id="iana-ua"><span class="secno">6.4. </span><span class="content">'Sec-CH-UA' Header Field</span><a class="self-link" href="#iana-ua"></a></h3>
    <p>Header field name:</p>
@@ -1913,10 +1913,10 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <dl>
     <dt data-md>this specification (<a href="#sec-ch-ua">§ 2.4 The 'Sec-CH-UA' Header Field</a>)
    </dl>
-   <h3 class="heading settled" data-level="6.5" id="iana-mobile"><span class="secno">6.5. </span><span class="content">'Sec-CH-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
+   <h3 class="heading settled" data-level="6.5" id="iana-mobile"><span class="secno">6.5. </span><span class="content">'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
    <p>Header field name:</p>
    <dl>
-    <dt data-md>Sec-CH-Mobile
+    <dt data-md>Sec-CH-UA-Mobile
    </dl>
    <p>Applicable protocol:</p>
    <dl>
@@ -1932,7 +1932,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    </dl>
    <p>Specification document:</p>
    <dl>
-    <dt data-md>this specification (<a href="#sec-ch-mobile">§ 2.5 The 'Sec-CH-Mobile' Header Field</a>)
+    <dt data-md>this specification (<a href="#sec-ch-mobile">§ 2.5 The 'Sec-CH-UA-Mobile' Header Field</a>)
    </dl>
    <h3 class="heading settled" data-level="6.6" id="iana-user-agent"><span class="secno">6.6. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
    <p>Header field name:</p>
@@ -2112,11 +2112,11 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
    <li><a href="#user-agent-platform-architecture">platform architecture</a><span>, in §2</span>
    <li><a href="#user-agent-platform-brand-and-version">platform brand and version</a><span>, in §2</span>
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request">return the Sec-CH-UA value for a request</a><span>, in §2.4</span>
-   <li><a href="#http-headerdef-sec-ch-arch">Sec-CH-Arch</a><span>, in §2.1</span>
-   <li><a href="#http-headerdef-sec-ch-mobile">Sec-CH-Mobile</a><span>, in §2.5</span>
-   <li><a href="#http-headerdef-sec-ch-model">Sec-CH-Model</a><span>, in §2.2</span>
-   <li><a href="#http-headerdef-sec-ch-platform">Sec-CH-Platform</a><span>, in §2.3</span>
    <li><a href="#http-headerdef-sec-ch-ua">Sec-CH-UA</a><span>, in §2.4</span>
+   <li><a href="#http-headerdef-sec-ch-ua-arch">Sec-CH-UA-Arch</a><span>, in §2.1</span>
+   <li><a href="#http-headerdef-sec-ch-ua-mobile">Sec-CH-UA-Mobile</a><span>, in §2.5</span>
+   <li><a href="#http-headerdef-sec-ch-ua-model">Sec-CH-UA-Model</a><span>, in §2.2</span>
+   <li><a href="#http-headerdef-sec-ch-ua-platform">Sec-CH-UA-Platform</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request">set-ua</a><span>, in §2.4</span>
    <li><a href="#dom-navigatoruadata-version">version</a><span>, in §3</span>
   </ul>
@@ -2135,7 +2135,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <aside class="dfn-panel" data-for="term-for-section-3.3.4">
    <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.4</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-3.3.4">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#ref-for-section-3.3.4">2.5. The 'Sec-CH-UA-Mobile' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.1">
@@ -2147,19 +2147,19 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
   <aside class="dfn-panel" data-for="term-for-section-3.3.3">
    <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-3.3.3">2.1. The 'Sec-CH-Arch' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3①">2.2. The 'Sec-CH-Model' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3②">2.3. The 'Sec-CH-Platform' Header Field</a>
+    <li><a href="#ref-for-section-3.3.3">2.1. The 'Sec-CH-UA-Arch' Header Field</a>
+    <li><a href="#ref-for-section-3.3.3①">2.2. The 'Sec-CH-UA-Model' Header Field</a>
+    <li><a href="#ref-for-section-3.3.3②">2.3. The 'Sec-CH-UA-Platform' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-">
    <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#termref-for-">2.1. The 'Sec-CH-Arch' Header Field</a>
-    <li><a href="#termref-for-">2.2. The 'Sec-CH-Model' Header Field</a>
-    <li><a href="#termref-for-">2.3. The 'Sec-CH-Platform' Header Field</a>
+    <li><a href="#termref-for-">2.1. The 'Sec-CH-UA-Arch' Header Field</a>
+    <li><a href="#termref-for-">2.2. The 'Sec-CH-UA-Model' Header Field</a>
+    <li><a href="#termref-for-">2.3. The 'Sec-CH-UA-Platform' Header Field</a>
     <li><a href="#termref-for-">2.4. The 'Sec-CH-UA' Header Field</a> <a href="#termref-for-">(2)</a>
-    <li><a href="#termref-for-">2.5. The 'Sec-CH-Mobile' Header Field</a>
+    <li><a href="#termref-for-">2.5. The 'Sec-CH-UA-Mobile' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-append">
@@ -2298,7 +2298,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Perhaps <code>Sec-CH-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-a1588654"> ↵ </a></div>
+   <div class="issue"> Perhaps <code>Sec-CH-UA-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-1a9c4c0c"> ↵ </a></div>
    <div class="issue"> Should we split the version out into a separate <code>Sec-CH-UA-Version</code> header? Or keep it here? <a href="https://github.com/wicg/ua-client-hints/issues/7">&lt;https://github.com/wicg/ua-client-hints/issues/7></a><a href="#issue-af2ff260"> ↵ </a></div>
    <div class="issue"> Provide a method to only access the UA’s major version.<a href="#issue-611030b9"> ↵ </a></div>
   </div>

@@ -242,7 +242,7 @@ browser on iOS) are interesting cases in which the underlying browser engine on 
 doesn't match the engine that the relevant browser built themselves. What should we do in these
 cases?
 
-We have a few options for the string:
+There are a few options for the string:
 
 1.  `"Chrome 73"`, which has the least entropy, but also sets poor expectations.
 2.  `"CriOS 73"` (or `"Chrome on iOS 73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.

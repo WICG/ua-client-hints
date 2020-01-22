@@ -1,10 +1,5 @@
 # Explainer: Reducing `User-Agent` Granularity
 
-Mike West, October 2018
-
-(_Note: This isn't a proposal that's well thought out, and stamped solidly with the Google Seal of
-Approval. It's a collection of interesting ideas for discussion, nothing more, nothing less._)
-
 ## A Problem
 
 User agents identify themselves to servers as part of each HTTP request via the `User-Agent` header.
@@ -247,34 +242,27 @@ browser on iOS) are interesting cases in which the underlying browser engine on 
 doesn't match the engine that the relevant browser built themselves. What should we do in these
 cases?
 
-I think we have a few options for the string:
+There are a few options for the string:
 
 1.  `"Chrome 73"`, which has the least entropy, but also sets poor expectations.
 2.  `"CriOS 73"` (or `"Chrome on iOS 73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.
 3.  `"CriOS 73", "Safari 12"`, which is interesting.
 4.  `"Chrome 73", "Safari 12"`, which is more interesting.
 
-I think I prefer the second.
 
 (A more verbose alternative could add a `Sec-CH-UA-Engine` header, containing values like `Blink`,
 `EdgeHTML`, `Gecko`, or `WebKit`.)
 
-## Wait a minute, I don't see this delegation stuff in the Client Hints spec...
+## Wait a minute, where is the Client Hints infrastructure specified?
 
-Right. There are more than a few open PRs:
-
-* Fetch integration of Accept-CH opt-in: [whatwg/fetch#773](whatwg/fetch#773)
-* HTML integration of Accept-CH-Lifetime and the ACHL cache: [whatwg/HTML#3774](https://github.com/whatwg/html/issues/3774)
-* Adding new CH features to the CH list in Fetch: [whatwg/fetch#725](https://github.com/whatwg/fetch/issues/725)
-* Other PRs for adding the Feature Policy 3rd party opt-in: [whatwg/fetch#811](https://github.com/whatwg/fetch/issues/811) and [wicg/feature-folicy#220](https://github.com/wicg/feature-policy/issues/220)
+The infrastructure is specified as a separate [document](https://wicg.github.io/client-hints-infrastructure), and integration with Fetch and HTML happens there.
 
 ## What's with the `Sec-CH-` prefix?
 
 Based on some discussion in [w3ctag/design-reviews#320](https://github.com/w3ctag/design-reviews/issues/320#issuecomment-435874298),
 it seems reasonable to forbid access to these headers from JavaScript, and demarcate them as
 browser-controlled client hints so they can be documented and included in requests without triggering
-CORS preflights. A `Sec-CH-` prefix seems like a viable approach. _This bit might shift as the broader
-Client Hints discussions above coalesce into something more solid that lands in specs_.
+CORS preflights. A `Sec-CH-` prefix seems like a viable approach. 
 
 ## How does `Sec-CH-UA-Mobile` define "mobile"?
 

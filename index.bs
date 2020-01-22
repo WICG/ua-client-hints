@@ -401,16 +401,16 @@ and prevent their users from being blocked by UA-based allow/block lists.
 Reseting expectations may help to prevent abuse of the UA string's brand in the
 short term, but probably won't help in the long run.  The world of network
 protocol introduced the notion of <abbr title="Generate Random Extensions And
-Sustain Extensibility">GREASE</abbr>. We could borrow from that concept to
-tackle this problem.
+Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]]. We could borrow
+from that concept to tackle this problem.
 
 User agents SHOULD model `UA` as a set, rather than a single entry. They then
 could encourage standardized processing of the `UA` string, by randomly
 including additional, intentionally incorrect, comma-separated entries with
-arbitrary ordering (similar conceptually to [[I-D.ietf-tls-grease]]). That
-would reduce the chance that we ossify on a few required strings.  For example,
-Chrome 73's `Sec-CH-UA` header might be `"Chrome 73", "NotBrowser 12"`,
-`"BrowsingIsFun Version 12b", "Chrome 73"`, or something completely different.
+arbitrary ordering. That would reduce the chance that we ossify on a few
+required strings.  For example, Chrome 73's `Sec-CH-UA` header might be
+`"Chrome 73", "NotBrowser 12"`, `"BrowsingIsFun Version 12b", "Chrome 73"`, or
+something completely different.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

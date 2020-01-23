@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 8dfdf2ed5fc6ab13df001e8912368d1a94aa49dd" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="0f5662bbd92c9b5c5ce8a64730d138c6c2a4bb4f" name="document-revision">
+  <meta content="a5375f0a4869f57319d333f9779d2ce3f6b84b43" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-22">22 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-23">23 January 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1806,18 +1806,20 @@ as existing sites' content negotiation code will continue to require its presenc
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.</p>
    <h3 class="heading settled" data-level="5.2" id="grease"><span class="secno">5.2. </span><span class="content">GREASE-like UA Strings</span><a class="self-link" href="#grease"></a></h3>
-   <p>History has shown us that there are real incentives for user agents to lie about their branding
-in order to thread the needle of sites' sniffing scripts. While I’m optimistic that we can reset
-expectations around sniffing by freezing the thing that’s sniffed-upon today, and creating a sane 
-set of options for developers, it’s likely that this is hopelessly naive. It’s reasonable to
-ponder what we should do to encourage sniffing in the right way, if we believe it’s going to
-happen one way or another.</p>
-   <p>User agents may choose to model <code>UA</code> as a set, rather than a single entry. This could encourage
-standardized processing of the <code>UA</code> string by 
-Randomly including additional, intentionally incorrect, comma-separated entries with arbitrary
-ordering (similar conceptually to <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>) could encourage standardized processing
-if the <code>UA</code> string by servers, and reduce the chance that we ossify on a few required strings.
-For example, Chrome 73’s <code>Sec-CH-UA</code> header might be <code>"Chrome 73", "NotBrowser 12"</code>, or <code>"BrowsingIsFun Version 12b", "Chrome 73"</code>, or something completely different.</p>
+   <p>History has shown us that there are real incentives for user agents to lie
+about their branding in order to thread the needle of sites' sniffing scripts,
+and prevent their users from being blocked by UA-based allow/block lists.</p>
+   <p>Reseting expectations may help to prevent abuse of the UA string’s brand in the
+short term, but probably won’t help in the long run.  The world of network
+protocol introduced the notion of <abbr title="Generate Random Extensions And
+Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>. We could borrow
+from that concept to tackle this problem.</p>
+   <p>User agents SHOULD model <code>UA</code> as a set, rather than a single entry. They then
+could encourage standardized processing of the <code>UA</code> string, by randomly
+including additional, intentionally incorrect, comma-separated entries with
+arbitrary ordering. That would reduce the chance that we ossify on a few
+required strings.  For example, Chrome 73’s <code>Sec-CH-UA</code> header might be <code>"Chrome 73", "NotBrowser 12"</code>, <code>"BrowsingIsFun Version 12b", "Chrome 73"</code>, or
+something completely different.</p>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Based on some discussion in https://github.com/w3ctag/design-reviews/issues/320, it seems
 reasonable to forbid access to these headers from JavaScript, and demarcate them as

@@ -95,10 +95,10 @@ accomplish this as follows:
 
 3.  Browsers should introduce several new Client Hint header fields:
 
-    1.  The `Sec-UA` header field represents the user agent's brand and  version. For example:
+    1.  The `Sec-UA` header field represents the user agent's brand and significant version. For example:
 
         ```http
-        Sec-CH-UA: "Chrome; v=73"
+        Sec-CH-UA: "Chrome"; v="73"
         ```
 
         Note: See the GREASE-like discussion below for how we could anticipate the inevitable lies
@@ -107,7 +107,7 @@ accomplish this as follows:
     2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
-        Sec-CH-UA-Platform: "Win; v=10"
+        Sec-CH-UA-Platform: "Win"; v="10"
         ```
 
     3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
@@ -142,16 +142,16 @@ accomplish this as follows:
     Navigator includes NavigatorUA;
 
     dictionary NavigatorUABrandVersionDict {
-      required DOMString brand;          // "Chrome"
+      required DOMString brand; // "Chrome"
       DOMString version;        // "69"
     };
 
     interface NavigatorUAData {
       readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;   // [ { brand: "Chrome", version: "69" } ]
       readonly attribute boolean mobile;                                   // false
-      readonly attribute NavigatorUABrandVersionDict platform;    // { brand: "Win", version: "10" }
-      readonly attribute DOMString architecture;                  // "ARM64"
-      readonly attribute DOMString model;                         // ""
+      readonly attribute NavigatorUABrandVersionDict platform;             // { brand: "Win", version: "10" }
+      readonly attribute DOMString architecture;                           // "ARM64"
+      readonly attribute DOMString model;                                  // ""
     };
     ```
 
@@ -162,7 +162,7 @@ accomplish this as follows:
     approach.
 
 User agents will attach the `Sec-CH-UA` header to every secure outgoing request by default, with a value
-that includes only the significant version (e.g. "`Chrome; 69`"). Servers can opt-into receiving more
+that includes only the significant version (e.g. `"Chrome"; v="69"`). Servers can opt-into receiving more
 detailed version information in the `Sec-CH-UA` header, along with the other available Client Hints, by
 delivering an `Accept-CH` header header in the usual way.
 
@@ -177,7 +177,7 @@ A user agent's initial request to `https://example.com` will include the followi
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-Sec-CH-UA: "Chrome; v=74"
+Sec-CH-UA: "Chrome"; v="74"
 ```
 
 If a server delivers the following response header:
@@ -191,8 +191,8 @@ Then subsequent requests to `https://example.com` will include the following req
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-Sec-CH-UA: "Chrome; v=74.0.3424.124"
-Sec-CH-UA-Platform: "macOS; v=12"
+Sec-CH-UA: "Chrome"; v="74.0.3424.124"
+Sec-CH-UA-Platform: "macOS"; v="12"
 Sec-CH-UA-Arch: "ARM64"
 ```
 
@@ -240,8 +240,8 @@ wrongfully categorizing browsers in the wrong buckets.
 Complementary to that, user agents might encourage standardized processing of
 the `UA` string by randomly including additional, intentionally incorrect,
 comma-separated entries with arbitrary ordering (similar conceptually to TLS's
-[GREASE][4]). Chrome 73's `UA` value might then be `Chrome; 73`, `NotBrowser;
-12`, or `BrowsingIsFun; 12b, Chrome; 73`.
+[GREASE][4]). Chrome 73's `UA` value might then be `"Chrome"; v="73"`,
+`"NotBrowser"; v="12"`, or `"BrowsingIsFun"; v="12b", "Chrome"; v="73"`.
 
 We'd reflect this value in the `NavigatorUAData.brand` attribute.
 
@@ -256,10 +256,10 @@ cases?
 
 There are a few options for the string:
 
-1.  `Chrome; 73`, which has the least entropy, but also sets poor expectations.
-2.  `CriOS; 73` (or `"Chrome on iOS 73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.
-3.  `CriOS; 73, Safari; 12`, which is interesting.
-4.  `Chrome; 73, Safari; 12`, which is more interesting.
+1.  `"Chrome"; v="73"`, which has the least entropy, but also sets poor expectations.
+2.  `"CriOS"; v="73"` (or `"Chrome on iOS", v="73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.
+3.  `"CriOS"; v="73", "Safari"; v="12"`, which is interesting.
+4.  `"Chrome"; v="73", "Safari";v="12"`, which is more interesting.
 
 
 ## Wait a minute, where is the Client Hints infrastructure specified?

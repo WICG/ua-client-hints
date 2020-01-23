@@ -143,7 +143,7 @@ A user navigates to `https://example.com/` for the first time. Their user agent 
 header along with the HTTP request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser; v=73"
+  Sec-CH-UA: "Examplary Browser"; v="73"
 ```
 
 The server is interested in rendering content consistent with the user's underlying platform, and
@@ -158,8 +158,8 @@ In response, the user agent includes more detailed version information, as well 
 the underlying platform in the next request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser; v=73.3R8.2H.1"
-  Sec-CH-UA-Platform: "Windows; v=10"
+  Sec-CH-UA: "Examplary Browser"; v="73.3R8.2H.1"
+  Sec-CH-UA-Platform: "Windows"; v="10"
 ```
 
 
@@ -420,8 +420,8 @@ could encourage standardized processing of the `UA` string, by randomly
 including additional, intentionally incorrect, comma-separated entries with
 arbitrary ordering. That would reduce the chance that we ossify on a few
 required strings.  For example, Chrome 73's `Sec-CH-UA` header might be
-`Chrome; 73, NotBrowser; 12`, `BrowsingIsFun; 12b, Chrome; 73`, or
-something completely different.
+`"Chrome"; v="73"`, `"NotBrowser"; v="12"`, `"BrowsingIsFun"; v="12b",
+"Chrome"; v="73"`, or something completely different.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

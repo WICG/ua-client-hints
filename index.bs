@@ -314,13 +314,13 @@ dictionary NavigatorUABrandVersionDict {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
   readonly attribute boolean mobile;
-  readonly attribute Promise&lt;NavigatorUABrandVersionDict&gt; platform;
-  readonly attribute Promise&lt;DOMString&gt; architecture;
-  readonly attribute Promise&lt;DOMString&gt; model;
+  readonly attribute NavigatorUABrandVersionDict platform;
+  readonly attribute DOMString architecture;
+  readonly attribute DOMString model;
 };
 
 interface mixin NavigatorUA {
-  [SecureContext] NavigatorUAData getUserAgent();
+  [SecureContext] Promise&lt;NavigatorUAData&gt; getUserAgent();
 };
 Navigator includes NavigatorUA;
 

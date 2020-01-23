@@ -394,20 +394,23 @@ order to reduce the fingerprint the header provides.
 GREASE-like UA Strings {#grease}
 ----------------------
 
-History has shown us that there are real incentives for user agents to lie about their branding
-in order to thread the needle of sites' sniffing scripts. While I'm optimistic that we can reset
-expectations around sniffing by freezing the thing that's sniffed-upon today, and creating a sane 
-set of options for developers, it's likely that this is hopelessly naive. It's reasonable to
-ponder what we should do to encourage sniffing in the right way, if we believe it's going to
-happen one way or another.
+History has shown us that there are real incentives for user agents to lie
+about their branding in order to thread the needle of sites' sniffing scripts,
+and prevent their users from being blocked by UA-based allow/block lists.
 
-User agents may choose to model `UA` as a set, rather than a single entry. This could encourage
-standardized processing of the `UA` string by 
-Randomly including additional, intentionally incorrect, comma-separated entries with arbitrary
-ordering (similar conceptually to [[I-D.ietf-tls-grease]]) could encourage standardized processing
-if the `UA` string by servers, and reduce the chance that we ossify on a few required strings.
-For example, Chrome 73's `Sec-CH-UA` header might be `"Chrome 73", "NotBrowser 12"`, or
-`"BrowsingIsFun Version 12b", "Chrome 73"`, or something completely different.
+Reseting expectations may help to prevent abuse of the UA string's brand in the
+short term, but probably won't help in the long run.  The world of network
+protocol introduced the notion of <abbr title="Generate Random Extensions And
+Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]]. We could borrow
+from that concept to tackle this problem.
+
+User agents SHOULD model `UA` as a set, rather than a single entry. They then
+could encourage standardized processing of the `UA` string, by randomly
+including additional, intentionally incorrect, comma-separated entries with
+arbitrary ordering. That would reduce the chance that we ossify on a few
+required strings.  For example, Chrome 73's `Sec-CH-UA` header might be
+`"Chrome 73", "NotBrowser 12"`, `"BrowsingIsFun Version 12b", "Chrome 73"`, or
+something completely different.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

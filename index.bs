@@ -7,6 +7,7 @@ Repository: wicg/ua-client-hints
 Shortname: ua-client-hints
 Level: None
 Editor: Mike West 56384, Google Inc., mkwst@google.com
+Editor: Yoav Weiss 58673, Google Inc., yoav@yoav.ws
 Abstract:
     This document defines a set of Client Hints that aim to provide developers with the ability to
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and
@@ -142,7 +143,7 @@ A user navigates to `https://example.com/` for the first time. Their user agent 
 header along with the HTTP request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser 73"
+  Sec-CH-UA: "Examplary Browser"; v="73"
 ```
 
 The server is interested in rendering content consistent with the user's underlying platform, and
@@ -157,8 +158,8 @@ In response, the user agent includes more detailed version information, as well 
 the underlying platform in the next request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser 73.3R8.2H.1"
-  Sec-CH-UA-Platform: "Windows 10"
+  Sec-CH-UA: "Examplary Browser"; v="73.3R8.2H.1"
+  Sec-CH-UA-Platform: "Windows"; v="10"
 ```
 
 
@@ -171,7 +172,7 @@ in [[I-D.ietf-httpbis-client-hints]]. The definitions below assume that each use
 a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> (for example: "cURL", "Edge", "The World's Best Web Browser")
-*   <dfn for="user agent" export>major version</dfn> (for example: "72", "3", or "28")
+*   <dfn for="user agent" export>significant version</dfn> (for example: "72", "3", or "28")
 *   <dfn for="user agent" export>full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")
 *   <dfn for="user agent" export>platform brand and version</dfn> (for example: "Windows NT 6.0", "iOS 15", or "AmazingOS 17G")
 *   <dfn for="user agent" export>platform architecture</dfn> (for example: "ARM64", or "ia32")
@@ -226,6 +227,10 @@ The header's ABNF is:
   Sec-CH-UA-Platform = sh-string
 ```
 
+Note: The `sh-string` above can include a `v` parameter, indicating the platform's version.
+
+ISSUE: Add processing model here that creates the header using SH serialization.
+
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
 
@@ -239,9 +244,11 @@ The header's ABNF is:
   Sec-CH-UA = sh-list
 ```
 
+Note: The `sh-list` above is a list of `sh-string`, each MAY include a `v` parameter, indicating the user agent version.
+
 Unlike most Client Hints, the `Sec-CH-UA` header will be sent with all requests, whether or not the
 server opted-into receiving the header via an `Accept-CH` header. Prior to an opt-in, however, it
-will include only the user agent's branding information, and the major version number (both of which
+will include only the user agent's branding information, and the significant version number (both of which
 are fairly clearly sniffable by "examining the structure of other headers and by testing for the
 availability and semantics of the features introduced or modified between releases of a particular
 browser" [[Janc2014]]).
@@ -253,13 +260,10 @@ user agents MUST:
 1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
 
 2.  Let |version| be the user agent's [=user agent/full version=] if |set|
-    [=list/contains=] `UA`, and the user agent's [=user agent/major version=] otherwise.
+    [=list/contains=] `UA`, and the user agent's [=user agent/significant version=] otherwise.
 
 3.  Let |ua| be a string whose value is the [=string/concatenation=] of the user agent's
-    [=user agent/brand=], a U+0020 SPACE character, and |version|.
-
-    ISSUE(wicg/ua-client-hints#7): Should we split the version out into a separate
-    `Sec-CH-UA-Version` header? Or keep it here?
+    [=user agent/brand=], the string ";v=", and |version|.
 
 4.  [=list/Append=] |ua| to |value|.
 
@@ -273,6 +277,10 @@ user agents MUST:
     Note: See [[#grease]] for more details on why these steps might be appropriate.
 
 6.  Return |value|.
+
+Issue: Fix the processing model here so that it will use Structured Headers
+serialization, and make sure that the value set for headers if the same as the
+one returned from the JS API.
 
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
 --------------------------------
@@ -297,15 +305,20 @@ Interface {#interface}
 =================
 
 <pre class="idl">
+dictionary NavigatorUABrandVersionDict {
+  required DOMString brand;
+  DOMString version;
+};
+
 [Exposed=Window]
 interface NavigatorUAData {
-  readonly attribute DOMString brand;
-  readonly attribute DOMString version;
-  readonly attribute DOMString platform;
+  readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
+  readonly attribute boolean mobile;
+  readonly attribute NavigatorUABrandVersionDict platform;
   readonly attribute DOMString architecture;
   readonly attribute DOMString model;
-  readonly attribute boolean mobile;
 };
+
 interface mixin NavigatorUA {
   [SecureContext] Promise&lt;NavigatorUAData&gt; getUserAgent();
 };
@@ -333,14 +346,12 @@ Processing model {#processing}
         ::  The user agent's [=user agent/model=].
         :   {{NavigatorUAData/mobile}}
         ::  The user agent's [=user agent/mobileness=].
-        :   {{NavigatorUAData/version}}
-        ::  The user agent's [=user agent/full version=].
 
     2.  [=Resolve=] |p| with |UAData|.
 
 3.  Return |p|.
 
-ISSUE: Provide a method to only access the UA's major version.
+ISSUE: Provide a method to only access the UA's significant version.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================
@@ -409,13 +420,13 @@ could encourage standardized processing of the `UA` string, by randomly
 including additional, intentionally incorrect, comma-separated entries with
 arbitrary ordering. That would reduce the chance that we ossify on a few
 required strings.  For example, Chrome 73's `Sec-CH-UA` header might be
-`"Chrome 73", "NotBrowser 12"`, `"BrowsingIsFun Version 12b", "Chrome 73"`, or
-something completely different.
+`"Chrome"; v="73"`, `"NotBrowser"; v="12"`, `"BrowsingIsFun"; v="12b",
+"Chrome"; v="73"`, or something completely different.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------
 
-Based on some discussion in https://github.com/w3ctag/design-reviews/issues/320, it seems
+Based on some [discussion with the TAG](https://github.com/w3ctag/design-reviews/issues/320), it seems
 reasonable to forbid access to these headers from JavaScript, and demarcate them as
 browser-controlled client hints so they can be documented and included in requests without
 triggering CORS preflights. A `Sec-CH-` prefix seems like a viable approach, but this bit might

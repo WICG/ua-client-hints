@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 8dfdf2ed5fc6ab13df001e8912368d1a94aa49dd" name="generator">
+  <meta content="Bikeshed version 8bc2fccb49a45a0af18c5e75ce18049d75f824b6" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="65a8c5b88e1811523a3586fb042ae31eed2e5484" name="document-revision">
+  <meta content="c4a5a50481807294503f59ffd070cc77517867c1" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-23">23 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-24">24 January 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1676,19 +1676,19 @@ be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbi
    <h3 class="heading settled" data-level="2.3" id="sec-ch-platform"><span class="secno">2.3. </span><span class="content">The 'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#sec-ch-platform"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform"></a></dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-②">Structured Header</a> whose value
-MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
+MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. Its value MAY include a
+"v" parameter, indicating the platform’s version.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Platform</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>
-   <p class="note" role="note"><span>Note:</span> The <code>sh-string</code> above can include a <code>v</code> parameter, indicating the platform’s version.</p>
    <p class="issue" id="issue-b88e5033"><a class="self-link" href="#issue-b88e5033"></a> Add processing model here that creates the header using SH serialization.</p>
    <h3 class="heading settled" data-level="2.4" id="sec-ch-ua"><span class="secno">2.4. </span><span class="content">The 'Sec-CH-UA' Header Field</span><a class="self-link" href="#sec-ch-ua"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code><a class="self-link" href="#http-headerdef-sec-ch-ua"></a></dfn> request header field gives a server information about a
-user agent’s branding and version. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
+user agent’s branding and version. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. The list’s items MUST be <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3③">string</a>. The value of each item SHOULD include a "v" parameter, indicating the
+user agent’s version.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA</c-> <c- o>=</c-> <c- nc>sh-list</c->
 </pre>
-   <p class="note" role="note"><span>Note:</span> The <code>sh-list</code> above is a list of <code>sh-string</code>, each MAY include a <code>v</code> parameter, indicating the user agent version.</p>
    <p>Unlike most Client Hints, the <code>Sec-CH-UA</code> header will be sent with all requests, whether or not the
 server opted-into receiving the header via an <code>Accept-CH</code> header. Prior to an opt-in, however, it
 will include only the user agent’s branding information, and the significant version number (both of which
@@ -2162,6 +2162,7 @@ field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>)
     <li><a href="#ref-for-section-3.3.3">2.1. The 'Sec-CH-UA-Arch' Header Field</a>
     <li><a href="#ref-for-section-3.3.3①">2.2. The 'Sec-CH-UA-Model' Header Field</a>
     <li><a href="#ref-for-section-3.3.3②">2.3. The 'Sec-CH-UA-Platform' Header Field</a>
+    <li><a href="#ref-for-section-3.3.3③">2.4. The 'Sec-CH-UA' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-">

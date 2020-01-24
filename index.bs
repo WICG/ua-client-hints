@@ -219,15 +219,14 @@ The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
 
 The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a [=Structured Header=] whose value
-MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
+MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]]. Its value MAY include a
+"v" parameter, indicating the platform's version.
 
 The header's ABNF is:
 
 ``` abnf
   Sec-CH-UA-Platform = sh-string
 ```
-
-Note: The `sh-string` above can include a `v` parameter, indicating the platform's version.
 
 ISSUE: Add processing model here that creates the header using SH serialization.
 
@@ -236,15 +235,15 @@ The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 
 The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server information about a
 user agent's branding and version. It is a [=Structured Header=] whose value MUST be a
-[=structured header/list=] [[I-D.ietf-httpbis-header-structure]].
+[=structured header/list=] [[I-D.ietf-httpbis-header-structure]]. The list's items MUST be
+[=structured header/string=]. The value of each item SHOULD include a "v" parameter, indicating the
+user agent's version.
 
 The header's ABNF is:
 
 ``` abnf
   Sec-CH-UA = sh-list
 ```
-
-Note: The `sh-list` above is a list of `sh-string`, each MAY include a `v` parameter, indicating the user agent version.
 
 Unlike most Client Hints, the `Sec-CH-UA` header will be sent with all requests, whether or not the
 server opted-into receiving the header via an `Accept-CH` header. Prior to an opt-in, however, it

@@ -136,7 +136,7 @@ accomplish this as follows:
 
     ```idl
     interface mixin NavigatorUA {
-      [SecureContext] Promise<NavigatorUAData> getUserAgent();
+      [SecureContext] NavigatorUAData getUserAgent();
     };
 
     Navigator includes NavigatorUA;
@@ -149,9 +149,9 @@ accomplish this as follows:
     interface NavigatorUAData {
       readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;   // [ { brand: "Chrome", version: "69" } ]
       readonly attribute boolean mobile;                                   // false
-      readonly attribute NavigatorUABrandVersionDict platform;             // { brand: "Win", version: "10" }
-      readonly attribute DOMString architecture;                           // "ARM64"
-      readonly attribute DOMString model;                                  // ""
+      Promise<NavigatorUABrandVersionDict> getPlatform();                  // { brand: "Win", version: "10" }
+      Promise<DOMString> getArchitecture();                                // "ARM64"
+      Promise<DOMString> model();                                          // ""
     };
     ```
 

@@ -240,10 +240,19 @@ wrongfully categorizing browsers in the wrong buckets.
 Complementary to that, user agents might encourage standardized processing of
 the `UA` string by randomly including additional, intentionally incorrect,
 comma-separated entries with arbitrary ordering (similar conceptually to TLS's
-[GREASE][4]). Chrome 73's `UA` value might then be `"Chrome"; v="73"`,
-`"NotBrowser"; v="12"`, or `"BrowsingIsFun"; v="12b", "Chrome"; v="73"`.
+[GREASE][4]).
 
-We'd reflect this value in the `NavigatorUAData.brand` attribute.
+Let's examine a few examples:
+* In order to avoid sites from barring unknown browsers from their allow lists, Chrome 73 could send a UA set that includes an non-existent browser, and which varies once in a while.
+  - `"Chrome"; v="73", "NotBrowser"; v="12"`
+* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its version to that.
+  - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
+* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing, Chrome might remove itself from the set entirely.
+  - `"Chromium"; v="73", "NotBrowser"; v="12"`
+* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
+  - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
+
+We'd reflect this value in the `NavigatorUAData.brand` attribute, which returns an array of dictionaries containing brand and version.
 
 [4]: https://tools.ietf.org/html/draft-ietf-tls-grease-01
 

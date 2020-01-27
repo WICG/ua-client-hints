@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 8bc2fccb49a45a0af18c5e75ce18049d75f824b6" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="c4a5a50481807294503f59ffd070cc77517867c1" name="document-revision">
+  <meta content="0c704aa5010c83250ddafdecaf64c678e91e503a" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-24">24 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-27">27 January 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1826,8 +1826,26 @@ from that concept to tackle this problem.</p>
 could encourage standardized processing of the <code>UA</code> string, by randomly
 including additional, intentionally incorrect, comma-separated entries with
 arbitrary ordering. That would reduce the chance that we ossify on a few
-required strings.  For example, Chrome 73’s <code>Sec-CH-UA</code> header might be <code>"Chrome"; v="73"</code>, <code>"NotBrowser"; v="12"</code>, <code>"BrowsingIsFun"; v="12b",
-"Chrome"; v="73"</code>, or something completely different.</p>
+required strings.</p>
+   <p>Let’s examine a few examples:</p>
+   <ul>
+    <li data-md>
+     <p>In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a UA set that includes an non-existent browser, and which varies once in a while.</p>
+    <li data-md>
+     <p><code>"Chrome"; v="73", "NotBrowser"; v="12"</code></p>
+    <li data-md>
+     <p>In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its version to that.</p>
+    <li data-md>
+     <p><code>"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"</code></p>
+    <li data-md>
+     <p>In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing, Chrome might remove itself from the set entirely.</p>
+    <li data-md>
+     <p><code>"Chromium"; v="73", "NotBrowser"; v="12"</code></p>
+    <li data-md>
+     <p>Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.</p>
+    <li data-md>
+     <p><code>"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"</code></p>
+   </ul>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Based on some <a href="https://github.com/w3ctag/design-reviews/issues/320">discussion with the TAG</a>, it seems
 reasonable to forbid access to these headers from JavaScript, and demarcate them as

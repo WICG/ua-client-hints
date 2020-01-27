@@ -313,13 +313,13 @@ dictionary NavigatorUABrandVersionDict {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
   readonly attribute boolean mobile;
-  readonly attribute NavigatorUABrandVersionDict platform;
-  readonly attribute DOMString architecture;
-  readonly attribute DOMString model;
+  Promise&lt;NavigatorUABrandVersionDict&gt; getPlatform();
+  Promise&lt;DOMString&gt; getArchitecture();
+  Promise&lt;DOMString&gt; getModel();
 };
 
 interface mixin NavigatorUA {
-  [SecureContext] Promise&lt;NavigatorUAData&gt; getUserAgent();
+  [SecureContext] NavigatorUAData getUserAgent();
 };
 Navigator includes NavigatorUA;
 
@@ -337,11 +337,11 @@ Processing model {#processing}
 
         :   {{NavigatorUAData/brand}}
         ::  The user agent's [=user agent/brand=].
-        :   {{NavigatorUAData/platform}}
+        :   {{NavigatorUAData/getPlatform}}
         ::  The user agent's [=user agent/platform brand and version=].
-        :   {{NavigatorUAData/architecture}}
+        :   {{NavigatorUAData/getArchitecture}}
         ::  The user agent's [=user agent/platform architecture=].
-        :   {{NavigatorUAData/model}}
+        :   {{NavigatorUAData/getModel}}
         ::  The user agent's [=user agent/model=].
         :   {{NavigatorUAData/mobile}}
         ::  The user agent's [=user agent/mobileness=].

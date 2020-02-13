@@ -203,24 +203,25 @@ that the extent of a site's usage can be monitored and evaluated.
 
 # Use-cases
 
-This section attempts to document the current uses for the User-Agent string,
+This section attempts to document the current uses for the `User-Agent` string,
 and how similar functionality could be enabled using UA-CH.
 
 ## Differential serving based on browser features
-This use-case enables services like polyfill.io to serve custom-tailored
-polyfills to their users, without bloating up the experience of users of modern
-browsers.  Similarly, when serving Javascript to users, one can avoid
+This use-case enables services like [polyfill.io](https://polyfill.io) to serve
+custom-tailored polyfills to their users, without bloating up the experience of
+modern browser users.
+Similarly, when serving Javascript to users, one can avoid
 transpilation (which can result in bloat and inefficient code) for browsers
-that support the latest ES features that were used.  Finally, when serving
-images, some browsers don't update their `Accept` request headers, while in
-other cases (*cough* WebP *cough*) the MIME type is not descriptive enough to
-distinguish between different variants of the same format. In those cases,
-knowing the browser and its version can be critical to serving the right image
-variant. 
+that support the latest ES features that were used.
+Finally, when serving images, some browsers don't update their `Accept` request
+headers, while in other cases (*cough* WebP *cough*) the MIME type is not
+descriptive enough to distinguish between different variants of the same
+format. In those cases, knowing the browser and its version can be critical to
+serving the right image variant. 
 
-For that use case to work, the server needs to be aware of the server and its
-meaningful version, in order to map that to a list of available features, and
-know which polyfill or code variant to serve.
+For that use case to work, the server needs to be aware of the browser and its
+meaningful version, and map that to a list of available features. That enables
+it to know which polyfill or code variant to serve.
 
 Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA`
 header, that is sent by default on every request, and modify their reponse
@@ -228,13 +229,13 @@ based on that.
 
 ## Marketshare Analytics
 A browser's market share can be extremely important. Having visibility into a
-browser's usage can encourage developers to test in that particular browsers,
-ensuring fewer compatibility issues. On top of that, a browser's market share
-can have a direct impact on the browser vendors' business goals, ensuring
-future development of the browser.
+browser's usage can encourage developers to test in that particular browser,
+ensuring fewer compatibility issues for its users. On top of that, a browser's
+market share can have a direct impact on the browser vendors' business goals,
+ensuring future development of the browser.
 
-For that use case to work, the server needs to be aware of the server and its
-meaningful version, in order to be able to register them and find their
+For marketshare analytics to work, the server needs to be aware of the server
+and its meaningful version, in order to be able to register them and find their
 relative market shares.
 
 Sites that wish to provide market share analytics using UA-CH will need to
@@ -244,10 +245,25 @@ keep a record of it.
 
 ## Content adaptation
 Content adaptation is ensuring that users get content that's tailored to their
-needs.  There are many dimensions to content adaptation beyond the UA string:
-viewport dimensions, device memory, user preferences and more.  This
-sub-section covers content adaptation needs that rely on information that is
-part of the current `User-Agent` string
+needs.  There are [many dimensions to content
+adaptation](https://blog.yoav.ws/adapting_without_assumptions/) beyond the UA
+string: [viewport
+dimensions](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/client-hints),
+[device memory](https://w3c.github.io/device-memory/), [user
+preferences](https://wicg.github.io/savedata/) and more.  This sub-section
+covers content adaptation needs that rely on information that is part of the
+current `User-Agent` string.
+
+### Browser based adaptation
+Some sites choose to serve slightly different content to different browsers.
+The reason for that vary. Some reasons are legitimate (e.g. wanting to serve
+different experiences to different browsers due to their feature support).
+Other reasons are slightly less legitimate (e.g. warning users that the site's
+developers hasn't tested in their browser).  And then there are reasons which
+are outright wrong (e.g. Willingness to block certain browsers' users from
+accessing the site).
+
+As browsers, we want to enable the former, while discouraging the latter.
 
 ### Mobile specific site
 Many site owners serve different content between mobile and desktop sites.

@@ -354,7 +354,7 @@ Processing model {#processing}
         ::  The user agent's [=user agent/platform brand=].
         :   {{NavigatorUAData/getPlatformVersion}}
         ::  The user agent's [=user agent/platform version=].
-        :   {{NavigatorUAData/architecture}}
+        :   {{NavigatorUAData/getArchitecture}}
         ::  The user agent's [=user agent/platform architecture=].
         :   {{NavigatorUAData/getModel}}
         ::  The user agent's [=user agent/model=].

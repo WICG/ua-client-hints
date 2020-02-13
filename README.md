@@ -107,7 +107,7 @@ accomplish this as follows:
     2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
-        Sec-CH-UA-Platform: "Win"; v="10"
+        Sec-CH-UA-Platform: "Windows"
         ```
 
     3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
@@ -149,7 +149,8 @@ accomplish this as follows:
     interface NavigatorUAData {
       readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;   // [ { brand: "Chrome", version: "69" } ]
       readonly attribute boolean mobile;                                   // false
-      Promise<NavigatorUABrandVersionDict> getPlatform();                  // { brand: "Win", version: "10" }
+      Promise<DOMString> getPlatform();                                    // "Windows"
+      Promise<DOMString> getPlatformVersion();                             // "10"
       Promise<DOMString> getArchitecture();                                // "ARM64"
       Promise<DOMString> model();                                          // ""
     };
@@ -192,7 +193,7 @@ Then subsequent requests to `https://example.com` will include the following req
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
 Sec-CH-UA: "Chrome"; v="74.0.3424.124"
-Sec-CH-UA-Platform: "macOS"; v="12"
+Sec-CH-UA-Platform: "macOS"
 Sec-CH-UA-Arch: "ARM64"
 ```
 

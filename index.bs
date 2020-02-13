@@ -325,8 +325,8 @@ dictionary NavigatorUABrandVersionDict {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
   readonly attribute boolean mobile;
-  Promise&lt;NavigatorUABrandVersionDict&gt; getPlatform();
-  Promise&lt;NavigatorUABrandVersionDict&gt; getPlatformVersion();
+  Promise&lt;DOMString&gt; getPlatform();
+  Promise&lt;SOMString&gt; getPlatformVersion();
   Promise&lt;DOMString&gt; getArchitecture();
   Promise&lt;DOMString&gt; getModel();
 };

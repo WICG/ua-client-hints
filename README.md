@@ -288,7 +288,7 @@ they want to split their content.
 
 If the dimension on which the split is made is memory, the Device-Memory Client
 Hint can be used to make that distinction.  Otherwise, with UA-CH, sites can
-still retriece the device model by opting in to the `UA-Model` hint.
+still retrieve the device model by opting in to the `UA-Model` hint.
 
 Both of these hints are not sent by default, so require some extra work.
 

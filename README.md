@@ -407,7 +407,7 @@ without any alternative mechanisms for persistent user tracking.
 Currently, the `User-Agent` string is often used as a brute-force way to block
 known bots and crawlers.  There's a concern that moving "normal" traffic to
 expose less entropy by default will also make it easier for bots to hide in the
-crowd.  While there's some truth to that, that's no reason for making the crowd
+crowd.  While there's some truth to that, that's not enough reason for making the crowd
 be more personally identifiable.
 
 Similar to the spam filtering case, there's hope that alternative methods would

@@ -373,7 +373,9 @@ when analyzing past traffic or when trying to debug errors related to their
 service.  Those services will have to use the lower entropy values available
 through `Sec-CH-UA` for logging purposes, or opt-in to receive higher-entropy
 hints. The latter doesn't seem like something services should do just for
-forensic purposes.
+forensic purposes. On the other hand, when specific issues are encountered, it
+may make sense for those services to opt-in to receive more details on the user
+agent, or use the `getUserAgent` API for that purpose.
 
 ## Fingerprinting
 

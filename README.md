@@ -287,8 +287,8 @@ convert device models into memory, CPU power, and other categories on which
 they want to split their content.
 
 If the dimension on which the split is made is memory, the Device-Memory Client
-Hint can be used to make that distinction.  Otherwise, with US-CH, sites can
-still retriece the device model by opting in to the `UA-Model` hint.
+Hint can be used to make that distinction.  Otherwise, with UA-CH, sites can
+still retrieve the device model by opting in to the `UA-Model` hint.
 
 Both of these hints are not sent by default, so require some extra work.
 
@@ -409,7 +409,7 @@ without any alternative mechanisms for persistent user tracking.
 Currently, the `User-Agent` string is often used as a brute-force way to block
 known bots and crawlers.  There's a concern that moving "normal" traffic to
 expose less entropy by default will also make it easier for bots to hide in the
-crowd.  While there's some truth to that, that's no reason for making the crowd
+crowd.  While there's some truth to that, that's not enough reason for making the crowd
 be more personally identifiable.
 
 Similar to the spam filtering case, there's hope that alternative methods would

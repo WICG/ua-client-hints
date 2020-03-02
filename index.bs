@@ -159,7 +159,7 @@ the underlying platform in the next request:
 
 ``` http
   Sec-CH-UA: "Examplary Browser"; v="73.3R8.2H.1"
-  Sec-CH-UA-Platform: "Windows"; v="10"
+  Sec-CH-UA-Platform: "Windows"
 ```
 
 
@@ -174,7 +174,8 @@ a number of properties for itself:
 *   <dfn for="user agent" export>brand</dfn> (for example: "cURL", "Edge", "The World's Best Web Browser")
 *   <dfn for="user agent" export>significant version</dfn> (for example: "72", "3", or "28")
 *   <dfn for="user agent" export>full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")
-*   <dfn for="user agent" export>platform brand and version</dfn> (for example: "Windows NT 6.0", "iOS 15", or "AmazingOS 17G")
+*   <dfn for="user agent" export>platform brand</dfn> (for example: "Windows", "iOS", or "AmazingOS")
+*   <dfn for="user agent" export>platform version</dfn> (for example: "NT 6.0", "15", or "17G")
 *   <dfn for="user agent" export>platform architecture</dfn> (for example: "ARM64", or "ia32")
 *   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
@@ -219,8 +220,7 @@ The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
 
 The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about
 the platform on which a given user agent is executing. It is a [=Structured Header=] whose value
-MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]]. Its value MAY include a
-"v" parameter, indicating the platform's version.
+MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
 
 The header's ABNF is:
 
@@ -228,7 +228,19 @@ The header's ABNF is:
   Sec-CH-UA-Platform = sh-string
 ```
 
-ISSUE: Add processing model here that creates the header using SH serialization.
+The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-platform-version}
+----------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field gives a server
+information about the platform version on which a given user agent is executing. It is a
+[=Structured Header=] whose value MUST be a [=structured header/string=]
+[[I-D.ietf-httpbis-header-structure]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Platform-Version = sh-string
+```
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
@@ -313,7 +325,8 @@ dictionary NavigatorUABrandVersionDict {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
   readonly attribute boolean mobile;
-  Promise&lt;NavigatorUABrandVersionDict&gt; getPlatform();
+  Promise&lt;DOMString&gt; getPlatform();
+  Promise&lt;SOMString&gt; getPlatformVersion();
   Promise&lt;DOMString&gt; getArchitecture();
   Promise&lt;DOMString&gt; getModel();
 };
@@ -338,7 +351,9 @@ Processing model {#processing}
         :   {{NavigatorUAData/brand}}
         ::  The user agent's [=user agent/brand=].
         :   {{NavigatorUAData/getPlatform}}
-        ::  The user agent's [=user agent/platform brand and version=].
+        ::  The user agent's [=user agent/platform brand=].
+        :   {{NavigatorUAData/getPlatformVersion}}
+        ::  The user agent's [=user agent/platform version=].
         :   {{NavigatorUAData/getArchitecture}}
         ::  The user agent's [=user agent/platform architecture=].
         :   {{NavigatorUAData/getModel}}
@@ -444,9 +459,9 @@ in specs.
 IANA Considerations {#iana}
 ===================
 
-This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, and
-`Sec-CH-UA` HTTP request header fields, and register them in the permanent message header
-field registry ([[RFC3864]]).
+This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Mobile` and `Sec-CH-UA` HTTP request header fields, and
+register them in the permanent message header field registry ([[RFC3864]]).
 
 It also intends to deprecate the `User-Agent` header field.
 
@@ -491,6 +506,24 @@ Specification document:
 
 Header field name:
 : Sec-CH-UA-Platform
+
+Applicable protocol:
+: http
+
+Status:
+: standard
+
+Author/Change controller:
+: IETF
+
+Specification document:
+: this specification ([[#sec-ch-platform]])
+
+'Sec-CH-UA-Platform-Version' Header Field {#iana-platform-version}
+------------------------------
+
+Header field name:
+: Sec-CH-UA-Platform-Version
 
 Applicable protocol:
 : http

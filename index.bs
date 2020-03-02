@@ -316,23 +316,34 @@ Interface {#interface}
 =================
 
 <pre class="idl">
-dictionary NavigatorUABrandVersionDict {
-  required DOMString brand;
+dictionary NavigatorUABrandVersion {
+  DOMString brand;
   DOMString version;
+};
+
+dictionary UADataOptions {
+  boolean platform = false;
+  boolean platformVersion = false;
+  boolean architecture = false;
+  boolean model = false;
+};
+
+dictionary UADataValues {
+  DOMString platform = "";
+  DOMString platformVersion = "";
+  DOMString architecture = "";
+  DOMString model = "";
 };
 
 [Exposed=Window]
 interface NavigatorUAData {
-  readonly attribute FrozenArray&lt;NavigatorUABrandVersionDict&gt; brand;
+  readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; UASet;
   readonly attribute boolean mobile;
-  Promise&lt;DOMString&gt; getPlatform();
-  Promise&lt;SOMString&gt; getPlatformVersion();
-  Promise&lt;DOMString&gt; getArchitecture();
-  Promise&lt;DOMString&gt; getModel();
+  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options);
 };
 
 interface mixin NavigatorUA {
-  [SecureContext] NavigatorUAData getUserAgent();
+  [SecureContext] readonly attribute NavigatorUAData userAgentData;
 };
 Navigator includes NavigatorUA;
 
@@ -340,32 +351,25 @@ Navigator includes NavigatorUA;
 
 Processing model {#processing}
 --------------
-<dfn method for="NavigatorUA"><code>getUserAgent()</code></dfn> method MUST run these steps:
+On getting, the {{NavigatorUAData/UASet}} attribute must return the set of {{NavigatorUABrandVersion}} objects, initialized with the user agent's [=user agent/brand=] and [=user agent/significant version=].
+
+On getting, the {{NavigatorUAData/mobile}} attribute must return the user agent's [=user agent/mobileness=].
+
+The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, optionally called with {{UADataOptions}} |options|, MUST run these steps:
 
 1. Let |p| be a [=a new promise=].
 
 2.  Run the following steps [=in parallel=]:
 
-    1.  Let |UAData| be a new {{NavigatorUAData}} object whose values are initialized as follows:
-
-        :   {{NavigatorUAData/brand}}
-        ::  The user agent's [=user agent/brand=].
-        :   {{NavigatorUAData/getPlatform}}
-        ::  The user agent's [=user agent/platform brand=].
-        :   {{NavigatorUAData/getPlatformVersion}}
-        ::  The user agent's [=user agent/platform version=].
-        :   {{NavigatorUAData/getArchitecture}}
-        ::  The user agent's [=user agent/platform architecture=].
-        :   {{NavigatorUAData/getModel}}
-        ::  The user agent's [=user agent/model=].
-        :   {{NavigatorUAData/mobile}}
-        ::  The user agent's [=user agent/mobileness=].
-
-    2.  [=Resolve=] |p| with |UAData|.
+    1. If |options| is the empty object, let |options| be a new {{UADataOptions}}.
+    2. Let |UAData| be a new {{UADataValues}}.
+    3. If |options.platform| is true, let |UAData.platform| be the the user agent's [=user agent/platform brand=].
+    4. If |options.platformVersion| is true, let |UAData.platformVersion| be the the user agent's [=user agent/platform version=].
+    5. If |options.architecture| is true, let |UAData.architecture| be the the user agent's [=user agent/platform architecture=].
+    6. If |options.model| is true, let |UAData.model| be the the user agent's [=user agent/model=].
+    7. [=Resolve=] |p| with |UAData|.
 
 3.  Return |p|.
-
-ISSUE: Provide a method to only access the UA's significant version.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

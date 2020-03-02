@@ -339,7 +339,7 @@ dictionary UADataValues {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; UASet;
   readonly attribute boolean mobile;
-  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options);
+  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options = {});
 };
 
 interface mixin NavigatorUA {
@@ -594,4 +594,3 @@ Author/Change controller:
 
 Specification document:
 : this specification ([[#user-agent]]), and Section 5.5.3 of [[RFC7231]]
-

@@ -500,7 +500,7 @@ CORS preflights. A `Sec-CH-` prefix seems like a viable approach.
 
 ## How does `Sec-CH-UA-Mobile` define "mobile"?
 
-This is a tough question. The motiviation for the header is that a majority of user-agent header 
+This is a tough question. The motivation for the header is that a majority of user-agent header 
 sniffing is used by the server to decide if a "desktop" or "mobile" UX should be served. This is
 currently implicitly defined in most modern browsers because they have two distinct UIs, a 
 "desktop" version (i.e. Windows, Mac OS, etc.) and a "mobile" version (i.e. Android, iOS). In general,

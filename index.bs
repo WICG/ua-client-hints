@@ -397,6 +397,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> meth
     5. If |options|["{{UADataOptions/model}}"] is true, let |uaData|["{{UADataValues/model}}"] be the the user agent's [=user agent/model=].
 
     6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
+
 ISSUE: Add a specific task source this is queued on.
 
 3.  Return |p|.

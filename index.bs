@@ -322,13 +322,6 @@ dictionary NavigatorUABrandVersion {
   DOMString version;
 };
 
-dictionary UADataOptions {
-  boolean platform = false;
-  boolean platformVersion = false;
-  boolean architecture = false;
-  boolean model = false;
-};
-
 dictionary UADataValues {
   DOMString platform = "";
   DOMString platformVersion = "";
@@ -340,7 +333,7 @@ dictionary UADataValues {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
   readonly attribute boolean mobile;
-  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options);
+  Promise&lt;UADataValues&gt; getHighEntropyValues(/* sequence&lt;DOMString&gt */);
 };
 
 interface mixin NavigatorUA {
@@ -380,7 +373,7 @@ On getting, the {{NavigatorUAData/uaList}} attribute MUST run these steps:
 
 On getting, the {{NavigatorUAData/mobile}} attribute must return the user agent's [=user agent/mobileness=].
 
-The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, called with {{UADataOptions}} |options|, MUST run these steps:
+The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, called with [=sequence<DOMString>=] |hints|, MUST run these steps:
 
 1. Let |p| be a [=a new promise=].
 
@@ -388,13 +381,13 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> meth
 
     1. Let |uaData| be a new {{UADataValues}}.
 
-    2. If |options|["{{UADataOptions/platform}}"] is true, let |uaData|["{{UADataValues/platform}}"] be the the user agent's [=user agent/platform brand=].
+    2. If |hints| [=contains=] "platform", let |uaData|["{{UADataValues/platform}}"] be the the user agent's [=user agent/platform brand=].
 
-    3. If |options|["{{UADataOptions/platformVersion}}"] is true, let |uaData|["{{UADataValues/platformVersion}}"] be the the user agent's [=user agent/platform version=].
+    3. If |hints| [=contains=] "platformVersion", let |uaData|["{{UADataValues/platformVersion}}"] be the the user agent's [=user agent/platform version=].
 
-    4. If |options|["{{UADataOptions/architecture}}"] is true, let |uaData|["{{UADataValues/architecture}}"] be the the user agent's [=user agent/platform architecture=].
+    4. If |hints| [=contains=] "architecture", let |uaData|["{{UADataValues/architecture}}"] be the the user agent's [=user agent/platform architecture=].
 
-    5. If |options|["{{UADataOptions/model}}"] is true, let |uaData|["{{UADataValues/model}}"] be the the user agent's [=user agent/model=].
+    5. If |hints| [=contains=] "model", let |uaData|["{{UADataValues/model}}"] be the the user agent's [=user agent/model=].
 
     6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
 

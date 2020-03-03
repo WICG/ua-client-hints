@@ -34,6 +34,7 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
             text: list; url: #section-3.1
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
+    spec:infra; type:dfn; for:/; text:list
 </pre>
 <pre class="biblio">
 {
@@ -337,9 +338,9 @@ dictionary UADataValues {
 
 [Exposed=Window]
 interface NavigatorUAData {
-  readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; UASet;
+  readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
   readonly attribute boolean mobile;
-  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options = {});
+  Promise&lt;UADataValues&gt; getHighEntropyValues(optional UADataOptions options);
 };
 
 interface mixin NavigatorUA {
@@ -351,23 +352,52 @@ Navigator includes NavigatorUA;
 
 Processing model {#processing}
 --------------
-On getting, the {{NavigatorUAData/UASet}} attribute must return the set of {{NavigatorUABrandVersion}} objects, initialized with the user agent's [=user agent/brand=] and [=user agent/significant version=].
+
+On getting, the {{NavigatorUAData/uaList}} attribute MUST run these steps:
+
+1. Let |list| be a [=/list=].
+
+2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the user agent,
+    its equivalence class and/or its rendering engine.
+
+3. For each pair:
+
+    1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
+        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}. 
+
+    2. Append |dict| to |list|.
+
+4.  The user agent MAY execute the following steps:
+
+    1.  [=list/Append=] additional items to |list| containing {{NavigatorUABrandVersion}} objects,
+        initialized with arbitrary {{NavigatorUABrandVersion/brand}} and {{NavigatorUABrandVersion/version}} combinations.
+
+    2.  Randomize the order of the items in |list|.
+
+    Note: See [[#grease]] for more details on why these steps might be appropriate.
+
+5. Return |list|.
 
 On getting, the {{NavigatorUAData/mobile}} attribute must return the user agent's [=user agent/mobileness=].
 
-The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, optionally called with {{UADataOptions}} |options|, MUST run these steps:
+The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, called with {{UADataOptions}} |options|, MUST run these steps:
 
 1. Let |p| be a [=a new promise=].
 
 2.  Run the following steps [=in parallel=]:
 
-    1. If |options| is the empty object, let |options| be a new {{UADataOptions}}.
-    2. Let |UAData| be a new {{UADataValues}}.
-    3. If |options.platform| is true, let |UAData.platform| be the the user agent's [=user agent/platform brand=].
-    4. If |options.platformVersion| is true, let |UAData.platformVersion| be the the user agent's [=user agent/platform version=].
-    5. If |options.architecture| is true, let |UAData.architecture| be the the user agent's [=user agent/platform architecture=].
-    6. If |options.model| is true, let |UAData.model| be the the user agent's [=user agent/model=].
-    7. [=Resolve=] |p| with |UAData|.
+    1. Let |uaData| be a new {{UADataValues}}.
+
+    2. If |options|["{{UADataOptions/platform}}"] is true, let |uaData|["{{UADataValues/platform}}"] be the the user agent's [=user agent/platform brand=].
+
+    3. If |options|["{{UADataOptions/platformVersion}}"] is true, let |uaData|["{{UADataValues/platformVersion}}"] be the the user agent's [=user agent/platform version=].
+
+    4. If |options|["{{UADataOptions/architecture}}"] is true, let |uaData|["{{UADataValues/architecture}}"] be the the user agent's [=user agent/platform architecture=].
+
+    5. If |options|["{{UADataOptions/model}}"] is true, let |uaData|["{{UADataValues/model}}"] be the the user agent's [=user agent/model=].
+
+    6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
+ISSUE: Add a specific task source this is queued on.
 
 3.  Return |p|.
 

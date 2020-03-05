@@ -152,7 +152,7 @@ accomplish this as follows:
       Promise<DOMString> getPlatform();                                    // "Windows"
       Promise<DOMString> getPlatformVersion();                             // "10"
       Promise<DOMString> getArchitecture();                                // "ARM64"
-      Promise<DOMString> model();                                          // ""
+      Promise<DOMString> getModel();                                       // ""
     };
     ```
 

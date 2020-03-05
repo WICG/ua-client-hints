@@ -95,7 +95,7 @@ accomplish this as follows:
 
 3.  Browsers should introduce several new Client Hint header fields:
 
-    1.  The `Sec-UA` header field represents the user agent's brand and significant version. For example:
+    1.  The `Sec-CH-UA` header field represents the user agent's brand and significant version. For example:
 
         ```http
         Sec-CH-UA: "Chrome"; v="73"

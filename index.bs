@@ -381,7 +381,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> meth
 
     1. Let |uaData| be a new {{UADataValues}}.
 
-    2. If |hints| [=contains=] "platform", let |uaData|["{{UADataValues/platform}}"] be the the user agent's [=user agent/platform brand=].
+    2. If |hints| [=contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the the user agent's [=user agent/platform brand=].
 
     3. If |hints| [=contains=] "platformVersion", let |uaData|["{{UADataValues/platformVersion}}"] be the the user agent's [=user agent/platform version=].
 

@@ -323,10 +323,10 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  DOMString platform = "";
-  DOMString platformVersion = "";
-  DOMString architecture = "";
-  DOMString model = "";
+  DOMString platform; 
+  DOMString platformVersion;
+  DOMString architecture;
+  DOMString model;
 };
 
 [Exposed=Window]
@@ -346,8 +346,13 @@ Navigator includes NavigatorUA;
 Processing model {#processing}
 --------------
 
-On getting, the {{NavigatorUAData/uaList}} attribute MUST run these steps:
+<h3 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h3>
 
+Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA list</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=/list=] returned from running [=create UA list=].
+
+<h3 id="create-ua-list-section">Create a UA list</h3>
+
+When asked to run the <dfn>create UA list</dfn> algorithm, the user agent MUST run the following steps:
 1. Let |list| be a [=/list=].
 
 2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the user agent,
@@ -371,7 +376,13 @@ On getting, the {{NavigatorUAData/uaList}} attribute MUST run these steps:
 
 5. Return |list|.
 
+<h3 id="getters">Getters</h3>
+
+On getting, the {{NavigatorUAData/uaList}} attribute MUST return [=this=]'s [=WindowOrWorkerGlobalScope/UA list=].
+
 On getting, the {{NavigatorUAData/mobile}} attribute must return the user agent's [=user agent/mobileness=].
+
+<h3 id="getHighEntropyValues"><code>getHighEntropyValues</code> method</h3>
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, called with [=sequence<DOMString>=] |hints|, MUST run these steps:
 
@@ -381,13 +392,13 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> meth
 
     1. Let |uaData| be a new {{UADataValues}}.
 
-    2. If |hints| [=contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the the user agent's [=user agent/platform brand=].
+    2. If |hints| [=contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the user agent's [=user agent/platform brand=].
 
-    3. If |hints| [=contains=] "platformVersion", let |uaData|["{{UADataValues/platformVersion}}"] be the the user agent's [=user agent/platform version=].
+    3. If |hints| [=contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"] to the user agent's [=user agent/platform version=].
 
-    4. If |hints| [=contains=] "architecture", let |uaData|["{{UADataValues/architecture}}"] be the the user agent's [=user agent/platform architecture=].
+    4. If |hints| [=contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to the user agent's [=user agent/platform architecture=].
 
-    5. If |hints| [=contains=] "model", let |uaData|["{{UADataValues/model}}"] be the the user agent's [=user agent/model=].
+    5. If |hints| [=contains=] "model", set |uaData|["{{UADataValues/model}}"] to the user agent's [=user agent/model=].
 
     6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
 

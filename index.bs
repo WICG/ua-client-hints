@@ -333,7 +333,7 @@ dictionary UADataValues {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
   readonly attribute boolean mobile;
-  Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt hints);
+  Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints);
 };
 
 interface mixin NavigatorUA {

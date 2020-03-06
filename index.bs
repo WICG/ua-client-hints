@@ -182,7 +182,7 @@ a number of properties for itself:
 *   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
 
-[=User agent=]s SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
+[=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
 
 

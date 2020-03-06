@@ -386,7 +386,7 @@ On getting, the {{NavigatorUAData/mobile}} attribute must return the user agent'
 
 <h3 id="getHighEntropyValues"><code>getHighEntropyValues</code> method</h3>
 
-The <dfn method for="NavigatorUA"><code>getHighEntropyValues()</code></dfn> method, called with [=sequence<DOMString>=] |hints|, MUST run these steps:
+The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
 
 1. Let |p| be a [=a new promise=].
 

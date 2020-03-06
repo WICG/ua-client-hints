@@ -433,7 +433,7 @@ Access Restrictions {#access}
 -------------------
 
 The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the platform/device upon which it runs. [=user agent=]s ought to exercise judgement before
+agent and the platform/device upon which it runs. [=User agents=] ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
 transport and delegation requirements noted above. For instance, [=user agent=]s could choose to reveal
 [=user agent/platform architecture=] only on requests it intends to download, giving the server the

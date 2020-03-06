@@ -471,7 +471,7 @@ protocol introduced the notion of <abbr title="Generate Random Extensions And
 Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]]. We could borrow
 from that concept to tackle this problem.
 
-[=User agent=]s SHOULD model `UA` as a set, rather than a single entry. They then
+[=User agents=] SHOULD model `UA` as a set, rather than a single entry. They then
 could encourage standardized processing of the `UA` string, by randomly
 including additional, intentionally incorrect, comma-separated entries with
 arbitrary ordering. That would reduce the chance that we ossify on a few

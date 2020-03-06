@@ -268,7 +268,7 @@ browser" [[Janc2014]]).
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, given a
 <a href="https://wicg.github.io/client-hints-infrastructure/#environment-settings-object-client-hints-set">client hints set</a> (|set|),
-[=user agent=]s MUST:
+[=user agents=] MUST:
 
 1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
 

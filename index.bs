@@ -153,14 +153,15 @@ asks for a little more information by sending an `Accept-CH` header (Section 2.2
 [[I-D.ietf-httpbis-client-hints]]) along with the initial response:
 
 ``` http
-  Accept-CH: UA, Platform
+  Accept-CH: UA-Full-Version, UA-Platform
 ```
 
 In response, the user agent includes more detailed version information, as well as information about
 the underlying platform in the next request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser"; v="73.3R8.2H.1"
+  Sec-CH-UA: "Examplary Browser"; v="73"
+  Sec-CH-UA-Full-Version: "73.3R8.2H.1"
   Sec-CH-UA-Platform: "Windows"
 ```
 
@@ -259,12 +260,14 @@ The header's ABNF is:
   Sec-CH-UA = sh-list
 ```
 
-Unlike most Client Hints, the `Sec-CH-UA` header will be sent with all requests, whether or not the
-server opted-into receiving the header via an `Accept-CH` header. Prior to an opt-in, however, it
-will include only the [=user agent=]'s branding information, and the significant version number (both of which
-are fairly clearly sniffable by "examining the structure of other headers and by testing for the
-availability and semantics of the features introduced or modified between releases of a particular
-browser" [[Janc2014]]).
+Unlike most Client Hints, since it's included in the <a
+href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+the `Sec-CH-UA` header will be sent with all requests, whether or not the server opted-into
+receiving the header via an `Accept-CH` header. Therefore, it includes only the [=user agent=]'s
+branding information, and the significant version number (both of which are fairly clearly
+sniffable by "examining the structure of other headers and by testing for the availability and
+semantics of the features introduced or modified between releases of a particular browser"
+[[Janc2014]]).
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, given a
 <a href="https://wicg.github.io/client-hints-infrastructure/#environment-settings-object-client-hints-set">client hints set</a> (|set|),
@@ -272,8 +275,7 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
 1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
 
-2.  Let |version| be the [=user agent=]'s [=user agent/full version=] if |set|
-    [=list/contains=] `UA`, and the [=user agent=]'s [=user agent/significant version=] otherwise.
+2.  Let |version| be the [=user agent=]'s [=user agent/significant version=].
 
 3.  Let |ua| be a string whose value is the [=string/concatenation=] of the [=user agent=]'s
     [=user agent/brand=], the string ";v=", and |version|.

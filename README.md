@@ -129,6 +129,11 @@ accomplish this as follows:
         ```http
         Sec-CH-UA-Mobile: ?1
         ```
+    6.  The `Sec-CH-UA-Full-Version` header field represents the user agent's full version.
+
+        ```http
+        Sec-CH-UA-Full-Version: "73.1.2343B.TR"
+        ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
     `navigator.getUserAgent()` method as something like:
@@ -141,18 +146,23 @@ accomplish this as follows:
 
     Navigator includes NavigatorUA;
 
+    dictionary UADataValues {
+      DOMString platform;         // "PhoneOS"
+      DOMString platformVersion;  // "10A"
+      DOMString architecture;     // "ARM64"
+      DOMString model;            // "X644GTM"
+      DOMString uaFullVersion;    // "73.32.AGX.5"
+    };
+
     dictionary NavigatorUABrandVersionDict {
       required DOMString brand; // "Chrome"
-      DOMString version;        // "69"
+      DOMString version;        // "73"
     };
 
     interface NavigatorUAData {
-      readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;   // [ { brand: "Chrome", version: "69" } ]
-      readonly attribute boolean mobile;                                   // false
-      Promise<DOMString> getPlatform();                                    // "Windows"
-      Promise<DOMString> getPlatformVersion();                             // "10"
-      Promise<DOMString> getArchitecture();                                // "ARM64"
-      Promise<DOMString> model();                                          // ""
+      readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;     // [ { brand: "Chrome", version: "73" } ]
+      readonly attribute boolean mobile;                                     // false
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
     };
     ```
 
@@ -162,10 +172,11 @@ accomplish this as follows:
     between the site's request and the Promise's resolution, if we decided that was a reasonable
     approach.
 
-User agents will attach the `Sec-CH-UA` header to every secure outgoing request by default, with a value
-that includes only the significant version (e.g. `"Chrome"; v="69"`). Servers can opt-into receiving more
-detailed version information in the `Sec-CH-UA` header, along with the other available Client Hints, by
-delivering an `Accept-CH` header header in the usual way.
+User agents will attach the `Sec-CH-UA` header to every secure outgoing request by default, with a
+value that includes only the significant version (e.g. `"Chrome"; v="69"`). They will also attach
+`Sec-CH-UA-Mobile` headers by default.
+Servers can opt-into receiving more detailed UA information using the other available Client Hints,
+by delivering an `Accept-CH` header opt-in, that includes the information they are interested in.
 
 Note the word "secure" in the paragraph above, and the `SecureContext` attribute in the IDL: these
 client hints will not be delivered to plaintext endpoints. Non-secure HTTP will receive only the
@@ -179,12 +190,13 @@ A user agent's initial request to `https://example.com` will include the followi
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
 Sec-CH-UA: "Chrome"; v="74"
+Sec-CH-Mobile: ?0
 ```
 
 If a server delivers the following response header:
 
 ```http
-Accept-CH: UA, UA-Platform, UA-Arch
+Accept-CH: UA-Full-Version, UA-Platform, UA-Arch
 ```
 
 Then subsequent requests to `https://example.com` will include the following request headers:
@@ -192,7 +204,8 @@ Then subsequent requests to `https://example.com` will include the following req
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-Sec-CH-UA: "Chrome"; v="74.0.3424.124"
+Sec-CH-UA: "Chrome"; v="74"
+Sec-CH-UA-Full-Version: "74.0.3424.124"
 Sec-CH-UA-Platform: "macOS"
 Sec-CH-UA-Arch: "ARM64"
 ```

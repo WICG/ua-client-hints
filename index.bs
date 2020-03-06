@@ -350,7 +350,7 @@ Processing model {#processing}
 
 Each user agent has an associated <dfn>UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
 
-Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from [=UA list=].
+Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=UA list=].
 
 <h3 id="create-ua-list-section">Create a UA list</h3>
 

@@ -295,6 +295,19 @@ Issue: Fix the processing model here so that it will use Structured Headers
 serialization, and make sure that the value set for headers if the same as the
 one returned from the JS API.
 
+The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-full-version}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
+about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
+whose value MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Full-Version = sh-string
+```
+
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
 --------------------------------
 
@@ -328,6 +341,7 @@ dictionary UADataValues {
   DOMString platformVersion;
   DOMString architecture;
   DOMString model;
+  DOMString uaFullVersion;
 };
 
 [Exposed=Window]
@@ -403,7 +417,9 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     5. If |hints| [=contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
 
-    6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
+    6. If |hints| [=contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
+
+    7. [=Queue a task=] to [=resolve=] |p| with |uaData|.
 
 ISSUE: Add a specific task source this is queued on.
 

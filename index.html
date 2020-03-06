@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 5721fde7f6b8111f662b83b678f9e181a9838206" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="14eca90253cacc54bcf0e345bef401fc6d51298d" name="document-revision">
+  <meta content="0b7359c1edc6d6f7fb2c77d1e723ea2a35e3d3f6" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-05">5 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-06">6 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1530,6 +1530,10 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#interface"><span class="secno">3</span> <span class="content">Interface</span></a>
      <ol class="toc">
       <li><a href="#processing"><span class="secno">3.1</span> <span class="content">Processing model</span></a>
+      <li><a href="#monkeypatch-html-windoworworkerglobalscope"><span class="secno">3.2</span> <span class="content"><code>WindowOrWorkerGlobalScope</code></span></a>
+      <li><a href="#create-ua-list-section"><span class="secno">3.3</span> <span class="content">Create a UA list</span></a>
+      <li><a href="#getters"><span class="secno">3.4</span> <span class="content">Getters</span></a>
+      <li><a href="#getHighEntropyValues"><span class="secno">3.5</span> <span class="content"><code>getHighEntropyValues</code> method</span></a>
      </ol>
     <li>
      <a href="#security-privacy"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
@@ -1739,29 +1743,70 @@ whether or not a user agent prefers a "mobile" user experience. It is a <a data-
    <h3 class="heading settled" data-level="2.7" id="fetch-integration"><span class="secno">2.7. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
     Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. 
    <h2 class="heading settled" data-level="3" id="interface"><span class="secno">3. </span><span class="content">Interface</span><a class="self-link" href="#interface"></a></h2>
-<pre class="idl highlight def"><c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-navigatoruabrandversiondict"><code><c- g>NavigatorUABrandVersionDict</c-></code></dfn> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="NavigatorUABrandVersionDict" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-navigatoruabrandversiondict-brand"><code><c- g>brand</c-></code><a class="self-link" href="#dom-navigatoruabrandversiondict-brand"></a></dfn>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="NavigatorUABrandVersionDict" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-navigatoruabrandversiondict-version"><code><c- g>version</c-></code><a class="self-link" href="#dom-navigatoruabrandversiondict-version"></a></dfn>;
+<pre class="idl highlight def"><c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-navigatoruabrandversion"><code><c- g>NavigatorUABrandVersion</c-></code></dfn> {
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUABrandVersion" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-navigatoruabrandversion-brand"><code><c- g>brand</c-></code></dfn>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUABrandVersion" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-navigatoruabrandversion-version"><code><c- g>version</c-></code></dfn>;
+};
+
+<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-uadatavalues"><code><c- g>UADataValues</c-></code></dfn> {
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-platform"><code><c- g>platform</c-></code></dfn>; 
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></dfn>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></dfn>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-model"><code><c- g>model</c-></code></dfn>;
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatoruadata"><code><c- g>NavigatorUAData</c-></code></dfn> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversiondict" id="ref-for-dictdef-navigatoruabrandversiondict"><c- n>NavigatorUABrandVersionDict</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<NavigatorUABrandVersionDict>" id="dom-navigatoruadata-brand"><code><c- g>brand</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" id="dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="boolean" id="dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></dfn>;
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getPlatform()" id="dom-navigatoruadata-getplatform"><code><c- g>getPlatform</c-></code></dfn>();
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name"><c- n>SOMString</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getPlatformVersion()" id="dom-navigatoruadata-getplatformversion"><code><c- g>getPlatformVersion</c-></code></dfn>();
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getArchitecture()" id="dom-navigatoruadata-getarchitecture"><code><c- g>getArchitecture</c-></code></dfn>();
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getModel()" id="dom-navigatoruadata-getmodel"><code><c- g>getModel</c-></code></dfn>();
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues"><c- n>UADataValues</c-></a>> <dfn class="idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getHighEntropyValues(hints)" id="dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code><a class="self-link" href="#dom-navigatoruadata-gethighentropyvalues"></a></dfn>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑥"><c- b>DOMString</c-></a>> <dfn class="idl-code" data-dfn-for="NavigatorUAData/getHighEntropyValues(hints)" data-dfn-type="argument" data-export id="dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code><a class="self-link" href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"></a></dfn>);
 };
 
 <c- b>interface</c-> <c- b>mixin</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatorua"><code><c- g>NavigatorUA</c-></code></dfn> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>] <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata"><c- n>NavigatorUAData</c-></a> <a class="idl-code" data-link-type="method" href="#dom-navigatorua-getuseragent" id="ref-for-dom-navigatorua-getuseragent"><c- g>getUserAgent</c-></a>();
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata"><c- n>NavigatorUAData</c-></a> <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="attribute" data-export data-readonly data-type="NavigatorUAData" id="dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code><a class="self-link" href="#dom-navigatorua-useragentdata"></a></dfn>;
 };
 <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua"><c- n>NavigatorUA</c-></a>;
 
 </pre>
    <h3 class="heading settled" data-level="3.1" id="processing"><span class="secno">3.1. </span><span class="content">Processing model</span><a class="self-link" href="#processing"></a></h3>
-    <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-getuseragent"><code>getUserAgent()</code></dfn> method MUST run these steps: 
+   <h3 class="heading settled" data-level="3.2" id="monkeypatch-html-windoworworkerglobalscope"><span class="secno">3.2. </span><span class="content"><code>WindowOrWorkerGlobalScope</code></span><a class="self-link" href="#monkeypatch-html-windoworworkerglobalscope"></a></h3>
+   <p>Each <a data-link-type="dfn" href="https://w3c.github.io/reporting/#report-user-agent" id="ref-for-report-user-agent">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="ua-list">UA list</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a> created by running <a data-link-type="dfn" href="#create-ua-list" id="ref-for-create-ua-list">create UA list</a>.</p>
+   <p>Every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> object has an associated <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-ua-frozen-array">UA frozen array</dfn>, which is a <code><a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-frozen-array" id="ref-for-idl-frozen-array">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion①">NavigatorUABrandVersion</a>></code>. It is initially the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://w3c.github.io/reporting/#report-user-agent" id="ref-for-report-user-agent①">user agent</a>'s <a data-link-type="dfn" href="#ua-list" id="ref-for-ua-list">UA list</a>.</p>
+   <h3 class="heading settled" data-level="3.3" id="create-ua-list-section"><span class="secno">3.3. </span><span class="content">Create a UA list</span><a class="self-link" href="#create-ua-list-section"></a></h3>
+   <p>When asked to run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-ua-list">create UA list</dfn> algorithm, the user agent MUST run the following steps:</p>
+   <ol>
+    <li data-md>
+     <p>Let <var>list</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a>.</p>
+    <li data-md>
+     <p>Collect pairs of <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand①">brand</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version①">significant version</a> which represent the user agent,
+its equivalence class and/or its rendering engine.</p>
+    <li data-md>
+     <p>For each pair:</p>
+     <ol>
+      <li data-md>
+       <p>Let <var>dict</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion②">NavigatorUABrandVersion</a></code> dictionary,
+with <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand②">brand</a> as <code class="idl"><a data-link-type="idl" href="#dom-navigatoruabrandversion-brand" id="ref-for-dom-navigatoruabrandversion-brand">brand</a></code> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version②">significant version</a> as <code class="idl"><a data-link-type="idl" href="#dom-navigatoruabrandversion-version" id="ref-for-dom-navigatoruabrandversion-version">version</a></code>.</p>
+      <li data-md>
+       <p>Append <var>dict</var> to <var>list</var>.</p>
+     </ol>
+    <li data-md>
+     <p>The user agent MAY execute the following steps:</p>
+     <ol>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">Append</a> additional items to <var>list</var> containing <code class="idl"><a data-link-type="idl" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion③">NavigatorUABrandVersion</a></code> objects,
+initialized with arbitrary <code class="idl"><a data-link-type="idl" href="#dom-navigatoruabrandversion-brand" id="ref-for-dom-navigatoruabrandversion-brand①">brand</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-navigatoruabrandversion-version" id="ref-for-dom-navigatoruabrandversion-version①">version</a></code> combinations.</p>
+      <li data-md>
+       <p>Randomize the order of the items in <var>list</var>.</p>
+     </ol>
+     <p class="note" role="note"><span>Note:</span> See <a href="#grease">§ 5.2 GREASE-like UA Strings</a> for more details on why these steps might be appropriate.</p>
+    <li data-md>
+     <p>Return <var>list</var>.</p>
+   </ol>
+   <h3 class="heading settled" data-level="3.4" id="getters"><span class="secno">3.4. </span><span class="content">Getters</span><a class="self-link" href="#getters"></a></h3>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-ualist" id="ref-for-dom-navigatoruadata-ualist">uaList</a></code> attribute MUST return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-ua-frozen-array" id="ref-for-windoworworkerglobalscope-ua-frozen-array">UA frozen array</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the user agent’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a>.</p>
+   <h3 class="heading settled" data-level="3.5" id="getHighEntropyValues"><span class="secno">3.5. </span><span class="content"><code>getHighEntropyValues</code> method</span><a class="self-link" href="#getHighEntropyValues"></a></h3>
+   <p>The <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code><a class="self-link" href="#dom-navigatorua-gethighentropyvalues"></a></dfn> method MUST run these steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
@@ -1769,34 +1814,24 @@ whether or not a user agent prefers a "mobile" user experience. It is a <a data-
      <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
       <li data-md>
-       <p>Let <var>UAData</var> be a new <code class="idl"><a data-link-type="idl" href="#navigatoruadata" id="ref-for-navigatoruadata①">NavigatorUAData</a></code> object whose values are initialized as follows:</p>
-       <dl>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brand" id="ref-for-dom-navigatoruadata-brand">brand</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand①">brand</a>.</p>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-getplatform" id="ref-for-dom-navigatoruadata-getplatform">getPlatform</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-getplatformversion" id="ref-for-dom-navigatoruadata-getplatformversion">getPlatformVersion</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a>.</p>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-getarchitecture" id="ref-for-dom-navigatoruadata-getarchitecture">getArchitecture</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture">platform architecture</a>.</p>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-getmodel" id="ref-for-dom-navigatoruadata-getmodel">getModel</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model">model</a>.</p>
-        <dt data-md><code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code>
-        <dd data-md>
-         <p>The user agent’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a>.</p>
-       </dl>
+       <p>Let <var>uaData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues①">UADataValues</a></code>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">Resolve</a> <var>p</var> with <var>UAData</var>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">contains</a> "platform", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the user agent’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
+      <li data-md>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains①">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"] to the user agent’s <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a>.</p>
+      <li data-md>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains②">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to the user agent’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture">platform architecture</a>.</p>
+      <li data-md>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains③">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the user agent’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model">model</a>.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">Queue a task</a> to <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var> with <var>uaData</var>.</p>
      </ol>
+   </ol>
+   <p class="issue" id="issue-3ac6580b"><a class="self-link" href="#issue-3ac6580b"></a> Add a specific task source this is queued on.</p>
+   <ol start="3">
     <li data-md>
      <p>Return <var>p</var>.</p>
    </ol>
-   <p class="issue" id="issue-694e4d3d"><a class="self-link" href="#issue-694e4d3d"></a> Provide a method to only access the UA’s significant version.</p>
    <h2 class="heading settled" data-level="4" id="security-privacy"><span class="secno">4. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="secure-transport"><span class="secno">4.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
@@ -2149,28 +2184,37 @@ register them in the permanent message header field registry (<a data-link-type=
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
+   <li><a href="#dom-uadatavalues-architecture">architecture</a><span>, in §3</span>
    <li>
     brand
     <ul>
-     <li><a href="#dom-navigatoruadata-brand">attribute for NavigatorUAData</a><span>, in §3</span>
      <li><a href="#user-agent-brand">dfn for user agent</a><span>, in §2</span>
-     <li><a href="#dom-navigatoruabrandversiondict-brand">dict-member for NavigatorUABrandVersionDict</a><span>, in §3</span>
+     <li><a href="#dom-navigatoruabrandversion-brand">dict-member for NavigatorUABrandVersion</a><span>, in §3</span>
     </ul>
+   <li><a href="#create-ua-list">create UA list</a><span>, in §3.3</span>
    <li><a href="#user-agent-full-version">full version</a><span>, in §2</span>
-   <li><a href="#dom-navigatoruadata-getarchitecture">getArchitecture()</a><span>, in §3</span>
-   <li><a href="#dom-navigatoruadata-getmodel">getModel()</a><span>, in §3</span>
-   <li><a href="#dom-navigatoruadata-getplatform">getPlatform()</a><span>, in §3</span>
-   <li><a href="#dom-navigatoruadata-getplatformversion">getPlatformVersion()</a><span>, in §3</span>
-   <li><a href="#dom-navigatorua-getuseragent">getUserAgent()</a><span>, in §3.1</span>
+   <li>
+    getHighEntropyValues(hints)
+    <ul>
+     <li><a href="#dom-navigatorua-gethighentropyvalues">method for NavigatorUA</a><span>, in §3.5</span>
+     <li><a href="#dom-navigatoruadata-gethighentropyvalues">method for NavigatorUAData</a><span>, in §3</span>
+    </ul>
    <li><a href="#dom-navigatoruadata-mobile">mobile</a><span>, in §3</span>
    <li><a href="#user-agent-mobileness">mobileness</a><span>, in §2</span>
-   <li><a href="#user-agent-model">model</a><span>, in §2</span>
+   <li>
+    model
+    <ul>
+     <li><a href="#user-agent-model">dfn for user agent</a><span>, in §2</span>
+     <li><a href="#dom-uadatavalues-model">dict-member for UADataValues</a><span>, in §3</span>
+    </ul>
    <li><a href="#navigatorua">NavigatorUA</a><span>, in §3</span>
-   <li><a href="#dictdef-navigatoruabrandversiondict">NavigatorUABrandVersionDict</a><span>, in §3</span>
+   <li><a href="#dictdef-navigatoruabrandversion">NavigatorUABrandVersion</a><span>, in §3</span>
    <li><a href="#navigatoruadata">NavigatorUAData</a><span>, in §3</span>
+   <li><a href="#dom-uadatavalues-platform">platform</a><span>, in §3</span>
    <li><a href="#user-agent-platform-architecture">platform architecture</a><span>, in §2</span>
    <li><a href="#user-agent-platform-brand">platform brand</a><span>, in §2</span>
    <li><a href="#user-agent-platform-version">platform version</a><span>, in §2</span>
+   <li><a href="#dom-uadatavalues-platformversion">platformVersion</a><span>, in §3</span>
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request">return the Sec-CH-UA value for a request</a><span>, in §2.5</span>
    <li><a href="#http-headerdef-sec-ch-ua">Sec-CH-UA</a><span>, in §2.5</span>
    <li><a href="#http-headerdef-sec-ch-ua-arch">Sec-CH-UA-Arch</a><span>, in §2.1</span>
@@ -2180,18 +2224,47 @@ register them in the permanent message header field registry (<a data-link-type=
    <li><a href="#http-headerdef-sec-ch-ua-platform-version">Sec-CH-UA-Platform-Version</a><span>, in §2.4</span>
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request">set-ua</a><span>, in §2.5</span>
    <li><a href="#user-agent-significant-version">significant version</a><span>, in §2</span>
-   <li><a href="#dom-navigatoruabrandversiondict-version">version</a><span>, in §3</span>
+   <li><a href="#dictdef-uadatavalues">UADataValues</a><span>, in §3</span>
+   <li><a href="#windoworworkerglobalscope-ua-frozen-array">UA frozen array</a><span>, in §3.2</span>
+   <li><a href="#dom-navigatoruadata-ualist">uaList</a><span>, in §3</span>
+   <li><a href="#ua-list">UA list</a><span>, in §3.2</span>
+   <li><a href="#dom-navigatorua-useragentdata">userAgentData</a><span>, in §3</span>
+   <li><a href="#dom-navigatoruabrandversion-version">version</a><span>, in §3</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-header-list-contains">
+   <a href="https://fetch.spec.whatwg.org/#header-list-contains">https://fetch.spec.whatwg.org/#header-list-contains</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-header-list-contains">3.5. getHighEntropyValues method</a> <a href="#ref-for-header-list-contains①">(2)</a> <a href="#ref-for-header-list-contains②">(3)</a> <a href="#ref-for-header-list-contains③">(4)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-navigator">
    <a href="https://html.spec.whatwg.org/multipage/system-state.html#navigator">https://html.spec.whatwg.org/multipage/system-state.html#navigator</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-navigator">3. Interface</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-windoworworkerglobalscope">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope">https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-windoworworkerglobalscope">3.2. WindowOrWorkerGlobalScope</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-in-parallel">
    <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel">https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-in-parallel">3.1. Processing model</a>
+    <li><a href="#ref-for-in-parallel">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-queue-a-task">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-queue-a-task">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-relevant-global">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-relevant-global">3.4. Getters</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.3.4">
@@ -2231,6 +2304,7 @@ register them in the permanent message header field registry (<a data-link-type=
    <a href="https://infra.spec.whatwg.org/#list-append">https://infra.spec.whatwg.org/#list-append</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-list-append">2.5. The 'Sec-CH-UA' Header Field</a> <a href="#ref-for-list-append①">(2)</a>
+    <li><a href="#ref-for-list-append②">3.3. Create a UA list</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-string-concatenate">
@@ -2245,16 +2319,35 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-list-contain">2.5. The 'Sec-CH-UA' Header Field</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-list">
+   <a href="https://infra.spec.whatwg.org/#list">https://infra.spec.whatwg.org/#list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list">3.2. WindowOrWorkerGlobalScope</a>
+    <li><a href="#ref-for-list①">3.3. Create a UA list</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-report-user-agent">
+   <a href="https://w3c.github.io/reporting/#report-user-agent">https://w3c.github.io/reporting/#report-user-agent</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-report-user-agent">3.2. WindowOrWorkerGlobalScope</a> <a href="#ref-for-report-user-agent①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMString">3. Interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a>
+    <li><a href="#ref-for-idl-DOMString">3. Interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a> <a href="#ref-for-idl-DOMString⑤">(6)</a> <a href="#ref-for-idl-DOMString⑥">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Exposed">
    <a href="https://heycam.github.io/webidl/#Exposed">https://heycam.github.io/webidl/#Exposed</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-Exposed">3. Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-frozen-array">
+   <a href="https://heycam.github.io/webidl/#idl-frozen-array">https://heycam.github.io/webidl/#idl-frozen-array</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-frozen-array">3.2. WindowOrWorkerGlobalScope</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-SecureContext">
@@ -2266,7 +2359,7 @@ register them in the permanent message header field registry (<a data-link-type=
   <aside class="dfn-panel" data-for="term-for-a-new-promise">
    <a href="https://heycam.github.io/webidl/#a-new-promise">https://heycam.github.io/webidl/#a-new-promise</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-a-new-promise">3.1. Processing model</a>
+    <li><a href="#ref-for-a-new-promise">3.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-boolean">
@@ -2275,19 +2368,39 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-idl-boolean">3. Interface</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dfn-create-frozen-array">
+   <a href="https://heycam.github.io/webidl/#dfn-create-frozen-array">https://heycam.github.io/webidl/#dfn-create-frozen-array</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dfn-create-frozen-array">3.2. WindowOrWorkerGlobalScope</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-resolve">
    <a href="https://heycam.github.io/webidl/#resolve">https://heycam.github.io/webidl/#resolve</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-resolve">3.1. Processing model</a>
+    <li><a href="#ref-for-resolve">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-this">
+   <a href="https://heycam.github.io/webidl/#this">https://heycam.github.io/webidl/#this</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-this">3.4. Getters</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-header-list-contains" style="color:initial">contains</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-navigator" style="color:initial">Navigator</span>
+     <li><span class="dfn-paneled" id="term-for-windoworworkerglobalscope" style="color:initial">WindowOrWorkerGlobalScope</span>
      <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
+     <li><span class="dfn-paneled" id="term-for-queue-a-task" style="color:initial">queue a task</span>
+     <li><span class="dfn-paneled" id="term-for-concept-relevant-global" style="color:initial">relevant global object</span>
     </ul>
    <li>
     <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
@@ -2303,27 +2416,40 @@ register them in the permanent message header field registry (<a data-link-type=
      <li><span class="dfn-paneled" id="term-for-list-append" style="color:initial">append</span>
      <li><span class="dfn-paneled" id="term-for-string-concatenate" style="color:initial">concatenation</span>
      <li><span class="dfn-paneled" id="term-for-list-contain" style="color:initial">contain</span>
+     <li><span class="dfn-paneled" id="term-for-list" style="color:initial">list</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[reporting-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-report-user-agent" style="color:initial">user agent</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
      <li><span class="dfn-paneled" id="term-for-Exposed" style="color:initial">Exposed</span>
+     <li><span class="dfn-paneled" id="term-for-idl-frozen-array" style="color:initial">FrozenArray</span>
      <li><span class="dfn-paneled" id="term-for-SecureContext" style="color:initial">SecureContext</span>
      <li><span class="dfn-paneled" id="term-for-a-new-promise" style="color:initial">a new promise</span>
      <li><span class="dfn-paneled" id="term-for-idl-boolean" style="color:initial">boolean</span>
+     <li><span class="dfn-paneled" id="term-for-dfn-create-frozen-array" style="color:initial">create a frozen array</span>
      <li><span class="dfn-paneled" id="term-for-resolve" style="color:initial">resolve</span>
+     <li><span class="dfn-paneled" id="term-for-this" style="color:initial">this</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]
    <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">Structured Headers for HTTP</a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-reporting-1">[REPORTING-1]
+   <dd>Douglas Creager; et al. <a href="https://w3c.github.io/reporting/">Reporting API</a>. URL: <a href="https://w3c.github.io/reporting/">https://w3c.github.io/reporting/</a>
    <dt id="biblio-webidl">[WebIDL]
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
@@ -2345,23 +2471,27 @@ register them in the permanent message header field registry (<a data-link-type=
    <dd><a href="https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s">The Microsoft Edge Rendering Engine that makes the Web just work</a>. URL: <a href="https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s">https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>dictionary</c-> <a href="#dictdef-navigatoruabrandversiondict"><code><c- g>NavigatorUABrandVersionDict</c-></code></a> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversiondict-brand"><code><c- g>brand</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversiondict-version"><code><c- g>version</c-></code></a>;
+<pre class="idl highlight def"><c- b>dictionary</c-> <a href="#dictdef-navigatoruabrandversion"><code><c- g>NavigatorUABrandVersion</c-></code></a> {
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑦"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-brand"><code><c- g>brand</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-version"><code><c- g>version</c-></code></a>;
+};
+
+<c- b>dictionary</c-> <a href="#dictdef-uadatavalues"><code><c- g>UADataValues</c-></code></a> {
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platform"><code><c- g>platform</c-></code></a>; 
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-model"><code><c- g>model</c-></code></a>;
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <a href="#navigatoruadata"><code><c- g>NavigatorUAData</c-></code></a> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversiondict" id="ref-for-dictdef-navigatoruabrandversiondict①"><c- n>NavigatorUABrandVersionDict</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersionDict>" href="#dom-navigatoruadata-brand"><code><c- g>brand</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion④"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-getplatform"><code><c- g>getPlatform</c-></code></a>();
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name"><c- n>SOMString</c-></a>> <a href="#dom-navigatoruadata-getplatformversion"><code><c- g>getPlatformVersion</c-></code></a>();
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③①"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-getarchitecture"><code><c- g>getArchitecture</c-></code></a>();
-  <c- b>Promise</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④①"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-getmodel"><code><c- g>getModel</c-></code></a>();
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues②"><c- n>UADataValues</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code></a>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑥①"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code></a>);
 };
 
 <c- b>interface</c-> <c- b>mixin</c-> <a href="#navigatorua"><code><c- g>NavigatorUA</c-></code></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata②"><c- n>NavigatorUAData</c-></a> <a class="idl-code" data-link-type="method" href="#dom-navigatorua-getuseragent" id="ref-for-dom-navigatorua-getuseragent①"><c- g>getUserAgent</c-></a>();
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata①"><c- n>NavigatorUAData</c-></a> <a data-readonly data-type="NavigatorUAData" href="#dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code></a>;
 };
 <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①"><c- n>NavigatorUA</c-></a>;
 
@@ -2373,19 +2503,20 @@ register them in the permanent message header field registry (<a data-link-type=
    <div class="issue"> Fix the processing model here so that it will use Structured Headers
 serialization, and make sure that the value set for headers if the same as the
 one returned from the JS API.<a href="#issue-b0a7fffe"> ↵ </a></div>
-   <div class="issue"> Provide a method to only access the UA’s significant version.<a href="#issue-694e4d3d"> ↵ </a></div>
+   <div class="issue"> Add a specific task source this is queued on.<a href="#issue-3ac6580b"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="user-agent-brand">
    <b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-brand">2.5. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-brand①">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-brand①">3.3. Create a UA list</a> <a href="#ref-for-user-agent-brand②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-significant-version">
    <b><a href="#user-agent-significant-version">#user-agent-significant-version</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-agent-significant-version">2.5. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-user-agent-significant-version①">3.3. Create a UA list</a> <a href="#ref-for-user-agent-significant-version②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-full-version">
@@ -2397,81 +2528,101 @@ one returned from the JS API.<a href="#issue-b0a7fffe"> ↵ </a></div>
   <aside class="dfn-panel" data-for="user-agent-platform-brand">
    <b><a href="#user-agent-platform-brand">#user-agent-platform-brand</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-platform-brand">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-platform-brand">3.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-platform-version">
    <b><a href="#user-agent-platform-version">#user-agent-platform-version</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-platform-version">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-platform-version">3.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-platform-architecture">
    <b><a href="#user-agent-platform-architecture">#user-agent-platform-architecture</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-platform-architecture">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-platform-architecture">3.5. getHighEntropyValues method</a>
     <li><a href="#ref-for-user-agent-platform-architecture①">4.3. Access Restrictions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-model">
    <b><a href="#user-agent-model">#user-agent-model</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-model">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-model">3.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-mobileness">
    <b><a href="#user-agent-mobileness">#user-agent-mobileness</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-mobileness">3.1. Processing model</a>
+    <li><a href="#ref-for-user-agent-mobileness">3.4. Getters</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dictdef-navigatoruabrandversiondict">
-   <b><a href="#dictdef-navigatoruabrandversiondict">#dictdef-navigatoruabrandversiondict</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dictdef-navigatoruabrandversion">
+   <b><a href="#dictdef-navigatoruabrandversion">#dictdef-navigatoruabrandversion</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-navigatoruabrandversiondict">3. Interface</a>
+    <li><a href="#ref-for-dictdef-navigatoruabrandversion">3. Interface</a>
+    <li><a href="#ref-for-dictdef-navigatoruabrandversion①">3.2. WindowOrWorkerGlobalScope</a>
+    <li><a href="#ref-for-dictdef-navigatoruabrandversion②">3.3. Create a UA list</a> <a href="#ref-for-dictdef-navigatoruabrandversion③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruabrandversion-brand">
+   <b><a href="#dom-navigatoruabrandversion-brand">#dom-navigatoruabrandversion-brand</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruabrandversion-brand">3.3. Create a UA list</a> <a href="#ref-for-dom-navigatoruabrandversion-brand①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-navigatoruabrandversion-version">
+   <b><a href="#dom-navigatoruabrandversion-version">#dom-navigatoruabrandversion-version</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-navigatoruabrandversion-version">3.3. Create a UA list</a> <a href="#ref-for-dom-navigatoruabrandversion-version①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dictdef-uadatavalues">
+   <b><a href="#dictdef-uadatavalues">#dictdef-uadatavalues</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dictdef-uadatavalues">3. Interface</a>
+    <li><a href="#ref-for-dictdef-uadatavalues①">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-uadatavalues-platform">
+   <b><a href="#dom-uadatavalues-platform">#dom-uadatavalues-platform</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-uadatavalues-platform">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-uadatavalues-platformversion">
+   <b><a href="#dom-uadatavalues-platformversion">#dom-uadatavalues-platformversion</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-uadatavalues-platformversion">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-uadatavalues-architecture">
+   <b><a href="#dom-uadatavalues-architecture">#dom-uadatavalues-architecture</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-uadatavalues-architecture">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-uadatavalues-model">
+   <b><a href="#dom-uadatavalues-model">#dom-uadatavalues-model</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-uadatavalues-model">3.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="navigatoruadata">
    <b><a href="#navigatoruadata">#navigatoruadata</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-navigatoruadata">3. Interface</a>
-    <li><a href="#ref-for-navigatoruadata①">3.1. Processing model</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-brand">
-   <b><a href="#dom-navigatoruadata-brand">#dom-navigatoruadata-brand</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-ualist">
+   <b><a href="#dom-navigatoruadata-ualist">#dom-navigatoruadata-ualist</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-brand">3.1. Processing model</a>
+    <li><a href="#ref-for-dom-navigatoruadata-ualist">3.4. Getters</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-navigatoruadata-mobile">
    <b><a href="#dom-navigatoruadata-mobile">#dom-navigatoruadata-mobile</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-mobile">3.1. Processing model</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-getplatform">
-   <b><a href="#dom-navigatoruadata-getplatform">#dom-navigatoruadata-getplatform</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-getplatform">3.1. Processing model</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-getplatformversion">
-   <b><a href="#dom-navigatoruadata-getplatformversion">#dom-navigatoruadata-getplatformversion</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-getplatformversion">3.1. Processing model</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-getarchitecture">
-   <b><a href="#dom-navigatoruadata-getarchitecture">#dom-navigatoruadata-getarchitecture</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-getarchitecture">3.1. Processing model</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-getmodel">
-   <b><a href="#dom-navigatoruadata-getmodel">#dom-navigatoruadata-getmodel</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-getmodel">3.1. Processing model</a>
+    <li><a href="#ref-for-dom-navigatoruadata-mobile">3.4. Getters</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="navigatorua">
@@ -2480,10 +2631,22 @@ one returned from the JS API.<a href="#issue-b0a7fffe"> ↵ </a></div>
     <li><a href="#ref-for-navigatorua">3. Interface</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-navigatorua-getuseragent">
-   <b><a href="#dom-navigatorua-getuseragent">#dom-navigatorua-getuseragent</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="ua-list">
+   <b><a href="#ua-list">#ua-list</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-navigatorua-getuseragent">3. Interface</a>
+    <li><a href="#ref-for-ua-list">3.2. WindowOrWorkerGlobalScope</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="windoworworkerglobalscope-ua-frozen-array">
+   <b><a href="#windoworworkerglobalscope-ua-frozen-array">#windoworworkerglobalscope-ua-frozen-array</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-windoworworkerglobalscope-ua-frozen-array">3.4. Getters</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="create-ua-list">
+   <b><a href="#create-ua-list">#create-ua-list</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-create-ua-list">3.2. WindowOrWorkerGlobalScope</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

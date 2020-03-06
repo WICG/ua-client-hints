@@ -348,7 +348,7 @@ Processing model {#processing}
 
 <h3 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h3>
 
-Each user agent has an associated <dfn>UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
+Each [=user agent=] has an associated <dfn>UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
 
 Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=UA list=].
 

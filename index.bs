@@ -435,7 +435,7 @@ Access Restrictions {#access}
 The information in the Client Hints defined above reveals quite a bit of information about the user
 agent and the platform/device upon which it runs. [=User agents=] ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, [=user agent=]s could choose to reveal
+transport and delegation requirements noted above. For instance, [=user agents=] could choose to reveal
 [=user agent/platform architecture=] only on requests it intends to download, giving the server the
 opportunity to serve the right binary. Likewise, they could offer users control over the values
 revealed to servers, or gate access on explicit user interaction via a permission prompt or via a

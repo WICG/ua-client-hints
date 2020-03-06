@@ -461,7 +461,7 @@ order to reduce the fingerprint the header provides.
 GREASE-like UA Strings {#grease}
 ----------------------
 
-History has shown us that there are real incentives for [=user agent=]s to lie
+History has shown us that there are real incentives for [=user agents=] to lie
 about their branding in order to thread the needle of sites' sniffing scripts,
 and prevent their users from being blocked by UA-based allow/block lists.
 

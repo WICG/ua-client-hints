@@ -447,7 +447,7 @@ Implementation Considerations {#impl-considerations}
 The 'User-Agent' Header {#user-agent}
 -----------------------
 
-[=User agent=]s SHOULD deprecate the `User-Agent` header in favor of the Client Hints model described in
+[=User agents=] SHOULD deprecate the `User-Agent` header in favor of the Client Hints model described in
 this document. The header, however, is likely to be impossible to remove entirely in the near-term,
 as existing sites' content negotiation code will continue to require its presence (see
 [[Rossi2015]] for a recent example of a new browser's struggles in this area).

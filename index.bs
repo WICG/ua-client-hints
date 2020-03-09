@@ -330,7 +330,6 @@ dictionary UADataValues {
   DOMString model;
 };
 
-[Exposed=Window]
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
   readonly attribute boolean mobile;
@@ -340,7 +339,9 @@ interface NavigatorUAData {
 interface mixin NavigatorUA {
   [SecureContext] readonly attribute NavigatorUAData userAgentData;
 };
+
 Navigator includes NavigatorUA;
+WorkerNavigator includes NavigatorUA;
 
 </pre>
 

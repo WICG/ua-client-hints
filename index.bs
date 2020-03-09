@@ -269,8 +269,7 @@ sniffable by "examining the structure of other headers and by testing for the av
 semantics of the features introduced or modified between releases of a particular browser"
 [[Janc2014]]).
 
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, given a
-<a href="https://wicg.github.io/client-hints-infrastructure/#environment-settings-object-client-hints-set">client hints set</a> (|set|),
+To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>,
 [=user agents=] MUST:
 
 1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
@@ -339,11 +338,11 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  DOMString platform = ""; 
-  DOMString platformVersion = "";
-  DOMString architecture = "";
-  DOMString model = "";
-  DOMString uaFullVersion = "";
+  DOMString platform; 
+  DOMString platformVersion;
+  DOMString architecture;
+  DOMString model;
+  DOMString uaFullVersion;
 };
 
 [Exposed=Window]

@@ -461,31 +461,33 @@ order to reduce the fingerprint the header provides.
 GREASE-like UA Strings {#grease}
 ----------------------
 
-History has shown us that there are real incentives for [=user agents=] to lie
-about their branding in order to thread the needle of sites' sniffing scripts,
-and prevent their users from being blocked by UA-based allow/block lists.
+History has shown us that there are real incentives for [=user agents=] to lie about their branding
+in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
+by UA-based allow/block lists.
 
-Reseting expectations may help to prevent abuse of the UA string's brand in the
-short term, but probably won't help in the long run.  The world of network
-protocol introduced the notion of <abbr title="Generate Random Extensions And
-Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]]. We could borrow
-from that concept to tackle this problem.
+Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
+probably won't help in the long run.  The world of network protocol introduced the notion of <abbr
+title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
+We could borrow from that concept to tackle this problem.
 
-[=User agents=] SHOULD model `UA` as a set, rather than a single entry. They then
-could encourage standardized processing of the `UA` string, by randomly
-including additional, intentionally incorrect, comma-separated entries with
-arbitrary ordering. That would reduce the chance that we ossify on a few
-required strings.  
+[=User agents=] SHOULD model <a http-header>`Sec-CH-UA`</a> and {{uaList}} as a set which contains
+more than a single entry. They then could encourage standardized processing of the `UA` string, by
+randomly including additional, intentionally incorrect, comma-separated entries with arbitrary
+ordering. That would reduce the chance that we ossify on a few required strings.  
 
 Let's examine a few examples:
-* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a UA set that includes an non-existent browser, and which varies once in a while.
-  - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its version to that.
-  - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing, Chrome might remove itself from the set entirely.
-  - `"Chromium"; v="73", "NotBrowser"; v="12"`
-* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
-  - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
+* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
+    UA set that includes an non-existent browser, and which varies once in a while.
+    - `"Chrome"; v="73", "NotBrowser"; v="12"`
+* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering
+    engine and its version to that.
+    - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
+* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than
+    exact UA sniffing, Chrome might remove itself from the set entirely.
+    - `"Chromium"; v="73", "NotBrowser"; v="12"`
+* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
+    set, enabling sites to count them.
+    - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
 
 The 'Sec-CH-' prefix {#sec-ch}

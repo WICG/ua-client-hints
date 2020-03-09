@@ -344,6 +344,8 @@ Navigator includes NavigatorUA;
 
 </pre>
 
+Note: The high-entropy portions of the user agent information are retrieved through a {{Promise}}, in order to give [=user agents=] the opportunity to gate their exposure behind potentially time-consuming checks (e.g. by asking the user for their permission).
+
 Processing model {#processing}
 --------------
 

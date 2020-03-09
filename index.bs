@@ -489,7 +489,6 @@ Let's examine a few examples:
     set, enabling sites to count them.
     - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
-
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------
 

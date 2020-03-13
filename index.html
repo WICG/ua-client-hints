@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 70c86369151f7b7b97b78c0f664dba09a4024ca2" name="generator">
+  <meta content="Bikeshed version 7dd49ddf2b095c0a9accc859934f2349a4fb5d3c" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="d94a6d9133c55af61ddb7774579bdf991c50b050" name="document-revision">
+  <meta content="433e3d72083a86fd8371fcda979b9fdbe2186dc5" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-09">9 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-13">13 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1752,7 +1752,7 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-model"><code><c- g>model</c-></code></dfn>;
 };
 
-[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatoruadata"><code><c- g>NavigatorUAData</c-></code></dfn> {
   <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" id="dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="boolean" id="dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></dfn>;
@@ -1762,7 +1762,9 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
 <c- b>interface</c-> <c- b>mixin</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatorua"><code><c- g>NavigatorUA</c-></code></dfn> {
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata"><c- n>NavigatorUAData</c-></a> <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="attribute" data-export data-readonly data-type="NavigatorUAData" id="dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code><a class="self-link" href="#dom-navigatorua-useragentdata"></a></dfn>;
 };
+
 <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua"><c- n>NavigatorUA</c-></a>;
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator" id="ref-for-workernavigator"><c- n>WorkerNavigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①"><c- n>NavigatorUA</c-></a>;
 
 </pre>
    <p class="note" role="note"><span>Note:</span> The high-entropy portions of the user agent information are retrieved through a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code>, in order to give <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑦">user agents</a> the opportunity to gate their exposure behind potentially time-consuming checks (e.g. by asking the user for their permission).</p>
@@ -2246,6 +2248,12 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-windoworworkerglobalscope">3.2. WindowOrWorkerGlobalScope</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-workernavigator">
+   <a href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator">https://html.spec.whatwg.org/multipage/workers.html#workernavigator</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-workernavigator">3. Interface</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-in-parallel">
    <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel">https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel</a><b>Referenced in:</b>
    <ul>
@@ -2417,6 +2425,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <ul>
      <li><span class="dfn-paneled" id="term-for-navigator" style="color:initial">Navigator</span>
      <li><span class="dfn-paneled" id="term-for-windoworworkerglobalscope" style="color:initial">WindowOrWorkerGlobalScope</span>
+     <li><span class="dfn-paneled" id="term-for-workernavigator" style="color:initial">WorkerNavigator</span>
      <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
      <li><span class="dfn-paneled" id="term-for-queue-a-task" style="color:initial">queue a task</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global" style="color:initial">relevant global object</span>
@@ -2497,7 +2506,7 @@ register them in the permanent message header field registry (<a data-link-type=
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-model"><code><c- g>model</c-></code></a>;
 };
 
-[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
 <c- b>interface</c-> <a href="#navigatoruadata"><code><c- g>NavigatorUAData</c-></code></a> {
   <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion④"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
@@ -2507,7 +2516,9 @@ register them in the permanent message header field registry (<a data-link-type=
 <c- b>interface</c-> <c- b>mixin</c-> <a href="#navigatorua"><code><c- g>NavigatorUA</c-></code></a> {
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata①"><c- n>NavigatorUAData</c-></a> <a data-readonly data-type="NavigatorUAData" href="#dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code></a>;
 };
-<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①"><c- n>NavigatorUA</c-></a>;
+
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua②"><c- n>NavigatorUA</c-></a>;
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator" id="ref-for-workernavigator①"><c- n>WorkerNavigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①①"><c- n>NavigatorUA</c-></a>;
 
 
 </pre>
@@ -2642,7 +2653,7 @@ one returned from the JS API.<a href="#issue-b0a7fffe"> ↵ </a></div>
   <aside class="dfn-panel" data-for="navigatorua">
    <b><a href="#navigatorua">#navigatorua</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-navigatorua">3. Interface</a>
+    <li><a href="#ref-for-navigatorua">3. Interface</a> <a href="#ref-for-navigatorua①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="ua-list">

@@ -330,6 +330,7 @@ dictionary UADataValues {
   DOMString model;
 };
 
+[Exposed=(Window,Worker)]
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
   readonly attribute boolean mobile;

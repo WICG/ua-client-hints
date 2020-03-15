@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 7dd49ddf2b095c0a9accc859934f2349a4fb5d3c" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="433e3d72083a86fd8371fcda979b9fdbe2186dc5" name="document-revision">
+  <meta content="fb3f94ee4e809a6b13f3ec6dace391c37aa899d4" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-13">13 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-15">15 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1892,6 +1892,8 @@ required strings.</p>
     <li data-md>
      <p><code>"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"</code></p>
    </ul>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑥">user agents</a> SHOULD keep caching variance in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a> versions.</p>
+   <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>'s significant version.</p>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Based on some <a href="https://github.com/w3ctag/design-reviews/issues/320">discussion with the TAG</a>, it seems
 reasonable to forbid access to these headers from JavaScript, and demarcate them as
@@ -2350,7 +2352,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-user-agent②⑨">4.2. Delegation</a>
     <li><a href="#ref-for-user-agent③⓪">4.3. Access Restrictions</a> <a href="#ref-for-user-agent③①">(2)</a>
     <li><a href="#ref-for-user-agent③②">5.1. The 'User-Agent' Header</a> <a href="#ref-for-user-agent③③">(2)</a>
-    <li><a href="#ref-for-user-agent③④">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent③⑤">(2)</a>
+    <li><a href="#ref-for-user-agent③④">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent③⑤">(2)</a> <a href="#ref-for-user-agent③⑥">(3)</a> <a href="#ref-for-user-agent③⑦">(4)</a> <a href="#ref-for-user-agent③⑧">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">

@@ -368,7 +368,7 @@ When asked to run the <dfn>create UA list</dfn> algorithm, the [=user agent=] MU
 
     2. Append |dict| to |list|.
 
-4.  The [=user agent=] MAY execute the following steps:
+4.  The [=user agent=] SHOULD execute the following steps:
 
     1.  [=list/Append=] additional items to |list| containing {{NavigatorUABrandVersion}} objects,
         initialized with arbitrary {{NavigatorUABrandVersion/brand}} and {{NavigatorUABrandVersion/version}} combinations.
@@ -470,7 +470,7 @@ probably won't help in the long run.  The world of network protocol introduced t
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.
 
-[=User agents=] SHOULD model <a http-header>`Sec-CH-UA`</a> and {{uaList}} as a set which contains
+[=User agents=] SHOULD model [=user agent/UA list=] as a set which contains
 more than a single entry. They then could encourage standardized processing of the `UA` string, by
 randomly including additional, intentionally incorrect, comma-separated entries with arbitrary
 ordering. That would reduce the chance that we ossify on a few required strings.  

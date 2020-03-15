@@ -491,6 +491,9 @@ Let's examine a few examples:
 * Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
   - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
+When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize variance among identical [=user agent=] versions.
+
+Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant version. 
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

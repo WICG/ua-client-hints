@@ -153,14 +153,15 @@ asks for a little more information by sending an `Accept-CH` header (Section 2.2
 [[I-D.ietf-httpbis-client-hints]]) along with the initial response:
 
 ``` http
-  Accept-CH: UA, Platform
+  Accept-CH: UA-Full-Version, UA-Platform
 ```
 
 In response, the user agent includes more detailed version information, as well as information about
 the underlying platform in the next request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser"; v="73.3R8.2H.1"
+  Sec-CH-UA: "Examplary Browser"; v="73"
+  Sec-CH-UA-Full-Version: "73.3R8.2H.1"
   Sec-CH-UA-Platform: "Windows"
 ```
 
@@ -259,12 +260,14 @@ The header's ABNF is:
   Sec-CH-UA = sh-list
 ```
 
-Unlike most Client Hints, the `Sec-CH-UA` header will be sent with all requests, whether or not the
-server opted-into receiving the header via an `Accept-CH` header. Prior to an opt-in, however, it
-will include only the [=user agent=]'s branding information, and the significant version number (both of which
-are fairly clearly sniffable by "examining the structure of other headers and by testing for the
-availability and semantics of the features introduced or modified between releases of a particular
-browser" [[Janc2014]]).
+Unlike most Client Hints, since it's included in the <a
+href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+the `Sec-CH-UA` header will be sent with all requests, whether or not the server opted-into
+receiving the header via an `Accept-CH` header. Therefore, it includes only the [=user agent=]'s
+branding information, and the significant version number (both of which are fairly clearly
+sniffable by "examining the structure of other headers and by testing for the availability and
+semantics of the features introduced or modified between releases of a particular browser"
+[[Janc2014]]).
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
@@ -283,6 +286,19 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
     3. Append |pair| to |list|.
 
 3. Return the output of running <a href="https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html#ser-list">serializing a list</a> with |list| as input.
+
+The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-full-version}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
+about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
+whose value MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Full-Version = sh-string
+```
 
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
 --------------------------------
@@ -316,6 +332,7 @@ dictionary UADataValues {
   DOMString platformVersion;
   DOMString architecture;
   DOMString model;
+  DOMString uaFullVersion;
 };
 
 [Exposed=(Window,Worker)]
@@ -395,7 +412,9 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     5. If |hints| [=contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
 
-    6. [=Queue a task=] to [=resolve=] |p| with |uaData|.
+    6. If |hints| [=contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
+
+    7. [=Queue a task=] to [=resolve=] |p| with |uaData|.
 
 ISSUE: Add a specific task source this is queued on.
 
@@ -611,6 +630,24 @@ Author/Change controller:
 
 Specification document:
 : this specification ([[#sec-ch-mobile]])
+
+'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
+----------------------------
+
+Header field name:
+: Sec-CH-UA-Full-Version
+
+Applicable protocol:
+: http
+
+Status:
+: standard
+
+Author/Change controller:
+: IETF
+
+Specification document:
+: this specification ([[#sec-ch-full-version]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

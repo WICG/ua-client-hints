@@ -270,15 +270,15 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
 1.  Let |list| be an [=/list=], initially empty.
 
-2. For each {{NavigatorUABrandVersion}} in [=user agent/UA list=]:
+2. For each |brandVersion| in [=user agent/UA list=]:
 
     1. Let |parameter| be a [=dictionary=], initially empty.
 
     2. Set |parameter|["param_name"] to "v".
 
-    3. Set |parameter|["param_value"] to {{NavigatorUABrandVersion/version}}.
+    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
 
-    2. Let |pair| be a tuple comprised of {{NavigatorUABrandVersion/brand}} and |parameter|.
+    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
 
     3. Append |pair| to |list|.
 

@@ -266,34 +266,23 @@ are fairly clearly sniffable by "examining the structure of other headers and by
 availability and semantics of the features introduced or modified between releases of a particular
 browser" [[Janc2014]]).
 
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, given a
-<a href="https://wicg.github.io/client-hints-infrastructure/#environment-settings-object-client-hints-set">client hints set</a> (|set|),
-[=user agents=] MUST:
+To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
-1.  Let |value| be a [=Structured Header=] object whose value is a [=structured header/list=].
+1.  Let |list| be a [=/list=], initially empty.
 
-2.  Let |version| be the [=user agent=]'s [=user agent/full version=] if |set|
-    [=list/contains=] `UA`, and the [=user agent=]'s [=user agent/significant version=] otherwise.
+2. For each |brandVersion| in [=user agent/UA list=]:
 
-3.  Let |ua| be a string whose value is the [=string/concatenation=] of the [=user agent=]'s
-    [=user agent/brand=], the string ";v=", and |version|.
+    1. Let |parameter| be a [=dictionary=], initially empty.
 
-4.  [=list/Append=] |ua| to |value|.
+    2. Set |parameter|["param_name"] to "v".
 
-5.  The [=user agent=] MAY execute the following steps:
+    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
 
-    1.  [=list/Append=] additional items to |value| containing arbitrary brand and version
-        combinations.
+    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
 
-    2.  Randomize the order of the items in |value|.
+    3. Append |pair| to |list|.
 
-    Note: See [[#grease]] for more details on why these steps might be appropriate.
-
-6.  Return |value|.
-
-Issue: Fix the processing model here so that it will use Structured Headers
-serialization, and make sure that the value set for headers if the same as the
-one returned from the JS API.
+3. Return the output of running <a href="https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html#ser-list">serializing a list</a> with |list| as input.
 
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
 --------------------------------
@@ -307,7 +296,6 @@ The header's ABNF is:
 ``` abnf
   Sec-CH-UA-Mobile = sh-boolean
 ```
-
 
 Integration with Fetch {#fetch-integration}
 ----------------------
@@ -353,7 +341,7 @@ Processing model {#processing}
 
 <h3 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h3>
 
-Each [=user agent=] has an associated <dfn>UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
+Each [=user agent=] has an associated <dfn for="user agent">UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
 
 Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=UA list=].
 
@@ -372,7 +360,7 @@ When asked to run the <dfn>create UA list</dfn> algorithm, the [=user agent=] MU
 
     2. Append |dict| to |list|.
 
-4.  The [=user agent=] MAY execute the following steps:
+4.  The [=user agent=] SHOULD execute the following steps:
 
     1.  [=list/Append=] additional items to |list| containing {{NavigatorUABrandVersion}} objects,
         initialized with arbitrary {{NavigatorUABrandVersion/brand}} and {{NavigatorUABrandVersion/version}} combinations.
@@ -465,31 +453,33 @@ order to reduce the fingerprint the header provides.
 GREASE-like UA Strings {#grease}
 ----------------------
 
-History has shown us that there are real incentives for [=user agents=] to lie
-about their branding in order to thread the needle of sites' sniffing scripts,
-and prevent their users from being blocked by UA-based allow/block lists.
+History has shown us that there are real incentives for [=user agents=] to lie about their branding
+in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
+by UA-based allow/block lists.
 
-Reseting expectations may help to prevent abuse of the UA string's brand in the
-short term, but probably won't help in the long run.  The world of network
-protocol introduced the notion of <abbr title="Generate Random Extensions And
-Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]]. We could borrow
-from that concept to tackle this problem.
+Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
+probably won't help in the long run.  The world of network protocol introduced the notion of <abbr
+title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
+We could borrow from that concept to tackle this problem.
 
-[=User agents=] SHOULD model `UA` as a set, rather than a single entry. They then
-could encourage standardized processing of the `UA` string, by randomly
-including additional, intentionally incorrect, comma-separated entries with
-arbitrary ordering. That would reduce the chance that we ossify on a few
-required strings.  
+[=User agents=]' [=user agent/UA list=] containing more than a single entry could encourage
+standardized processing of the `UA` string. By randomly including additional, intentionally
+incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
+ossify on a few required strings.  
 
 Let's examine a few examples:
-* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a UA set that includes an non-existent browser, and which varies once in a while.
-  - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its version to that.
-  - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing, Chrome might remove itself from the set entirely.
-  - `"Chromium"; v="73", "NotBrowser"; v="12"`
-* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
-  - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
+* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
+    UA set that includes an non-existent browser, and which varies once in a while.
+    - `"Chrome"; v="73", "NotBrowser"; v="12"`
+* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering
+    engine and its version to that.
+    - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
+* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than
+    exact UA sniffing, Chrome might remove itself from the set entirely.
+    - `"Chromium"; v="73", "NotBrowser"; v="12"`
+* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
+    set, enabling sites to count them.
+    - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
 When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize variance among identical [=user agent=] versions.
 

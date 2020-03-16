@@ -268,7 +268,7 @@ browser" [[Janc2014]]).
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
-1.  Let |list| be an [=/list=], initially empty.
+1.  Let |list| be a [=/list=], initially empty.
 
 2. For each |brandVersion| in [=user agent/UA list=]:
 

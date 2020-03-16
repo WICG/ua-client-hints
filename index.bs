@@ -632,6 +632,24 @@ Author/Change controller:
 Specification document:
 : this specification ([[#sec-ch-mobile]])
 
+'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
+----------------------------
+
+Header field name:
+: Sec-CH-UA-Full-Version
+
+Applicable protocol:
+: http
+
+Status:
+: standard
+
+Author/Change controller:
+: IETF
+
+Specification document:
+: this specification ([[#sec-ch-full-version]])
+
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------
 

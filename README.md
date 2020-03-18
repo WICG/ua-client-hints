@@ -220,7 +220,9 @@ that the extent of a site's usage can be monitored and evaluated.
 This section attempts to document the current uses for the `User-Agent` string,
 and how similar functionality could be enabled using UA-CH.
 
-## Differential serving based on browser features
+## Differential serving
+
+### Based on browser features
 This use-case enables services like [polyfill.io](https://polyfill.io) to serve
 custom-tailored polyfills to their users, without bloating up the experience of
 modern browser users.
@@ -238,8 +240,22 @@ meaningful version, and map that to a list of available features. That enables
 it to know which polyfill or code variant to serve.
 
 Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA`
-header, that is sent by default on every request, and modify their reponse
+header, that is sent by default on every request, and modify their response
 based on that.
+
+### Browser bug workaround
+Some browser versions have well-known bugs which require content to workaround
+them. Triggering those bugs can result in browser crashes, content breakage and
+other issues, and those bugs are by definition not something that can be
+feature detected. Therefore, content needs to avoid them altogether for
+affected browser versions.
+
+For that use case, servers need to be aware of the browser and its meaningful
+version, be aware of browser bugs that impact them, and apply workarounds if
+the current browser version is impacted.
+
+Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA`
+header, sent by default on every request, and use it to modify their response.
 
 ## Marketshare Analytics
 A browser's market share can be extremely important. Having visibility into a
@@ -363,6 +379,17 @@ knows which device is in question.
 Since such messaging doesn't require any server-side adaptation, it's better
 for this case to use the `getUserAgent` method in order to retrieve the
   required information.
+
+## Download of appropriate binary executables
+Some sites are used to download binary executables of native applications, and
+need to be able to propose the right binary to the user by default.  The right
+binary executable for the current user depends on a few factors: their
+operating system, its version, as well as their CPU architecture.
+
+In order to tackle that use case, download sites can opt-in to receive the
+`UA-Platform`, `UA-Platform-Version` and `UA-Architecture` hints (or query them
+through the API), in order to ensure the right binary is offered to the user by
+default.
 
 ## Conversion modeling
 Some machine learning models use various details from the `User-Agent` string

@@ -481,7 +481,7 @@ Let's examine a few examples:
 * Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
   - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
-We'd reflect this value in the `NavigatorUAData.userAgentData.uaList` attribute, which returns an array of dictionaries containing brand and version.
+We'd reflect this value in the `navigator.userAgentData.uaList` attribute, which returns an array of dictionaries containing brand and version.
 
 [4]: https://tools.ietf.org/html/draft-ietf-tls-grease-01
 

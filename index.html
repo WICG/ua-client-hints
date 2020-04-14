@@ -1222,94 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 7dd49ddf2b095c0a9accc859934f2349a4fb5d3c" name="generator">
+  <meta content="Bikeshed version b76f9052, updated Mon Apr 13 16:17:21 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="ff4d5f00f17c491692ae477dd1299a628b8b5e53" name="document-revision">
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: gray;
-    color: white;
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: black;
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
+  <meta content="c48c4257ee505dc6f94789a7493ee8119f857e74" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1372,6 +1287,35 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
 <style>/* style-dfn-panel */
 
 .dfn-panel {
@@ -1409,6 +1353,62 @@ pre .property::before, pre .property::after {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: gray;
+    color: white;
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: black;
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }</style>
 <style>/* style-syntax-highlighting */
 pre.idl.highlight { color: #708090; }
 .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-16">16 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-14">14 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2266,8 +2266,8 @@ register them in the permanent message header field registry (<a data-link-type=
    <li><a href="#dictdef-uadatavalues">UADataValues</a><span>, in §3</span>
    <li><a href="#windoworworkerglobalscope-ua-frozen-array">UA frozen array</a><span>, in §3.2</span>
    <li><a href="#dom-uadatavalues-uafullversion">uaFullVersion</a><span>, in §3</span>
-   <li><a href="#dom-navigatoruadata-ualist">uaList</a><span>, in §3</span>
    <li><a href="#user-agent-ua-list">UA list</a><span>, in §3.2</span>
+   <li><a href="#dom-navigatoruadata-ualist">uaList</a><span>, in §3</span>
    <li><a href="#dom-navigatorua-useragentdata">userAgentData</a><span>, in §3</span>
    <li><a href="#dom-navigatoruabrandversion-version">version</a><span>, in §3</span>
   </ul>
@@ -2531,31 +2531,31 @@ register them in the permanent message header field registry (<a data-link-type=
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def"><c- b>dictionary</c-> <a href="#dictdef-navigatoruabrandversion"><code><c- g>NavigatorUABrandVersion</c-></code></a> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑧"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-brand"><code><c- g>brand</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-version"><code><c- g>version</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-brand"><code><c- g>brand</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-navigatoruabrandversion-version"><code><c- g>version</c-></code></a>;
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-uadatavalues"><code><c- g>UADataValues</c-></code></a> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platform"><code><c- g>platform</c-></code></a>; 
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-model"><code><c- g>model</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑥①"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-uafullversion"><code><c- g>uaFullVersion</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platform"><code><c- g>platform</c-></code></a>; 
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-model"><code><c- g>model</c-></code></a>;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-uafullversion"><code><c- g>uaFullVersion</c-></code></a>;
 };
 
-[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
+[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
 <c- b>interface</c-> <a href="#navigatoruadata"><code><c- g>NavigatorUAData</c-></code></a> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion④"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></a>;
-  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues②"><c- n>UADataValues</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code></a>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑦①"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code></a>);
+  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues"><c- n>UADataValues</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code></a>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code></a>);
 };
 
 <c- b>interface</c-> <c- b>mixin</c-> <a href="#navigatorua"><code><c- g>NavigatorUA</c-></code></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata" id="ref-for-navigatoruadata①"><c- n>NavigatorUAData</c-></a> <a data-readonly data-type="NavigatorUAData" href="#dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code></a>;
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext"><c- g>SecureContext</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#navigatoruadata"><c- n>NavigatorUAData</c-></a> <a data-readonly data-type="NavigatorUAData" href="#dom-navigatorua-useragentdata"><code><c- g>userAgentData</c-></code></a>;
 };
 
-<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua②"><c- n>NavigatorUA</c-></a>;
-<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator" id="ref-for-workernavigator①"><c- n>WorkerNavigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①①"><c- n>NavigatorUA</c-></a>;
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator"><c- n>Navigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua"><c- n>NavigatorUA</c-></a>;
+<a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator"><c- n>WorkerNavigator</c-></a> <c- b>includes</c-> <a class="n" data-link-type="idl-name" href="#navigatorua"><c- n>NavigatorUA</c-></a>;
 
 
 </pre>

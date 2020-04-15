@@ -136,15 +136,14 @@ accomplish this as follows:
         ```
         
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
-    `navigator.getUserAgent()` method as something like:
+    `navigator.userAgentData` attribute as something like:
 
 
     ```idl
-    interface mixin NavigatorUA {
-      [SecureContext] NavigatorUAData getUserAgent();
+    dictionary NavigatorUABrandVersion {
+      DOMString brand;    // "Google Chrome"
+      DOMString version;  // "84"
     };
-
-    Navigator includes NavigatorUA;
 
     dictionary UADataValues {
       DOMString platform;         // "PhoneOS"
@@ -154,16 +153,19 @@ accomplish this as follows:
       DOMString uaFullVersion;    // "73.32.AGX.5"
     };
 
-    dictionary NavigatorUABrandVersionDict {
-      required DOMString brand; // "Chrome"
-      DOMString version;        // "73"
+    [Exposed=(Window,Worker)]
+    interface NavigatorUAData {
+      readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
+      readonly attribute boolean mobile;                                                 // false
+      Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
     };
 
-    interface NavigatorUAData {
-      readonly attribute FrozenArray<NavigatorUABrandVersionDict> brand;     // [ { brand: "Chrome", version: "73" } ]
-      readonly attribute boolean mobile;                                     // false
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
+    interface mixin NavigatorUA {
+      [SecureContext] readonly attribute NavigatorUAData userAgentData;
     };
+
+    Navigator includes NavigatorUA;
+    WorkerNavigator includes NavigatorUA;
     ```
 
     User agents can make intelligent decisions about what to reveal in each of these attributes.
@@ -214,6 +216,25 @@ The user agent can make reasonable decisions about when to honor requests for de
 hints and first-parties can use `Feature-Policy` to decide which third-parties they'd like to
 privilege with detailed user agent information. In any event, moving to this opt-in model means
 that the extent of a site's usage can be monitored and evaluated.
+
+For developers that prefer using user agent information to make client-side decisions, they could use the JavaScript API:
+
+```javascript
+  const uaData = navigator.userAgentData;
+  const uaList = uaData.uaList;     // [ {brand: "Google Chrome", version: "84"}, {brand: "Chrromium", version: "84"} ]
+  const mobileness = uaData.mobile; // false
+  (async ()=>{
+    // `getHighEntropyValues()` returns a Promise, so needs to be `await`ed on.
+    const highEntropyValues = await uaData.getHighEntropyValues(
+      ["platform", "platformVersion", "architecture", "model", "uaFullVersion"]);
+    const platform = highEntropyValues.platform;               // "Mac OS X"
+    const platformVersion = highEntropyValues.platformVersion; //"10_15_4"
+    const architecture = highEntropyValues.architecture;       // "Intel"
+    const model = highEntropyValues.model;                     // ""
+    const uaFullVersion = highEntropyValues.uaFullVersion;     // "84.0.4113.0"
+  })();
+
+```
 
 # Use-cases
 
@@ -377,8 +398,8 @@ often also include the platform and its version in order to make sure the user
 knows which device is in question.
 
 Since such messaging doesn't require any server-side adaptation, it's better
-for this case to use the `getUserAgent` method in order to retrieve the
-  required information.
+for this case to use the `userAgentData.getHighEntropyData()` method in order
+to retrieve the required information.
 
 ## Download of appropriate binary executables
 Some sites are used to download binary executables of native applications, and
@@ -416,7 +437,7 @@ through `Sec-CH-UA` for logging purposes, or opt-in to receive higher-entropy
 hints. The latter doesn't seem like something services should do just for
 forensic purposes. On the other hand, when specific issues are encountered, it
 may make sense for those services to opt-in to receive more details on the user
-agent, or use the `getUserAgent` API for that purpose.
+agent, or use the `userAgentData.getHighEntropyData()` API for that purpose.
 
 ## Fingerprinting
 

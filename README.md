@@ -221,7 +221,7 @@ For developers that prefer using user agent information to make client-side deci
 
 ```javascript
   const uaData = navigator.userAgentData;
-  const uaList = uaData.uaList;     // [ {brand: "Google Chrome", version: "84"}, {brand: "Chrromium", version: "84"} ]
+  const brands = uaData.brands;     // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
   const mobileness = uaData.mobile; // false
   (async ()=>{
     // `getHighEntropyValues()` returns a Promise, so needs to be `await`ed on.

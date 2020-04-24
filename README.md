@@ -155,7 +155,7 @@ accomplish this as follows:
 
     [Exposed=(Window,Worker)]
     interface NavigatorUAData {
-      readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
+      readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; brands;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile;                                                 // false
       Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
     };
@@ -529,7 +529,7 @@ Let's examine a few examples:
 * Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
   - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
-We'd reflect this value in the `navigator.userAgentData.uaList` attribute, which returns an array of dictionaries containing brand and version.
+We'd reflect this value in the `navigator.userAgentData.brands` attribute, which returns an array of dictionaries containing brand and version.
 
 [4]: https://tools.ietf.org/html/draft-ietf-tls-grease-01
 

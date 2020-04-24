@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version b76f9052, updated Mon Apr 13 16:17:21 2020 -0700" name="generator">
+  <meta content="Bikeshed version 4ad68f3f, updated Thu Apr 23 14:57:31 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="0f5e939337a24ea8a750705eada26d995fb0478e" name="document-revision">
+  <meta content="791181727392ad4c51d0f1c0a3832e331593b171" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-15">15 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-24">24 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1532,7 +1532,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <ol class="toc">
       <li><a href="#processing"><span class="secno">3.1</span> <span class="content">Processing model</span></a>
       <li><a href="#monkeypatch-html-windoworworkerglobalscope"><span class="secno">3.2</span> <span class="content"><code>WindowOrWorkerGlobalScope</code></span></a>
-      <li><a href="#create-ua-list-section"><span class="secno">3.3</span> <span class="content">Create a UA list</span></a>
+      <li><a href="#create-ua-list-section"><span class="secno">3.3</span> <span class="content">Create brands</span></a>
       <li><a href="#getters"><span class="secno">3.4</span> <span class="content">Getters</span></a>
       <li><a href="#getHighEntropyValues"><span class="secno">3.5</span> <span class="content"><code>getHighEntropyValues</code> method</span></a>
      </ol>
@@ -1713,7 +1713,7 @@ semantics of the features introduced or modified between releases of a particula
     <li data-md>
      <p>Let <var>list</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a>, initially empty.</p>
     <li data-md>
-     <p>For each <var>brandVersion</var> in <a data-link-type="dfn" href="#user-agent-ua-list" id="ref-for-user-agent-ua-list">UA list</a>:</p>
+     <p>For each <var>brandVersion</var> in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands">brands</a>:</p>
      <ol>
       <li data-md>
        <p>Let <var>parameter</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-dictionary" id="ref-for-dfn-dictionary">dictionary</a>, initially empty.</p>
@@ -1759,7 +1759,7 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="navigatoruadata"><code><c- g>NavigatorUAData</c-></code></dfn> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" id="dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" id="dom-navigatoruadata-brands"><code><c- g>brands</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="attribute" data-export data-readonly data-type="boolean" id="dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></dfn>;
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues"><c- n>UADataValues</c-></a>> <dfn class="idl-code" data-dfn-for="NavigatorUAData" data-dfn-type="method" data-export data-lt="getHighEntropyValues(hints)" id="dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code><a class="self-link" href="#dom-navigatoruadata-gethighentropyvalues"></a></dfn>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑦"><c- b>DOMString</c-></a>> <dfn class="idl-code" data-dfn-for="NavigatorUAData/getHighEntropyValues(hints)" data-dfn-type="argument" data-export id="dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code><a class="self-link" href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"></a></dfn>);
 };
@@ -1775,10 +1775,10 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
    <p class="note" role="note"><span>Note:</span> The high-entropy portions of the user agent information are retrieved through a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code>, in order to give <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①③">user agents</a> the opportunity to gate their exposure behind potentially time-consuming checks (e.g. by asking the user for their permission).</p>
    <h3 class="heading settled" data-level="3.1" id="processing"><span class="secno">3.1. </span><span class="content">Processing model</span><a class="self-link" href="#processing"></a></h3>
    <h3 class="heading settled" data-level="3.2" id="monkeypatch-html-windoworworkerglobalscope"><span class="secno">3.2. </span><span class="content"><code>WindowOrWorkerGlobalScope</code></span><a class="self-link" href="#monkeypatch-html-windoworworkerglobalscope"></a></h3>
-   <p>Each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①④">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-ua-list">UA list</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a> created by running <a data-link-type="dfn" href="#create-ua-list" id="ref-for-create-ua-list">create UA list</a>.</p>
-   <p>Every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> object has an associated <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-ua-frozen-array">UA frozen array</dfn>, which is a <code><a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-frozen-array" id="ref-for-idl-frozen-array">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion①">NavigatorUABrandVersion</a>></code>. It is initially the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑤">user agent</a>'s <a data-link-type="dfn" href="#user-agent-ua-list" id="ref-for-user-agent-ua-list①">UA list</a>.</p>
-   <h3 class="heading settled" data-level="3.3" id="create-ua-list-section"><span class="secno">3.3. </span><span class="content">Create a UA list</span><a class="self-link" href="#create-ua-list-section"></a></h3>
-   <p>When asked to run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-ua-list">create UA list</dfn> algorithm, the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑥">user agent</a> MUST run the following steps:</p>
+   <p>Each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①④">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-brands">brands</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a> created by running <a data-link-type="dfn" href="#create-brands" id="ref-for-create-brands">create brands</a>.</p>
+   <p>Every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> object has an associated <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-brands-frozen-array">brands frozen array</dfn>, which is a <code><a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-frozen-array" id="ref-for-idl-frozen-array">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion①">NavigatorUABrandVersion</a>></code>. It is initially the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑤">user agent</a>'s <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands①">brands</a>.</p>
+   <h3 class="heading settled" data-level="3.3" id="create-ua-list-section"><span class="secno">3.3. </span><span class="content">Create brands</span><a class="self-link" href="#create-ua-list-section"></a></h3>
+   <p>When asked to run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-brands">create brands</dfn> algorithm, the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑥">user agent</a> MUST run the following steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>list</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a>.</p>
@@ -1808,7 +1808,7 @@ initialized with arbitrary <code class="idl"><a data-link-type="idl" href="#dom-
      <p>Return <var>list</var>.</p>
    </ol>
    <h3 class="heading settled" data-level="3.4" id="getters"><span class="secno">3.4. </span><span class="content">Getters</span><a class="self-link" href="#getters"></a></h3>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-ualist" id="ref-for-dom-navigatoruadata-ualist">uaList</a></code> attribute MUST return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-ua-frozen-array" id="ref-for-windoworworkerglobalscope-ua-frozen-array">UA frozen array</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brands" id="ref-for-dom-navigatoruadata-brands">brands</a></code> attribute MUST return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array">brands frozen array</a>.</p>
    <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a>.</p>
    <h3 class="heading settled" data-level="3.5" id="getHighEntropyValues"><span class="secno">3.5. </span><span class="content"><code>getHighEntropyValues</code> method</span><a class="self-link" href="#getHighEntropyValues"></a></h3>
    <p>The <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code><a class="self-link" href="#dom-navigatorua-gethighentropyvalues"></a></dfn> method MUST run these steps:</p>
@@ -1873,7 +1873,7 @@ by UA-based allow/block lists.</p>
    <p>Reseting expectations may help to prevent abuse of the UA string’s brand in the short term, but
 probably won’t help in the long run.  The world of network protocol introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">User agents</a>' <a data-link-type="dfn" href="#user-agent-ua-list" id="ref-for-user-agent-ua-list②">UA list</a> containing more than a single entry could encourage
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands②">brands</a> containing more than a single entry could encourage
 standardized processing of the <code>UA</code> string. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.</p>
@@ -2229,7 +2229,14 @@ register them in the permanent message header field registry (<a data-link-type=
      <li><a href="#user-agent-brand">dfn for user agent</a><span>, in §2</span>
      <li><a href="#dom-navigatoruabrandversion-brand">dict-member for NavigatorUABrandVersion</a><span>, in §3</span>
     </ul>
-   <li><a href="#create-ua-list">create UA list</a><span>, in §3.3</span>
+   <li>
+    brands
+    <ul>
+     <li><a href="#dom-navigatoruadata-brands">attribute for NavigatorUAData</a><span>, in §3</span>
+     <li><a href="#user-agent-brands">dfn for user agent</a><span>, in §3.2</span>
+    </ul>
+   <li><a href="#windoworworkerglobalscope-brands-frozen-array">brands frozen array</a><span>, in §3.2</span>
+   <li><a href="#create-brands">create brands</a><span>, in §3.3</span>
    <li><a href="#user-agent-full-version">full version</a><span>, in §2</span>
    <li>
     getHighEntropyValues(hints)
@@ -2264,10 +2271,7 @@ register them in the permanent message header field registry (<a data-link-type=
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request">set-ua</a><span>, in §2.5</span>
    <li><a href="#user-agent-significant-version">significant version</a><span>, in §2</span>
    <li><a href="#dictdef-uadatavalues">UADataValues</a><span>, in §3</span>
-   <li><a href="#windoworworkerglobalscope-ua-frozen-array">UA frozen array</a><span>, in §3.2</span>
    <li><a href="#dom-uadatavalues-uafullversion">uaFullVersion</a><span>, in §3</span>
-   <li><a href="#user-agent-ua-list">UA list</a><span>, in §3.2</span>
-   <li><a href="#dom-navigatoruadata-ualist">uaList</a><span>, in §3</span>
    <li><a href="#dom-navigatorua-useragentdata">userAgentData</a><span>, in §3</span>
    <li><a href="#dom-navigatoruabrandversion-version">version</a><span>, in §3</span>
   </ul>
@@ -2351,7 +2355,7 @@ register them in the permanent message header field registry (<a data-link-type=
   <aside class="dfn-panel" data-for="term-for-list-append">
    <a href="https://infra.spec.whatwg.org/#list-append">https://infra.spec.whatwg.org/#list-append</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-append">3.3. Create a UA list</a>
+    <li><a href="#ref-for-list-append">3.3. Create brands</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list">
@@ -2359,7 +2363,7 @@ register them in the permanent message header field registry (<a data-link-type=
    <ul>
     <li><a href="#ref-for-list">2.5. The 'Sec-CH-UA' Header Field</a>
     <li><a href="#ref-for-list①">3.2. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-list②">3.3. Create a UA list</a>
+    <li><a href="#ref-for-list②">3.3. Create brands</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-user-agent">
@@ -2374,7 +2378,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-user-agent①②">2.7. The 'Sec-CH-UA-Mobile' Header Field</a>
     <li><a href="#ref-for-user-agent①③">3. Interface</a>
     <li><a href="#ref-for-user-agent①④">3.2. WindowOrWorkerGlobalScope</a> <a href="#ref-for-user-agent①⑤">(2)</a>
-    <li><a href="#ref-for-user-agent①⑥">3.3. Create a UA list</a> <a href="#ref-for-user-agent①⑦">(2)</a> <a href="#ref-for-user-agent①⑧">(3)</a>
+    <li><a href="#ref-for-user-agent①⑥">3.3. Create brands</a> <a href="#ref-for-user-agent①⑦">(2)</a> <a href="#ref-for-user-agent①⑧">(3)</a>
     <li><a href="#ref-for-user-agent①⑨">3.4. Getters</a>
     <li><a href="#ref-for-user-agent②⓪">3.5. getHighEntropyValues method</a> <a href="#ref-for-user-agent②①">(2)</a> <a href="#ref-for-user-agent②②">(3)</a> <a href="#ref-for-user-agent②③">(4)</a>
     <li><a href="#ref-for-user-agent②④">4.1. Secure Transport</a>
@@ -2545,7 +2549,7 @@ register them in the permanent message header field registry (<a data-link-type=
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
 <c- b>interface</c-> <a href="#navigatoruadata"><code><c- g>NavigatorUAData</c-></code></a> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-ualist"><code><c- g>uaList</c-></code></a>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-navigatoruabrandversion"><c- n>NavigatorUABrandVersion</c-></a>> <a data-readonly data-type="FrozenArray<NavigatorUABrandVersion>" href="#dom-navigatoruadata-brands"><code><c- g>brands</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-navigatoruadata-mobile"><code><c- g>mobile</c-></code></a>;
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-uadatavalues"><c- n>UADataValues</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues"><code><c- g>getHighEntropyValues</c-></code></a>(<c- b>sequence</c->&lt;<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a>> <a href="#dom-navigatoruadata-gethighentropyvalues-hints-hints"><code><c- g>hints</c-></code></a>);
 };
@@ -2567,13 +2571,13 @@ register them in the permanent message header field registry (<a data-link-type=
   <aside class="dfn-panel" data-for="user-agent-brand">
    <b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-brand">3.3. Create a UA list</a> <a href="#ref-for-user-agent-brand①">(2)</a>
+    <li><a href="#ref-for-user-agent-brand">3.3. Create brands</a> <a href="#ref-for-user-agent-brand①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-significant-version">
    <b><a href="#user-agent-significant-version">#user-agent-significant-version</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-significant-version">3.3. Create a UA list</a> <a href="#ref-for-user-agent-significant-version①">(2)</a>
+    <li><a href="#ref-for-user-agent-significant-version">3.3. Create brands</a> <a href="#ref-for-user-agent-significant-version①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-agent-full-version">
@@ -2619,21 +2623,21 @@ register them in the permanent message header field registry (<a data-link-type=
    <ul>
     <li><a href="#ref-for-dictdef-navigatoruabrandversion">3. Interface</a>
     <li><a href="#ref-for-dictdef-navigatoruabrandversion①">3.2. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-dictdef-navigatoruabrandversion②">3.3. Create a UA list</a> <a href="#ref-for-dictdef-navigatoruabrandversion③">(2)</a>
+    <li><a href="#ref-for-dictdef-navigatoruabrandversion②">3.3. Create brands</a> <a href="#ref-for-dictdef-navigatoruabrandversion③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-navigatoruabrandversion-brand">
    <b><a href="#dom-navigatoruabrandversion-brand">#dom-navigatoruabrandversion-brand</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-navigatoruabrandversion-brand">2.5. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-dom-navigatoruabrandversion-brand①">3.3. Create a UA list</a> <a href="#ref-for-dom-navigatoruabrandversion-brand②">(2)</a>
+    <li><a href="#ref-for-dom-navigatoruabrandversion-brand①">3.3. Create brands</a> <a href="#ref-for-dom-navigatoruabrandversion-brand②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-navigatoruabrandversion-version">
    <b><a href="#dom-navigatoruabrandversion-version">#dom-navigatoruabrandversion-version</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-navigatoruabrandversion-version">2.5. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-dom-navigatoruabrandversion-version①">3.3. Create a UA list</a> <a href="#ref-for-dom-navigatoruabrandversion-version②">(2)</a>
+    <li><a href="#ref-for-dom-navigatoruabrandversion-version①">3.3. Create brands</a> <a href="#ref-for-dom-navigatoruabrandversion-version②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-uadatavalues">
@@ -2679,10 +2683,10 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-navigatoruadata">3. Interface</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-navigatoruadata-ualist">
-   <b><a href="#dom-navigatoruadata-ualist">#dom-navigatoruadata-ualist</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-navigatoruadata-brands">
+   <b><a href="#dom-navigatoruadata-brands">#dom-navigatoruadata-brands</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-ualist">3.4. Getters</a>
+    <li><a href="#ref-for-dom-navigatoruadata-brands">3.4. Getters</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-navigatoruadata-mobile">
@@ -2697,24 +2701,24 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-navigatorua">3. Interface</a> <a href="#ref-for-navigatorua①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="user-agent-ua-list">
-   <b><a href="#user-agent-ua-list">#user-agent-ua-list</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="user-agent-brands">
+   <b><a href="#user-agent-brands">#user-agent-brands</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-user-agent-ua-list">2.5. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-ua-list①">3.2. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-user-agent-ua-list②">5.2. GREASE-like UA Strings</a>
+    <li><a href="#ref-for-user-agent-brands">2.5. The 'Sec-CH-UA' Header Field</a>
+    <li><a href="#ref-for-user-agent-brands①">3.2. WindowOrWorkerGlobalScope</a>
+    <li><a href="#ref-for-user-agent-brands②">5.2. GREASE-like UA Strings</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="windoworworkerglobalscope-ua-frozen-array">
-   <b><a href="#windoworworkerglobalscope-ua-frozen-array">#windoworworkerglobalscope-ua-frozen-array</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="windoworworkerglobalscope-brands-frozen-array">
+   <b><a href="#windoworworkerglobalscope-brands-frozen-array">#windoworworkerglobalscope-brands-frozen-array</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-windoworworkerglobalscope-ua-frozen-array">3.4. Getters</a>
+    <li><a href="#ref-for-windoworworkerglobalscope-brands-frozen-array">3.4. Getters</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="create-ua-list">
-   <b><a href="#create-ua-list">#create-ua-list</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="create-brands">
+   <b><a href="#create-brands">#create-brands</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-create-ua-list">3.2. WindowOrWorkerGlobalScope</a>
+    <li><a href="#ref-for-create-brands">3.2. WindowOrWorkerGlobalScope</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

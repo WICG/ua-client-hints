@@ -273,7 +273,7 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
 1.  Let |list| be a [=/list=], initially empty.
 
-2. For each |brandVersion| in [=user agent/UA list=]:
+2. For each |brandVersion| in [=user agent/brands=]:
 
     1. Let |parameter| be a [=dictionary=], initially empty.
 
@@ -337,7 +337,7 @@ dictionary UADataValues {
 
 [Exposed=(Window,Worker)]
 interface NavigatorUAData {
-  readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; uaList;
+  readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
   readonly attribute boolean mobile;
   Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints);
 };
@@ -358,13 +358,13 @@ Processing model {#processing}
 
 <h3 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h3>
 
-Each [=user agent=] has an associated <dfn for="user agent">UA list</dfn>, which is a [=/list=] created by running [=create UA list=].
+Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running [=create brands=].
 
-Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">UA frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=UA list=].
+Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
 
-<h3 id="create-ua-list-section">Create a UA list</h3>
+<h3 id="create-ua-list-section">Create brands</h3>
 
-When asked to run the <dfn>create UA list</dfn> algorithm, the [=user agent=] MUST run the following steps:
+When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUST run the following steps:
 1. Let |list| be a [=/list=].
 
 2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the [=user agent=],
@@ -390,7 +390,7 @@ When asked to run the <dfn>create UA list</dfn> algorithm, the [=user agent=] MU
 
 <h3 id="getters">Getters</h3>
 
-On getting, the {{NavigatorUAData/uaList}} attribute MUST return [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/UA frozen array=].
+On getting, the {{NavigatorUAData/brands}} attribute MUST return [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
 
 On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agent=]'s [=user agent/mobileness=].
 
@@ -481,7 +481,7 @@ probably won't help in the long run.  The world of network protocol introduced t
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.
 
-[=User agents=]' [=user agent/UA list=] containing more than a single entry could encourage
+[=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
 standardized processing of the `UA` string. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.  

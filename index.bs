@@ -22,6 +22,8 @@ Boilerplate: omit conformance, omit feedback-header
 spec:fetch; type:dfn; for:/; text:request
 spec:webidl; type:dfn; text:resolve
 spec:infra; type:dfn; text:user agent
+spec:infra; type:dfn; for:/; text:list
+spec:permissions; type:dfn; for:/; text: permission task source
 </pre>
 <pre class="anchors">
 urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec: I-D.ietf-httpbis-header-structure
@@ -35,7 +37,6 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
             text: list; url: #section-3.1
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
-    spec:infra; type:dfn; for:/; text:list
 </pre>
 <pre class="biblio">
 {
@@ -414,7 +415,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     6. If |hints| [=contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
 
-    7. [=Queue a task=] to [=resolve=] |p| with |uaData|.
+    7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 ISSUE: Add a specific task source this is queued on.
 

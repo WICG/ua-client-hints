@@ -398,9 +398,9 @@ On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agen
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
 
-1. Let |p| be a [=a new promise=] created with {{NavigatorUAData}}'s [=relevant realm=].
+1. Let |p| be a [=a new promise=] created with [=current settings object=]'s [=environment settings object/realm=].
 
-2. If [=this=]'s [=relevant global object=] is not identical to {{NavigatorUAData}}'s [=relevant global object=], then:
+2. If {{NavigatorUAData}}'s [=relevant global object=] is a [=Window=] and its [=associated Document=] is [=fully active=], then:
 
     1. [=Reject=] |p| with a {{WrongDocumentError}}.
 

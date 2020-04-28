@@ -23,7 +23,6 @@ spec:fetch; type:dfn; for:/; text:request
 spec:webidl; type:dfn; text:resolve
 spec:infra; type:dfn; text:user agent
 spec:infra; type:dfn; for:/; text:list
-spec:permissions; type:dfn; for:/; text: permission task source
 </pre>
 <pre class="anchors">
 urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec: I-D.ietf-httpbis-header-structure
@@ -399,9 +398,15 @@ On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agen
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
 
-1. Let |p| be a [=a new promise=].
+1. Let |p| be a [=a new promise=] created with {{NavigatorUAData}}'s [=relevant realm=].
 
-2.  Run the following steps [=in parallel=]:
+2. If [=this=]'s [=relevant global object=] is not identical to {{NavigatorUAData}}'s [=relevant global object=], then:
+
+    1. [=Reject=] |p| with a {{ReferenceError}}.
+
+    2. Return |p|.
+
+3.  Run the following steps [=in parallel=]:
 
     1. Let |uaData| be a new {{UADataValues}}.
 
@@ -417,9 +422,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
-ISSUE: Add a specific task source this is queued on.
-
-3.  Return |p|.
+4.  Return |p|.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

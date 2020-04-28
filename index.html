@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 4ad68f3f, updated Thu Apr 23 14:57:31 2020 -0700" name="generator">
+  <meta content="Bikeshed version d2959a41, updated Fri Apr 24 17:44:40 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="791181727392ad4c51d0f1c0a3832e331593b171" name="document-revision">
+  <meta content="f0bbe167bcfeb12188b2d72a94255e099f039af3" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-24">24 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-28">28 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1814,7 +1814,7 @@ initialized with arbitrary <code class="idl"><a data-link-type="idl" href="#dom-
    <p>The <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code><a class="self-link" href="#dom-navigatorua-gethighentropyvalues"></a></dfn> method MUST run these steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
+     <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a> created in <a href="https://tc39.es/ecma262/#current-realm">the current realm</a>.</p>
     <li data-md>
      <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
@@ -1831,11 +1831,8 @@ initialized with arbitrary <code class="idl"><a data-link-type="idl" href="#dom-
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains④">contains</a> "uaFullVersion", let <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-uafullversion" id="ref-for-dom-uadatavalues-uafullversion">uaFullVersion</a></code>"] be the the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version①">full version</a>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">Queue a task</a> to <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var> with <var>uaData</var>.</p>
+       <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">Queue a task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-task-source" id="ref-for-permission-task-source">permission task source</a> to <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var> with <var>uaData</var>.</p>
      </ol>
-   </ol>
-   <p class="issue" id="issue-3ac6580b"><a class="self-link" href="#issue-3ac6580b"></a> Add a specific task source this is queued on.</p>
-   <ol start="3">
     <li data-md>
      <p>Return <var>p</var>.</p>
    </ol>
@@ -2388,6 +2385,12 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-user-agent③⓪">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent③①">(2)</a> <a href="#ref-for-user-agent③②">(3)</a> <a href="#ref-for-user-agent③③">(4)</a> <a href="#ref-for-user-agent③④">(5)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-permission-task-source">
+   <a href="https://w3c.github.io/permissions/#permission-task-source">https://w3c.github.io/permissions/#permission-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-permission-task-source">3.5. getHighEntropyValues method</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
@@ -2487,6 +2490,11 @@ register them in the permanent message header field registry (<a data-link-type=
      <li><span class="dfn-paneled" id="term-for-user-agent" style="color:initial">user agent</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[permissions]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-permission-task-source" style="color:initial">permission task source</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
@@ -2513,6 +2521,8 @@ register them in the permanent message header field registry (<a data-link-type=
    <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">Structured Headers for HTTP</a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-permissions">[PERMISSIONS]
+   <dd>Mounir Lamouri; Marcos Caceres; Jeffrey Yasskin. <a href="https://w3c.github.io/permissions/">Permissions</a>. URL: <a href="https://w3c.github.io/permissions/">https://w3c.github.io/permissions/</a>
    <dt id="biblio-webidl">[WebIDL]
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
@@ -2566,7 +2576,6 @@ register them in the permanent message header field registry (<a data-link-type=
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Perhaps <code>Sec-CH-UA-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-1a9c4c0c"> ↵ </a></div>
-   <div class="issue"> Add a specific task source this is queued on.<a href="#issue-3ac6580b"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="user-agent-brand">
    <b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>

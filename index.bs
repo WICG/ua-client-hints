@@ -402,7 +402,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
 2. If [=this=]'s [=relevant global object=] is not identical to {{NavigatorUAData}}'s [=relevant global object=], then:
 
-    1. [=Reject=] |p| with a {{ReferenceError}}.
+    1. [=Reject=] |p| with a {{WrongDocumentError}}.
 
     2. Return |p|.
 

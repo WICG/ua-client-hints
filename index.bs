@@ -400,13 +400,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
 1. Let |p| be a [=a new promise=] created with [=current settings object=]'s [=environment settings object/realm=].
 
-2. If {{NavigatorUAData}}'s [=relevant global object=] is a [=Window=] and its [=associated Document=] is not [=fully active=], then:
-
-    1. [=Reject=] |p| with a {{WrongDocumentError}}.
-
-    2. Return |p|.
-
-3.  Run the following steps [=in parallel=]:
+2.  Run the following steps [=in parallel=]:
 
     1. Let |uaData| be a new {{UADataValues}}.
 
@@ -422,7 +416,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
-4.  Return |p|.
+3.  Return |p|.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

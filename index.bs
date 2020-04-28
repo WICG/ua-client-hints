@@ -398,7 +398,7 @@ On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agen
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
 
-1. Let |p| be a [=a new promise=] created with [=current settings object=]'s [=environment settings object/realm=].
+1. Let |p| be a [=a new promise=] created with <a href="https://tc39.es/ecma262/#current-realm">the current realm</a>.
 
 2.  Run the following steps [=in parallel=]:
 

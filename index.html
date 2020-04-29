@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d2959a41, updated Fri Apr 24 17:44:40 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="f0bbe167bcfeb12188b2d72a94255e099f039af3" name="document-revision">
+  <meta content="acaf321e7ddeac59983b4ab736485830b10f1b34" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1471,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-28">28 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-29">29 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1908,12 +1908,14 @@ set, enabling sites to count them.</p>
    <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agents</a> SHOULD keep caching variance in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③③">user agent</a> versions.</p>
    <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③④">user agent</a>'s significant version.</p>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
-   <p>Based on some <a href="https://github.com/w3ctag/design-reviews/issues/320">discussion with the TAG</a>, it seems
-reasonable to forbid access to these headers from JavaScript, and demarcate them as
-browser-controlled client hints so they can be documented and included in requests without
-triggering CORS preflights. A <code>Sec-CH-</code> prefix seems like a viable approach, but this bit might
-shift as the broader Client Hints discussions above coalesce into something more solid that lands
-in specs.</p>
+   <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
+security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which
+require such user-land rewriting.</p>
+   <p>As such and based on <a href="https://github.com/w3ctag/design-reviews/issues/320">discussions with the TAG</a>, it seems
+reasonable to forbid write access to these headers from JavaScript (e.g. through <code>fetch</code> or Service
+Workers), and demarcate them as browser-controlled client hints so they can be documented and
+included in requests without triggering CORS preflights.</p>
+   <p>Therefore, request headers defined in this specification include a <code>Sec-CH-</code> prefix.</p>
    <h2 class="heading settled" data-level="6" id="iana"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
    <p>This document intends to define the <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA-Mobile</code> and <code>Sec-CH-UA</code> HTTP request header fields, and
 register them in the permanent message header field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>).</p>

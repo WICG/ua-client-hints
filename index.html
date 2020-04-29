@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d2959a41, updated Fri Apr 24 17:44:40 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="8962dae94127e3dbf47916987c147642c80e5a3e" name="document-revision">
+  <meta content="482a05baf0cd43fca49a2006ae6e20ae5d88a3c1" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1868,7 +1868,7 @@ order to reduce the fingerprint the header provides.</p>
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.</p>
    <p>Reseting expectations may help to prevent abuse of the UA string’s brand in the short term, but
-probably won’t help in the long run.  The world of network protocol introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>.
+probably won’t help in the long run.  The world of network protocols introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands②">brands</a> containing more than a single entry could encourage
 standardized processing of the <code>UA</code> string. By randomly including additional, intentionally
@@ -1905,8 +1905,15 @@ set, enabling sites to count them.</p>
        <p><code>"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"</code></p>
      </ul>
    </ul>
-   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agents</a> SHOULD keep caching variance in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③③">user agent</a> versions.</p>
-   <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③④">user agent</a>'s significant version.</p>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agents</a> SHOULD keep caching variance in mind and minimize
+variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③③">user agent</a> versions.</p>
+   <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set
+at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③④">user agent</a>'s significant
+version.</p>
+   <p>When adding arbitrary values to <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands③">brands</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agents</a> MUST make sure that receivers
+of the header adhere to <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑦">Structured Header</a> parsing, by adding escaped double-quotes, commas and
+semi-colons to those values. The purpose of this is to make non-compliant server implementations
+immediately aware that their parsing code is inadequate.</p>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
 security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which
@@ -2349,6 +2356,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#termref-for-">2.5. The 'Sec-CH-UA' Header Field</a>
     <li><a href="#termref-for-">2.6. The 'Sec-CH-UA-Full-Version' Header Field</a>
     <li><a href="#termref-for-">2.7. The 'Sec-CH-UA-Mobile' Header Field</a>
+    <li><a href="#termref-for-">5.2. GREASE-like UA Strings</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-append">
@@ -2384,7 +2392,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-user-agent②⑤">4.2. Delegation</a>
     <li><a href="#ref-for-user-agent②⑥">4.3. Access Restrictions</a> <a href="#ref-for-user-agent②⑦">(2)</a>
     <li><a href="#ref-for-user-agent②⑧">5.1. The 'User-Agent' Header</a> <a href="#ref-for-user-agent②⑨">(2)</a>
-    <li><a href="#ref-for-user-agent③⓪">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent③①">(2)</a> <a href="#ref-for-user-agent③②">(3)</a> <a href="#ref-for-user-agent③③">(4)</a> <a href="#ref-for-user-agent③④">(5)</a>
+    <li><a href="#ref-for-user-agent③⓪">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent③①">(2)</a> <a href="#ref-for-user-agent③②">(3)</a> <a href="#ref-for-user-agent③③">(4)</a> <a href="#ref-for-user-agent③④">(5)</a> <a href="#ref-for-user-agent③⑤">(6)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-permission-task-source">
@@ -2717,7 +2725,7 @@ register them in the permanent message header field registry (<a data-link-type=
    <ul>
     <li><a href="#ref-for-user-agent-brands">2.5. The 'Sec-CH-UA' Header Field</a>
     <li><a href="#ref-for-user-agent-brands①">3.2. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-user-agent-brands②">5.2. GREASE-like UA Strings</a>
+    <li><a href="#ref-for-user-agent-brands②">5.2. GREASE-like UA Strings</a> <a href="#ref-for-user-agent-brands③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="windoworworkerglobalscope-brands-frozen-array">

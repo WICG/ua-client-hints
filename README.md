@@ -155,9 +155,9 @@ accomplish this as follows:
 
     [Exposed=(Window,Worker)]
     interface NavigatorUAData {
-      readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; brands;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
+      readonly attribute FrozenArray<NavigatorUABrandVersion> brands;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile;                                                 // false
-      Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
     };
 
     interface mixin NavigatorUA {

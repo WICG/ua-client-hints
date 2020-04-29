@@ -475,7 +475,7 @@ in order to thread the needle of sites' sniffing scripts, and prevent their user
 by UA-based allow/block lists.
 
 Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
-probably won't help in the long run.  The world of network protocol introduced the notion of <abbr
+probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.
 
@@ -498,9 +498,17 @@ Let's examine a few examples:
     set, enabling sites to count them.
     - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
-When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize variance among identical [=user agent=] versions.
+When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
+variance among identical [=user agent=] versions.
 
-Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant version. 
+Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
+at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
+version. 
+
+When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
+of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
+semi-colons to those values. The purpose of this is to make non-compliant server implementations
+immediately aware that their parsing code is inadequate.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

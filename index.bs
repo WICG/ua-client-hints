@@ -505,8 +505,8 @@ Note: One approach to minimize caching variance could be to determine the GREASE
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
 version. 
 
-When adding arbitrary values to [=user agent/brands=], [=user agents=] SHOULD make sure that those
-arbitrary values enforce [=Structured Header=] parsing, by adding escaped double-quotes, commas and
+When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
+of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
 semi-colons to those values. The purpose of this is to make non-compliant server implementations
 immediately aware that their parsing code is inadequate.
 

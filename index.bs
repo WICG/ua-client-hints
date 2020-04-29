@@ -505,12 +505,16 @@ Note: One approach to minimize caching variance could be to determine the GREASE
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------
 
-Based on some [discussion with the TAG](https://github.com/w3ctag/design-reviews/issues/320), it seems
-reasonable to forbid access to these headers from JavaScript, and demarcate them as
-browser-controlled client hints so they can be documented and included in requests without
-triggering CORS preflights. A `Sec-CH-` prefix seems like a viable approach, but this bit might
-shift as the broader Client Hints discussions above coalesce into something more solid that lands
-in specs.
+Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
+security related advantages. At the same time, there don't seem to be any legitimate [use-cases](https://github.com/WICG/ua-client-hints#use-cases) which
+require such user-land rewriting.
+
+As such and based on [discussions with the TAG](https://github.com/w3ctag/design-reviews/issues/320), it seems
+reasonable to forbid write access to these headers from JavaScript (e.g. through `fetch` or Service
+Workers), and demarcate them as browser-controlled client hints so they can be documented and
+included in requests without triggering CORS preflights.
+
+Therefore, request headers defined in this specification include a `Sec-CH-` prefix.
 
 IANA Considerations {#iana}
 ===================

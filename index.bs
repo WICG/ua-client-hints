@@ -194,9 +194,17 @@ has defined a number of properties for itself:
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
 
-[=User agents=] MAY return the empty string for [=full version=], [=platform architecture=] or
-[=model=] in cases they consider that exposing that value increase their user's privacy risk beyond
-the user benefit of the use-cases they enable.
+[=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
+unless the user's platform is one where both the following conditions apply:
+ * Binary download of executables is likely.
+ * Different CPU architectures are likely to require different binary executable resources.
+
+[=User agents=] MUST return the empty string for [=model=] if [=mobileness=] is false or on
+platforms where the model is not typically exposed.
+
+[=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
+architecture=] or [=model=] in cases they consider that exposing that value increase their user's
+privacy risk beyond the user benefit of the use-cases they enable.
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}
 ------------------------------

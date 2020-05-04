@@ -179,12 +179,24 @@ a number of properties for itself:
 *   <dfn for="user agent" export>full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")
 *   <dfn for="user agent" export>platform brand</dfn> (for example: "Windows", "iOS", or "AmazingOS")
 *   <dfn for="user agent" export>platform version</dfn> (for example: "NT 6.0", "15", or "17G")
-*   <dfn for="user agent" export>platform architecture</dfn> (for example: "ARM64", or "ia32")
+*   <dfn for="user agent" export>platform architecture</dfn> (for example: "arm", or "x86")
 *   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
+
+[=User agents=] MUST map higher-entropy [=platform architecture=] values to the following buckets:
+
+* x86 CPU architectures => "x86"
+* ARM CPU architectures => "arm"
+
+Other CPU architectures could be mapped into one of these values in case that makes sense, or be
+mapped to the empty string.
+
+ISSUE 105: There might be use-cases for higher-entropy and more specific CPU architectures (e.g.
+"bitness" or for the download of highly optimized executable binaries). If necessarrry, we could
+support those use-cases through one or more separate hints.
 
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}

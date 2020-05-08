@@ -197,14 +197,15 @@ values for each, as they are all values constructed at the [=user agent=]'s whim
 [=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
 unless the user's platform is one where both the following conditions apply:
  * Binary download of executables is likely.
- * Different CPU architectures are likely to require different binary executable resources.
+ * Different CPU architectures are likely to require different binary executable resources, and
+     different binary exeutable resources are likely to be available.
 
-[=User agents=] MUST return the empty string for [=model=] if [=mobileness=] is false or on
-platforms where the model is not typically exposed.
+[=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
+Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
+platforms where the model is typically exposed.
 
 [=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
-architecture=] or [=model=] in cases they consider that exposing that value increase their user's
-privacy risk beyond the user benefit of the use-cases they enable.
+architecture=] or [=model=], for privacy, compatibility, or other reasons.
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}
 ------------------------------

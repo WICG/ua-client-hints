@@ -191,7 +191,7 @@ values for each, as they are all values constructed at the [=user agent=]'s whim
 * 32 bit x86 CPU architectures => "x86"
 * 64 bit x86 CPU architectures => "x86_64"
 * 32 bit ARM CPU architectures => "arm"
-* 64 bit ARM CPU architectures => "arm_64"
+* 64 bit ARM CPU architectures => "arm64"
 
 Other CPU architectures could be mapped into one of these values in case that makes sense, or be
 mapped to the empty string.

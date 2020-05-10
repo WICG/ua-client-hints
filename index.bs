@@ -498,17 +498,24 @@ Let's examine a few examples:
     set, enabling sites to count them.
     - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
+
+[=User agents=] MUST include more than a single value in [=user agent/brands=], where at least one
+of these values is an arbitrary value.
+
+When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
+of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
+semi-colons to those values. The purpose of this is to make non-compliant server implementations
+immediately aware that their parsing code is inadequate.
+
+The value order in [=user agent/brands=] MUST change over time, the prevent receivers of the header
+from relying on certain values beeing in certain locations in the string.
+
 When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
 variance among identical [=user agent=] versions.
 
 Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
 version. 
-
-When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
-of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
-semi-colons to those values. The purpose of this is to make non-compliant server implementations
-immediately aware that their parsing code is inadequate.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

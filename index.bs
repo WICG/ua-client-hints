@@ -188,17 +188,16 @@ values for each, as they are all values constructed at the [=user agent=]'s whim
 
 [=User agents=] MUST map higher-entropy [=platform architecture=] values to the following buckets:
 
-* 32 bit x86 CPU architectures => "x86"
-* 64 bit x86 CPU architectures => "x86_64"
-* 32 bit ARM CPU architectures => "arm"
-* 64 bit ARM CPU architectures => "arm64"
+* x86 CPU architectures => "x86"
+* ARM CPU architectures => "arm"
 
 Other CPU architectures could be mapped into one of these values in case that makes sense, or be
 mapped to the empty string.
 
-ISSUE 105: There might be use-cases for higher-entropy and more specific CPU architectures (e.g.
-for the download of highly optimized executable binaries). If necessarrry, we could support those
-use-cases through one or more separate hints.
+ISSUE 105: There might be use-cases for higher-entropy, more specific CPU architectures (e.g. 32
+vs. 64 bit architectures, or specific instruction sets for the download of highly optimized
+executable binaries). If necessary, we could support those use-cases through one or more separate
+hints.
 
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}

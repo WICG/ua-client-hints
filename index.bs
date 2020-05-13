@@ -404,15 +404,15 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     1. Let |uaData| be a new {{UADataValues}}.
 
-    2. If |hints| [=contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+    2. If |hints| [=list/contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
 
-    3. If |hints| [=contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"] to the [=user agent=]'s [=user agent/platform version=].
+    3. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"] to the [=user agent=]'s [=user agent/platform version=].
 
-    4. If |hints| [=contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to the [=user agent=]'s [=user agent/platform architecture=].
+    4. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to the [=user agent=]'s [=user agent/platform architecture=].
 
-    5. If |hints| [=contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
+    5. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
 
-    6. If |hints| [=contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
+    6. If |hints| [=list/contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
 
     7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 

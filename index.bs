@@ -170,18 +170,27 @@ User Agent Hints {#http-ua-hints}
 ================
 
 The following sections define a number of HTTP request header fields that expose detail about a
-given [=user agent=], which servers can opt-into receiving via the Client Hints infrastructure defined
-in [[I-D.ietf-httpbis-client-hints]]. The definitions below assume that each [=user agent=] has defined
-a number of properties for itself:
+given [=user agent=], which servers can opt-into receiving via the Client Hints infrastructure
+defined in [[I-D.ietf-httpbis-client-hints]]. The definitions below assume that each [=user agent=]
+has defined a number of properties for itself:
 
-*   <dfn for="user agent" export>brand</dfn> (for example: "cURL", "Edge", "The World's Best Web Browser")
-*   <dfn for="user agent" export>significant version</dfn> (for example: "72", "3", or "28")
-*   <dfn for="user agent" export>full version</dfn> (for example: "72.0.3245.12", "3.14159", or "297.70E04154A")
-*   <dfn for="user agent" export>platform brand</dfn> (for example: "Windows", "iOS", or "AmazingOS")
-*   <dfn for="user agent" export>platform version</dfn> (for example: "NT 6.0", "15", or "17G")
-*   <dfn for="user agent" export>platform architecture</dfn> (for example: "arm", or "x86")
-*   <dfn for="user agent" export>model</dfn> (for example: "", or "Pixel 2 XL")
-*   <dfn for="user agent" export>mobileness</dfn> (for example: ?0 or ?1)
+*   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (for example:
+      "cURL", "Edge", "The World's Best Web Browser")
+*   <dfn for="user agent" export>significant version</dfn> - The [=user agent=]'s marketing version,
+      which includes distinguishable web-exposed features (for example: "72", "3", or "12.1")
+*   <dfn for="user agent" export>full version</dfn> - The [=user agent=]'s build version (for
+      example: "72.0.3245.12", "3.14159", or "297.70E04154A")
+*   <dfn for="user agent" export>platform brand</dfn> - The [=user agent=]'s operating system's
+      commercial name. (for example: "Windows", "iOS", or "AmazingOS")
+*   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
+      version. (for example: "NT 6.0", "15", or "17G")
+*   <dfn for="user agent" export>platform architecture</dfn> - The [=user agent=]'s underlying CPU
+      architecture (for example: "ARM64", or "ia32")
+*   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (for example: "",
+      or "Pixel 2 XL")
+*   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
+      device is a mobile device. (for example: ?0 or ?1)
+
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
@@ -199,6 +208,18 @@ vs. 64 bit architectures, or specific instruction sets for the download of highl
 executable binaries). If necessary, we could support those use-cases through one or more separate
 hints.
 
+[=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
+unless the user's platform is one where both the following conditions apply:
+ * Binary download of executables is likely.
+ * Different CPU architectures are likely to require different binary executable resources, and
+     different binary exeutable resources are likely to be available.
+
+[=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
+Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
+platforms where the model is typically exposed.
+
+[=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
+architecture=] or [=model=], for privacy, compatibility, or other reasons.
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}
 ------------------------------
@@ -417,15 +438,15 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     1. Let |uaData| be a new {{UADataValues}}.
 
-    2. If |hints| [=contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+    2. If |hints| [=list/contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
 
-    3. If |hints| [=contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"] to the [=user agent=]'s [=user agent/platform version=].
+    3. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"] to the [=user agent=]'s [=user agent/platform version=].
 
-    4. If |hints| [=contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to the [=user agent=]'s [=user agent/platform architecture=].
+    4. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to the [=user agent=]'s [=user agent/platform architecture=].
 
-    5. If |hints| [=contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
+    5. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the [=user agent=]'s [=user agent/model=].
 
-    6. If |hints| [=contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
+    6. If |hints| [=list/contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"] be the the user agent's [=user agent/full version=].
 
     7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
@@ -511,17 +532,24 @@ Let's examine a few examples:
     set, enabling sites to count them.
     - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
+
+[=User agents=] MUST include more than a single value in [=user agent/brands=], where at least one
+of these values is an arbitrary value.
+
+When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
+of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
+semi-colons to those values. The purpose of this is to make non-compliant server implementations
+immediately aware that their parsing code is inadequate.
+
+The value order in [=user agent/brands=] MUST change over time, the prevent receivers of the header
+from relying on certain values beeing in certain locations in the string.
+
 When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
 variance among identical [=user agent=] versions.
 
 Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
 version. 
-
-When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
-of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
-semi-colons to those values. The purpose of this is to make non-compliant server implementations
-immediately aware that their parsing code is inadequate.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

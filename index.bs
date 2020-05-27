@@ -191,8 +191,22 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
       device is a mobile device. (for example: ?0 or ?1)
 
+
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
+
+[=User agents=] MUST map higher-entropy [=platform architecture=] values to the following buckets:
+
+* x86 CPU architectures => "x86"
+* ARM CPU architectures => "arm"
+
+Other CPU architectures could be mapped into one of these values in case that makes sense, or be
+mapped to the empty string.
+
+ISSUE 105: There might be use-cases for higher-entropy, more specific CPU architectures (e.g. 32
+vs. 64 bit architectures, or specific instruction sets for the download of highly optimized
+executable binaries). If necessary, we could support those use-cases through one or more separate
+hints.
 
 [=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
 unless the user's platform is one where both the following conditions apply:

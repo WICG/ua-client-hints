@@ -114,7 +114,7 @@ accomplish this as follows:
         width. For example:
 
         ```http
-        Sec-CH-UA-Arch: "ARM64"
+        Sec-CH-UA-Arch: "arm"
         ```
 
     4.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
@@ -148,7 +148,7 @@ accomplish this as follows:
     dictionary UADataValues {
       DOMString platform;         // "PhoneOS"
       DOMString platformVersion;  // "10A"
-      DOMString architecture;     // "ARM64"
+      DOMString architecture;     // "arm"
       DOMString model;            // "X644GTM"
       DOMString uaFullVersion;    // "73.32.AGX.5"
     };
@@ -157,7 +157,7 @@ accomplish this as follows:
     interface NavigatorUAData {
       readonly attribute FrozenArray<NavigatorUABrandVersion> brands;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile;                                                 // false
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "ARM64", "X644GTM", "73.32.AGX.5" }
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "arm", "X644GTM", "73.32.AGX.5" }
     };
 
     interface mixin NavigatorUA {
@@ -209,7 +209,7 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 Sec-CH-UA: "Chrome"; v="74"
 Sec-CH-UA-Full-Version: "74.0.3424.124"
 Sec-CH-UA-Platform: "macOS"
-Sec-CH-UA-Arch: "ARM64"
+Sec-CH-UA-Arch: "arm"
 ```
 
 The user agent can make reasonable decisions about when to honor requests for detailed user agent
@@ -229,7 +229,7 @@ For developers that prefer using user agent information to make client-side deci
       ["platform", "platformVersion", "architecture", "model", "uaFullVersion"]);
     const platform = highEntropyValues.platform;               // "Mac OS X"
     const platformVersion = highEntropyValues.platformVersion; //"10_15_4"
-    const architecture = highEntropyValues.architecture;       // "Intel"
+    const architecture = highEntropyValues.architecture;       // "x86"
     const model = highEntropyValues.model;                     // ""
     const uaFullVersion = highEntropyValues.uaFullVersion;     // "84.0.4113.0"
   })();

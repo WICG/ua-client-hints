@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version f539c4af, updated Mon Aug 10 11:34:58 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="601c5ad55334c44d4848a5d70870081d20f13ee8" name="document-revision">
+  <meta content="dbb11cec69d28305f45d4506292219caa649daf8" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1735,12 +1735,13 @@ information about the platform version on which a given <a data-link-type="dfn" 
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA</c-> <c- o>=</c-> <c- nc>sh-list</c->
 </pre>
-   <p>Unlike most Client Hints, since it’s included in the <a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
-the <code>Sec-CH-UA</code> header will be sent with all requests, whether or not the server opted-into
-receiving the header via an <code>Accept-CH</code> header. Therefore, it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>'s
-branding information, and the significant version number (both of which are fairly clearly
-sniffable by "examining the structure of other headers and by testing for the availability and
-semantics of the features introduced or modified between releases of a particular browser" <a data-link-type="biblio" href="#biblio-janc2014">[Janc2014]</a>).</p>
+   <p class="note" role="note"><span>Note:</span> Unlike most Client Hints, since it’s included in the <a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
+receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+It is considered low enropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>'s branding information,
+and the significant version number (both of which are fairly clearly sniffable by "examining the
+structure of other headers and by testing for the availability and semantics of the features
+introduced or modified between releases of a particular browser" <a data-link-type="biblio" href="#biblio-janc2014">[Janc2014]</a>).</p>
    <p>To <dfn data-dfn-type="abstract-op" data-export data-local-lt="set-ua" id="abstract-opdef-return-the-sec-ch-ua-value-for-a-request">return the <code>Sec-CH-UA</code> value for a request<a class="self-link" href="#abstract-opdef-return-the-sec-ch-ua-value-for-a-request"></a></dfn>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agents</a> MUST:</p>
    <ol>
     <li data-md>
@@ -1774,6 +1775,11 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
 </pre>
+   <p class="note" role="note"><span>Note:</span> Like <code>Sec-CH-UA</code> above, since it’s included in the <a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+the <code>Sec-CH-UA-Mobile</code> header will be sent by default, whether or not the server opted-into
+receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+It is considered low enropy because it is a single bit of information directly controllable
+by the user.</p>
    <p class="note" role="note"><span>Note:</span> These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile</p>
    <h3 class="heading settled" data-level="2.8" id="fetch-integration"><span class="secno">2.8. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
     Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. 

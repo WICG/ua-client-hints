@@ -347,7 +347,7 @@ The header's ABNF is:
   Sec-CH-UA-Mobile = sh-boolean
 ```
 
-Note: These client hints can be evokes with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
+Note: These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
 
 Integration with Fetch {#fetch-integration}
 ----------------------

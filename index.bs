@@ -351,6 +351,15 @@ Integration with Fetch {#fetch-integration}
 ----------------------
 Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification.
 
+Client Hint Tokens {#tokens}
+------------------
+This document defines the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>:
+
+ * UA-Arch
+ * UA-Model
+ * UA-Platform
+ * UA
+ * UA-Mobile
 
 Interface {#interface} 
 =================

@@ -347,6 +347,10 @@ The header's ABNF is:
   Sec-CH-UA-Mobile = sh-boolean
 ```
 
+Like the `Sec-CH-UA` hint above ([[#sec-ch-ua]]), since it's included in the <a
+href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+the `Sec-CH-UA-Mobile` header will also be sent with all requests.
+
 Note: These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
 
 Integration with Fetch {#fetch-integration}

@@ -294,14 +294,16 @@ The header's ABNF is:
   Sec-CH-UA = sh-list
 ```
 
-Unlike most Client Hints, since it's included in the <a
+Note: Unlike most Client Hints, since it's included in the <a
 href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
-the `Sec-CH-UA` header will be sent with all requests, whether or not the server opted-into
-receiving the header via an `Accept-CH` header. Therefore, it includes only the [=user agent=]'s
-branding information, and the significant version number (both of which are fairly clearly
-sniffable by "examining the structure of other headers and by testing for the availability and
-semantics of the features introduced or modified between releases of a particular browser"
-[[Janc2014]]).
+the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
+receiving the header via an `Accept-CH` header (although it can still be controlled by it's
+<a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+It is considered low enropy because it includes only the [=user agent=]'s branding information,
+and the significant version number (both of which are fairly clearly sniffable by "examining the
+structure of other headers and by testing for the availability and semantics of the features
+introduced or modified between releases of a particular browser" [[Janc2014]]).
+
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
@@ -347,9 +349,13 @@ The header's ABNF is:
   Sec-CH-UA-Mobile = sh-boolean
 ```
 
-Like the `Sec-CH-UA` hint above ([[#sec-ch-ua]]), since it's included in the <a
+Note: Like `Sec-CH-UA` above, since it's included in the <a
 href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
-the `Sec-CH-UA-Mobile` header will also be sent with all requests.
+the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
+receiving the header via an `Accept-CH` header (although it can still be controlled by it's
+<a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+It is considered low enropy because it is a single bit of information directly controllable
+by the user.
 
 Note: These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
 

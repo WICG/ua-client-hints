@@ -44,9 +44,9 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
     "title": "Year class: A classification system for Android",
     "authors": [ "Chris Marra", "Daniel Weaver" ]
   },
-  "I-D.ietf-httpbis-client-hints": {
+  "I-D.draft-ietf-httpbis-client-hints": {
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-client-hints",
-    "title": "HTTP Client Hints",
+    "title": "HTTP Client Hints (Experimental)",
     "authors": [ "Ilya Grigorik" ],
     "status": "ID",
     "publisher": "IETF"
@@ -74,20 +74,77 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
     "href": "https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s",
     "title": "The Microsoft Edge Rendering Engine that makes the Web just work",
     "author": [ "Jacob Rossi" ]
+  },
+  "51Degrees": {
+    "href": "https://51degrees.com/device-detection",
+    "title": "Use cases for device detection with 51Degrees",
+    "author": [ "51Degrees" ]
+  },
+  "Scientiamobile": {
+    "href": "https://www.scientiamobile.com",
+    "title": "WURFL based device detection",
+    "author": [ "Scientiamobile" ]
+  },
+  "DeviceAtlas": {
+    "href": "https://deviceatlas.com/",
+    "title": "Use cases for device detection with DeviceAtlas",
+    "author": [ "DeviceAtlas" ]
+  },
+  "AlexRussell": {
+    "href": "https://twitter.com/slightlylate/status/1139684093602349056/photo/2",
+    "title": "Performance scores by device model",
+    "author": [ "Alex Russell" ]
+  },
+  "Google-Analytics": {
+    "href": "https://support.google.com/analytics/answer/3123672?hl=en",
+    "title": "Acquisition device",
+    "author": [ "Google" ]
+  },
+  "Client-Hints-Infrastructure": {
+    "href": "https://wicg.github.io/client-hints-infrastructure/",
+    "title": "Client Hints Infrastructure",
+    "author": [ "Yoav Weiss" ]
   }
 }
 </pre>
+
+Dependencies {#dependencies}
+============
+
+This document is dependent on the following related specifications which the reader must be 
+familar with before reading this document.
+
+1.  Experimental IETF specification for Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) 
+    which expires in January 2021.
+    
+2.  Unofficial community draft Client Hints Infrastructure ([[Client-Hints-Infrastructure]]). 
+    No official standing in W3C like this document.
+
+ISSUE(https://wicg.github.io/client-hints-infrastructure): How are low and high entropy Client 
+Hints determined? How are they balanced against considerations other than privacy? Needs to be 
+resolved before referencing in this document.
 
 Introduction {#intro}
 ============
 
 Today, user agents generally identify themselves to servers by sending a `User-Agent` HTTP request
-header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). Ideally, this header
-would give servers the ability to perform content negotiation, sending down exactly those bits that
-best represent the requested resource in a given user agent, optimizing both bandwidth and user
-experience. In practice, however, this header's value exposes far more information about the user's
-device than seems appropriate as a default, on the one hand, and intentionally obscures the true
-user agent in order to bypass misguided server-side heuristics, on the other.
+header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). This header value
+gives servers the option to perform content negotiation, sending down exactly those bits that best
+represent the requested resource in a given user agent, optimizing both bandwidth and user
+experience. In addition to performance improvements the information also supports analytics, fraud
+detection, problem diagnosis and market share analysis.
+
+When combined with other information the `User-Agent` field value could be used to track specific 
+user agents and therefore represents a risk to people's privacy. This problem is most severe when 
+content is served over insecure HTTP where access providers can view the information. It is a less
+of problem when content is served scurely over HTTPS and only the parties known to the user will
+have access to the information.
+
+[[RFC7231]] does not mandate the structure of the information contained in the field value. It has
+evolved over several decades by multiple browser vendors and often contains information that is not
+needed. Robust solutions ([[51Degrees]] [[DeviceAtlas]], [[Scientiamobile]]) for parsing 
+`User-Agent` field values know which segments to ignore or focus on and perform with over 99% 
+accuracy in practice.
 
 For example, a recent version of Chrome on iOS identifies itself as:
 
@@ -105,11 +162,12 @@ While a recent version of Edge identifies itself as:
               Safari/537.36 Edge/18.014
 ```
 
-There's quite a bit of information packed into those strings (along with a fair number of lies).
-Version numbers, platform details, model information, etc. are all broadcast along with every
-request, and form the basis for fingerprinting schemes of all sorts. Individual vendors have taken
-stabs at altering their user agent strings, and have run into a few categories of feedback from
-developers that have stymied historical approaches:
+There's quite a bit of information packed into those strings (along with a fair number of lies 
+which are ignored in practice). Version numbers, platform details, model information, layout engine
+versions etc. are all broadcast along with every request, and form the basis for fingerprinting 
+schemes of all sorts. 
+
+Use cases for the information contained in `User-Agent` field values include:
 
 1.  Brand and version information (e.g. "Chrome 69") allows websites to work around known bugs in
     specific releases that aren't otherwise detectable. For example, implementations of Content
@@ -117,26 +175,54 @@ developers that have stymied historical approaches:
     send in an HTTP response without knowing what browser is responsible for its parsing and
     execution.
 
-2.  Developers will often negotiate what content to send based on the user agent and platform. Some
+2.  Developers will often negotiate the content to send based on the user agent and platform. Some
     application frameworks, for instance, will style an application on iOS differently from the same
     application on Android in order to match each platform's aesthetic and design patterns.
 
 3.  Similarly to #1, OS revisions and architecture can be responsible for specific bugs which can
-    be worked around in website's code, and narrowly useful for things like selecting appropriate
-    executables for download (32 vs 64 bit, ARM vs Intel, etc).
+    be worked around in website's code, and useful for things like selecting appropriate executables
+    for download (32 vs 64 bit, ARM vs Intel, etc).
 
 4.  Sophisticated developers use model/make to tailor their sites to the capabilities of the
     device (e.g. [[FacebookYearClass]]) and to pinpoint performance bugs and regressions which
     sometimes are specific to model/make.
+    
+5.  Difference models of device perform very differently [[AlexRussell]]. Developers wishing to 
+    improve performance require this insight in analytics tools and in real time to optimise their
+    web site. The ability to optimise on first request is particularly important to authors targeting
+    people living in emerging economies where lower end device models and features are more widely
+    used than affluent western democracies.
+    
+6.  Vendors of devices and browsers use the information transmitted in `User-Agent` field values to 
+    measure the active install base of their products. This information in aggregate informs product
+    development decisions.
+    
+7.  Web analytics solutions and search engine tools such as those developed by Google 
+    [[Google-Analytics]] require the `User-Agent` field value to be present to provide insights into 
+    device classifications, models, browser and operating system versions.
 
-This document proposes a mechanism which might allow user agents to be a bit more aggressive about
-removing entropy from the `User-Agent` string generally by giving servers that really need some
-specific details about the client the ability to opt-into receiving them. It introduces four new
-Client Hints ([[I-D.ietf-httpbis-client-hints]]) that can provide the client's branding and version
-information, the underlying operating system's branding and major version, as well as details about
-the underlying device. Rather than broadcasting this data to everyone, all the time, user agents can
-make reasonable decisions about how to respond to given sites' requests for more granular data,
-reducing the passive fingerprinting surface area exposed to the network.
+This document proposes a mechanism which will address the following distinct perceived challenges:
+
+1.  Remove entropy from the `User-Agent` field value.
+
+2.  Address historic structural issues with the `User-Agent` field value in a way other than adopting
+    a new convention for the existing value.
+
+3.  Reduce the amount of information sent on every request.
+
+The document introduces seven new Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) that can 
+provide the client's branding and version information, the underlying operating system's branding 
+and major version, as well as details about the underlying device. Rather than broadcasting this 
+data to everyone, all the time, user agents can make reasonable decisions about how to respond to
+given sites' requests for more granular data, reducing the passive fingerprinting surface area 
+exposed to the network.
+
+The document does not consider how the use cases for `User-Agent` field values will be migrated to 
+make use of Client Hints. These considerations will need to be addressed following incubation 
+prior to deployment following experiments.
+
+ISSUE(wicg/ua-client-hints): Engage with a wide group of stakeholders prior to progression
+beyond incubation.
 
 Examples {#examples}
 --------
@@ -150,7 +236,7 @@ header along with the HTTP request:
 
 The server is interested in rendering content consistent with the user's underlying platform, and
 asks for a little more information by sending an `Accept-CH` header (Section 2.2.1 of
-[[I-D.ietf-httpbis-client-hints]]) along with the initial response:
+[[I-D.draft-ietf-httpbis-client-hints]]) along with the initial response:
 
 ``` http
   Accept-CH: UA-Full-Version, UA-Platform
@@ -165,13 +251,12 @@ the underlying platform in the next request:
   Sec-CH-UA-Platform: "Windows"
 ```
 
-
 User Agent Hints {#http-ua-hints}
 ================
 
 The following sections define a number of HTTP request header fields that expose detail about a
 given [=user agent=], which servers can opt-into receiving via the Client Hints infrastructure
-defined in [[I-D.ietf-httpbis-client-hints]]. The definitions below assume that each [=user agent=]
+defined in [[I-D.draft-ietf-httpbis-client-hints]]. The definitions below assume that each [=user agent=]
 has defined a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (for example:
@@ -190,7 +275,6 @@ has defined a number of properties for itself:
       or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
       device is a mobile device. (for example: ?0 or ?1)
-
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
@@ -212,7 +296,7 @@ hints.
 unless the user's platform is one where both the following conditions apply:
  * Binary download of executables is likely.
  * Different CPU architectures are likely to require different binary executable resources, and
-     different binary exeutable resources are likely to be available.
+     different binary executable resources are likely to be available.
 
 [=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
 Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
@@ -235,7 +319,6 @@ The header's ABNF is:
   Sec-CH-UA-Arch = sh-string
 ~~~
 
-
 The 'Sec-CH-UA-Model' Header Field {#sec-ch-model}
 -------------------------------
 
@@ -249,8 +332,8 @@ The header's ABNF is:
   Sec-CH-UA-Model = sh-string
 ```
 
-ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
-
+Where the model code may be shared among multiple model vendors the vendor MUST include a prefix prior
+to the model code to identify the vendor.
 
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
 ----------------------------------
@@ -304,6 +387,12 @@ and the significant version number (both of which are fairly clearly sniffable b
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
 
+ISSUE: What is the policy for classifying some Client Hints as being send by default? Either all Client 
+Hints should be sent on every request, or no Client Hints sent on first 
+request. If the rationale for the specification is to limit entropy then sending a value will increase
+entropy for minority browser vendors, whilst decrease it for dominate browser vendors. If the rationale
+is to address historic issues with the `User-Agent` field value construction this could be better addressed
+via a simpler specification to introduce a more modern convention for the field.
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
@@ -356,12 +445,6 @@ receiving the header via an `Accept-CH` header (although it can still be control
 <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
 It is considered low enropy because it is a single bit of information directly controllable
 by the user.
-
-Note: These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
-
-Integration with Fetch {#fetch-integration}
-----------------------
-Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification.
 
 
 Interface {#interface} 
@@ -471,7 +554,7 @@ Secure Transport {#secure-transport}
 ----------------
 
 Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of [[I-D.ietf-httpbis-client-hints]]). This means that [=user agent=] information will not
+Section 2.2.1 of [[I-D.draft-ietf-httpbis-client-hints]]). This means that [=user agent=] information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent's behavior over time.
 
@@ -481,6 +564,8 @@ Delegation {#delegation}
 Client Hints will be delegated from top-level pages via Feature Policy. This reduces the likelihood that [=user agent=]
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.
+
+ISSUE: Reference Feature Policy on which this document relies.
 
 That delegation is defined as part of <a href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request">append client hints to request</a>.
 
@@ -496,22 +581,25 @@ opportunity to serve the right binary. Likewise, they could offer users control 
 revealed to servers, or gate access on explicit user interaction via a permission prompt or via a
 settings interface.
 
+ISSUE(https://www.w3.org/Consortium/mission): Is this compatible with the W3C One Web objective?
+Restriction of access to information vital to the provision of some services seems problematic.
+
 Implementation Considerations {#impl-considerations}
 =============================
 
 The 'User-Agent' Header {#user-agent}
 -----------------------
 
-[=User agents=] SHOULD deprecate the `User-Agent` header in favor of the Client Hints model described in
-this document. The header, however, is likely to be impossible to remove entirely in the near-term,
-as existing sites' content negotiation code will continue to require its presence (see
-[[Rossi2015]] for a recent example of a new browser's struggles in this area).
+[=User agents=] MUST NOT deprecate the `User-Agent` header in favor of the Client Hints model described in
+this document until such time as Client Hints and all related specifications are ratified recommendations 
+of the W3C and/or IETF and all implementation and migration issues have been identified, the impacts to web 
+interoperability agreed, and mitigations implemented.
 
-One approach which might be advisable could be for each [=user agent=] to lock the value of its
-`User-Agent` header, ensuring backwards compatibility by maintaining the crufty declarations of
-"like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
-the version number, then shifting platform and model information to something reasonably generic in
-order to reduce the fingerprint the header provides.
+ISSUE: Rather than include deployment and mitigation issues within the proposal document these would be 
+better presented in a seperate document considering all use cases contributed to by relevant stakeholders.
+
+ISSUE: Spliting out the the deprecation of the `User-Agent` header from the proposal for Client Hints would
+focus this proposal.
 
 GREASE-like UA Strings {#grease}
 ----------------------
@@ -563,16 +651,19 @@ Note: One approach to minimize caching variance could be to determine the GREASE
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
 version. 
 
+ISSUE: This will introduce inefficiency into a new specification which is designed to eliminate 
+inefficiency in the previous established practices. This chapter should be removed.
+
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------
 
 Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
-security related advantages. At the same time, there don't seem to be any legitimate [use-cases](https://github.com/WICG/ua-client-hints#use-cases) which
-require such user-land rewriting.
+security related advantages. At the same time, there don't seem to be any legitimate 
+[use-cases](https://github.com/WICG/ua-client-hints#use-cases) which require such user-land rewriting.
 
-As such and based on [discussions with the TAG](https://github.com/w3ctag/design-reviews/issues/320), it seems
-reasonable to forbid write access to these headers from JavaScript (e.g. through `fetch` or Service
-Workers), and demarcate them as browser-controlled client hints so they can be documented and
+As such and based on [discussions with the TAG](https://github.com/w3ctag/design-reviews/issues/320), 
+it seems reasonable to forbid write access to these headers from JavaScript (e.g. through `fetch` or 
+Service Workers), and demarcate them as browser-controlled client hints so they can be documented and
 included in requests without triggering CORS preflights.
 
 Therefore, request headers defined in this specification include a `Sec-CH-` prefix.
@@ -583,8 +674,6 @@ IANA Considerations {#iana}
 This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
 `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Mobile` and `Sec-CH-UA` HTTP request header fields, and
 register them in the permanent message header field registry ([[RFC3864]]).
-
-It also intends to deprecate the `User-Agent` header field.
 
 'Sec-CH-UA-Arch' Header Field {#iana-arch}
 --------------------------
@@ -711,21 +800,3 @@ Author/Change controller:
 
 Specification document:
 : this specification ([[#sec-ch-full-version]])
-
-'User-Agent' Header Field {#iana-user-agent}
--------------------------
-
-Header field name:
-: User-Agent
-
-Applicable protocol:
-: http
-
-Status:
-: deprecated
-
-Author/Change controller:
-: IETF
-
-Specification document:
-: this specification ([[#user-agent]]), and Section 5.5.3 of [[RFC7231]]

@@ -58,13 +58,6 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
     "status": "ID",
     "publisher": "IETF"
   },
-  "I-D.ietf-tls-grease": {
-    "href": "https://tools.ietf.org/html/draft-ietf-tls-grease",
-    "title": "Applying GREASE to TLS Extensibility",
-    "authors": [ "David Benjamin" ],
-    "status": "ID",
-    "publisher": "IETF"
-  },
   "Janc2014": {
     "href": "https://dev.chromium.org/Home/chromium-security/client-identification-mechanisms#TOC-Browser-level-fingerprints",
     "title": "Technical analysis of client identification mechanisms",
@@ -121,8 +114,8 @@ familar with before reading this document.
     No official standing in W3C like this document.
 
 ISSUE(https://wicg.github.io/client-hints-infrastructure): How are low and high entropy Client 
-Hints determined? How are they balanced against considerations other than privacy? Needs to be 
-resolved before referencing in this document.
+Hints determined in the Client Hints Infrastructure document? How are they balanced against 
+considerations other than privacy? This needs to be resolved before referencing in this document.
 
 Introduction {#intro}
 ============
@@ -135,10 +128,11 @@ experience. In addition to performance improvements the information also support
 detection, problem diagnosis and market share analysis.
 
 When combined with other information the `User-Agent` field value could be used to track specific 
-user agents and therefore represents a risk to people's privacy. This problem is most severe when 
-content is served over insecure HTTP where access providers can view the information. It is a less
-of problem when content is served scurely over HTTPS and only the parties known to the user will
-have access to the information.
+user agents and therefore might represent a risk to people's privacy. This problem is most severe 
+when content is served over insecure HTTP where access providers can view the information. Privacy
+concerns are mitigated to some extent when secure protocols such as HTTPS are used. Only parties 
+known to the user or the organisation whose domain is displayed in the address bar of the user 
+agent will have access to the `User-Agent` field value.
 
 [[RFC7231]] does not mandate the structure of the information contained in the field value. It has
 evolved over several decades by multiple browser vendors and often contains information that is not
@@ -163,9 +157,7 @@ While a recent version of Edge identifies itself as:
 ```
 
 There's quite a bit of information packed into those strings (along with a fair number of lies 
-which are ignored in practice). Version numbers, platform details, model information, layout engine
-versions etc. are all broadcast along with every request, and form the basis for fingerprinting 
-schemes of all sorts. 
+which are ignored in practice). 
 
 Use cases for the information contained in `User-Agent` field values include:
 
@@ -200,15 +192,20 @@ Use cases for the information contained in `User-Agent` field values include:
 7.  Web analytics solutions and search engine tools such as those developed by Google 
     [[Google-Analytics]] require the `User-Agent` field value to be present to provide insights into 
     device classifications, models, browser and operating system versions.
+    
+8.  Fraud detection uses the version numbers, platform details, model information, and layout engine
+    versions, among others and form the basis for fingerprinting schemes for the identification and 
+    prevention of fraud or to track people.
 
-This document proposes a mechanism which will address the following distinct perceived challenges:
+This document proposes a mechanism which will address the following distinct problems:
 
-1.  Remove entropy from the `User-Agent` field value.
+1.  Address historic structural issues with the `User-Agent` field value by introducing new HTTP 
+    header fields and values.
 
-2.  Address historic structural issues with the `User-Agent` field value in a way other than adopting
-    a new convention for the existing value.
+2.  Reduce the amount of information sent on every request.
 
-3.  Reduce the amount of information sent on every request.
+Prior to deployment this appraoch will be compared with the adopting a simpler and more efficient
+convention for the existing `User-Agent` field values.
 
 The document introduces seven new Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) that can 
 provide the client's branding and version information, the underlying operating system's branding 
@@ -217,12 +214,24 @@ data to everyone, all the time, user agents can make reasonable decisions about 
 given sites' requests for more granular data, reducing the passive fingerprinting surface area 
 exposed to the network.
 
-The document does not consider how the use cases for `User-Agent` field values will be migrated to 
-make use of Client Hints. These considerations will need to be addressed following incubation 
-prior to deployment following experiments.
+Out of Scope {#out-of-scope}
+------------
 
+The following are out of scope for this document.
+
+1.  How the use cases for `User-Agent` field values will be migrated to make use of Client Hints. 
+    These considerations will need to be addressed following incubation prior to deployment 
+    following experiments.
+
+2.  Understanding how the `User-Agent` field values are used in practice and the work involved in
+    migrating to Client Hints.
+    
 ISSUE(wicg/ua-client-hints): Engage with a wide group of stakeholders prior to progression
 beyond incubation.
+
+3.  Policy issues such as anti-trust or privacy are not matters for technical specifications.
+
+4.  Modifications to existing `User-Agent` field values and practices.
 
 Examples {#examples}
 --------
@@ -513,8 +522,6 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
     2.  Randomize the order of the items in |list|.
 
-    Note: See [[#grease]] for more details on why these steps might be appropriate.
-
 5. Return |list|.
 
 <h3 id="getters">Getters</h3>
@@ -595,64 +602,6 @@ this document until such time as Client Hints and all related specifications are
 of the W3C and/or IETF and all implementation and migration issues have been identified, the impacts to web 
 interoperability agreed, and mitigations implemented.
 
-ISSUE: Rather than include deployment and mitigation issues within the proposal document these would be 
-better presented in a seperate document considering all use cases contributed to by relevant stakeholders.
-
-ISSUE: Spliting out the the deprecation of the `User-Agent` header from the proposal for Client Hints would
-focus this proposal.
-
-GREASE-like UA Strings {#grease}
-----------------------
-
-History has shown us that there are real incentives for [=user agents=] to lie about their branding
-in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
-by UA-based allow/block lists.
-
-Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
-probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
-title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
-We could borrow from that concept to tackle this problem.
-
-[=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
-standardized processing of the `UA` string. By randomly including additional, intentionally
-incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
-ossify on a few required strings.  
-
-Let's examine a few examples:
-* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
-    UA set that includes an non-existent browser, and which varies once in a while.
-    - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering
-    engine and its version to that.
-    - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than
-    exact UA sniffing, Chrome might remove itself from the set entirely.
-    - `"Chromium"; v="73", "NotBrowser"; v="12"`
-* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
-    set, enabling sites to count them.
-    - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
-
-
-[=User agents=] MUST include more than a single value in [=user agent/brands=], where at least one
-of these values is an arbitrary value.
-
-When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
-of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
-semi-colons to those values. The purpose of this is to make non-compliant server implementations
-immediately aware that their parsing code is inadequate.
-
-The value order in [=user agent/brands=] MUST change over time, the prevent receivers of the header
-from relying on certain values being in certain locations in the string.
-
-When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
-variance among identical [=user agent=] versions.
-
-Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
-at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-version. 
-
-ISSUE: This will introduce inefficiency into a new specification which is designed to eliminate 
-inefficiency in the previous established practices. This chapter should be removed.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

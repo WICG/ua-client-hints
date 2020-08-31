@@ -97,6 +97,16 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
     "href": "https://wicg.github.io/client-hints-infrastructure/",
     "title": "Client Hints Infrastructure",
     "author": [ "Yoav Weiss" ]
+  },
+  "CMA-UK": {
+    "href": "https://www.gov.uk/cma-cases/online-platforms-and-digital-advertising-market-study",
+    "title": "Online platforms and digital advertising market study",
+    "author": [ "UK Competition and Markets Authority" ]
+  },
+  "Privacy-Budget": {
+    "href": "https://github.com/bslassey/privacy-budget",
+    "title": "Combating Fingerprinting with a Privacy Budget",
+    "author": [ "Brad Lassey" ]
   }
 }
 </pre>
@@ -105,7 +115,7 @@ Dependencies {#dependencies}
 ============
 
 This document is dependent on the following related specifications which the reader must be 
-familar with before reading this document.
+familiar with before reading this document.
 
 1.  Experimental IETF specification for Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) 
     which expires in January 2021.
@@ -131,12 +141,12 @@ When combined with other information the `User-Agent` field value could be used 
 user agents and therefore might represent a risk to people's privacy. This problem is most severe 
 when content is served over insecure HTTP where access providers can view the information. Privacy
 concerns are mitigated to some extent when secure protocols such as HTTPS are used. Only parties 
-known to the user or the organisation whose domain is displayed in the address bar of the user 
+known to the user or the organization whose domain is displayed in the address bar of the user 
 agent will have access to the `User-Agent` field value.
 
 [[RFC7231]] does not mandate the structure of the information contained in the field value. It has
 evolved over several decades by multiple browser vendors and often contains information that is not
-needed. Robust solutions ([[51Degrees]] [[DeviceAtlas]], [[Scientiamobile]]) for parsing 
+needed. Robust solutions ([[51Degrees]], [[DeviceAtlas]], [[Scientiamobile]]) for parsing 
 `User-Agent` field values know which segments to ignore or focus on and perform with over 99% 
 accuracy in practice.
 
@@ -172,8 +182,8 @@ Use cases for the information contained in `User-Agent` field values include:
     application on Android in order to match each platform's aesthetic and design patterns.
 
 3.  Similarly to #1, OS revisions and architecture can be responsible for specific bugs which can
-    be worked around in website's code, and useful for things like selecting appropriate executables
-    for download (32 vs 64 bit, ARM vs Intel, etc).
+    be worked around in website's code, and useful for things like selecting the appropriate 
+    executable for download (32 vs 64 bit, ARM vs Intel, etc).
 
 4.  Sophisticated developers use model/make to tailor their sites to the capabilities of the
     device (e.g. [[FacebookYearClass]]) and to pinpoint performance bugs and regressions which
@@ -193,7 +203,12 @@ Use cases for the information contained in `User-Agent` field values include:
     [[Google-Analytics]] require the `User-Agent` field value to be present to provide insights into 
     device classifications, models, browser and operating system versions.
     
-8.  Fraud detection uses the version numbers, platform details, model information, and layout engine
+8.  Identifying legitimate non human web traffic for the purposes of improving web sites based on 
+    human interactions only, and other purposes where including non human activity in analysis is 
+    undesirable, but where reliable identification of humans via sign in methods is either not
+    possible or desirable.
+
+9.  Fraud detection uses the version numbers, platform details, model information, and layout engine
     versions, among others and form the basis for fingerprinting schemes for the identification and 
     prevention of fraud or to track people.
 
@@ -204,34 +219,38 @@ This document proposes a mechanism which will address the following distinct pro
 
 2.  Reduce the amount of information sent on every request.
 
-Prior to deployment this appraoch will be compared with the adopting a simpler and more efficient
-convention for the existing `User-Agent` field values.
-
 The document introduces seven new Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) that can 
 provide the client's branding and version information, the underlying operating system's branding 
 and major version, as well as details about the underlying device. Rather than broadcasting this 
-data to everyone, all the time, user agents can make reasonable decisions about how to respond to
-given sites' requests for more granular data, reducing the passive fingerprinting surface area 
-exposed to the network.
+data all the time, user agents can provide this information on request.
+
+Prior to deployment this approach will be compared with adopting a simpler and more efficient
+convention for the existing `User-Agent` field values as a comparison.
 
 Out of Scope {#out-of-scope}
 ------------
 
 The following are out of scope for this document.
 
-1.  How the use cases for `User-Agent` field values will be migrated to make use of Client Hints. 
+1.  Understanding how the `User-Agent` field values are used in practice and the work involved in
+    migrating to Client Hints.
+    
+2.  How the use cases for `User-Agent` field values will be migrated to make use of Client Hints. 
     These considerations will need to be addressed following incubation prior to deployment 
     following experiments.
 
-2.  Understanding how the `User-Agent` field values are used in practice and the work involved in
-    migrating to Client Hints.
-    
-ISSUE(wicg/ua-client-hints): Engage with a wide group of stakeholders prior to progression
-beyond incubation.
+ISSUE(wicg/ua-client-hints): Engage with a wide group of stakeholders prior to progression.
 
-3.  Policy issues such as anti-trust or privacy are not matters for technical specifications.
+3.  In this draft the identification and mitigation of privacy issues associated with the 
+    deployment of Client-Hints is not in scope.
 
-4.  Modifications to existing `User-Agent` field values and practices.
+ISSUE: Align other work on privacy such as the introduction of personal identifiers, 
+requiring per install or upgrade privacy notices and defaults separate to user agent vendors other
+notices [[CMA-UK]], or the concept of privacy budgets [[PRIVACY-BUDGET]].
+
+4.  Policy issues such as anti-trust or privacy which not matters for technical specifications.
+
+5.  Modifications to existing `User-Agent` field values and practices.
 
 Examples {#examples}
 --------
@@ -288,6 +307,11 @@ has defined a number of properties for itself:
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
 
+ISSUE: One of the problems that this document is attempting to solve is the unstructured nature of the
+`User-Agent` field value. The document does not currently provide sufficient guidance to implementors
+concerning the structure of each field value. The document should aim to be as explicit as those related
+to other HTTP header values if it is to be successful in solving this problem.
+
 [=User agents=] MUST map higher-entropy [=platform architecture=] values to the following buckets:
 
 * x86 CPU architectures => "x86"
@@ -296,14 +320,14 @@ values for each, as they are all values constructed at the [=user agent=]'s whim
 Other CPU architectures could be mapped into one of these values in case that makes sense, or be
 mapped to the empty string.
 
-ISSUE 105: There might be use-cases for higher-entropy, more specific CPU architectures (e.g. 32
+ISSUE: There might be use-cases for higher-entropy, more specific CPU architectures (e.g. 32
 vs. 64 bit architectures, or specific instruction sets for the download of highly optimized
 executable binaries). If necessary, we could support those use-cases through one or more separate
 hints.
 
 [=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
 unless the user's platform is one where both the following conditions apply:
- * Binary download of executables is likely.
+ * Binary download of an executable is likely.
  * Different CPU architectures are likely to require different binary executable resources, and
      different binary executable resources are likely to be available.
 
@@ -391,23 +415,23 @@ href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
 <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
-It is considered low enropy because it includes only the [=user agent=]'s branding information,
+It is considered low entropy because it includes only the [=user agent=]'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
 
-ISSUE: What is the policy for classifying some Client Hints as being send by default? Either all Client 
-Hints should be sent on every request, or no Client Hints sent on first 
-request. If the rationale for the specification is to limit entropy then sending a value will increase
-entropy for minority browser vendors, whilst decrease it for dominate browser vendors. If the rationale
-is to address historic issues with the `User-Agent` field value construction this could be better addressed
-via a simpler specification to introduce a more modern convention for the field.
+ISSUE: What is the policy for classifying some Client Hints as being sent by default? Either all Client 
+Hints should be sent on every request, or no Client Hints sent on first request. If the rationale for
+the specification is to limit entropy then sending a value will increase entropy for minority browser 
+vendors, whilst decrease it for dominate browser vendors. If the rationale is to address historic 
+issues with the `User-Agent` field value construction this could be better addressed via a simpler 
+specification to introduce a more modern convention for the field.
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
 1.  Let |list| be a [=/list=], initially empty.
 
-2. For each |brandVersion| in [=user agent/brands=]:
+2.  For each |brandVersion| in [=user agent/brands=]:
 
     1. Let |parameter| be a [=dictionary=], initially empty.
 
@@ -569,7 +593,7 @@ Delegation {#delegation}
 ----------
 
 Client Hints will be delegated from top-level pages via Feature Policy. This reduces the likelihood that [=user agent=]
-information will be delivered along with subresource requests, which reduces the potential for
+information will be delivered along with sub-resource requests, which reduces the potential for
 passive fingerprinting.
 
 ISSUE: Reference Feature Policy on which this document relies.
@@ -591,6 +615,9 @@ settings interface.
 ISSUE(https://www.w3.org/Consortium/mission): Is this compatible with the W3C One Web objective?
 Restriction of access to information vital to the provision of some services seems problematic.
 
+ISSUE: Some method of providing people control of the defaults they accept is needed to inform the
+implementation of this feature [[CMA-UK]].
+
 Implementation Considerations {#impl-considerations}
 =============================
 
@@ -600,7 +627,7 @@ The 'User-Agent' Header {#user-agent}
 [=User agents=] MUST NOT deprecate the `User-Agent` header in favor of the Client Hints model described in
 this document until such time as Client Hints and all related specifications are ratified recommendations 
 of the W3C and/or IETF and all implementation and migration issues have been identified, the impacts to web 
-interoperability agreed, and mitigations implemented.
+interoperability agreed, and mitigation options implemented.
 
 
 The 'Sec-CH-' prefix {#sec-ch}
@@ -616,6 +643,8 @@ Service Workers), and demarcate them as browser-controlled client hints so they 
 included in requests without triggering CORS preflights.
 
 Therefore, request headers defined in this specification include a `Sec-CH-` prefix.
+
+ISSUE: Expand specification to make the information available in this document available via JavaScript.
 
 IANA Considerations {#iana}
 ===================

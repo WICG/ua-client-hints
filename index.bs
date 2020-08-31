@@ -248,7 +248,7 @@ ISSUE: Align other work on privacy such as the introduction of personal identifi
 requiring per install or upgrade privacy notices and defaults separate to user agent vendors other
 notices [[CMA-UK]], or the concept of privacy budgets [[PRIVACY-BUDGET]].
 
-4.  Policy issues such as anti-trust or privacy which not matters for technical specifications.
+4.  Policy issues such as anti-trust or privacy which are not matters for technical specifications.
 
 5.  Modifications to existing `User-Agent` field values and practices.
 

@@ -9,9 +9,9 @@ Level: None
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Editor: Yoav Weiss 58673, Google Inc., yoav@yoav.ws
 Abstract:
-    This document defines a set of Client Hints that aim to provide developers with the ability to
-    perform agent-based content negotiation when necessary, while avoiding the historical baggage and
-    passive fingerprinting surface exposed by the venerable `User-Agent` header.
+    This document defines a set of Client Hints that aim to provide developers with the ability 
+    to perform agent-based content negotiation when necessary and provide an option to remove 
+    "historical baggage" from the venerable `User-Agent` header.
 Indent: 4
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
@@ -43,6 +43,11 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
     "href": "https://engineering.fb.com/android/year-class-a-classification-system-for-android/",
     "title": "Year class: A classification system for Android",
     "authors": [ "Chris Marra", "Daniel Weaver" ]
+  },
+  "RFC2026" : {
+    "href": "https://tools.ietf.org/html/rfc2026#section-4.2.1",
+    "title": "The Internet Standards Process -- Revision 3",
+    "authors": [ "S. Bradner" ]
   },
   "I-D.draft-ietf-httpbis-client-hints": {
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-client-hints",
@@ -117,8 +122,8 @@ Dependencies {#dependencies}
 This document is dependent on the following related specifications which the reader must be 
 familiar with before reading this document.
 
-1.  Experimental IETF specification for Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) 
-    which expires in January 2021.
+1.  Experimental IETF specification for Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]).
+    Not currently on track to become a standard [[RFC2026]].
     
 2.  Unofficial community draft Client Hints Infrastructure ([[Client-Hints-Infrastructure]]). 
     No official standing in W3C like this document.

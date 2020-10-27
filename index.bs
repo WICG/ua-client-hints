@@ -47,9 +47,16 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
   "I-D.ietf-httpbis-client-hints": {
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-client-hints",
     "title": "HTTP Client Hints",
-    "authors": [ "Ilya Grigorik" ],
+    "authors": [ "Ilya Grigorik", "Yoav Weiss" ],
     "status": "ID",
     "publisher": "IETF"
+  },
+  "client-hints-infrastructure": {
+    "href": "https://wicg.github.io/client-hints-infrastructure/",
+    "title": "Client Hints Infrastructure",
+    "authors": [ "Yoav Weiss" ],
+    "status": "CG Draft",
+    "publisher": "WICG"
   },
   "I-D.ietf-httpbis-header-structure": {
     "authors": [ "Mark Nottingham", "Poul-Henning Kamp" ],
@@ -295,7 +302,7 @@ The header's ABNF is:
 ```
 
 Note: Unlike most Client Hints, since it's included in the <a
-href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, [[client-hints-infrastructure]]
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
 <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
@@ -350,7 +357,7 @@ The header's ABNF is:
 ```
 
 Note: Like `Sec-CH-UA` above, since it's included in the <a
-href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>,
+href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, [[client-hints-infrastructure]]
 the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
 <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
@@ -361,7 +368,7 @@ Note: These client hints can be evoked with the following set of <a href="https:
 
 Integration with Fetch {#fetch-integration}
 ----------------------
-Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification.
+Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. [[client-hints-infrastructure]]
 
 
 Interface {#interface} 

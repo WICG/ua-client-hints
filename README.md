@@ -570,3 +570,16 @@ such, servers will usually use the platform or presence of this "mobile" identif
 pointing out that most modern browsers also have an explicit "request desktop site" UI element in their
 mobile versions which should be honored. In a more general sense, though, a "mobile" experience could be
 seen as a UX designed with smaller screens and touch-based interface in mind.
+
+# Considered alternatives
+## Freezing the UA string and reducing its information density without providing an alternative mechanism
+We've considered removing information from the UA string, similar to WebKit's [attempt](https://webkit.org/blog/8042/release-notes-for-safari-technology-preview-46/#post-8042:~:text=Froze%20the%20user%2Dagent%20string%20to%20reduce,to%20prevent%20its%20use%20for%20fingerprinting).
+
+We ruled out this alternative as it seems to leave many use-cases unaddressed.
+
+## Restructuring of the User-Agent string
+
+Restructuring the User-Agent string could have addressed some of the compatibility concerns with today's use of the User-Agent string, and potentially discourage its abuse.
+At the same time, it would have incurred same or higher migration costs as this proposal. In particular, attempts to restructure the string in-place would result in a lot of breakage of legacy apps.
+On top of that, it wouldn’t have addressed any of the passive entropy concerns that are motivating this proposal.
+

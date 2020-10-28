@@ -34,8 +34,19 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
             text: boolean; url: #section-3.3.4
             text: string; url: #section-3.3.3
             text: list; url: #section-3.1
+            text: serializing a list; url: #ser-list
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
+urlPrefix: https://wicg.github.io/client-hints-infrastructure/
+    type: dfn
+        text: low entropy hint table; url: #low-entropy-hint-table
+        text: client hints token; url: #client-hints-token
+        text: client hints fetch integration; url: #fetch
+        text: policy controlled client hints features; url: #policy-controlled-client-hints-features
+        text: append client hints to request; url: #abstract-opdef-append-client-hints-to-request
+urlPrefix: https://tc39.es/ecma262/
+    type: dfn
+        text: current realm; url: #current-realm
 </pre>
 <pre class="biblio">
 {
@@ -294,11 +305,10 @@ The header's ABNF is:
   Sec-CH-UA = sh-list
 ```
 
-Note: Unlike most Client Hints, since it's included in the <a
-href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, [[CLIENT-HINTS-INFRASTRUCTURE]]
+Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
-<a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+[=policy controlled client hints feature=].
 It is considered low enropy because it includes only the [=user agent=]'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
@@ -321,7 +331,7 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
     3. Append |pair| to |list|.
 
-3. Return the output of running <a href="https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html#ser-list">serializing a list</a> with |list| as input.
+3. Return the output of running [=serializing a list=] with |list| as input.
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-full-version}
 --------------------------------
@@ -349,19 +359,18 @@ The header's ABNF is:
   Sec-CH-UA-Mobile = sh-boolean
 ```
 
-Note: Like `Sec-CH-UA` above, since it's included in the <a
-href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, [[CLIENT-HINTS-INFRASTRUCTURE]]
+Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
-<a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+[=policy controlled client hints feature=].
 It is considered low enropy because it is a single bit of information directly controllable
 by the user.
 
-Note: These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
+Note: These client hints can be evoked with the following set of [=Client hints tokens=]: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
 
 Integration with Fetch {#fetch-integration}
 ----------------------
-Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. [[CLIENT-HINTS-INFRASTRUCTURE]]
+[=Client Hints Fetch integration=] is defined as part of the [[CLIENT-HINTS-INFRASTRUCTURE]] specification.
 
 
 Interface {#interface} 
@@ -444,7 +453,7 @@ On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agen
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
 
-1. Let |p| be a [=a new promise=] created in <a href="https://tc39.es/ecma262/#current-realm">the current realm</a>.
+1. Let |p| be a [=a new promise=] created in the [=current realm=].
 
 2.  Run the following steps [=in parallel=]:
 
@@ -482,7 +491,7 @@ Client Hints will be delegated from top-level pages via Feature Policy. This red
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.
 
-That delegation is defined as part of <a href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request">append client hints to request</a>.
+That delegation is defined as part of [=append client hints to request=].
 
 Access Restrictions {#access}
 -------------------

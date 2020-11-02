@@ -185,7 +185,7 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
       version. (for example: "NT 6.0", "15", or "17G")
 *   <dfn for="user agent" export>platform architecture</dfn> - The [=user agent=]'s underlying CPU
-      architecture (for example: "ARM64", or "ia32")
+      architecture (for example: "ARM", or "x86")
 *   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (for example: "",
       or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s

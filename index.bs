@@ -364,7 +364,7 @@ Integration with Fetch {#fetch-integration}
 Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. [[CLIENT-HINTS-INFRASTRUCTURE]]
 
 
-Interface {#interface} 
+Interface {#interface}
 =================
 
 <pre class="idl">
@@ -374,7 +374,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  DOMString platform; 
+  DOMString platform;
   DOMString platformVersion;
   DOMString architecture;
   DOMString model;
@@ -419,7 +419,7 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 3. For each pair:
 
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
-        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}. 
+        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}.
 
     2. Append |dict| to |list|.
 
@@ -528,7 +528,7 @@ We could borrow from that concept to tackle this problem.
 [=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
 standardized processing of the `UA` string. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
-ossify on a few required strings.  
+ossify on a few required strings.
 
 Let's examine a few examples:
 * In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
@@ -561,7 +561,7 @@ variance among identical [=user agent=] versions.
 
 Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-version. 
+version.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

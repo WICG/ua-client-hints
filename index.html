@@ -1324,7 +1324,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version adf8655b, updated Thu Oct 29 16:15:09 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="96e720c0d8e4a092ea59de4fad73d8a2fe30c081" name="document-revision">
+  <meta content="275ed7138e3ac91a11d1e6db382943b352ad9d6e" name="document-revision">
 <style>/* darkmode */
 
             @media (prefers-color-scheme: dark) {
@@ -1883,7 +1883,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-11-02">2 November 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-11-03">3 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2147,8 +2147,9 @@ information about the platform version on which a given <a data-link-type="dfn" 
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA</c-> <c- o>=</c-> <c- nc>sh-list</c->
 </pre>
-   <p class="note" role="note"><span>Note:</span> Unlike most Client Hints, since it’s included in the <a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, <a data-link-type="biblio" href="#biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]</a> the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
-receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+   <p class="note" role="note"><span>Note:</span> Unlike most Client Hints, since it’s included in the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>,
+the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
+receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features">policy controlled client hints feature</a>.
 It is considered low enropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
@@ -2172,7 +2173,7 @@ introduced or modified between releases of a particular browser" <a data-link-ty
        <p>Append <var>pair</var> to <var>list</var>.</p>
      </ol>
     <li data-md>
-     <p>Return the output of running <a href="https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html#ser-list">serializing a list</a> with <var>list</var> as input.</p>
+     <p>Return the output of running <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1.1" id="ref-for-section-4.1.1">serializing a list</a> with <var>list</var> as input.</p>
    </ol>
    <h3 class="heading settled" data-level="2.6" id="sec-ch-full-version"><span class="secno">2.6. </span><span class="content">The 'Sec-CH-UA-Full-Version' Header Field</span><a class="self-link" href="#sec-ch-full-version"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-full-version"><code>Sec-CH-UA-Full-Version</code><a class="self-link" href="#http-headerdef-sec-ch-ua-full-version"></a></dfn> request header field gives a server information
@@ -2186,13 +2187,14 @@ whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#us
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Mobile</c-> <c- o>=</c-> <c- nc>sh-boolean</c->
 </pre>
-   <p class="note" role="note"><span>Note:</span> Like <code>Sec-CH-UA</code> above, since it’s included in the <a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-table">low-entropy table</a>, <a data-link-type="biblio" href="#biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]</a> the <code>Sec-CH-UA-Mobile</code> header will be sent by default, whether or not the server opted-into
-receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-features">policy-controlled feature</a>.
+   <p class="note" role="note"><span>Note:</span> Like <code>Sec-CH-UA</code> above, since it’s included in the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table" id="ref-for-low-entropy-hint-table①">low entropy hint table</a>,
+the <code>Sec-CH-UA-Mobile</code> header will be sent by default, whether or not the server opted-into
+receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features①">policy controlled client hints feature</a>.
 It is considered low enropy because it is a single bit of information directly controllable
 by the user.</p>
-   <p class="note" role="note"><span>Note:</span> These client hints can be evoked with the following set of <a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token-definition">Client Hint tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile</p>
+   <p class="note" role="note"><span>Note:</span> These client hints can be evoked with the following set of <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token" id="ref-for-client-hints-token">Client hints tokens</a>: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile</p>
    <h3 class="heading settled" data-level="2.8" id="fetch-integration"><span class="secno">2.8. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h3>
-    Fetch integration of this specification is defined as part of the <a href="https://wicg.github.io/client-hints-infrastructure/#fetch">Client Hints infrastructure</a> specification. <a data-link-type="biblio" href="#biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]</a> 
+    <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#fetch" id="ref-for-fetch">Client Hints Fetch integration</a> is defined as part of the <a data-link-type="biblio" href="#biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]</a> specification. 
    <h2 class="heading settled" data-level="3" id="interface"><span class="secno">3. </span><span class="content">Interface</span><a class="self-link" href="#interface"></a></h2>
 <pre class="idl highlight def"><c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-navigatoruabrandversion"><code><c- g>NavigatorUABrandVersion</c-></code></dfn> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUABrandVersion" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-navigatoruabrandversion-brand"><code><c- g>brand</c-></code></dfn>;
@@ -2264,7 +2266,7 @@ initialized with arbitrary <code class="idl"><a data-link-type="idl" href="#dom-
    <p>The <dfn class="idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code><a class="self-link" href="#dom-navigatorua-gethighentropyvalues"></a></dfn> method MUST run these steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a> created in <a href="https://tc39.es/ecma262/#current-realm">the current realm</a>.</p>
+     <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a> created in the <a data-link-type="dfn" href="https://tc39.es/ecma262/#current-realm" id="ref-for-current-realm">current realm</a>.</p>
     <li data-md>
      <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
@@ -2295,7 +2297,7 @@ of a given agent’s behavior over time.</p>
    <h3 class="heading settled" data-level="4.2" id="delegation"><span class="secno">4.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
    <p>Client Hints will be delegated from top-level pages via Feature Policy. This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a> information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.</p>
-   <p>That delegation is defined as part of <a href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request">append client hints to request</a>.</p>
+   <p>That delegation is defined as part of <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a>.</p>
    <h3 class="heading settled" data-level="4.3" id="access"><span class="secno">4.3. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
 agent and the platform/device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">User agents</a> ought to exercise judgement before
@@ -2655,6 +2657,12 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-section-3.1">2.5. The 'Sec-CH-UA' Header Field</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-section-4.1.1">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1.1">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1.1</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-4.1.1">2.5. The 'Sec-CH-UA' Header Field</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.3.3">
    <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3</a><b>Referenced in:</b>
    <ul>
@@ -2817,6 +2825,7 @@ register them in the permanent message header field registry (<a data-link-type=
     <ul>
      <li><span class="dfn-paneled" id="term-for-section-3.3.4">boolean</span>
      <li><span class="dfn-paneled" id="term-for-section-3.1">list</span>
+     <li><span class="dfn-paneled" id="term-for-section-4.1.1">serializing a list</span>
      <li><span class="dfn-paneled" id="term-for-section-3.3.3">string</span>
      <li><span class="dfn-paneled" id="term-for-">structured header</span>
     </ul>

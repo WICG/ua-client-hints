@@ -34,7 +34,7 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
             text: boolean; url: #section-3.3.4
             text: string; url: #section-3.3.3
             text: list; url: #section-3.1
-            text: serializing a list; url: #ser-list
+            text: serializing a list; url: #section-4.1.1
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
 urlPrefix: https://wicg.github.io/client-hints-infrastructure/

@@ -530,7 +530,7 @@ History has shown us that there are real incentives for [=user agents=] to lie a
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.
 
-Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
+Resetting expectations may help to prevent abuse of the UA string's brand in the short term, but
 probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.

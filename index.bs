@@ -511,10 +511,11 @@ Implementation Considerations {#impl-considerations}
 The 'User-Agent' Header {#user-agent}
 -----------------------
 
-[=User agents=] SHOULD deprecate the `User-Agent` header in favor of the Client Hints model described in
-this document. The header, however, is likely to be impossible to remove entirely in the near-term,
-as existing sites' content negotiation code will continue to require its presence (see
-[[Rossi2015]] for a recent example of a new browser's struggles in this area).
+[=User agents=] SHOULD deprecate usage of the `User-Agent` header by reducing its information granularity
+or removing the header entirely, in favor of the Client Hints model described in this document. The header,
+however, is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
+code will continue to require its presence (see [[Rossi2015]] for a recent example of a new browser's struggles
+in this area).
 
 One approach which might be advisable could be for each [=user agent=] to lock the value of its
 `User-Agent` header, ensuring backwards compatibility by maintaining the crufty declarations of
@@ -529,7 +530,7 @@ History has shown us that there are real incentives for [=user agents=] to lie a
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.
 
-Reseting expectations may help to prevent abuse of the UA string's brand in the short term, but
+Resetting expectations may help to prevent abuse of the UA string's brand in the short term, but
 probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.
@@ -593,7 +594,7 @@ This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH
 `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Mobile` and `Sec-CH-UA` HTTP request header fields, and
 register them in the permanent message header field registry ([[RFC3864]]).
 
-It also intends to deprecate the `User-Agent` header field.
+It also intends to deprecate usage of the `User-Agent` header field.
 
 'Sec-CH-UA-Arch' Header Field {#iana-arch}
 --------------------------

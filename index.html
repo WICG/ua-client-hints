@@ -1324,7 +1324,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version adf8655b, updated Thu Oct 29 16:15:09 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="053880f83fcc9212f77f77432f62e7e90e806863" name="document-revision">
+  <meta content="372bf8c03a26e0957c13138022b6c110b4948dcd" name="document-revision">
 <style>/* darkmode */
 
             @media (prefers-color-scheme: dark) {
@@ -2079,7 +2079,7 @@ defined in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints
   version. (for example: "NT 6.0", "15", or "17G")</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-architecture">platform architecture</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑦">user agent</a>'s underlying CPU
-  architecture (for example: "ARM64", or "ia32")</p>
+  architecture (for example: "ARM", or "x86")</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-model">model</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑧">user agent</a>'s device model (for example: "",
   or "Pixel 2 XL")</p>
@@ -2202,7 +2202,7 @@ by the user.</p>
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-uadatavalues"><code><c- g>UADataValues</c-></code></dfn> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-platform"><code><c- g>platform</c-></code></dfn>; 
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-platform"><code><c- g>platform</c-></code></dfn>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></dfn>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></dfn>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString⑤"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="UADataValues" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-uadatavalues-model"><code><c- g>model</c-></code></dfn>;
@@ -2901,7 +2901,7 @@ register them in the permanent message header field registry (<a data-link-type=
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-uadatavalues"><code><c- g>UADataValues</c-></code></a> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platform"><code><c- g>platform</c-></code></a>; 
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platform"><code><c- g>platform</c-></code></a>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-platformversion"><code><c- g>platformVersion</c-></code></a>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-architecture"><code><c- g>architecture</c-></code></a>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-type="DOMString " href="#dom-uadatavalues-model"><code><c- g>model</c-></code></a>;

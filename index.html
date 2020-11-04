@@ -1324,7 +1324,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version adf8655b, updated Thu Oct 29 16:15:09 2020 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="275ed7138e3ac91a11d1e6db382943b352ad9d6e" name="document-revision">
+  <meta content="053880f83fcc9212f77f77432f62e7e90e806863" name="document-revision">
 <style>/* darkmode */
 
             @media (prefers-color-scheme: dark) {
@@ -1883,7 +1883,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-11-03">3 November 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-11-04">4 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2308,9 +2308,11 @@ revealed to servers, or gate access on explicit user interaction via a permissio
 settings interface.</p>
    <h2 class="heading settled" data-level="5" id="impl-considerations"><span class="secno">5. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="user-agent"><span class="secno">5.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">User agents</a> SHOULD deprecate the <code>User-Agent</code> header in favor of the Client Hints model described in
-this document. The header, however, is likely to be impossible to remove entirely in the near-term,
-as existing sites' content negotiation code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015">[Rossi2015]</a> for a recent example of a new browser’s struggles in this area).</p>
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
+or removing the header entirely, in favor of the Client Hints model described in this document. The header,
+however, is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
+code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015">[Rossi2015]</a> for a recent example of a new browser’s struggles
+in this area).</p>
    <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a> to lock the value of its <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
 "like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
 the version number, then shifting platform and model information to something reasonably generic in
@@ -2319,7 +2321,7 @@ order to reduce the fingerprint the header provides.</p>
    <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agents</a> to lie about their branding
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.</p>
-   <p>Reseting expectations may help to prevent abuse of the UA string’s brand in the short term, but
+   <p>Resetting expectations may help to prevent abuse of the UA string’s brand in the short term, but
 probably won’t help in the long run.  The world of network protocols introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands②">brands</a> containing more than a single entry could encourage
@@ -2382,7 +2384,7 @@ included in requests without triggering CORS preflights.</p>
    <h2 class="heading settled" data-level="6" id="iana"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
    <p>This document intends to define the <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA-Mobile</code> and <code>Sec-CH-UA</code> HTTP request header fields, and
 register them in the permanent message header field registry (<a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>).</p>
-   <p>It also intends to deprecate the <code>User-Agent</code> header field.</p>
+   <p>It also intends to deprecate usage of the <code>User-Agent</code> header field.</p>
    <h3 class="heading settled" data-level="6.1" id="iana-arch"><span class="secno">6.1. </span><span class="content">'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
    <p>Header field name:</p>
    <dl>

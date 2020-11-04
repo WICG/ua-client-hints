@@ -196,7 +196,7 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
       version. (for example: "NT 6.0", "15", or "17G")
 *   <dfn for="user agent" export>platform architecture</dfn> - The [=user agent=]'s underlying CPU
-      architecture (for example: "ARM64", or "ia32")
+      architecture (for example: "ARM", or "x86")
 *   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (for example: "",
       or "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
@@ -373,7 +373,7 @@ Integration with Fetch {#fetch-integration}
 [=Client Hints Fetch integration=] is defined as part of the [[CLIENT-HINTS-INFRASTRUCTURE]] specification.
 
 
-Interface {#interface} 
+Interface {#interface}
 =================
 
 <pre class="idl">
@@ -383,7 +383,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  DOMString platform; 
+  DOMString platform;
   DOMString platformVersion;
   DOMString architecture;
   DOMString model;
@@ -428,7 +428,7 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 3. For each pair:
 
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
-        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}. 
+        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}.
 
     2. Append |dict| to |list|.
 
@@ -538,7 +538,7 @@ We could borrow from that concept to tackle this problem.
 [=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
 standardized processing of the `UA` string. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
-ossify on a few required strings.  
+ossify on a few required strings.
 
 Let's examine a few examples:
 * In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
@@ -571,7 +571,7 @@ variance among identical [=user agent=] versions.
 
 Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
 at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-version. 
+version.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

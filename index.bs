@@ -430,7 +430,11 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
     2.  Randomize the order of the items in |list|.
 
-    Note: See [[#grease]] for more details on why these steps might be appropriate.
+    Note: One approach to minimize caching variance when generating these random components could be to
+    determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
+    version. 
+
+    Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
 
 5. Return |list|.
 

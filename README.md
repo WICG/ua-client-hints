@@ -480,7 +480,7 @@ be able to replace `User-Agent` string matching for this use-case.
 
 # FAQ
 
-## Do we really need to neuter the JavaScript interface too?
+## Do we really need to neuter the JavaScript interface (i.e. `Navigator.userAgent`) too?
 
 An excellent question! This proposal assumes that developers with access to JavaScript execution
 do not need the user agent string in order to determine which resources to load and how they

@@ -77,7 +77,7 @@ accomplish this as follows:
     Mozilla/5.0 (Linux; Android 9; Unspecified Device) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/71.1.2222.33 Mobile Safari/537.36
     ```
 
-    And the following for desktop, similarly irrepspective of the underlying device:
+    And the following for desktop, similarly irrespective of the underlying device:
 
     ```http
     Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.1.2222.33 Safari/537.36

@@ -454,18 +454,19 @@ This is a case of fingerprinting that is not user-hostile, and therefore one we
 would like to preserve.  With UA-CH this will be initially enabled by active
 collection of the various hints.
 
-This will work until something like [Privacy
-Budget](https://github.com/bslassey/privacy-budget) will prevent sites from
-collecting user identifying levels of entropy about their users.  By then, one
-can hope that alternative methods will exist for spam filtering that will
-obsolete the use of fingerprinting for that purpose.
+We hope that alternative methods or APIs will exist to address the
+spam filtering and bot detection use cases in the future, as browsers may decide
+to intervene on behalf of their users by limiting the collection of
+user-identifying entropy (e.g., the
+[Privacy Budget](https://github.com/bslassey/privacy-budget proposal).
 
 ### Persistent user tracking
 This is a case of fingerprinting that this proposal *explicitly tries to make
 harder*.  Like the case of "spam filtering", it would still be feasible to
 actively collect all the hints about the user as bits of entropy. Unlike the
-above case, this is something that the Privacy Budget is destined to prevent,
-without any alternative mechanisms for persistent user tracking.
+above case, this is something that proposals such as the Privacy Budget aim to
+prevent, without providing any alternative mechanisms for persistent user
+tracking.
 
 ## Blocking known bots and crawlers
 Currently, the `User-Agent` string is often used as a brute-force way to block

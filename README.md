@@ -27,7 +27,7 @@ which might allow user agents generally to be a little more aggressive.
 [1]: https://twitter.com/rmondello/status/943545865204989953?lang=en
 [2]: https://bugs.webkit.org/show_bug.cgi?id=182629#c6
 
-### Challenges 
+### Challenges
 
 From a developer's standpoint, the detail available in the UA string is valuable, and they
 reasonably object to dropping it. The feedback to Safari's UA string freeze was right along these
@@ -134,7 +134,7 @@ accomplish this as follows:
         ```http
         Sec-CH-UA-Full-Version: "73.1.2343B.TR"
         ```
-        
+
 4.  These client hints should also be exposed via JavaScript APIs, perhaps hanging off a new
     `navigator.userAgentData` attribute as something like:
 
@@ -254,7 +254,7 @@ Finally, when serving images, some browsers don't update their `Accept` request
 headers, while in other cases (*cough* WebP *cough*) the MIME type is not
 descriptive enough to distinguish between different variants of the same
 format. In those cases, knowing the browser and its version can be critical to
-serving the right image variant. 
+serving the right image variant.
 
 For that use case to work, the server needs to be aware of the browser and its
 meaningful version, and map that to a list of available features. That enables
@@ -454,18 +454,19 @@ This is a case of fingerprinting that is not user-hostile, and therefore one we
 would like to preserve.  With UA-CH this will be initially enabled by active
 collection of the various hints.
 
-This will work until something like [Privacy
-Budget](https://github.com/bslassey/privacy-budget) will prevent sites from
-collecting user identifying levels of entropy about their users.  By then, one
-can hope that alternative methods will exist for spam filtering that will
-obsolete the use of fingerprinting for that purpose.
+We hope that alternative methods or APIs will exist to address the
+spam filtering and bot detection use cases in the future, as browsers may decide
+to intervene on behalf of their users by limiting the collection of
+user-identifying entropy (e.g., the
+[Privacy Budget](https://github.com/bslassey/privacy-budget proposal).
 
 ### Persistent user tracking
 This is a case of fingerprinting that this proposal *explicitly tries to make
 harder*.  Like the case of "spam filtering", it would still be feasible to
 actively collect all the hints about the user as bits of entropy. Unlike the
-above case, this is something that the Privacy Budget is destined to prevent,
-without any alternative mechanisms for persistent user tracking.
+above case, this is something that proposals such as the Privacy Budget aim to
+prevent, without providing any alternative mechanisms for persistent user
+tracking.
 
 ## Blocking known bots and crawlers
 Currently, the `User-Agent` string is often used as a brute-force way to block
@@ -495,12 +496,12 @@ then move on to the rest rather than doubling back at some point in the future.
 ## What about the compatibility hit we'll take from UA sniffing?
 
 Locking the User-Agent string will lock in the existing behavior of UA-sniffing libraries. That
-may break things in the future if we diverge significantly from today's behavior in some 
+may break things in the future if we diverge significantly from today's behavior in some
 interesting way, but that doesn't seem like a risk unique to this proposal.
 
 ## Should the UA string really be a set?
 
-Yes! 
+Yes!
 
 History has shown us that there are real incentives for user agents to lie
 about their branding in order to thread the needle of sites' sniffing scripts,
@@ -557,13 +558,13 @@ The infrastructure is specified as a separate [document](https://wicg.github.io/
 Based on some discussion in [w3ctag/design-reviews#320](https://github.com/w3ctag/design-reviews/issues/320#issuecomment-435874298),
 it seems reasonable to forbid access to these headers from JavaScript, and demarcate them as
 browser-controlled client hints so they can be documented and included in requests without triggering
-CORS preflights. A `Sec-CH-` prefix seems like a viable approach. 
+CORS preflights. A `Sec-CH-` prefix seems like a viable approach.
 
 ## How does `Sec-CH-UA-Mobile` define "mobile"?
 
-This is a tough question. The motivation for the header is that a majority of user-agent header 
+This is a tough question. The motivation for the header is that a majority of user-agent header
 sniffing is used by the server to decide if a "desktop" or "mobile" UX should be served. This is
-currently implicitly defined in most modern browsers because they have two distinct UIs, a 
+currently implicitly defined in most modern browsers because they have two distinct UIs, a
 "desktop" version (i.e. Windows, Mac OS, etc.) and a "mobile" version (i.e. Android, iOS). In general,
 most browsers will also explicitly send "Mobile" in user-agent strings on "mobile" platforms. As
 such, servers will usually use the platform or presence of this "mobile" identifier. It's also worth

@@ -9,9 +9,9 @@ Level: None
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Editor: Yoav Weiss 58673, Google Inc., yoav@yoav.ws
 Abstract:
-    This document defines a set of Client Hints that aim to provide developers with the ability to
-    perform agent-based content negotiation when necessary, while avoiding the historical baggage and
-    passive fingerprinting surface exposed by the venerable `User-Agent` header.
+    This document defines a set of Client Hints that aim to provide developers with the ability 
+    to perform agent-based content negotiation when necessary and provide an option to remove 
+    "historical baggage" from the venerable `User-Agent` header.
 Indent: 4
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
@@ -85,6 +85,31 @@ urlPrefix: https://tc39.es/ecma262/
     "href": "https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s",
     "title": "The Microsoft Edge Rendering Engine that makes the Web just work",
     "author": [ "Jacob Rossi" ]
+  },
+  "AlexRussell": {
+    "href": "https://twitter.com/slightlylate/status/1139684093602349056/photo/2",
+    "title": "Performance scores by device model",
+    "author": [ "Alex Russell" ]
+  },
+  "Google-Analytics": {
+    "href": "https://support.google.com/analytics/answer/3123672?hl=en",
+    "title": "Acquisition device",
+    "author": [ "Google" ]
+  },
+  "51Degrees": {
+    "href": "https://51degrees.com/device-detection",
+    "title": "Use cases for device detection with 51Degrees",
+    "author": [ "51Degrees" ]
+  },
+  "Scientiamobile": {
+    "href": "https://www.scientiamobile.com",
+    "title": "WURFL based device detection",
+    "author": [ "Scientiamobile" ]
+  },
+  "DeviceAtlas": {
+    "href": "https://deviceatlas.com/",
+    "title": "Use cases for device detection with DeviceAtlas",
+    "author": [ "DeviceAtlas" ]
   }
 }
 </pre>
@@ -93,12 +118,24 @@ Introduction {#intro}
 ============
 
 Today, user agents generally identify themselves to servers by sending a `User-Agent` HTTP request
-header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). Ideally, this header
-would give servers the ability to perform content negotiation, sending down exactly those bits that
-best represent the requested resource in a given user agent, optimizing both bandwidth and user
-experience. In practice, however, this header's value exposes far more information about the user's
-device than seems appropriate as a default, on the one hand, and intentionally obscures the true
-user agent in order to bypass misguided server-side heuristics, on the other.
+header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). This header value
+gives servers the option to perform content negotiation, sending down exactly those bits that best
+represent the requested resource in a given user agent, optimizing both bandwidth and user
+experience. In addition to performance improvements the information also supports analytics, fraud
+detection, problem diagnosis and market share analysis.
+
+When combined with other information the `User-Agent` field value could be used to track specific 
+user agents and therefore might represent a risk to people's privacy. This problem is most severe 
+when content is served over insecure HTTP where access providers can view the information. Privacy
+concerns are mitigated to some extent when secure protocols such as HTTPS are used. Only parties 
+known to the user or the organization whose domain is displayed in the address bar of the user 
+agent will have access to the `User-Agent` field value.
+
+[[RFC7231]] does not mandate the structure of the information contained in the field value. It has
+evolved over several decades by multiple browser vendors and often contains information that is not
+needed. Robust solutions ([[51Degrees]], [[DeviceAtlas]], [[Scientiamobile]]) for parsing 
+`User-Agent` field values know which segments to ignore or focus on and perform with over 99% 
+accuracy in practice.
 
 For example, a recent version of Chrome on iOS identifies itself as:
 
@@ -116,11 +153,10 @@ While a recent version of Edge identifies itself as:
               Safari/537.36 Edge/18.014
 ```
 
-There's quite a bit of information packed into those strings (along with a fair number of lies).
-Version numbers, platform details, model information, etc. are all broadcast along with every
-request, and form the basis for fingerprinting schemes of all sorts. Individual vendors have taken
-stabs at altering their user agent strings, and have run into a few categories of feedback from
-developers that have stymied historical approaches:
+There's quite a bit of information packed into those strings (along with a fair number of lies 
+which are ignored in practice). 
+
+Use cases for the information contained in `User-Agent` field values include:
 
 1.  Brand and version information (e.g. "Chrome 69") allows websites to work around known bugs in
     specific releases that aren't otherwise detectable. For example, implementations of Content
@@ -128,26 +164,54 @@ developers that have stymied historical approaches:
     send in an HTTP response without knowing what browser is responsible for its parsing and
     execution.
 
-2.  Developers will often negotiate what content to send based on the user agent and platform. Some
+2.  Developers will often negotiate the content to send based on the user agent and platform. Some
     application frameworks, for instance, will style an application on iOS differently from the same
     application on Android in order to match each platform's aesthetic and design patterns.
 
 3.  Similarly to #1, OS revisions and architecture can be responsible for specific bugs which can
-    be worked around in website's code, and narrowly useful for things like selecting appropriate
-    executables for download (32 vs 64 bit, ARM vs Intel, etc).
+    be worked around in website's code, and useful for things like selecting the appropriate 
+    executable for download (32 vs 64 bit, ARM vs Intel, etc).
 
 4.  Sophisticated developers use model/make to tailor their sites to the capabilities of the
     device (e.g. [[FacebookYearClass]]) and to pinpoint performance bugs and regressions which
     sometimes are specific to model/make.
+    
+5.  Difference models of device perform very differently [[AlexRussell]]. Developers wishing to 
+    improve performance require this insight in analytics tools and in real time to optimise their
+    web site. The ability to optimise on first request is particularly important to authors targeting
+    people living in emerging economies where lower end device models and features are more widely
+    used than affluent western democracies.
+    
+6.  Vendors of devices and browsers use the information transmitted in `User-Agent` field values to 
+    measure the active install base of their products. This information in aggregate informs product
+    development decisions.
+    
+7.  Web analytics solutions and search engine tools such as those developed by Google 
+    [[Google-Analytics]] require the `User-Agent` field value to be present to provide insights into 
+    device classifications, models, browser and operating system versions.
+    
+8.  Identifying legitimate non human web traffic for the purposes of improving web sites based on 
+    human interactions only, and other purposes where including non human activity in analysis is 
+    undesirable, but where reliable identification of humans via sign in methods is either not
+    possible or desirable.
 
-This document proposes a mechanism which might allow user agents to be a bit more aggressive about
-removing entropy from the `User-Agent` string generally by giving servers that really need some
-specific details about the client the ability to opt-into receiving them. It introduces four new
-Client Hints ([[I-D.ietf-httpbis-client-hints]]) that can provide the client's branding and version
-information, the underlying operating system's branding and major version, as well as details about
-the underlying device. Rather than broadcasting this data to everyone, all the time, user agents can
-make reasonable decisions about how to respond to given sites' requests for more granular data,
-reducing the passive fingerprinting surface area exposed to the network.
+9.  Fraud detection uses the version numbers, platform details, model information, and layout engine
+    versions, among others and form the basis for fingerprinting schemes for the identification and 
+    prevention of fraud or to track people.
+
+This document proposes a mechanism which will address the following distinct problems:
+
+1.  Address historic structural issues with the `User-Agent` field value by introducing new HTTP 
+    header fields and values.
+
+2.  Reduce the amount of information sent on every request.
+
+The document introduces seven new Client Hints ([[I-D.draft-ietf-httpbis-client-hints]]) that can 
+provide the client's branding and version information, the underlying operating system's branding 
+and major version, as well as details about the underlying device.
+
+Prior to deployment this approach will be compared with adopting a simpler and more efficient
+convention for the existing `User-Agent` field values as a comparison.
 
 Examples {#examples}
 --------

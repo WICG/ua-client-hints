@@ -85,6 +85,11 @@ urlPrefix: https://tc39.es/ecma262/
     "href": "https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s",
     "title": "The Microsoft Edge Rendering Engine that makes the Web just work",
     "author": [ "Jacob Rossi" ]
+  },
+  "Anti-trust-law": {
+    "href": "https://ec.europa.eu/competition/antitrust/overview_en.html",
+    "title": "Antitrust: Overview – Competition - European Commission",
+    "author": [ "European Commission" ]
   }
 }
 </pre>
@@ -500,14 +505,26 @@ That delegation is defined as part of [=append client hints to request=].
 Access Restrictions {#access}
 -------------------
 
-The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the platform/device upon which it runs. [=User agents=] ought to exercise judgement before
-granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, [=user agents=] could choose to reveal
-[=user agent/platform architecture=] only on requests it intends to download, giving the server the
-opportunity to serve the right binary. Likewise, they could offer users control over the values
-revealed to servers, or gate access on explicit user interaction via a permission prompt or via a
-settings interface.
+Implementors MUST not restrict access to the information exposed in anyway to any party. The information
+provided must be available to all parties equally to avoid breaching ([[Anti-trust-law]]) anti-trust laws. 
+
+For example; should an implementor consider the frequency that a user visits a website as an indicator
+of the trustworthiness of the domain or organisation associated with the website such an implementor
+would favour default services, links and home pages provided at installation and naturally discriminate
+against smaller lower profile rival services.
+
+For example; should an implementor have access to similar information via means other than those associated
+with this proposal the disparity of information availability would be discriminatory.
+
+For example; should an implementor seek permissions for their own properties at installation time, or via
+acceptance of terms and conditions associated with other products and services, they would be gaining such
+permission in a manner unavailable to competitors.
+
+For example; should the implementation require changes to web site implementations the migration effort 
+would amount to a barrier to access for those organisations that lack the resources of the proposer.
+
+ISSUE: The W3C should rapidly seek and publish advice from experts in competition law before continuing to 
+host this proposal.
 
 Implementation Considerations {#impl-considerations}
 =============================

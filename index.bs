@@ -219,6 +219,16 @@ vs. 64 bit architectures, or specific instruction sets for the download of highl
 executable binaries). If necessary, we could support those use-cases through one or more separate
 hints.
 
+ISSUE: Increases the communication overhead associated with the HTTP protocol in practice 
+degrading performance and increaseing the environmental impact of the web. The following 
+User-Agent for Chrome `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
+Gecko) Chrome/86.0.4280.88 Safari/537.36` is 114 characters in length. With this experiment enabled
+an additional 78 characters are added to the collection of HTTP headers for every request 
+`Sec-CH-UA: "Chromium";v="86", "\"Not\\A;Brand";v="99", "Google Chrome";v="86"`. When other client 
+hint data is included via a second request requiring all HTTP headers to be recommunicated 
+immediately after the initial request significantly more additional data transfer and "chatter" 
+will take place.
+
 [=User agents=] SHOULD return the empty string or a fictitious value for [=platform architecture=]
 unless the user's platform is one where both the following conditions apply:
  * Binary download of executables is likely.

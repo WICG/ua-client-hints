@@ -85,9 +85,26 @@ urlPrefix: https://tc39.es/ecma262/
     "href": "https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s",
     "title": "The Microsoft Edge Rendering Engine that makes the Web just work",
     "author": [ "Jacob Rossi" ]
+  },
+  "Client Hints Infrastructure": {
+    "href": "https://wicg.github.io/client-hints-infrastructure",
+    "title": "Client Hints Infrastructure",
+    "author": [ "Yoav Weiss" ]
   }
 }
 </pre>
+
+Dependencies {#dependencies}
+============
+
+This document is dependent on the following related specifications which the reader must be 
+familiar with before reading this document.
+
+1.  Experimental IETF specification for Client Hints ([[I-D.ietf-httpbis-client-hints]]).
+    Not currently on track to become a standard [[RFC2026]].
+    
+2.  Unofficial community draft Client Hints Infrastructure ([[Client-Hints-Infrastructure]]). 
+    No official standing in W3C like this document.
 
 Introduction {#intro}
 ============

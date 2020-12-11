@@ -515,67 +515,10 @@ Implementation Considerations {#impl-considerations}
 The 'User-Agent' Header {#user-agent}
 -----------------------
 
-[=User agents=] SHOULD deprecate usage of the `User-Agent` header by reducing its information granularity
-or removing the header entirely, in favor of the Client Hints model described in this document. The header,
-however, is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
-code will continue to require its presence (see [[Rossi2015]] for a recent example of a new browser's struggles
-in this area).
-
-One approach which might be advisable could be for each [=user agent=] to lock the value of its
-`User-Agent` header, ensuring backwards compatibility by maintaining the crufty declarations of
-"like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
-the version number, then shifting platform and model information to something reasonably generic in
-order to reduce the fingerprint the header provides.
-
-GREASE-like UA Strings {#grease}
-----------------------
-
-History has shown us that there are real incentives for [=user agents=] to lie about their branding
-in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
-by UA-based allow/block lists.
-
-Resetting expectations may help to prevent abuse of the UA string's brand in the short term, but
-probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
-title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
-We could borrow from that concept to tackle this problem.
-
-[=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
-standardized processing of the `UA` string. By randomly including additional, intentionally
-incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
-ossify on a few required strings.
-
-Let's examine a few examples:
-* In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
-    UA set that includes an non-existent browser, and which varies once in a while.
-    - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering
-    engine and its version to that.
-    - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than
-    exact UA sniffing, Chrome might remove itself from the set entirely.
-    - `"Chromium"; v="73", "NotBrowser"; v="12"`
-* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
-    set, enabling sites to count them.
-    - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
-
-
-[=User agents=] MUST include more than a single value in [=user agent/brands=], where at least one
-of these values is an arbitrary value.
-
-When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
-of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
-semi-colons to those values. The purpose of this is to make non-compliant server implementations
-immediately aware that their parsing code is inadequate.
-
-The value order in [=user agent/brands=] MUST change over time, the prevent receivers of the header
-from relying on certain values being in certain locations in the string.
-
-When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
-variance among identical [=user agent=] versions.
-
-Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
-at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-version.
+[=User agents=] MUST NOT deprecate the `User-Agent` header in favor of the Client Hints model described in
+this document until such time as Client Hints and all related specifications are ratified recommendations 
+of the W3C and/or IETF and all implementation and migration issues have been identified, the impacts to web 
+interoperability agreed, and mitigation options implemented.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

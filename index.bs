@@ -202,6 +202,10 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
       device is a mobile device. (for example: ?0 or ?1)
 
+ISSUE: One of the problems that this document is attempting to solve is the unstructured nature of the
+`User-Agent` field value. The document does not currently provide sufficient guidance to implementors
+concerning the structure of each field value. The document should aim to be as explicit as those related
+to other HTTP header values if it is to be successful in solving this problem.
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.

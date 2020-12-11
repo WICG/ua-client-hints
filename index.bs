@@ -260,7 +260,8 @@ The header's ABNF is:
   Sec-CH-UA-Model = sh-string
 ```
 
-ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
+Where the model code may be shared among multiple model vendors the vendor MUST include a prefix prior
+to the model code to identify the vendor.
 
 
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}

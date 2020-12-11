@@ -314,6 +314,12 @@ and the significant version number (both of which are fairly clearly sniffable b
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
 
+ISSUE: What is the policy for classifying some Client Hints as being sent by default? Either all Client 
+Hints should be sent on every request, or no Client Hints sent on first request. If the rationale for
+the specification is to limit entropy then sending a value will increase entropy for minority browser 
+vendors, whilst decrease it for dominate browser vendors. If the rationale is to address historic 
+issues with the `User-Agent` field value construction this could be better addressed via a simpler 
+specification to introduce a more modern convention for the field.
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 

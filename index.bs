@@ -89,6 +89,14 @@ urlPrefix: https://tc39.es/ecma262/
 }
 </pre>
 
+To be complete {#todo}
+==============
+
+ISSUE: Alternatives have not yet been considered. For example; appending information to the end of
+the existing User-Agent field value to communicate the CPU architecture, model, platform, browser,
+device type and associated versions. The document needs to clearly state why this approach is better
+than simpler less impactful alternatives that solve the same problem.
+
 Introduction {#intro}
 ============
 

@@ -85,7 +85,17 @@ urlPrefix: https://tc39.es/ecma262/
     "href": "https://channel9.msdn.com/Events/WebPlatformSummit/2015/The-Microsoft-Edge-Rendering-Engine-that-makes-the-Web-just-work#time=9m45s",
     "title": "The Microsoft Edge Rendering Engine that makes the Web just work",
     "author": [ "Jacob Rossi" ]
-  }
+  },
+  "CMA-UK": {
+    "href": "https://www.gov.uk/cma-cases/online-platforms-and-digital-advertising-market-study",
+    "title": "Online platforms and digital advertising market study",
+    "author": [ "UK Competition and Markets Authority" ]
+  },
+  "Privacy-Budget": {
+    "href": "https://github.com/bslassey/privacy-budget",
+    "title": "Combating Fingerprinting with a Privacy Budget",
+    "author": [ "Brad Lassey" ]
+  }  
 }
 </pre>
 
@@ -148,6 +158,31 @@ information, the underlying operating system's branding and major version, as we
 the underlying device. Rather than broadcasting this data to everyone, all the time, user agents can
 make reasonable decisions about how to respond to given sites' requests for more granular data,
 reducing the passive fingerprinting surface area exposed to the network.
+
+Out of Scope {#out-of-scope}
+------------
+
+The following are out of scope for this document.
+
+1.  Understanding how the `User-Agent` field values are used in practice and the work involved in
+    migrating to Client Hints.
+
+2.  How the use cases for `User-Agent` field values will be migrated to make use of Client Hints. 
+    These considerations will need to be addressed following incubation prior to deployment 
+    following experiments.
+
+ISSUE(wicg/ua-client-hints): Engage with a wide group of stakeholders prior to progression.
+
+3.  In this draft the identification and mitigation of privacy issues associated with the 
+    deployment of Client-Hints is not in scope.
+
+ISSUE: Align other work on privacy such as the introduction of personal identifiers, 
+requiring per install or upgrade privacy notices and defaults separate to user agent vendors other
+notices [[CMA-UK]], or the concept of privacy budgets [[PRIVACY-BUDGET]].
+
+4.  Policy issues such as anti-trust or privacy which are not matters for technical specifications.
+
+5.  Modifications to existing `User-Agent` field values and practices.
 
 Examples {#examples}
 --------

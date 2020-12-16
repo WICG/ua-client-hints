@@ -441,7 +441,7 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
     Note: One approach to minimize caching variance when generating these random components could be to
     determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-    version. 
+    version.
 
     Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
 
@@ -459,7 +459,11 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
 1. Let |p| be a [=a new promise=] created in the [=current realm=].
 
-2.  Run the following steps [=in parallel=]:
+2. If the [=user agent=] decides one or more values in |hints| should not be returned, then [=reject=] and return |p| with a "{{NotAllowedError}}".
+
+ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to refuse a hint once [Issue #151](https://github.com/WICG/ua-client-hints/issues/151) is resolved.
+
+3. Otherwise, run the following steps [=in parallel=]:
 
     1. Let |uaData| be a new {{UADataValues}}.
 
@@ -475,7 +479,7 @@ The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></df
 
     7. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
-3.  Return |p|.
+4.  Return |p|.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

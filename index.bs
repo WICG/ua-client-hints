@@ -491,11 +491,16 @@ of a given agent's behavior over time.
 Delegation {#delegation}
 ----------
 
-Client Hints will be delegated from top-level pages via Feature Policy. This reduces the likelihood that [=user agent=]
-information will be delivered along with subresource requests, which reduces the potential for
-passive fingerprinting.
+All requests initiated by the user agent (aka as third party) will contain the
+same Client Hint headers as those requested by the origin (also know as first 
+party). For example if the a request to https://example.com included the 
+Sec-CH-UA-Full-Version HTTP header field then Sec-CH-UA-Full-Version would also
+be sent in all requests initiated by the response to the original request.
 
-That delegation is defined as part of [=append client hints to request=].
+An origin can trust it's supply chain partners. The act of including
+instructions to communicate with a partner expresses that trust choice. To 
+restrict, otherwise interfere, or add complexity such as to make the web 
+developers role more difficult must be avoided.
 
 Access Restrictions {#access}
 -------------------

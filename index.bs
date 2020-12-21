@@ -491,7 +491,7 @@ of a given agent's behavior over time.
 Delegation {#delegation}
 ----------
 
-Client Hints will be delegated from top-level pages via Feature Policy. This reduces the likelihood that [=user agent=]
+Client Hints will be delegated from top-level pages via Permissions Policy. This reduces the likelihood that [=user agent=]
 information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.
 

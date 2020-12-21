@@ -458,7 +458,7 @@ We hope that alternative methods or APIs will exist to address the
 spam filtering and bot detection use cases in the future, as browsers may decide
 to intervene on behalf of their users by limiting the collection of
 user-identifying entropy (e.g., the
-[Privacy Budget](https://github.com/bslassey/privacy-budget proposal).
+[Privacy Budget](https://github.com/bslassey/privacy-budget) proposal).
 
 ### Persistent user tracking
 This is a case of fingerprinting that this proposal *explicitly tries to make

@@ -422,8 +422,8 @@ Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrW
 When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUST run the following steps:
 1. Let |list| be a [=/list=].
 
-2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the [=user agent=],
-    its equivalence class and/or its rendering engine.
+2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the [=user agent=] or
+    [=equivalence classes=].
 
 3. For each pair:
 
@@ -441,11 +441,14 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
     Note: One approach to minimize caching variance when generating these random components could be to
     determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-    version. 
+    version.
 
     Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
 
 5. Return |list|.
+
+An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with each other. A shared
+    rendering engine may form an [=equivalence class=], for example.
 
 <h3 id="getters">Getters</h3>
 
@@ -548,10 +551,10 @@ Let's examine a few examples:
 * In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
     UA set that includes an non-existent browser, and which varies once in a while.
     - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering
+* In order to enable [=equivalence classes=] based on Chromium versions, Chrome could add the rendering
     engine and its version to that.
     - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than
+* In order to encourage sites to rely on [=equivalence classes=] based on Chromium versions rather than
     exact UA sniffing, Chrome might remove itself from the set entirely.
     - `"Chromium"; v="73", "NotBrowser"; v="12"`
 * Browsers based on Chromium may use a similar UA string, but use their own brand as part of the

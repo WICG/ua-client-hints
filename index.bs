@@ -530,20 +530,20 @@ One approach which might be advisable could be for each [=user agent=] to lock t
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.
 
-GREASE-like UA Strings {#grease}
+GREASE-like UA Brand Lists {#grease}
 ----------------------
 
 History has shown us that there are real incentives for [=user agents=] to lie about their branding
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.
 
-Resetting expectations may help to prevent abuse of the UA string's brand in the short term, but
-probably won't help in the long run.  The world of network protocols introduced the notion of <abbr
+Resetting expectations may help to prevent abuse of the [=user agent/brands=] list in the short term, but
+probably won't help in the long run. The world of network protocols introduced the notion of <abbr
 title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> [[I-D.ietf-tls-grease]].
 We could borrow from that concept to tackle this problem.
 
 [=User agents=]' [=user agent/brands=] containing more than a single entry could encourage
-standardized processing of the `UA` string. By randomly including additional, intentionally
+standardized processing of the [=user agent/brands=] list. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.
 
@@ -570,8 +570,8 @@ of the header adhere to [=Structured Header=] parsing, by adding escaped double-
 semi-colons to those values. The purpose of this is to make non-compliant server implementations
 immediately aware that their parsing code is inadequate.
 
-The value order in [=user agent/brands=] MUST change over time, the prevent receivers of the header
-from relying on certain values being in certain locations in the string.
+The value order in [=user agent/brands=] MUST change over time to prevent receivers of the header
+from relying on certain values being in certain locations in the list.
 
 When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
 variance among identical [=user agent=] versions.

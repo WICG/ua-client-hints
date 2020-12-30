@@ -413,9 +413,12 @@ Processing model {#processing}
 
 <h4 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h4>
 
-Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running [=create brands=].
+Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running
+[=create brands=].
 
-Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>, which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
+Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>,
+which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the
+result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
 
 <h4 id="create-ua-list-section">Create brands</h4>
 
@@ -428,7 +431,8 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 3. For each pair:
 
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
-        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as {{NavigatorUABrandVersion/version}}.
+        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as
+        {{NavigatorUABrandVersion/version}}.
 
     2. Append |dict| to |list|.
 
@@ -448,8 +452,8 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
 5. Return |list|.
 
-An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with each other. A shared
-    rendering engine may form an [=equivalence class=], for example.
+An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with
+each other. A shared rendering engine may form an [=equivalence class=], for example.
 
 <h4 id="create-arbitrary-brands-section"
     algorithm="to create arbitrary brand and version values">Create arbitrary brand and version values</h4>

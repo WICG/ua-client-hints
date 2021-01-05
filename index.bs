@@ -602,11 +602,6 @@ Let's examine a few examples:
 [=User agents=] MUST include more than a single value in [=user agent/brands=], where one of these values is an
 arbitrary value.
 
-When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
-of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and
-semi-colons to those values. The purpose of this is to make non-compliant server implementations
-immediately aware that their parsing code is inadequate.
-
 The value order in [=user agent/brands=] MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.
 

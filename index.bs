@@ -438,11 +438,11 @@ When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUS
 
 4.  The [=user agent=] SHOULD execute the following steps:
 
-    1.  [=list/Append=] additional items to |list| containing {{NavigatorUABrandVersion}} objects,
+    1.  [=list/Append=] one additional [=list/item=] to |list| containing a {{NavigatorUABrandVersion}} dictionary,
         initialized with <a lt="create an arbitrary brand">arbitrary brand</a> and <a lt="create an arbitrary version">
         arbitrary version</a> combinations.
 
-    2.  Randomize the order of the items in |list|.
+    2.  Randomize the order of the [=list/items=] in |list|.
 
     Note: One approach to minimize caching variance when generating these random components could be to
     determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
@@ -599,8 +599,8 @@ Let's examine a few examples:
     - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
 
 
-[=User agents=] MUST include more than a single value in [=user agent/brands=], where at least one
-of these values is an arbitrary value.
+[=User agents=] MUST include more than a single value in [=user agent/brands=], where one of these values is an
+arbitrary value.
 
 When adding arbitrary values to [=user agent/brands=], [=user agents=] MUST make sure that receivers
 of the header adhere to [=Structured Header=] parsing, by adding escaped double-quotes, commas and

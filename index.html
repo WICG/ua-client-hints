@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version ea6f00aa, updated Wed Jan 6 17:23:39 2021 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="e3b93ea25f0f96159bcf86ec540eb4035ae6ad2c" name="document-revision">
+  <meta content="1e6cc1c2c7b78a0a413eb212beff3a1dfdbc2883" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1013,18 +1013,23 @@ over time.</p>
     <li data-md>
      <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a> created in the <a data-link-type="dfn" href="https://tc39.es/ecma262/#current-realm" id="ref-for-current-realm">current realm</a>.</p>
     <li data-md>
-     <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
+     <p>If the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑥">user agent</a> decides one or more values in <var>hints</var> should not be returned, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject">reject</a> and return <var>p</var> with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>".</p>
+   </ol>
+   <p class="issue" id="issue-22962aa8"><a class="self-link" href="#issue-22962aa8"></a> We can improve upon when and why a UA decides to refuse a hint once <a href="https://github.com/WICG/ua-client-hints/issues/151">Issue #151</a> is resolved.</p>
+   <ol start="3">
+    <li data-md>
+     <p>Otherwise, run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
       <li data-md>
        <p>Let <var>uaData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues①">UADataValues</a></code>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "platform", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑥">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "platform", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>'s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "uaFullVersion", let <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-uafullversion" id="ref-for-dom-uadatavalues-uafullversion">uaFullVersion</a></code>"] be the the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version②">full version</a>.</p>
       <li data-md>
@@ -1036,47 +1041,47 @@ over time.</p>
    <h2 class="heading settled" data-level="4" id="security-privacy"><span class="secno">4. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="secure-transport"><span class="secno">4.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints">[I-D.ietf-httpbis-client-hints]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a> information will not
+Section 2.2.1 of <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints">[I-D.ietf-httpbis-client-hints]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a> information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent’s behavior over time.</p>
    <h3 class="heading settled" data-level="4.2" id="delegation"><span class="secno">4.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
-   <p>Client Hints will be delegated from top-level pages via Permissions Policy. This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a> information will be delivered along with subresource requests, which reduces the potential for
+   <p>Client Hints will be delegated from top-level pages via Permissions Policy. This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a> information will be delivered along with subresource requests, which reduces the potential for
 passive fingerprinting.</p>
    <p>That delegation is defined as part of <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a>.</p>
    <h3 class="heading settled" data-level="4.3" id="fingerprinting"><span class="secno">4.3. </span><span class="content">Fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
    <p>The primary goal of User Agent Client Hints is to reduce the default entropy
 available to the network for passive fingerprinting. However, it will still be possible
 for some, or all, hints to be requested and used for active fingerprinting purposes by
-first or delegated third parties. As noted in <a href="#access">§ 4.4 Access Restrictions</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">User agents</a> should consider
+first or delegated third parties. As noted in <a href="#access">§ 4.4 Access Restrictions</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">User agents</a> should consider
 policies to restrict or reduce access to parties that are known to actively
 fingerprint their users.</p>
    <h3 class="heading settled" data-level="4.4" id="access"><span class="secno">4.4. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the platform/device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">User agents</a> ought to exercise judgement before
+agent and the platform/device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">User agents</a> ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agents</a> could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture④">platform architecture</a> only on requests it intends to download, giving the server the
+transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agents</a> could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture④">platform architecture</a> only on requests it intends to download, giving the server the
 opportunity to serve the right binary. Likewise, they could offer users control over the values
 revealed to servers, or gate access on explicit user interaction via a permission prompt or via a
 settings interface.</p>
    <h2 class="heading settled" data-level="5" id="impl-considerations"><span class="secno">5. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="user-agent"><span class="secno">5.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
 or removing the header entirely, in favor of the Client Hints model described in this document. The header,
 however, is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
 code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015">[Rossi2015]</a> for a recent example of a new browser’s struggles
 in this area).</p>
-   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a> to lock the value of its <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
+   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agent</a> to lock the value of its <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
 "like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.</p>
    <h3 class="heading settled" data-level="5.2" id="grease"><span class="secno">5.2. </span><span class="content">GREASE-like UA Brand Lists</span><a class="self-link" href="#grease"></a></h3>
-   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agents</a> to lie about their branding
+   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">user agents</a> to lie about their branding
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.</p>
    <p>Resetting expectations may help to prevent abuse of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands②">brands</a> list in the short term, but
 probably won’t help in the long run. The world of network protocols introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands③">brands</a> containing more than a single entry could encourage
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands③">brands</a> containing more than a single entry could encourage
 standardized processing of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands④">brands</a> list. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.</p>
@@ -1111,14 +1116,14 @@ set, enabling sites to count them.</p>
        <p><code>"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"</code></p>
      </ul>
    </ul>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑤">brands</a>, where one of these values is an
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑤">brands</a>, where one of these values is an
 arbitrary value.</p>
    <p>The value order in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.</p>
-   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">user agents</a> SHOULD keep caching variance in mind and minimize
-variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agent</a> versions.</p>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agents</a> SHOULD keep caching variance in mind and minimize
+variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">user agent</a> versions.</p>
    <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set
-at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">user agent</a>'s significant
+at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤③">user agent</a>'s significant
 version.</p>
    <h3 class="heading settled" data-level="5.3" id="sec-ch"><span class="secno">5.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
@@ -1544,13 +1549,13 @@ register them in the permanent message header field registry (<a data-link-type=
     <li><a href="#ref-for-user-agent②⑨">3.1.2. Create brands</a> <a href="#ref-for-user-agent③⓪">(2)</a> <a href="#ref-for-user-agent③①">(3)</a> <a href="#ref-for-user-agent③②">(4)</a>
     <li><a href="#ref-for-user-agent③③">3.1.3. Create arbitrary brand and version values</a> <a href="#ref-for-user-agent③④">(2)</a>
     <li><a href="#ref-for-user-agent③⑤">3.1.4. Getters</a>
-    <li><a href="#ref-for-user-agent③⑥">3.1.5. getHighEntropyValues method</a> <a href="#ref-for-user-agent③⑦">(2)</a> <a href="#ref-for-user-agent③⑧">(3)</a> <a href="#ref-for-user-agent③⑨">(4)</a>
-    <li><a href="#ref-for-user-agent④⓪">4.1. Secure Transport</a>
-    <li><a href="#ref-for-user-agent④①">4.2. Delegation</a>
-    <li><a href="#ref-for-user-agent④②">4.3. Fingerprinting</a>
-    <li><a href="#ref-for-user-agent④③">4.4. Access Restrictions</a> <a href="#ref-for-user-agent④④">(2)</a>
-    <li><a href="#ref-for-user-agent④⑤">5.1. The 'User-Agent' Header</a> <a href="#ref-for-user-agent④⑥">(2)</a>
-    <li><a href="#ref-for-user-agent④⑦">5.2. GREASE-like UA Brand Lists</a> <a href="#ref-for-user-agent④⑧">(2)</a> <a href="#ref-for-user-agent④⑨">(3)</a> <a href="#ref-for-user-agent⑤⓪">(4)</a> <a href="#ref-for-user-agent⑤①">(5)</a> <a href="#ref-for-user-agent⑤②">(6)</a>
+    <li><a href="#ref-for-user-agent③⑥">3.1.5. getHighEntropyValues method</a> <a href="#ref-for-user-agent③⑦">(2)</a> <a href="#ref-for-user-agent③⑧">(3)</a> <a href="#ref-for-user-agent③⑨">(4)</a> <a href="#ref-for-user-agent④⓪">(5)</a>
+    <li><a href="#ref-for-user-agent④①">4.1. Secure Transport</a>
+    <li><a href="#ref-for-user-agent④②">4.2. Delegation</a>
+    <li><a href="#ref-for-user-agent④③">4.3. Fingerprinting</a>
+    <li><a href="#ref-for-user-agent④④">4.4. Access Restrictions</a> <a href="#ref-for-user-agent④⑤">(2)</a>
+    <li><a href="#ref-for-user-agent④⑥">5.1. The 'User-Agent' Header</a> <a href="#ref-for-user-agent④⑦">(2)</a>
+    <li><a href="#ref-for-user-agent④⑧">5.2. GREASE-like UA Brand Lists</a> <a href="#ref-for-user-agent④⑨">(2)</a> <a href="#ref-for-user-agent⑤⓪">(3)</a> <a href="#ref-for-user-agent⑤①">(4)</a> <a href="#ref-for-user-agent⑤②">(5)</a> <a href="#ref-for-user-agent⑤③">(6)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-permission-task-source">
@@ -1576,6 +1581,12 @@ register them in the permanent message header field registry (<a data-link-type=
    <ul>
     <li><a href="#ref-for-idl-frozen-array">3. Interface</a>
     <li><a href="#ref-for-idl-frozen-array①">3.1.1. WindowOrWorkerGlobalScope</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-notallowederror">
+   <a href="https://heycam.github.io/webidl/#notallowederror">https://heycam.github.io/webidl/#notallowederror</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-notallowederror">3.1.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
@@ -1612,6 +1623,12 @@ register them in the permanent message header field registry (<a data-link-type=
    <a href="https://heycam.github.io/webidl/#dfn-dictionary">https://heycam.github.io/webidl/#dfn-dictionary</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dfn-dictionary">2.5. The 'Sec-CH-UA' Header Field</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-reject">
+   <a href="https://heycam.github.io/webidl/#reject">https://heycam.github.io/webidl/#reject</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-reject">3.1.5. getHighEntropyValues method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-resolve">
@@ -1683,12 +1700,14 @@ register them in the permanent message header field registry (<a data-link-type=
      <li><span class="dfn-paneled" id="term-for-idl-DOMString">DOMString</span>
      <li><span class="dfn-paneled" id="term-for-Exposed">Exposed</span>
      <li><span class="dfn-paneled" id="term-for-idl-frozen-array">FrozenArray</span>
+     <li><span class="dfn-paneled" id="term-for-notallowederror">NotAllowedError</span>
      <li><span class="dfn-paneled" id="term-for-idl-promise">Promise</span>
      <li><span class="dfn-paneled" id="term-for-SecureContext">SecureContext</span>
      <li><span class="dfn-paneled" id="term-for-a-new-promise">a new promise</span>
      <li><span class="dfn-paneled" id="term-for-idl-boolean">boolean</span>
      <li><span class="dfn-paneled" id="term-for-dfn-create-frozen-array">create a frozen array</span>
      <li><span class="dfn-paneled" id="term-for-dfn-dictionary">dictionary</span>
+     <li><span class="dfn-paneled" id="term-for-reject">reject</span>
      <li><span class="dfn-paneled" id="term-for-resolve">resolve</span>
      <li><span class="dfn-paneled" id="term-for-idl-sequence">sequence</span>
      <li><span class="dfn-paneled" id="term-for-this">this</span>
@@ -1760,6 +1779,7 @@ register them in the permanent message header field registry (<a data-link-type=
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Perhaps <code>Sec-CH-UA-Mobile</code> is enough, and we don’t need to expose the model?<a href="#issue-1a9c4c0c"> ↵ </a></div>
+   <div class="issue"> We can improve upon when and why a UA decides to refuse a hint once <a href="https://github.com/WICG/ua-client-hints/issues/151">Issue #151</a> is resolved.<a href="#issue-22962aa8"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="user-agent-brand">
    <b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>

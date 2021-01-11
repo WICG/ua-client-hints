@@ -309,7 +309,7 @@ Note: Unlike most Client Hints, since it's included in the [=low entropy hint ta
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
 [=policy controlled client hints feature=].
-It is considered low enropy because it includes only the [=user agent=]'s branding information,
+It is considered low entropy because it includes only the [=user agent=]'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).

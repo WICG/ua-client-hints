@@ -152,11 +152,11 @@ reducing the passive fingerprinting surface area exposed to the network.
 Examples {#examples}
 --------
 
-A user navigates to `https://example.com/` for the first time. Their user agent sends the following
-header along with the HTTP request:
+A user navigates to `https://example.com/` for the first time using the latest version of the "Examplary Browser". Their
+user agent sends the following header along with the HTTP request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser"; v="73"
+  Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
 ```
 
 The server is interested in rendering content consistent with the user's underlying platform, and
@@ -171,7 +171,7 @@ In response, the user agent includes more detailed version information, as well 
 the underlying platform in the next request:
 
 ``` http
-  Sec-CH-UA: "Examplary Browser"; v="73"
+  Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Full-Version: "73.3R8.2H.1"
   Sec-CH-UA-Platform: "Windows"
 ```
@@ -601,16 +601,16 @@ ossify on a few required strings.
 Let's examine a few examples:
 * In order to avoid sites from barring unknown browsers from their allow lists, Chrome could send a
     UA set that includes an non-existent browser, and which varies once in a while.
-    - `"Chrome"; v="73", "NotBrowser"; v="12"`
+    - `"Chrome"; v="73", "(Not;Browser"; v="12"`
 * In order to enable [=equivalence classes=] based on Chromium versions, Chrome could add the rendering
     engine and its version to that.
-    - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
+    - `"Chrome"; v="73", "(Not;Browser"; v="12", "Chromium"; v="73"`
 * In order to encourage sites to rely on [=equivalence classes=] based on Chromium versions rather than
     exact UA sniffing, Chrome might remove itself from the set entirely.
-    - `"Chromium"; v="73", "NotBrowser"; v="12"`
+    - `"(Not;Browser"; v="12", Chromium"; v="73"`
 * Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
     set, enabling sites to count them.
-    - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
+    - `"Chrome"; v="73", "Xwebs mega"; v="60", "Chromium"; v="73", "(Not;Browser"; v="12"`
 
 
 [=User agents=] MUST include more than a single value in [=user agent/brands=], where one of these values is an

@@ -267,9 +267,10 @@ ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't 
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
 ----------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about
-the platform on which a given [=user agent=] is executing. It is a [=Structured Header=] whose value
-MUST be a [=structured header/string=] [[I-D.ietf-httpbis-header-structure]].
+The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about the platform on
+which a given [=user agent=] is executing. It is a [=Structured Header=] whose value MUST be a
+[=structured header/string=] [[I-D.ietf-httpbis-header-structure]]. Its value SHOULD match one of the following common
+platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or "Unknown".
 
 The header's ABNF is:
 

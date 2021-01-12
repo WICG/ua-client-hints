@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version e6d5d32c, updated Mon Jan 11 12:13:13 2021 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="b67cf087e2b774da2e511fd405afe5041a7724a3" name="document-revision">
+  <meta content="f2aadb030cd83021da720c866cc007bad30ced09" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -745,9 +745,9 @@ the underlying device. Rather than broadcasting this data to everyone, all the t
 make reasonable decisions about how to respond to given sites' requests for more granular data,
 reducing the passive fingerprinting surface area exposed to the network.</p>
    <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
-   <p>A user navigates to <code>https://example.com/</code> for the first time. Their user agent sends the following
-header along with the HTTP request:</p>
-<pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser"; v="73"
+   <p>A user navigates to <code>https://example.com/</code> for the first time using the latest version of the "Examplary Browser". Their
+user agent sends the following header along with the HTTP request:</p>
+<pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
 </pre>
    <p>The server is interested in rendering content consistent with the user’s underlying platform, and
 asks for a little more information by sending an <code>Accept-CH</code> header (Section 2.2.1 of <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-client-hints">[I-D.ietf-httpbis-client-hints]</a>) along with the initial response:</p>
@@ -755,7 +755,7 @@ asks for a little more information by sending an <code>Accept-CH</code> header (
 </pre>
    <p>In response, the user agent includes more detailed version information, as well as information about
 the underlying platform in the next request:</p>
-<pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser"; v="73"
+<pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Full-Version: "73.3R8.2H.1"
   Sec-CH-UA-Platform: "Windows"
 </pre>
@@ -852,7 +852,7 @@ information about the platform version on which a given <a data-link-type="dfn" 
    <p class="note" role="note"><span>Note:</span> Unlike most Client Hints, since it’s included in the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>,
 the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
 receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by it’s <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features">policy controlled client hints feature</a>.
-It is considered low enropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>'s branding information,
+It is considered low entropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" <a data-link-type="biblio" href="#biblio-janc2014">[Janc2014]</a>).</p>
@@ -1094,28 +1094,28 @@ ossify on a few required strings.</p>
 UA set that includes an non-existent browser, and which varies once in a while.</p>
      <ul>
       <li data-md>
-       <p><code>"Chrome"; v="73", "NotBrowser"; v="12"</code></p>
+       <p><code>"Chrome"; v="73", "(Not;Browser"; v="12"</code></p>
      </ul>
     <li data-md>
      <p>In order to enable <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class②">equivalence classes</a> based on Chromium versions, Chrome could add the rendering
 engine and its version to that.</p>
      <ul>
       <li data-md>
-       <p><code>"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"</code></p>
+       <p><code>"Chrome"; v="73", "(Not;Browser"; v="12", "Chromium"; v="73"</code></p>
      </ul>
     <li data-md>
      <p>In order to encourage sites to rely on <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class③">equivalence classes</a> based on Chromium versions rather than
 exact UA sniffing, Chrome might remove itself from the set entirely.</p>
      <ul>
       <li data-md>
-       <p><code>"Chromium"; v="73", "NotBrowser"; v="12"</code></p>
+       <p><code>"(Not;Browser"; v="12", Chromium"; v="73"</code></p>
      </ul>
     <li data-md>
      <p>Browsers based on Chromium may use a similar UA string, but use their own brand as part of the
 set, enabling sites to count them.</p>
      <ul>
       <li data-md>
-       <p><code>"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"</code></p>
+       <p><code>"Chrome"; v="73", "Xwebs mega"; v="60", "Chromium"; v="73", "(Not;Browser"; v="12"</code></p>
      </ul>
    </ul>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑤">brands</a>, where one of these values is an

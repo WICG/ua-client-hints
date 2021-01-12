@@ -98,11 +98,12 @@ accomplish this as follows:
     1.  The `Sec-CH-UA` header field represents the user agent's brand and significant version. For example:
 
         ```http
-        Sec-CH-UA: "Chrome"; v="73"
+        Sec-CH-UA: "Chrome"; v="73", "?Not:Your Browser"; v="11"
         ```
 
         Note: See the GREASE-like discussion below for how we could anticipate the inevitable lies
-        which user agents might want to tell in this field.
+        which user agents might want to tell in this field and to learn more about the admittedly odd looking
+        `"?Not:Your Browser"; v="11"`.
 
     2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
@@ -191,7 +192,7 @@ A user agent's initial request to `https://example.com` will include the followi
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-Sec-CH-UA: "Chrome"; v="74"
+Sec-CH-UA: "Chrome"; v="74", ";Not)Your=Browser"; v="13"
 Sec-CH-Mobile: ?0
 ```
 
@@ -206,7 +207,7 @@ Then subsequent requests to `https://example.com` will include the following req
 ```http
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
             Chrome/71.1.2222.33 Safari/537.36
-Sec-CH-UA: "Chrome"; v="74"
+Sec-CH-UA: "Chrome"; v="74", ";Not)Your=Browser"; v="13"
 Sec-CH-UA-Full-Version: "74.0.3424.124"
 Sec-CH-UA-Platform: "macOS"
 Sec-CH-UA-Arch: "arm"
@@ -521,16 +522,21 @@ comma-separated entries with arbitrary ordering (similar conceptually to TLS's
 [GREASE][4]).
 
 Let's examine a few examples:
-* In order to avoid sites from barring unknown browsers from their allow lists, Chrome 73 could send a UA set that includes an non-existent browser, and which varies once in a while.
-  - `"Chrome"; v="73", "NotBrowser"; v="12"`
-* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its version to that.
-  - `"Chrome"; v="73", "NotBrowser"; v="12", "Chromium"; v="73"`
-* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing, Chrome might remove itself from the set entirely.
-  - `"Chromium"; v="73", "NotBrowser"; v="12"`
-* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to count them.
-  - `"Chrome"; v="73", "Awesome Browser"; v="60", "Chromium"; v="73"`
+* In order to avoid sites from barring unknown browsers from their allow lists, Chrome 73 could send a UA set that
+    includes an non-existent browser, and which varies once in a while.
+  - `"Chrome"; v="73", ";Not=Browser"; v="12"`
+* In order to enable equivalence classes based on Chromium versions, Chrome could add the rendering engine and its
+    version to that.
+  - `"Chrome"; v="73", ";Not=Browser"; v="12", "Chromium"; v="73"`
+* In order to encourage sites to rely on equivalence classes based on Chromium versions rather than exact UA sniffing,
+    Chrome might remove itself from the set entirely.
+  - `"Chromium"; v="73", ";Not=Browser"; v="12"`
+* Browsers based on Chromium may use a similar UA string, but use their own brand as part of the set, enabling sites to
+    count them.
+  - `"Awesome Browser"; v="60", "Chrome"; v="73", "Chromium"; v="73"`
 
-We'd reflect this value in the `navigator.userAgentData.brands` attribute, which returns an array of dictionaries containing brand and version.
+We'd reflect this value in the `navigator.userAgentData.brands` attribute, which returns an array of dictionaries
+containing brand and version.
 
 [4]: https://tools.ietf.org/html/draft-ietf-tls-grease-01
 
@@ -543,10 +549,11 @@ cases?
 
 There are a few options for the string:
 
-1.  `"Chrome"; v="73"`, which has the least entropy, but also sets poor expectations.
-2.  `"CriOS"; v="73"` (or `"Chrome on iOS", v="73"`, or similar) which is basically what's sent today, and categorizes the browser as distinct.
-3.  `"CriOS"; v="73", "Safari"; v="12"`, which is interesting.
-4.  `"Chrome"; v="73", "Safari";v="12"`, which is more interesting.
+1.  `"Chrome"; v="73", ")Friendly-Browsing"; v="99"`, which has the least entropy, but also sets poor expectations.
+2.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99"`` (or `"Chrome on iOS", v="73"`, or similar) which is basically
+    what's sent today, and categorizes the browser as distinct.
+3.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99"`, "Safari"; v="12"`, which is interesting.
+4.  `")Friendly-Browsing"; v="99", "Chrome"; v="73", "Safari"; v="12"`, which is more interesting.
 
 
 ## Wait a minute, where is the Client Hints infrastructure specified?

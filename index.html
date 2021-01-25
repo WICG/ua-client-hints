@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d994f217, updated Fri Jan 22 13:58:53 2021 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="21ebfadeff330676ba5886157efe929a5c851cdd" name="document-revision">
+  <meta content="dc1fc2a349e51404abc87d19e14475b6690652be" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -832,9 +832,9 @@ be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbi
 </pre>
    <p class="issue" id="issue-1a9c4c0c"><a class="self-link" href="#issue-1a9c4c0c"></a> Perhaps <code>Sec-CH-UA-Mobile</code> is enough, and we don’t need to expose the model?</p>
    <h3 class="heading settled" data-level="2.3" id="sec-ch-platform"><span class="secno">2.3. </span><span class="content">The 'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#sec-ch-platform"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform"></a></dfn> request header field gives a server information about
-the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-②">Structured Header</a> whose value
-MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform"></a></dfn> request header field gives a server information about the platform on
+which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-②">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. Its value SHOULD match one of the following common
+platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or "Unknown".</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight">  <c- nc>Sec-CH-UA-Platform</c-> <c- o>=</c-> <c- nc>sh-string</c->
 </pre>

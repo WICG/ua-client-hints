@@ -367,7 +367,8 @@ receiving the header via an `Accept-CH` header (although it can still be control
 It is considered low enropy because it is a single bit of information directly controllable
 by the user.
 
-Note: These client hints can be evoked with the following set of [=Client hints tokens=]: UA-Arch, UA-Model, UA-Platform, UA, UA-Mobile
+Note: These client hints can be evoked with the following set of [=Client hints tokens=]:
+`Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA`, `Sec-CH-UA-Mobile`
 
 Integration with Fetch {#fetch-integration}
 ----------------------

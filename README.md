@@ -199,7 +199,7 @@ Sec-CH-Mobile: ?0
 If a server delivers the following response header:
 
 ```http
-Accept-CH: UA-Full-Version, UA-Platform, UA-Arch
+Accept-CH: Sec-CH-UA-Full-Version, Sec-CH-UA-Platform, Sec-CH-UA-Arch
 ```
 
 Then subsequent requests to `https://example.com` will include the following request headers:
@@ -340,7 +340,7 @@ they want to split their content.
 
 If the dimension on which the split is made is memory, the Device-Memory Client
 Hint can be used to make that distinction.  Otherwise, with UA-CH, sites can
-still retrieve the device model by opting in to the `UA-Model` hint.
+still retrieve the device model by opting in to the `Sec-CH-UA-Model` hint.
 
 Both of these hints are not sent by default, so require some extra work.
 
@@ -366,7 +366,7 @@ folks would wish to deliver tailored inline styles based on the platform and
 platform version.
 
 Those cases are very similar to the case discussed above (in "Low-powered
-devices"), only with the `UA-Platform` and `UA-Platform-Version` hints.
+devices"), only with the `Sec-CH-UA-Platform` and `Sec-CH-UA-Platform-Version` hints.
 
 ### OS integration
 Similarly, some sites would want to change links to OS specific ones (e.g.
@@ -409,7 +409,7 @@ binary executable for the current user depends on a few factors: their
 operating system, its version, as well as their CPU architecture.
 
 In order to tackle that use case, download sites can opt-in to receive the
-`UA-Platform`, `UA-Platform-Version` and `UA-Architecture` hints (or query them
+`Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version` and `Sec-CH-UA-Architecture` hints (or query them
 through the API), in order to ensure the right binary is offered to the user by
 default.
 

@@ -233,7 +233,7 @@ platforms where the model is typically exposed.
 [=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
 architecture=] or [=model=], for privacy, compatibility, or other reasons.
 
-The 'Sec-CH-UA-Arch' Header Field {#sec-ch-arch}
+The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
 ------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Arch`</dfn> request header field gives a server information about
@@ -248,7 +248,7 @@ The header's ABNF is:
 ~~~
 
 
-The 'Sec-CH-UA-Model' Header Field {#sec-ch-model}
+The 'Sec-CH-UA-Model' Header Field {#sec-ch-ua-model}
 -------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Model`</dfn> request header field gives a server information about
@@ -264,7 +264,7 @@ The header's ABNF is:
 ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
 
 
-The 'Sec-CH-UA-Platform' Header Field {#sec-ch-platform}
+The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 ----------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about the platform on
@@ -278,7 +278,7 @@ The header's ABNF is:
   Sec-CH-UA-Platform = sh-string
 ```
 
-The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-platform-version}
+The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
 ----------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field gives a server
@@ -335,7 +335,7 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
 3. Return the output of running [=serializing a list=] with |list| as input.
 
-The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-full-version}
+The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
 --------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
@@ -348,7 +348,7 @@ The header's ABNF is:
   Sec-CH-UA-Full-Version = sh-string
 ```
 
-The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-mobile}
+The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
 --------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Mobile`</dfn> request header field gives a server information about
@@ -668,7 +668,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-arch]])
+: this specification ([[#sec-ch-ua-arch]])
 
 'Sec-CH-UA-Model' Header Field {#iana-model}
 ---------------------------
@@ -686,7 +686,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-ua]])
+: this specification ([[#sec-ch-ua-model]])
 
 'Sec-CH-UA-Platform' Header Field {#iana-platform}
 ------------------------------
@@ -704,7 +704,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-platform]])
+: this specification ([[#sec-ch-ua-platform]])
 
 'Sec-CH-UA-Platform-Version' Header Field {#iana-platform-version}
 ------------------------------
@@ -722,7 +722,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-platform]])
+: this specification ([[#sec-ch-ua-platform-version]])
 
 'Sec-CH-UA' Header Field {#iana-ua}
 ------------------------
@@ -758,7 +758,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-mobile]])
+: this specification ([[#sec-ch-ua-mobile]])
 
 'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
 ----------------------------
@@ -776,7 +776,7 @@ Author/Change controller:
 : IETF
 
 Specification document:
-: this specification ([[#sec-ch-full-version]])
+: this specification ([[#sec-ch-ua-full-version]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

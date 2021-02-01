@@ -795,3 +795,15 @@ Author/Change controller:
 
 Specification document:
 : this specification ([[#user-agent]]), and Section 5.5.3 of [[RFC7231]]
+
+Acknowledgments {#ack}
+=============================
+
+Thanks to
+Aaron Tagliaboschi,
+ArkUmbra, <!-- github -->
+jasonwee, <!-- github -->
+Luke Williams,
+Mike West,
+and Toru Kobayashi
+for valuable feedback and contributions to this specification.

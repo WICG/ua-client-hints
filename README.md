@@ -1,3 +1,13 @@
+# User Agent Client Hints
+
+This repository hosts the User Agent Client Hints specification.
+
+## Contributing
+
+We welcome contributions in the form of new issues, comments on existing issues,
+and pull requests. Before getting started, please read our
+[Contributing Guide](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 # Explainer: Reducing `User-Agent` Granularity
 
 ## A Problem

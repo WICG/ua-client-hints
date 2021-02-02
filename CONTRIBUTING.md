@@ -21,10 +21,10 @@ contribute.
 
 Pull requests to this specification are encouraged and welcome.
 
-Before doing the work to update the spec, please start with a new issue so we
-can ensure that your changes align with the goals of this specification (or so
-you can explain why the goals of this specification should change, if that's the
-case).
+Before doing the work to update the spec, please start a conversation in a new
+or existing issue so we can ensure that your changes align with the goals of
+this specification (or so you can explain why the goals of this specification
+should change, if that's the case).
 
 Please note the [section on CLA requirements](#web-platform-incubator-community-group-and-w3c-cla)
 before any PR can be merged.

@@ -26,8 +26,8 @@ can ensure that your changes align with the goals of this specification (or so
 you can explain why the goals of this specification should change, if that's the
 case).
 
-Please note the next section about CLA requirements before any PR can be
-merged.
+Please note the [section on CLA requirements](#web-platform-incubator-community-group-and-w3c-cla)
+before any PR can be merged.
 
 ## Building the Spec
 
@@ -43,7 +43,7 @@ your changes.
 [`bikeshed watch`](https://tabatkins.github.io/bikeshed/#cli-watch) is also
 handy when making more than a single edit.
 
-## Web Platform Incubator Community Group CLA
+## Web Platform Incubator Community Group and W3C CLA
 
 This repository is being used for work in the W3C Web Platform Incubator
 Community Group, governed by the

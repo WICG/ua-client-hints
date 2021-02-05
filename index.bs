@@ -177,6 +177,18 @@ the underlying platform in the next request:
   Sec-CH-UA-Platform: "Windows"
 ```
 
+Infrastructure {#infrastructure}
+==============
+
+This specification depends on Client Hints Infrastructure, HTTP Client Hints, and the Infra
+Standard.
+[[!CLIENT-HINTS-INFRASTRUCTURE]]
+[[!I-D.ietf-httpbis-client-hints]]
+[[!INFRA]]
+
+Some of the terms used in this specification are defined in <cite>Structured Field Values for
+HTTP</cite>.
+[[!I-D.ietf-httpbis-header-structure]]
 
 User Agent Hints {#http-ua-hints}
 ================
@@ -370,10 +382,6 @@ by the user.
 
 Note: These client hints can be evoked with the following set of [=Client hints tokens=]:
 `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA`, `Sec-CH-UA-Mobile`
-
-Integration with Fetch {#fetch-integration}
-----------------------
-[=Client Hints Fetch integration=] is defined as part of the [[CLIENT-HINTS-INFRASTRUCTURE]] specification.
 
 
 Interface {#interface}

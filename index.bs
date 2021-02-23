@@ -6,9 +6,9 @@ ED: https://wicg.github.io/ua-client-hints/
 Repository: wicg/ua-client-hints
 Shortname: ua-client-hints
 Level: None
-Editor: Mike Taylor 90704, Google Inc., miketaylr@google.com
-Editor: Yoav Weiss 58673, Google Inc., yoav@yoav.ws
-Former Editor: Mike West 56384, Google Inc., mkwst@google.com
+Editor: Mike Taylor 90704, Google LLC, miketaylr@google.com
+Editor: Yoav Weiss 58673, Google LLC, yoav@yoav.ws
+Former Editor: Mike West 56384, Google LLC, mkwst@google.com
 Abstract:
     This document defines a set of Client Hints that aim to provide developers with the ability to
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and

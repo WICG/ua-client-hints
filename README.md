@@ -1,6 +1,18 @@
 # User Agent Client Hints
 
-This repository hosts the User Agent Client Hints specification.
+This repository hosts the User Agent Client Hints (UA-CH) specification.
+
+UA-CH introduces the following [Client Hints](https://tools.ietf.org/html/rfc8942) HTTP headers and
+a corresponding JavaScript API:
+
+* `Sec-CH-UA-Arch`
+* `Sec-CH-UA-Mobile`
+* `Sec-CH-UA-Model`
+* `Sec-CH-UA-Platform`
+* `Sec-CH-UA-Platform-Version`
+* `Sec-CH-UA`
+* `Sec-CH-UA-Full-Version`
+
 
 ## Contributing
 

@@ -6,6 +6,7 @@ UA-CH introduces the following [Client Hints](https://tools.ietf.org/html/rfc894
 a corresponding JavaScript API:
 
 * `Sec-CH-UA-Arch`
+* `Sec-CH-UA-Bitness`
 * `Sec-CH-UA-Mobile`
 * `Sec-CH-UA-Model`
 * `Sec-CH-UA-Platform`
@@ -127,32 +128,40 @@ accomplish this as follows:
         which user agents might want to tell in this field and to learn more about the admittedly odd looking
         `"?Not:Your Browser"; v="11"`.
 
-    2.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
+    1.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For example:
 
         ```http
         Sec-CH-UA-Platform: "Windows"
         ```
 
-    3.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set and
-        width. For example:
+    1.  The `Sec-CH-UA-Arch` header field represents the underlying architecture's instruction set.
+        For example:
 
         ```http
         Sec-CH-UA-Arch: "arm"
         ```
 
-    4.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
+    1.  The `Sec-CH-UA-Bitness` header field represents the underlying architecture's bitness
+        (i.e., the size in bits of an integer or memory address).
+        For example:
+
+        ```http
+        Sec-CH-UA-Bitness: "64"
+        ```
+
+    1.  The `Sec-CH-UA-Model` header field represents the user agent's underlying device model. For example:
 
         ```http
         Sec-CH-UA-Model: "Pixel 2 XL"
         ```
 
-    5.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a specifically "mobile"
+    1.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a specifically "mobile"
         UX.
 
         ```http
         Sec-CH-UA-Mobile: ?1
         ```
-    6.  The `Sec-CH-UA-Full-Version` header field represents the user agent's full version.
+    1.  The `Sec-CH-UA-Full-Version` header field represents the user agent's full version.
 
         ```http
         Sec-CH-UA-Full-Version: "73.1.2343B.TR"
@@ -169,10 +178,11 @@ accomplish this as follows:
     };
 
     dictionary UADataValues {
+      DOMString architecture;     // "arm"
+      DOMString bitness;          // "64"
+      DOMString model;            // "X644GTM"
       DOMString platform;         // "PhoneOS"
       DOMString platformVersion;  // "10A"
-      DOMString architecture;     // "arm"
-      DOMString model;            // "X644GTM"
       DOMString uaFullVersion;    // "73.32.AGX.5"
     };
 
@@ -180,7 +190,7 @@ accomplish this as follows:
     interface NavigatorUAData {
       readonly attribute FrozenArray<NavigatorUABrandVersion> brands;              // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile;                                                 // false
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "PhoneOS", "10A", "arm", "X644GTM", "73.32.AGX.5" }
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "arm", "64", "X644GTM", "PhoneOS", "10A", "73.32.AGX.5" }
     };
 
     interface mixin NavigatorUA {

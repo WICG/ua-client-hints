@@ -184,24 +184,24 @@ given [=user agent=], which servers can opt-into receiving via the Client Hints 
 defined in [[!RFC8942]]. The definitions below assume that each [=user agent=]
 has defined a number of properties for itself:
 
-*   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (for example:
+*   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
       "cURL", "Edge", "The World's Best Web Browser")
 *   <dfn for="user agent" export>significant version</dfn> - The [=user agent=]'s marketing version,
-      which includes distinguishable web-exposed features (for example: "72", "3", or "12.1")
-*   <dfn for="user agent" export>full version</dfn> - The [=user agent=]'s build version (for
-      example: "72.0.3245.12", "3.14159", or "297.70E04154A")
+      which includes distinguishable web-exposed features (e.g., "72", "3", or "12.1")
+*   <dfn for="user agent" export>full version</dfn> - The [=user agent=]'s build version (e.g.,
+      "72.0.3245.12", "3.14159", or "297.70E04154A")
 *   <dfn for="user agent" export>platform brand</dfn> - The [=user agent=]'s operating system's
-      commercial name. (for example: "Windows", "iOS", or "AmazingOS")
+      commercial name. (e.g., "Windows", "iOS", or "AmazingOS")
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
-      version. (for example: "NT 6.0", "15", or "17G")
+      version. (e.g., "NT 6.0", "15", or "17G")
 *   <dfn for="user agent" export>platform architecture</dfn> - The [=user agent=]'s underlying CPU
-      architecture (for example: "ARM", or "x86")
+      architecture (e.g., "ARM", or "x86")
 *   <dfn for="user agent" export>platform bitness</dfn> - The [=user agent=]'s underlying CPU
-      architecture bitness (for example: "32", or "64")
-*   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (for example: "",
-      or "Pixel 2 XL")
+      architecture bitness (e.g., "32" or "64")
+*   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (e.g., "", or
+      "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
-      device is a mobile device. (for example: ?0 or ?1)
+      device is a mobile device. (e.g., ?0 or ?1)
 
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
@@ -219,7 +219,7 @@ mapped to the empty string.
 or [=platform bitness=] unless the user's platform is one where both the following conditions apply:
  * Binary download of executables is likely.
  * Different CPU architectures are likely to require different binary executable resources, and
-     different binary exeutable resources are likely to be available.
+     different binary executable resources are likely to be available.
 
 [=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
 Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on

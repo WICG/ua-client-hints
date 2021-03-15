@@ -142,7 +142,9 @@ accomplish this as follows:
         ```
 
     1.  The `Sec-CH-UA-Bitness` header field represents the underlying architecture's bitness
-        (i.e., the size in bits of an integer or memory address).
+        (i.e., the size in bits of an integer or memory address). This could be used to determine
+        which binary to serve for downloads.
+
         For example:
 
         ```http

@@ -235,6 +235,30 @@ platforms where the model is typically exposed.
 [=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
 architecture=], [=platform bitness=] or [=model=], for privacy, compatibility, or other reasons.
 
+The 'Sec-CH-UA' Header Field {#sec-ch-ua}
+----------------------------
+
+The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server information about a
+[=user agent=]'s branding and version. It is a [=Structured Header=] whose value MUST be a
+[=structured header/list=] [[!RFC8941]]. The list's items MUST be
+[=structured header/string=]. The value of each item SHOULD include a "v" parameter, indicating the
+[=user agent=]'s version.
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA = sf-list
+```
+
+Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
+the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
+receiving the header via an `Accept-CH` header (although it can still be controlled by it's
+[=policy controlled client hints feature=].
+It is considered low entropy because it includes only the [=user agent=]'s branding information,
+and the significant version number (both of which are fairly clearly sniffable by "examining the
+structure of other headers and by testing for the availability and semantics of the features
+introduced or modified between releases of a particular browser" [[Janc2014]]).
+
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
 ------------------------------
 
@@ -262,6 +286,39 @@ The header's ABNF is:
 ~~~ abnf
   Sec-CH-UA-Bitness = sf-string
 ~~~
+
+The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
+about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
+whose value MUST be a [=structured header/string=] [[!RFC8941]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Full-Version = sf-string
+```
+
+The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Mobile`</dfn> request header field gives a server information about
+whether or not a [=user agent=] prefers a "mobile" user experience. It is a [=Structured Header=]
+whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Mobile = sf-boolean
+```
+
+Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=],
+the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
+receiving the header via an `Accept-CH` header (although it can still be controlled by it's
+[=policy controlled client hints feature=].
+It is considered low enropy because it is a single bit of information directly controllable
+by the user.
 
 The 'Sec-CH-UA-Model' Header Field {#sec-ch-ua-model}
 -------------------------------
@@ -307,30 +364,6 @@ The header's ABNF is:
   Sec-CH-UA-Platform-Version = sf-string
 ```
 
-The 'Sec-CH-UA' Header Field {#sec-ch-ua}
-----------------------------
-
-The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server information about a
-[=user agent=]'s branding and version. It is a [=Structured Header=] whose value MUST be a
-[=structured header/list=] [[!RFC8941]]. The list's items MUST be
-[=structured header/string=]. The value of each item SHOULD include a "v" parameter, indicating the
-[=user agent=]'s version.
-
-The header's ABNF is:
-
-``` abnf
-  Sec-CH-UA = sf-list
-```
-
-Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
-the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
-receiving the header via an `Accept-CH` header (although it can still be controlled by it's
-[=policy controlled client hints feature=].
-It is considered low entropy because it includes only the [=user agent=]'s branding information,
-and the significant version number (both of which are fairly clearly sniffable by "examining the
-structure of other headers and by testing for the availability and semantics of the features
-introduced or modified between releases of a particular browser" [[Janc2014]]).
-
 
 To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
 
@@ -349,39 +382,6 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
     3. Append |pair| to |list|.
 
 3. Return the output of running [=serializing a list=] with |list| as input.
-
-The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
---------------------------------
-
-The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
-about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
-whose value MUST be a [=structured header/string=] [[!RFC8941]].
-
-The header's ABNF is:
-
-``` abnf
-  Sec-CH-UA-Full-Version = sf-string
-```
-
-The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
---------------------------------
-
-The <dfn http-header>`Sec-CH-UA-Mobile`</dfn> request header field gives a server information about
-whether or not a [=user agent=] prefers a "mobile" user experience. It is a [=Structured Header=]
-whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
-
-The header's ABNF is:
-
-``` abnf
-  Sec-CH-UA-Mobile = sf-boolean
-```
-
-Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=],
-the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
-receiving the header via an `Accept-CH` header (although it can still be controlled by it's
-[=policy controlled client hints feature=].
-It is considered low enropy because it is a single bit of information directly controllable
-by the user.
 
 Note: These client hints can be evoked with the following set of [=Client hints tokens=]:
 `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA`, `Sec-CH-UA-Mobile`
@@ -660,11 +660,25 @@ Therefore, request headers defined in this specification include a `Sec-CH-` pre
 IANA Considerations {#iana}
 ===================
 
-This document intends to define the `Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Mobile` and `Sec-CH-UA` HTTP request header fields, and
-register them in the permanent message header field registry ([[RFC3864]]).
+This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
+`Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, and the
+`Sec-CH-UA-Platform-Version` HTTP request header fields, and register them in the permanent message
+header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
+
+'Sec-CH-UA' Header Field {#iana-ua}
+------------------------
+
+Header field name: Sec-CH-UA
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua]])
 
 'Sec-CH-UA-Arch' Header Field {#iana-arch}
 --------------------------
@@ -691,6 +705,32 @@ Status: standard
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-bitness]])
+
+'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
+----------------------------
+
+Header field name: Sec-CH-UA-Full-Version
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-full-version]])
+
+'Sec-CH-UA-Mobile' Header Field {#iana-mobile}
+----------------------------
+
+Header field name: Sec-CH-UA-Mobile
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-mobile]])
 
 'Sec-CH-UA-Model' Header Field {#iana-model}
 ---------------------------
@@ -730,45 +770,6 @@ Status: standard
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-platform-version]])
-
-'Sec-CH-UA' Header Field {#iana-ua}
-------------------------
-
-Header field name: Sec-CH-UA
-
-Applicable protocol: http
-
-Status: standard
-
-Author/Change controller: IETF
-
-Specification document: this specification ([[#sec-ch-ua]])
-
-'Sec-CH-UA-Mobile' Header Field {#iana-mobile}
-----------------------------
-
-Header field name: Sec-CH-UA-Mobile
-
-Applicable protocol: http
-
-Status: standard
-
-Author/Change controller: IETF
-
-Specification document: this specification ([[#sec-ch-ua-mobile]])
-
-'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
-----------------------------
-
-Header field name: Sec-CH-UA-Full-Version
-
-Applicable protocol: http
-
-Status: standard
-
-Author/Change controller: IETF
-
-Specification document: this specification ([[#sec-ch-ua-full-version]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

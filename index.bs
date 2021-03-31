@@ -383,8 +383,9 @@ To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request
 
 3. Return the output of running [=serializing a list=] with |list| as input.
 
-Note: These client hints can be evoked with the following set of [=Client hints tokens=]:
-`Sec-CH-UA-Arch`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA`, `Sec-CH-UA-Mobile`
+Note: These client hints can be evoked with the following set of [=client hints tokens=]:
+`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
+`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`
 
 
 Interface {#interface}

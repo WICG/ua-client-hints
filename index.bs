@@ -246,7 +246,7 @@ the architecture of the platform on which a given [=user agent=] is executing. I
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-UA-Arch = sh-string
+  Sec-CH-UA-Arch = sf-string
 ~~~
 
 The 'Sec-CH-UA-Bitness' Header Field {#sec-ch-ua-bitness}
@@ -260,7 +260,7 @@ a [=Structured Header=] whose value MUST be a [=structured header/string=]
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-UA-Bitness = sh-string
+  Sec-CH-UA-Bitness = sf-string
 ~~~
 
 The 'Sec-CH-UA-Model' Header Field {#sec-ch-ua-model}
@@ -273,7 +273,7 @@ be a [=structured header/string=] [[!RFC8941]].
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Model = sh-string
+  Sec-CH-UA-Model = sf-string
 ```
 
 ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
@@ -290,7 +290,7 @@ platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or 
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Platform = sh-string
+  Sec-CH-UA-Platform = sf-string
 ```
 
 The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
@@ -304,7 +304,7 @@ information about the platform version on which a given [=user agent=] is execut
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Platform-Version = sh-string
+  Sec-CH-UA-Platform-Version = sf-string
 ```
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
@@ -319,7 +319,7 @@ The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server infor
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA = sh-list
+  Sec-CH-UA = sf-list
 ```
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
@@ -360,7 +360,7 @@ whose value MUST be a [=structured header/string=] [[!RFC8941]].
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Full-Version = sh-string
+  Sec-CH-UA-Full-Version = sf-string
 ```
 
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
@@ -373,7 +373,7 @@ whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Mobile = sh-boolean
+  Sec-CH-UA-Mobile = sf-boolean
 ```
 
 Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=],

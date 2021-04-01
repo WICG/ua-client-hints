@@ -146,28 +146,30 @@ in [[FINGERPRINTING-GUIDANCE]]).
 Examples {#examples}
 --------
 
-A user navigates to `https://example.com/` for the first time using the latest version of the "Examplary Browser". Their
-user agent sends the following header along with the HTTP request:
+A user navigates to `https://example.com/` for the first time using the latest version of the
+"Examplary Browser". Their user agent sends the following headers along with the HTTP request:
 
 ``` http
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
+  Sec-CH-UA-Mobile: ?0
+  Sec-CH-UA-Platform: "Windows"
 ```
 
-The server is interested in rendering content consistent with the user's underlying platform, and
-asks for a little more information by sending an `Accept-CH` header (Section 2.2.1 of
+The server is interested in rendering content consistent with the user's underlying platform version,
+and asks for a little more information by sending an `Accept-CH` header (Section 2.2.1 of
 [[!RFC8942]]) along with the initial response:
 
 ``` http
-  Accept-CH: Sec-CH-UA-Full-Version, Sec-CH-UA-Platform
+  Accept-CH: Sec-CH-UA-Platform-Version
 ```
 
-In response, the user agent includes more detailed version information, as well as information about
-the underlying platform in the next request:
+In response, the user agent includes the platform version information in the next request:
 
 ``` http
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
-  Sec-CH-UA-Full-Version: "73.3R8.2H.1"
+  Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
+  Sec-CH-UA-Full-Version: "10.0.19042"
 ```
 
 Infrastructure {#infrastructure}

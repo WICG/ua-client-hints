@@ -317,10 +317,9 @@ The header's ABNF is:
 
 Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA-Mobile` header will be sent by default, whether or not the server opted-into
-receiving the header via an `Accept-CH` header (although it can still be controlled by it's
-[=policy controlled client hints feature=].
-It is considered low enropy because it is a single bit of information directly controllable
-by the user.
+receiving the header via an `Accept-CH` header (although it can still be controlled by its
+[=policy controlled client hints feature=]). It is considered low entropy because it is a single
+bit of information directly controllable by the user.
 
 The 'Sec-CH-UA-Model' Header Field {#sec-ch-ua-model}
 -------------------------------
@@ -341,16 +340,22 @@ ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't 
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 ----------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information about the platform on
-which a given [=user agent=] is executing. It is a [=Structured Header=] whose value MUST be a
-[=structured header/string=] [[!RFC8941]]. Its value SHOULD match one of the following common
-platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or "Unknown".
+The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information
+about the platform on which a given [=user agent=] is executing. It is a [=Structured Header=]
+whose value MUST be a [=structured header/string=] [[!RFC8941]]. Its value SHOULD match one of the
+following common platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or
+"Unknown".
 
 The header's ABNF is:
 
 ``` abnf
   Sec-CH-UA-Platform = sf-string
 ```
+
+Note: Like `Sec-CH-UA` above, since it's included in the [=low entropy hint table=], the
+`Sec-CH-UA-Platform` header will be sent by default, whether or not the server opted-into receiving
+the header via an `Accept-CH` header (although it can still be controlled by its
+[=policy controlled client hints feature=]).
 
 The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
 ----------------------------------
@@ -403,7 +408,6 @@ dictionary UADataValues {
   DOMString architecture;
   DOMString bitness;
   DOMString model;
-  DOMString platform;
   DOMString platformVersion;
   DOMString uaFullVersion;
 };
@@ -412,6 +416,7 @@ dictionary UADataValues {
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
   readonly attribute boolean mobile;
+  readonly attribute DOMString platform;
   Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints);
 };
 
@@ -511,6 +516,8 @@ On getting, the {{NavigatorUAData/brands}} attribute MUST return [=this=]'s [=re
 
 On getting, the {{NavigatorUAData/mobile}} attribute must return the [=user agent=]'s [=user agent/mobileness=].
 
+On getting, the {{NavigatorUAData/platform}} attribute must return the [=user agent=]'s [=user agent/platform brand=].
+
 <h4 id="getHighEntropyValues"><code>getHighEntropyValues</code> method</h4>
 
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
@@ -531,8 +538,6 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         the [=user agent=]'s [=user agent/platform bitness=].
     1. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the
         [=user agent=]'s [=user agent/model=].
-    1. If |hints| [=list/contains=] "platform", set |uaData|["{{UADataValues/platform}}"] to the
-        [=user agent=]'s [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
         to the [=user agent=]'s [=user agent/platform version=].
     1. If |hints| [=list/contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"]
@@ -575,7 +580,7 @@ Access Restrictions {#access}
 -------------------
 
 The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the platform/device upon which it runs. [=User agents=] ought to exercise judgement before
+agent and the device upon which it runs. [=User agents=] ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
 transport and delegation requirements noted above. For instance, [=user agents=] could choose to reveal
 [=user agent/platform architecture=] or [=user agent/platform bitness=] only on requests it intends

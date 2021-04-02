@@ -622,12 +622,12 @@ arbitrary value.
 The value order in [=user agent/brands=] MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.
 
-When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance in mind and minimize
-variance among identical [=user agent=] versions.
+When choosing GREASE strategies, [=user agents=] SHOULD keep caching variance and analytics use
+cases in mind and minimize variance among identical [=user agent=] versions.
 
-Note: One approach to minimize caching variance could be to determine the GREASE parts of the UA set
-at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
-version.
+Note: One approach to minimize variance for caching and analytics could be to determine the GREASE
+parts of the UA set at build time, and keep them identical throughout the lifetime of the
+[=user agent=]'s significant version.
 
 The 'Sec-CH-' prefix {#sec-ch}
 --------------------

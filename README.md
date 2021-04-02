@@ -308,7 +308,7 @@ By design, looking at individual entries in the brands list makes it
 hard to distinguish between a less-popular browser's truthful brand
 name and a more-popular browser's arbitrary GREASE. Since the
 less-popular browser may include several popular brand names for
-compatibility purposes, its users will likely be bucketted as using
+compatibility purposes, its users will likely be bucketed as using
 the more-popular one if this approach is taken, leading to distorted
 views of usage share that favour already-popular browsers and with
 less-popular browsers possibly never gaining any visibility.
@@ -318,7 +318,7 @@ as a unit, and compare it to known lists of brands sent by various
 the various (browser, version) pairs that are to be distinguished.
 This will necessitate regular updates to the list of known lists of
 brands when new browser versions are released or new browsers become
-popular, or else everything will get bucketted as an unknown browser.
+popular, or else everything will get bucketed as an unknown browser.
 However, as this doesn't break sites for users, failing closed for
 unknown browsers is acceptable in this context.
 

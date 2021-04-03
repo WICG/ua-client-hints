@@ -320,7 +320,7 @@ ensuring fewer compatibility issues for its users. On top of that, a browser's
 market share can have a direct impact on the browser vendors' business goals,
 ensuring future development of the browser.
 
-For marketshare analytics to work, the server needs to be aware of the server
+For marketshare analytics to work, the server needs to be aware of the browser
 and its meaningful version, in order to be able to register them and find their
 relative market shares.
 

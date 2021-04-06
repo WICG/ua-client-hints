@@ -4,9 +4,9 @@
   <title>User-Agent Client Hints</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 21986e339, updated Wed Mar 24 10:25:03 2021 -0700" name="generator">
+  <meta content="Bikeshed version 132fff3bd, updated Mon Apr 5 17:14:30 2021 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="c8719a301e49bf5d9545273b967ebb8f71bc6e5d" name="document-revision">
+  <meta content="b3b7ec3f607bfc68db7ba3d78dac1e9575111ea4" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -578,7 +578,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-03-25">25 March 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-04-06">6 April 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1138,11 +1138,10 @@ set, enabling sites to count them.</p>
 arbitrary value.</p>
    <p>The value order in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.</p>
-   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">user agents</a> SHOULD keep caching variance in mind and minimize
-variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">user agent</a> versions.</p>
-   <p class="note" role="note"><span>Note:</span> One approach to minimize caching variance could be to determine the GREASE parts of the UA set
-at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">user agent</a>'s significant
-version.</p>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">user agents</a> SHOULD keep caching variance and analytics use
+cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">user agent</a> versions.</p>
+   <p class="note" role="note"><span>Note:</span> One approach to minimize variance for caching and analytics could be to determine the GREASE
+parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">user agent</a>'s significant version.</p>
    <h3 class="heading settled" data-level="6.3" id="sec-ch"><span class="secno">6.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
 security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which

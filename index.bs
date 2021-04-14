@@ -405,6 +405,9 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
+  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  boolean mobile;
+  DOMString platform;
   DOMString architecture;
   DOMString bitness;
   DOMString model;
@@ -532,6 +535,9 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
 
     1. Let |uaData| be a new {{UADataValues}}.
 
+    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
+    1. set |uaData|["{{UADataValues/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
+    1. set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to
         the [=user agent=]'s [=user agent/platform architecture=].
     1. If |hints| [=list/contains=] "bitness", set |uaData|["{{UADataValues/bitness}}"] to

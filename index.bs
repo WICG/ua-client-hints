@@ -415,12 +415,19 @@ dictionary UADataValues {
   DOMString uaFullVersion;
 };
 
+dictionary UALowEntropyJSON {
+  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  boolean mobile;
+  DOMString platform;
+};
+
 [Exposed=(Window,Worker)]
 interface NavigatorUAData {
   readonly attribute FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
   readonly attribute boolean mobile;
   readonly attribute DOMString platform;
   Promise&lt;UADataValues&gt; getHighEntropyValues(sequence&lt;DOMString&gt; hints);
+  UALowEntropyJSON toJSON();
 };
 
 interface mixin NavigatorUA {
@@ -551,6 +558,18 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 4.  Return |p|.
+
+<h4 id="toJSON"><code>toJSON</code> method</h4>
+
+The <dfn method for="NavigatorUA"><code>toJSON()</code></dfn> method MUST run these steps:
+
+1. Let |uaLowEntropyData| be a new {{UALowEntropyJSON}}
+
+1. set |uaLowEntropyData|["{{UALowEntropyJSON/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
+1. set |uaLowEntropyData|["{{UALowEntropyJSON/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
+1. set |uaLowEntropyData|["{{UALowEntropyJSON/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+
+1. Return |uaLowEntropyData|
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

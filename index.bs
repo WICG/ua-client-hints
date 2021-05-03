@@ -135,8 +135,8 @@ developers that have stymied historical approaches:
 
 This document proposes a mechanism which might allow user agents to be a bit more aggressive about
 removing entropy from the `User-Agent` string generally by giving servers that really need some
-specific details about the client the ability to opt-into receiving them. It introduces four new
-Client Hints ([[!RFC8942]]) that can provide the client's branding and version
+specific details about the client the ability to opt-into receiving them. It introduces a number of
+new Client Hints ([[!RFC8942]]) that can provide the client's branding and version
 information, the underlying operating system's branding and major version, as well as details about
 the underlying device. Rather than broadcasting this data to everyone, all the time, user agents can
 make reasonable decisions about how to respond to given sites' requests for more granular data,

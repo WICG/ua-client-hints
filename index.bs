@@ -352,9 +352,6 @@ The header's ABNF is:
   Sec-CH-UA-Model = sf-string
 ```
 
-ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
-
-
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 ----------------------------------
 

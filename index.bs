@@ -252,6 +252,24 @@ The header's ABNF is:
   Sec-CH-UA = sf-list
 ```
 
+To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
+
+1.  Let |list| be a [=/list=], initially empty.
+
+2. For each |brandVersion| in [=user agent/brands=]:
+
+    1. Let |parameter| be a [=dictionary=], initially empty.
+
+    2. Set |parameter|["param_name"] to "v".
+
+    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
+
+    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
+
+    3. Append |pair| to |list|.
+
+3. Return the output of running [=serializing a list=] with |list| as input.
+
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
@@ -370,25 +388,6 @@ The header's ABNF is:
 ``` abnf
   Sec-CH-UA-Platform-Version = sf-string
 ```
-
-
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
-
-1.  Let |list| be a [=/list=], initially empty.
-
-2. For each |brandVersion| in [=user agent/brands=]:
-
-    1. Let |parameter| be a [=dictionary=], initially empty.
-
-    2. Set |parameter|["param_name"] to "v".
-
-    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
-
-    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
-
-    3. Append |pair| to |list|.
-
-3. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,

@@ -12,7 +12,7 @@ Former Editor: Mike West 56384, Google LLC, mkwst@google.com
 Abstract:
     This document defines a set of Client Hints that aim to provide developers with the ability to
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and
-    [=passive fingerprinting=] surface exposed by the venerable `User-Agent` header.
+    [=passive fingerprinting=] surface exposed by the venerable <code>User-Agent</code> header.
 Indent: 4
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on

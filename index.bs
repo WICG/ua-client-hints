@@ -352,6 +352,7 @@ The header's ABNF is:
   Sec-CH-UA-Model = sf-string
 ```
 
+
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 ----------------------------------
 
@@ -401,7 +402,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString platform;
   DOMString architecture;
@@ -412,7 +413,7 @@ dictionary UADataValues {
 };
 
 dictionary UALowEntropyJSON {
-  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString platform;
 };

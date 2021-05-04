@@ -1,14 +1,13 @@
 language: python
 sudo: false
 python:
-  - "3.7"
+  - "3.8"
 
 install:
-  # Setup bikeshed. See https://tabatkins.github.io/bikeshed/#install-linux
-  - git clone https://github.com/tabatkins/bikeshed.git
-  - pip install --editable $PWD/bikeshed
+  # Setup bikeshed. See https://tabatkins.github.io/bikeshed/#travis-ci
+  - pip3 install bikeshed
   - bikeshed update
- 
+
 script:
   - bash ./deploy.sh
 

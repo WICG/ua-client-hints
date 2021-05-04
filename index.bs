@@ -12,7 +12,7 @@ Former Editor: Mike West 56384, Google LLC, mkwst@google.com
 Abstract:
     This document defines a set of Client Hints that aim to provide developers with the ability to
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and
-    [=passive fingerprinting=] surface exposed by the venerable `User-Agent` header.
+    [=passive fingerprinting=] surface exposed by the venerable <code>User-Agent</code> header.
 Indent: 4
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
@@ -135,8 +135,8 @@ developers that have stymied historical approaches:
 
 This document proposes a mechanism which might allow user agents to be a bit more aggressive about
 removing entropy from the `User-Agent` string generally by giving servers that really need some
-specific details about the client the ability to opt-into receiving them. It introduces four new
-Client Hints ([[!RFC8942]]) that can provide the client's branding and version
+specific details about the client the ability to opt-into receiving them. It introduces a number of
+new Client Hints ([[!RFC8942]]) that can provide the client's branding and version
 information, the underlying operating system's branding and major version, as well as details about
 the underlying device. Rather than broadcasting this data to everyone, all the time, user agents can
 make reasonable decisions about how to respond to given sites' requests for more granular data,
@@ -252,6 +252,24 @@ The header's ABNF is:
   Sec-CH-UA = sf-list
 ```
 
+To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
+
+1.  Let |list| be a [=/list=], initially empty.
+
+2. For each |brandVersion| in [=user agent/brands=]:
+
+    1. Let |parameter| be a [=dictionary=], initially empty.
+
+    2. Set |parameter|["param_name"] to "v".
+
+    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
+
+    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
+
+    3. Append |pair| to |list|.
+
+3. Return the output of running [=serializing a list=] with |list| as input.
+
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
 receiving the header via an `Accept-CH` header (although it can still be controlled by it's
@@ -334,8 +352,6 @@ The header's ABNF is:
   Sec-CH-UA-Model = sf-string
 ```
 
-ISSUE(wicg/ua-client-hints): Perhaps `Sec-CH-UA-Mobile` is enough, and we don't need to expose the model?
-
 
 The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 ----------------------------------
@@ -371,25 +387,6 @@ The header's ABNF is:
   Sec-CH-UA-Platform-Version = sf-string
 ```
 
-
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
-
-1.  Let |list| be a [=/list=], initially empty.
-
-2. For each |brandVersion| in [=user agent/brands=]:
-
-    1. Let |parameter| be a [=dictionary=], initially empty.
-
-    2. Set |parameter|["param_name"] to "v".
-
-    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
-
-    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
-
-    3. Append |pair| to |list|.
-
-3. Return the output of running [=serializing a list=] with |list| as input.
-
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
 `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`
@@ -405,7 +402,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString platform;
   DOMString architecture;
@@ -416,7 +413,7 @@ dictionary UADataValues {
 };
 
 dictionary UALowEntropyJSON {
-  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString platform;
 };

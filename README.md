@@ -23,6 +23,9 @@ and pull requests. Before getting started, please read our
 
 # Explainer: Reducing `User-Agent` Granularity
 
+<!-- START doctoc -->
+<!-- END doctoc -->
+
 ## A Problem
 
 User agents identify themselves to servers as part of each HTTP request via the `User-Agent` header.

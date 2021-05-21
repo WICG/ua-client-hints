@@ -23,8 +23,50 @@ and pull requests. Before getting started, please read our
 
 # Explainer: Reducing `User-Agent` Granularity
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+  - [A Problem](#a-problem)
+    - [Challenges](#challenges)
+  - [A Proposal](#a-proposal)
+    - [For example...](#for-example)
+- [Use-cases](#use-cases)
+  - [Differential serving](#differential-serving)
+    - [Based on browser features](#based-on-browser-features)
+    - [Browser bug workaround](#browser-bug-workaround)
+  - [Marketshare Analytics](#marketshare-analytics)
+  - [Content adaptation](#content-adaptation)
+    - [Browser based adaptation](#browser-based-adaptation)
+    - [Mobile specific site](#mobile-specific-site)
+    - [Low-powered devices](#low-powered-devices)
+    - [OS specific styles](#os-specific-styles)
+    - [OS integration](#os-integration)
+    - [Browser and OS specific experiments](#browser-and-os-specific-experiments)
+  - [User login notification](#user-login-notification)
+  - [Download of appropriate binary executables](#download-of-appropriate-binary-executables)
+  - [Conversion modeling](#conversion-modeling)
+  - [Vulnerability filtering](#vulnerability-filtering)
+  - [Logs and debugging](#logs-and-debugging)
+  - [Fingerprinting](#fingerprinting)
+    - [Spam filtering and bot detection](#spam-filtering-and-bot-detection)
+    - [Persistent user tracking](#persistent-user-tracking)
+  - [Blocking known bots and crawlers](#blocking-known-bots-and-crawlers)
+- [FAQ](#faq)
+  - [What user needs are solved by reducing the `User-Agent` header or adding User Agent Client Hints to the web platform?](#what-user-needs-are-solved-by-reducing-the-user-agent-header-or-adding-user-agent-client-hints-to-the-web-platform)
+  - [Do we really need to neuter the JavaScript interface (i.e. `Navigator.userAgent`) too?](#do-we-really-need-to-neuter-the-javascript-interface-ie-navigatoruseragent-too)
+  - [What about the compatibility hit we'll take from UA sniffing?](#what-about-the-compatibility-hit-well-take-from-ua-sniffing)
+  - [Should the UA string really be a set?](#should-the-ua-string-really-be-a-set)
+  - [As a concrete example, what UA string would Chrome on iOS send?](#as-a-concrete-example-what-ua-string-would-chrome-on-ios-send)
+  - [Wait a minute, where is the Client Hints infrastructure specified?](#wait-a-minute-where-is-the-client-hints-infrastructure-specified)
+  - [What's with the `Sec-CH-` prefix?](#whats-with-the-sec-ch--prefix)
+  - [How does `Sec-CH-UA-Mobile` define "mobile"?](#how-does-sec-ch-ua-mobile-define-mobile)
+  - [Aren’t we duplicating a lot of information already in the `User-Agent` header?](#arent-we-duplicating-a-lot-of-information-already-in-the-user-agent-header)
+  - [Aren’t you adding a lot of new headers? Isn’t that going to bloat requests?](#arent-you-adding-a-lot-of-new-headers-isnt-that-going-to-bloat-requests)
+- [Considered alternatives](#considered-alternatives)
+  - [Freezing the UA string and reducing its information density without providing an alternative mechanism](#freezing-the-ua-string-and-reducing-its-information-density-without-providing-an-alternative-mechanism)
+  - [Restructuring of the User-Agent string](#restructuring-of-the-user-agent-string)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## A Problem
 

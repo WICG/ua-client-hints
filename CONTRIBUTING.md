@@ -46,7 +46,7 @@ handy when making more than a single edit.
 ## Generating the Explainer Table of Contents
 
 If you contribute edits to the
-(Explainer portion of README.md)[https://github.com/WICG/ua-client-hints#explainer-reducing-user-agent-granularity],
+[Explainer portion of README.md](https://github.com/WICG/ua-client-hints#explainer-reducing-user-agent-granularity),
 you should update the table of contents. We use
 [doctoc](https://github.com/thlorenz/doctoc) to generate the table of contents, which requires that
 NodeJS be installed on your machine.

@@ -43,6 +43,23 @@ your changes.
 [`bikeshed watch`](https://tabatkins.github.io/bikeshed/#cli-watch) is also
 handy when making more than a single edit.
 
+## Generating the Explainer Table of Contents
+
+If you contribute edits to the
+(Explainer portion of README.md)[https://github.com/WICG/ua-client-hints#explainer-reducing-user-agent-granularity],
+you should update the table of contents. We use
+[doctoc](https://github.com/thlorenz/doctoc) to generate the table of contents, which requires that
+NodeJS be installed on your machine.
+
+The following command should do the trick:
+
+```bash
+npx doctoc README.md --github
+```
+
+After you run that command, commit the Table of Contents updates like any other proposed change. Note
+that the first time you run it, it will prompt you to install doctoc locally.
+
 ## Web Platform Incubator Community Group and W3C CLA
 
 This repository is being used for work in the W3C Web Platform Incubator

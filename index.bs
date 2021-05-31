@@ -592,7 +592,7 @@ Fingerprinting {#fingerprinting}
 --------------
 
 The primary goal of User Agent Client Hints is to reduce the default entropy
-available to the network for [=passive fingerprinting=]. However, it will still be possible
+available to a server for [=passive fingerprinting=]. However, it will still be possible
 for some, or all, hints to be requested and used for [=active fingerprinting=] purposes by
 first or delegated third parties. As noted in [[#access]], [=User agents=] should consider
 policies to restrict or reduce access to parties that are known to <a lt="active fingerprinting">

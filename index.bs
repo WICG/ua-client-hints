@@ -172,6 +172,239 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA-Full-Version: "10.0.19042"
 ```
 
+## Use Cases ## {#use-cases}
+
+This section attempts to document the current uses for the `User-Agent` string,
+and how similar functionality could be enabled using User-Agent Client Hints (UA-CH).
+
+### Differential serving ### {#differential-serving-use-case}
+
+#### Based on browser features #### {#based-on-browser-features-use-case}
+This use case enables services like [polyfill.io](https://polyfill.io) to serve custom-tailored
+polyfills to their users, without bloating up the experience of modern browser users.
+
+Similarly, when serving Javascript to users, one can avoid transpilation (which can result in bloat
+and inefficient code) for browsers that support the latest ES features that were used. Finally, when
+serving images, some browsers don't update their `Accept` request headers, while in other cases the
+MIME type is not descriptive enough to distinguish between different variants of the same format
+(e.g., WebP). In those cases, knowing the browser and its version can be critical to serving the
+right image variant.
+
+For that use case to work, the server needs to be aware of the browser and its meaningful version,
+and map that to a list of available features. That enables it to know which polyfill or code variant
+to serve.
+
+Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA`
+header, that is sent by default on every request, and modify their response
+based on that.
+
+#### Browser bug workaround #### {#browser-bug-workaround-use-case}
+Some browser versions have well-known bugs which require content to workaround them. Triggering
+those bugs can result in browser crashes, content breakage and other issues, and those bugs are by
+definition not something that can be feature detected. Therefore, content needs to avoid them
+altogether for affected browser versions.
+
+For that use case, servers need to be aware of the browser and its meaningful version, be aware of
+browser bugs that impact them, and apply workarounds if the current browser version is impacted.
+
+Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA` header, sent by
+default on every request, and use it to modify their response.
+
+### Marketshare Analytics ### {#marketshare-analytics-use-case}
+A browser's market share can be extremely important. Having visibility into a browser's usage can
+encourage developers to test in that particular browser, ensuring fewer compatibility issues for
+its users. On top of that, a browser's market share can have a direct impact on the browser vendors'
+business goals, ensuring future development of the browser.
+
+For market share analytics to work, the server needs to be aware of the browser and its meaningful
+version, in order to be able to register them and find their relative market shares.
+
+Sites that wish to provide market share analytics using UA-CH will need to inspect the `Sec-CH-UA`
+header, that is sent by default on every request, and keep a record of it.
+
+By design, looking at individual entries in the brands list makes it hard to distinguish between a
+less-popular browser's truthful brand name and a more-popular browser's arbitrary GREASE. Since the
+less-popular browser may include several popular brand names for compatibility purposes, its users
+will likely be bucketed as using the more-popular one if this approach is taken, leading to
+distorted views of usage share that favour already-popular browsers and with less-popular browsers
+possibly never gaining any visibility.
+
+Hence, for analytics purposes, it is better to treat the brands list as a unit, and compare it to
+known lists of brands sent by the various (browser, version) pairs that are to be distinguished.
+This will necessitate regular updates to the list of known lists of brands when new browser versions
+are released or new browsers become popular, or else everything will get bucketed as an unknown
+browser. However, as this doesn't break sites for users, failing closed for unknown browsers is
+acceptable in this context.
+
+Such a list of known lists of brands could be maintained centrally and used by many sites (as, e.g.,
+browser feature support is maintained by caniuse and MDN, and consumed by many webmasters).
+
+The specification recommends that browsers fix the brands list they send per version to make
+counting usage shares simpler (and also to help with caching), so the known lists of brands can be a
+simple list mapping from a set of brands to a (browser, version) pair.
+
+### Content adaptation ### {#content-adaptation-use-case}
+Content adaptation is ensuring that users get content that's tailored to their needs. There are
+[many dimensions to content adaptation](https://blog.yoav.ws/adapting_without_assumptions/) beyond
+the UA string:
+[viewport dimensions](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/client-hints),
+[device memory](https://w3c.github.io/device-memory/),
+[user preferences](https://wicg.github.io/savedata/) and more.  This sub-section covers content
+adaptation needs that rely on information that is part of the current `User-Agent` string.
+
+#### Browser based adaptation #### {#browser-based-adaptation-use-case}
+Some sites choose to serve slightly different content to different browsers. The reasons for that
+vary. Some reasons are legitimate (e.g. wanting to serve different experiences to different browsers
+due to their feature support). Other reasons are slightly less legitimate (e.g. warning users that
+the site's developers haven't tested in their browser). And then there are reasons which are
+outright wrong (e.g. Willingness to block certain browsers' users from accessing the site).
+
+As browsers, we want to enable the former, while discouraging the latter.
+
+#### Mobile specific site #### {#mobile-specific-site-use-case}
+Many site owners serve different content between mobile and desktop sites. While responsive web
+design has made it possible to serve multiple form factors using a single code base, there are still
+cases where serving a mobile-specific version can be better adapted.
+
+For those cases, serving mobile-specific sites to users on mobile devices can be helpful. For that
+to work, the server needs to be aware, at HTML serving time, whether the user is on a mobile device
+or not.
+
+Sites that wish to serve mobile-specific sites using UA-CH can do that using the `Sec-CH-UA-Mobile`
+headers that are sent by default on every request.
+
+#### Low-powered devices #### {#low-powered-devices-use-case}
+Some sites serve different content to low powered devices that cannot deal with CPU intensive tasks,
+large video and images, etc.  Such content adaptation typically uses the device model information
+that's integrated in the current `User-Agent` string for that purpose, relying on server-side
+databases to convert device models into memory, CPU power, and other categories on which they want
+to split their content.
+
+If the dimension on which the split is made is memory, the Device-Memory Client Hint can be used to
+make that distinction.  Otherwise, with UA-CH, sites can still retrieve the device model by opting
+in to the `Sec-CH-UA-Model` hint.
+
+Both of these hints are not sent by default, so require some extra work.
+
+Top-level origins will need to send `Accept-CH: Device-Memory, Sec-CH-UA-Model` headers with their
+responses to opt-in to receiving those hints.  In cases where they absolutely need to perform that
+adaptation on every navigation request, a redirect would be required here in the case where the
+hints are not present in a browser that supports them. Alternatively, they might use Critical-CH to
+have the client handle the additional request/response roundtrip.
+
+Third-party origins that need to perform such adaptation would need
+[delegation](https://github.com/WICG/client-hints-infrastructure#cross-origin-hint-delegation) from
+the top-level origin. The top-level origin would need to opt-in using `Accept-CH`, as well as add
+`Permissions-Policy` headers that delegate those hints to the third-party origin.
+
+#### OS specific styles #### {#os-specific-styles-use-case}
+Some sites may wish to tailor their interfaces to match the user's OS. While progressive enhancement
+is likely to be a better path here (e.g. through the application of different button styles using
+script), there may be cases where folks would wish to deliver tailored inline styles based on the
+platform and platform version.
+
+Those cases are very similar to the case discussed above (in "Low-powered devices"), only with the
+`Sec-CH-UA-Platform` and `Sec-CH-UA-Platform-Version` hints.
+
+#### OS integration #### {#os-integration-use-case}
+Similarly, some sites would want to change links to OS specific ones (e.g. [Android intent
+links](https://developer.chrome.com/multidevice/android/intents)).  While, again, progressive
+enhancement can be used to modify those links using script, rather than bake them into the HTML,
+some sites may prefer server-side adaptation.
+
+Again, like the "OS specific styles" case, they'd need to use the `Sec-CH-UA-Platform` and
+`Sec-CH-UA-Platform-Version` hints to do so.
+
+#### Browser and OS specific experiments #### {#browser-os-experiments-use-case}
+Some servers may like to limit their multi variant experimentation to specific browsers, specific
+platforms or specific versions of any of the above.  For experiments that are limited to browser
+and version, those sites can use the `Sec-CH-UA` values sent by default on requests.  If they
+require the platform and its version, they could use the default `Sec-CH-UA-Platform` hint but
+would have to request the `Sec-CH-UA-Platform-Version` hint, or use client-side scripts to control
+the experimentation.
+
+### User login notification ### {#user-login-notification-use-case}
+Many sites, especially security sensitive ones, like to notify their users when a log-in from a new
+device happens. That enables users to be aware of those logins, and take action in case it's not a
+login that's done by them or on their behalf.
+
+For those notifications to be meaningful, sites need to recognize and communicate the commercial
+brand of the browser to the user. These messages often also include the platform and its version in
+order to make sure the user knows which device is in question.
+
+Since such messaging doesn't require any server-side adaptation, it's better for this case to use
+the `userAgentData.getHighEntropyData()` method in order to retrieve the required information.
+
+### Download of appropriate binary executables ### {#binary-executable-downloads}
+Some sites are used to download binary executables of native applications, and need to be able to
+propose the right binary to the user by default.  The right binary executable for the current user
+depends on a few factors: their operating system, its version, its bitness, as well as their CPU
+architecture.
+
+In order to tackle that use case, download sites can opt-in to receive the `Sec-CH-UA-Platform`,
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Architecture`, and `Sec-CH-UA-Bitness` hints (or query
+them through the API), in order to ensure the right binary is offered to the user by default.
+
+### Conversion modeling ### {#conversion-modeling-use-case}
+Some machine learning models use various details from the `User-Agent` string in order to estimate
+various things about users of those user agents.  Similar modeling would still be possible, but will
+require explicit opt-in to collect the required bits of information.
+
+### Vulnerability filtering ### {#vulnerability-filtering-use-case}
+In some environments, proxy servers may be used to verify that the different users accessing
+information are not doing so from obsolete devices that are potentially vulnerable to security
+issues. While the browser and version information available from `Sec-CH-UA` can provide some
+information, the browser and OS full version are often useful for that kind of analysis.
+
+Such proxies would have to add a redirect step, or use one of the two
+[Client Hint reliability mechanisms](https://github.com/WICG/client-hints-infrastructure/blob/main/reliability.md#client-hint-reliability)
+that opts-in to getting the browser full version and the platform version in order to continue to
+get access to those hints.
+
+### Logs and debugging ### {#logs-debugging-use-case}
+Many services log the `User-Agent` string today and can use it in various ways when analyzing past
+traffic or when trying to debug errors related to their service.  Those services will have to use
+the lower entropy values available through `Sec-CH-UA` for logging purposes, or opt-in to receive
+higher-entropy hints. The latter doesn't seem like something services should do just for forensic
+purposes. On the other hand, when specific issues are encountered, it may make sense for those
+services to opt-in to receive more details on the user agent, or use the
+`userAgentData.getHighEntropyData()` API for that purpose.
+
+### Fingerprinting ### {#fingerprinting-use-case}
+
+User fingerprinting is the practice of gathering multiple bits of user information from multiple
+sources and intersecting them together to create a unique signature of the user, that would enable
+to recognize them to be recognized later on, even if they clear state from their browsers (e.g. by
+deleting cookies).
+
+For those cases, the origin needs to gather as much entropy as possible, so it is likely to collect
+all the hints.
+
+#### Spam filtering and bot detection #### {#spam-filtering-bots-use-case}
+This is a case of fingerprinting that is not user-hostile, and therefore one we would like to
+preserve.  With UA-CH this will be initially enabled by active collection of the various hints.
+
+We hope that alternative methods or APIs will exist to address the spam filtering and bot detection
+use cases in the future, as browsers may decide to intervene on behalf of their users by limiting
+the collection of user-identifying entropy (e.g., the
+[Privacy Budget](https://github.com/bslassey/privacy-budget) proposal).
+
+#### Persistent user tracking #### {#persistent-user-tracking}
+This is a case of fingerprinting that this proposal *explicitly tries to make harder*.  Like the
+case of "spam filtering", it would still be feasible to actively collect all the hints about the
+user as bits of entropy. Unlike the above case, this is something that proposals such as the Privacy
+Budget aim to prevent, without providing any alternative mechanisms for persistent user tracking.
+
+#### Blocking known bots and crawlers #### {#blocking-known-bots-crawlers-use-case}
+Currently, the `User-Agent` string is often used as a brute-force way to block
+known bots and crawlers.  There's a concern that moving "normal" traffic to
+expose less entropy by default will also make it easier for bots to hide in the
+crowd.  While there's some truth to that, that's not enough reason for making the crowd
+be more personally identifiable.
+
+Similar to the spam filtering case, there's hope that alternative methods would
+be able to replace `User-Agent` string matching for this use case.
+
 Infrastructure {#infrastructure}
 ==============
 

@@ -674,9 +674,9 @@ There are a few options for the string:
 
 1.  `"Chrome"; v="73", ")Friendly-Browsing"; v="99"`, which has the least entropy, but also sets
     poor expectations.
-2.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99"`` (or `"Chrome on iOS", v="73"`, or similar)
+2.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99"` (or `"Chrome on iOS", v="73"`, or similar)
     which is basically what's sent today, and categorizes the browser as distinct.
-3.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99"`, "Safari"; v="12"`, which is interesting.
+3.  `"CriOS"; v="73", ")Friendly-Browsing"; v="99", "Safari"; v="12"`, which is interesting.
 4.  `")Friendly-Browsing"; v="99", "Chrome"; v="73", "Safari"; v="12"`, which is more interesting,
     as it identifies as Chrome, rather than more cryptic CriOS.
 

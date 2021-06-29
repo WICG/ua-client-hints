@@ -622,7 +622,7 @@ information about the platform version on which a given [=user agent=] is execut
             1. Parse |platformReturnedVersionString|, storing the first three decimal integers delimited by U+002E (FULL STOP). If |platformReturnedVersionString| does not contain three integer values, replace the missing components with "0".
             1. Append all three version components in the order they were read to |platformVersionComponentList|.
         * If the platform is macOS:
-            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` return by `currentDevice` and reading its `systemVersion`.
+            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned by `currentDevice` and reading its `systemVersion`.
             1. Parse |platformReturnedVersionString|, storing the first three decimal integers delimited by U+002E (FULL STOP). If |platformReturnedVersionString| does not contain three integer values, replace the missing components with "0".
             1. Append all three version components in the order they were read to |platformVersionComponentList|.
         * If the platform is Linux:

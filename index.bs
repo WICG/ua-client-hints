@@ -169,7 +169,7 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
-  Sec-CH-UA-Full-Version: "10.0.19042"
+  Sec-CH-UA-Full-Version: "14"
 ```
 
 ## Use Cases ## {#use-cases}
@@ -613,6 +613,30 @@ The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field giv
 information about the platform version on which a given [=user agent=] is executing. It is a
 [=Structured Header=] whose value MUST be a [=structured header/string=]
 [[!RFC8941]].
+
+[=User agents=] SHOULD return a version with a platform-specific format that allows differentiating significant platform versions by running these steps:
+    1. Let |platformVersionComponentList| be a [=list=].
+    1. Use per-platform logic:
+        * If the platform is Android:
+            1. Let |platformReturnedVersionString| be the result of querying the OS's `android.os.Build.VERSION.RELEASE` string.
+            1. Parse |platformReturnedVersionString|, storing the first three decimal integers delimited by U+002E (FULL STOP). If |platformReturnedVersionString| does not contain three integer values, replace the missing components with "0".
+            1. Append all three version components in the order they were read to |platformVersionComponentList|.
+        * If the platform is macOS:
+            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` return by `currentDevice` and reading its `systemVersion`.
+            1. Parse |platformReturnedVersionString|, storing the first three decimal integers delimited by U+002E (FULL STOP). If |platformReturnedVersionString| does not contain three integer values, replace the missing components with "0".
+            1. Append all three version components in the order they were read to |platformVersionComponentList|.
+        * If the platform is Linux:
+            1. Let |platformReturnedVersionString| be the result of querying the `release` string in the `utsname` struct returned by the `uname` API.
+            1. Parse |platformReturnedVersionString|, storing the first three decimal integers delimited by U+002E (FULL STOP). If |platformReturnedVersionString| does not contain three integer values, replace the missing components with "0".
+            1. Append all three version components in the order they were read to |platformVersionComponentList|.
+        * If the platform is macOS:
+            1. Let |platformReturnedVersionString| be the result of querying the `NSOperatingSystemVersion`.
+            2. Append the `majorVersion`, `minorVersion`, and `patchVersion` components (in that order) to |platformVersionComponentList|.
+        * If the platform is Windows:
+            1. If available (i.e., on Windows 10 or higher), append the single integer version of the `Windows.Foundation.UniversalApiContract` contract to |platformVersionComponentList|. Otherwise, append 0 to |platformVersionComponentList|.
+        * Other platforms not listed above:
+            1. Append one to three version parts based on the a format likely to lead to interoperability with other browsers running on that platform to |platformVersionComponentList|.
+    1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E (FULL STOP) separator.
 
 The header's ABNF is:
 

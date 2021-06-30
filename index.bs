@@ -169,7 +169,7 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
-  Sec-CH-UA-Full-Version: "10.0.19042"
+  Sec-CH-UA-Full-Version: "14.0.0"
 ```
 
 ## Use Cases ## {#use-cases}
@@ -614,6 +614,42 @@ information about the platform version on which a given [=user agent=] is execut
 [=Structured Header=] whose value MUST be a [=structured header/string=]
 [[!RFC8941]].
 
+[=User agents=] SHOULD return a version with a platform-specific format that allows differentiating significant platform versions by running these steps:
+    1. Let |platformVersionComponentList| be a [=list=].
+    1. Use per-platform logic:
+        * If the platform is Android:
+            1. Let |platformReturnedVersionString| be the result of querying the OS's `android.os.Build.VERSION.RELEASE` string.
+            1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.
+        * If the platform is iOS:
+            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned by `currentDevice` and reading its `systemVersion`.
+            1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.
+        * If the platform is Linux:
+            1. Let |platformReturnedVersionString| be the result of querying the `release` string in the `utsname` struct returned by the `uname` API.
+            1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.
+        * If the platform is macOS:
+            1. Let |platformReturnedVersionString| be the result of querying the `NSProcessInfo` returned by `processInfo` and reading its `operatingSystemVersion`.
+            2. Append the `majorVersion`, `minorVersion`, and `patchVersion` components (in that order) to |platformVersionComponentList|.
+        * If the platform is Windows:
+            1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be the result of querying the `Windows.Foundation.UniversalApiContract` integer version and converting it to a string. Otherwise, let |platformReturnedVersionString| be "0".
+            1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.
+        * Otherwise:
+            1. Append one to three version parts based on the a format likely to lead to interoperability with other browsers running on that platform to |platformVersionComponentList|.
+            2. While |platformVersionComponentList|'s length is less than 3, append "0" to |platformVersionComponentList|.
+    1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E FULL STOP (`.`) separator.
+
+<p>The <dfn>parse a platform-returned version string</dfn> algorithm, given a string |input|, runs these steps:
+    1. Let |platformVersionComponentList| be a [=list=] and |index| be 0.
+    1. Let |platformVersionUnprocessedTokenList| be the [=list=] returned by [=strictly split a string|strictly splitting=] |input| on the U+002E FULL STOP character (`.`):
+    1. While |index| is less than 3:
+        1. If |index| is less than the length of |platformVersionUnprocessedTokenList|:
+            1. If |platformVersionUnprocessedTokenList|[|index|] is an unsigned integer, convert it to a string and append it to |platformVersionComponentList|.
+            1. Otherwise, append "0" to |platformVersionComponentList|.
+        1. Otherwise, if |index| is greater than or equal to the length of |platformVersionUnprocessedTokenList|:
+            1. Append "0" to |platformVersionComponentList|.
+        1. Increment |index| by 1.
+    1. Return |platformVersionComponentList|.
+
+
 The header's ABNF is:
 
 ``` abnf
@@ -1053,6 +1089,7 @@ Acknowledgments {#ack}
 Thanks to
 Aaron Tagliaboschi,
 ArkUmbra, <!-- github -->
+Erik Anderson,
 jasonwee, <!-- github -->
 Luke Williams,
 Mike West,

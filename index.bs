@@ -640,7 +640,7 @@ information about the platform version on which a given [=user agent=] is execut
     1. Let |platformVersionUnprocessedTokenList| be the [=list=] returned by [=strictly split a string|strictly splitting=] |input| on the U+002E FULL STOP character (`.`):
     1. While |index| is less than 3:
         1. If |index| is less than the length of |platformVersionUnprocessedTokenList|:
-            1. If |platformVersionUnprocessedTokenList[index]| is an unsigned integer, convert it to a string and append it to |platformVersionComponentList|.
+            1. If |platformVersionUnprocessedTokenList|[|index|]| is an unsigned integer, convert it to a string and append it to |platformVersionComponentList|.
             1. Otherwise, append "0" to |platformVersionComponentList|.
         1. Otherwise, if |index| is greater than or equal to the length of |platformVersionUnprocessedTokenList|:
             1. Append "0" to |platformVersionComponentList|.

@@ -169,7 +169,7 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
-  Sec-CH-UA-Full-Version: "14"
+  Sec-CH-UA-Full-Version: "14.0.0"
 ```
 
 ## Use Cases ## {#use-cases}
@@ -630,9 +630,11 @@ information about the platform version on which a given [=user agent=] is execut
             1. Let |platformReturnedVersionString| be the result of querying the `NSProcessInfo` returned by `processInfo` and reading its `operatingSystemVersion`.
             2. Append the `majorVersion`, `minorVersion`, and `patchVersion` components (in that order) to |platformVersionComponentList|.
         * If the platform is Windows:
-            1. If available (i.e., on Windows 10 or higher), append the single integer version of the `Windows.Foundation.UniversalApiContract` contract to |platformVersionComponentList|. Otherwise, append 0 to |platformVersionComponentList|.
-        * Other platforms not listed above:
+            1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be the result of querying the `Windows.Foundation.UniversalApiContract` integer version and converting it to a string. Otherwise, let |platformReturnedVersionString| be "0".
+            1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.
+        * Otherwise:
             1. Append one to three version parts based on the a format likely to lead to interoperability with other browsers running on that platform to |platformVersionComponentList|.
+            2. While |platformVersionComponentList|'s length is less than 3, append "0" to |platformVersionComponentList|.
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E FULL STOP (`.`) separator.
 
 <p>The <dfn>parse a platform-returned version string</dfn> algorithm, given a string |input|, runs these steps:

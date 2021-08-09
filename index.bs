@@ -169,7 +169,7 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
-  Sec-CH-UA-Full-Version: "14.0.0"
+  Sec-CH-UA-Platform-Version: "14.0.0"
 ```
 
 ## Use Cases ## {#use-cases}

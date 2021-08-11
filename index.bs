@@ -485,23 +485,19 @@ The header's ABNF is:
   Sec-CH-UA = sf-list
 ```
 
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
+To <dfn abstract-op>return the `Sec-CH-UA` value for a request</dfn>,
+[=user agents=] MUST:
 
-1.  Let |list| be a [=/list=], initially empty.
-
-2. For each |brandVersion| in [=user agent/brands=]:
-
+1. Let |list| be a [=/list=], initially empty.
+1. Let |brands| be the result of running the [=create brands=] steps, with
+    [=user agent/significant version=] passed as an argument.
+1. For each |brand| in |brands|:
     1. Let |parameter| be a [=dictionary=], initially empty.
-
-    2. Set |parameter|["param_name"] to "v".
-
-    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
-
-    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
-
-    3. Append |pair| to |list|.
-
-3. Return the output of running [=serializing a list=] with |list| as input.
+    1. Set |parameter|["param_name"] to "v".
+    1. Set |parameter|["param_value"] to |brand|'s {{NavigatorUABrandVersion/version}}.
+    1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
+    1. Append |pair| to |list|.
+1. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
@@ -713,43 +709,37 @@ Processing model {#processing}
 <h4 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h4>
 
 Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running
-[=create brands=].
+[=create brands=] with [=user agent/significant version=] as <var ignore>versionType</var>.
 
 Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>,
 which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the
 result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
 
-<h4 id="create-ua-list-section">Create brands</h4>
+<h4 algorithm="to create brands" id="create-ua-list-section">Create brands</h4>
 
-When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUST run the following steps:
+When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUST run the following
+steps, given the argument |versionType|:
+
 1. Let |list| be a [=/list=].
-
-2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the [=user agent=] or
-    [=equivalence classes=].
-
-3. For each pair:
-
-    1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
-        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as
-        {{NavigatorUABrandVersion/version}}.
-
-    2. Append |dict| to |list|.
-
-4.  The [=user agent=] SHOULD execute the following steps:
-
-    1.  [=list/Append=] one additional [=list/item=] to |list| containing a {{NavigatorUABrandVersion}} dictionary,
-        initialized with <a lt="create an arbitrary brand">arbitrary brand</a> and <a lt="create an arbitrary version">
-        arbitrary version</a> combinations.
-
-    2.  Randomize the order of the [=list/items=] in |list|.
+1. Collect pairs of [=user agent/brand=] and versions of |versionType| which represent the
+    [=user agent=] or [=equivalence classes=].
+1. For each pair:
+    1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary, with [=user agent/brand=] as
+        {{NavigatorUABrandVersion/brand}} and |versionType| as {{NavigatorUABrandVersion/version}}.
+    1. Append |dict| to |list|.
+1.  The [=user agent=] SHOULD execute the following steps:
+    1. [=list/Append=] one additional [=list/item=] to |list| containing a
+        {{NavigatorUABrandVersion}} dictionary, initialized with
+        <a lt="create an arbitrary brand">arbitrary brand</a> and
+        <a lt="create an arbitrary version">arbitrary version</a> combinations.
+    1.  Randomize the order of the [=list/items=] in |list|.
 
     Note: One approach to minimize caching variance when generating these random components could be to
     determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
     version.
 
     Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
-
-5. Return |list|.
+1. Return |list|.
 
 An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with
 each other. A shared rendering engine may form an [=equivalence class=], for example.

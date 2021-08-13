@@ -539,6 +539,9 @@ The header's ABNF is:
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
 --------------------------------
 
+Advisement: `Sec-CH-UA-Full-Version` is deprecated and will be removed in the future. Developers
+should use <a href="#sec-ch-ua-version-list">`Sec-CH-UA-Version-List`</a> instead.
+
 The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
 about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
 whose value MUST be a [=structured header/string=] [[!RFC8941]].
@@ -701,7 +704,7 @@ dictionary UADataValues {
   DOMString model;
   DOMString platform;
   DOMString platformVersion;
-  DOMString uaFullVersion;
+  DOMString uaFullVersion; // deprecated in favor of versionList
   FrozenArray&lt;NavigatorUABrandVersion&gt; versionList;
 };
 
@@ -1041,7 +1044,7 @@ Header field name: Sec-CH-UA-Full-Version
 
 Applicable protocol: http
 
-Status: standard
+Status: deprecated
 
 Author/Change controller: IETF
 

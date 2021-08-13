@@ -769,8 +769,9 @@ steps, given the argument |versionType|:
 1.  The [=user agent=] SHOULD execute the following steps:
     1. [=list/Append=] one additional [=list/item=] to |list| containing a
         {{NavigatorUABrandVersion}} dictionary, initialized with
-        <a lt="create an arbitrary brand">arbitrary brand</a> and
-        <a lt="create an arbitrary version">arbitrary version</a> combinations.
+        <a lt="create an arbitrary brand">arbitrary brand</a> as {{NavigatorUABrandVersion/brand}}
+        and the result of <a lt="create an arbitrary version">creating an arbitrary version</a> with
+        |versionType| as {{NavigatorUABrandVersion/version}}.
     1.  Randomize the order of the [=list/items=] in |list|.
 
     Note: One approach to minimize caching variance when generating these random components could be to
@@ -809,8 +810,14 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     Note: [=Structured Headers=] allows for escaped 0x22 (\") and 0x5C (\\) inside a [=structured header/string=], but
           these are known to not be web-compatible.
 
-To <dfn>create an arbitrary version</dfn>, return a [=/string=] that MUST match the format of the [=user agent=]'s
-[=user agent/significant version=], but MUST NOT match the value.
+To <dfn>create an arbitrary version</dfn> with |versionType|, run the following steps:
+    1. Let |arbitraryVersion| be a [=/string=].
+    1. If |versionType| is [=user agent/significant version=], set |arbitraryVersion| to a string
+        that matches the format of the [=user agent=]'s [=user agent/significant version=], but not
+        the value.
+    1. If |versionType| is [=user agent/full version=], set |arbitraryVersion| to to a string that
+        matches the format of the [=user agent=]'s [=user agent/full version=], but not the value.
+    1. Return |arbitraryVersion|.
 
 Note: User Agents may decide to send arbitrarily low versions to ensure proper version checking, and should vary them
 over time.

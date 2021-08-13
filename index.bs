@@ -694,7 +694,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  sequence&lt;NavigatorUABrandVersion&gt; brands;
+  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString architecture;
   DOMString bitness;
@@ -702,7 +702,7 @@ dictionary UADataValues {
   DOMString platform;
   DOMString platformVersion;
   DOMString uaFullVersion;
-  sequence&lt;NavigatorUABrandVersion&gt; versionList;
+  FrozenArray&lt;NavigatorUABrandVersion&gt; versionList;
 };
 
 dictionary UALowEntropyJSON {
@@ -739,9 +739,17 @@ Processing model {#processing}
 Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running
 [=create brands=] with [=user agent/significant version=] as <var ignore>versionType</var>.
 
-Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>,
-which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the
-result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
+Every {{WindowOrWorkerGlobalScope}} object has an associated
+<dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>, which is a
+<code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
+initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s
+[=brands=].
+
+Additionally, every {{WindowOrWorkerGlobalScope}} object has an associated
+<dfn for="WindowOrWorkerGlobalScope">version list frozen array</dfn>, which is a
+<code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
+initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s
+[=brands=], with [=user agent/full version=] passed as an argument.
 
 <h4 algorithm="to create brands" id="create-ua-list-section">Create brands</h4>
 
@@ -825,7 +833,8 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
 3. Otherwise, run the following steps [=in parallel=]:
 
     1. Let |uaData| be a new {{UADataValues}}.
-    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
+    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s
+        [=WindowOrWorkerGlobalScope/brands frozen array=].
     1. set |uaData|["{{UADataValues/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
     1. set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to
@@ -836,11 +845,11 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         [=user agent=]'s [=user agent/model=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
         to the [=user agent=]'s [=user agent/platform version=].
-    1. If |hints| [=list/contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"]
-        be the the user agent's [=user agent/full version=].
-    1. If |hints| [=list/contains=] "versionList", let |uaData|["{{UADataValues/versionList}}"]
-        be the result of running the [=create brands=] steps, with [=user agent/full version=]
-        passed as an argument.
+    1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
+        to the user agent's [=user agent/full version=].
+    1. If |hints| [=list/contains=] "versionList", set |uaData|["{{UADataValues/versionList}}"]
+        to [=this=]'s [=relevant global object=]'s
+        [=WindowOrWorkerGlobalScope/version list frozen array=].
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 4.  Return |p|.

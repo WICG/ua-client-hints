@@ -617,8 +617,7 @@ information about the platform version on which a given [=user agent=] is execut
 [=User agents=] SHOULD return a version with a platform-specific format that allows differentiating significant platform versions by running these steps:
     1. If the platform is Linux:
     	1. Return the empty string.
-    1. Let |platformVersionComponentList| be a [=list=].
-    1. Use per-platform logic:
+    1. Else, let |platformVersionComponentList| be a [=list=] and use per-platform logic:
         * If the platform is Android:
             1. Let |platformReturnedVersionString| be the result of querying the OS's `android.os.Build.VERSION.RELEASE` string.
             1. Let |platformVersionComponentList| be the result of running <a lt="parse a platform-returned version string">parse a platform-returned version string</a> with |platformReturnedVersionString|.

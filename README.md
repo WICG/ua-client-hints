@@ -234,7 +234,7 @@ accomplish this as follows:
         brand list. For example:
 
         ```http
-        Sec-CH-UA-Version-List: "Edge"; v="92.0.902.73", "Chromium"; v="92.0.4515.131", "?Not:Your Browser"; v="3.1.2.0"
+        Sec-CH-UA-Version-List: "Microsoft Edge"; v="92.0.902.73", "Chromium"; v="92.0.4515.131", "?Not:Your Browser"; v="3.1.2.0"
         ```
 
 4.  These client hints should also be exposed via JavaScript APIs via a new

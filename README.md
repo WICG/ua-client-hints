@@ -264,7 +264,7 @@ accomplish this as follows:
       readonly attribute FrozenArray<NavigatorUABrandVersion> brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile; // false
       readonly attribute platform; // "PhoneOS"
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // [ "arm", "64", "X644GTM", "PhoneOS", "10A", "73.32.AGX.5" ]
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { architecture: "arm", bitness: "64", model: "X644GTM", platform: "PhoneOS", platformVersion: "10A", versionList: [ {brand: "Google Chrome", version: "84.1.2.3"}, {brand: "Chromium", version: "84.1.2.3"}, {brand: "Not A;Brand", version: "101.3.2.9"} ] }
     };
 
     interface mixin NavigatorUA {

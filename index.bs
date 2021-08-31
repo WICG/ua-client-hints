@@ -486,17 +486,14 @@ The header's ABNF is:
 ```
 
 To <dfn abstract-op>return the `Sec-CH-UA` value for a request</dfn>,
-[=user agents=] MUST:
+[=user agents=] MUST run these steps:
 
-1. Let |list| be a [=/list=], initially empty.
-1. Let |brands| be the result of running the [=create brands=] steps, with
-    [=user agent/significant version=] passed as an argument.
-1. For each |brand| in |brands|:
-    1. Let |parameter| be a [=dictionary=], initially empty.
-    1. Set |parameter|["param_name"] to "v".
-    1. Set |parameter|["param_value"] to |brand|'s {{NavigatorUABrandVersion/version}}.
-    1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
-    1. Append |pair| to |list|.
+1. Let |versionType| be the [=user agent=]'s [=user agent/significant version=].
+1. Let |brands| be the result of running the [=create brands=] steps, with |versionType| passed as
+    an argument.
+1. Let |list| be the result of
+    <a lt="create a brand-version list">creating a brand-version list</a>, with |brands| and
+    |versionType| passed as arguments.
 1. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
@@ -671,17 +668,13 @@ The header's ABNF is:
 To <dfn abstract-op>return the `Sec-CH-UA-Version-List` value for a request</dfn>, [=user agents=]
 MUST run the following steps:
 
-1. Let |versionList| be a [=/list=], initially empty.
+1. Let |versionType| be the [=user agent=]'s [=user agent/full version=].
 1. Let |brands| be the result of running the [=create brands=] steps, with
-    [=user agent/full version=] passed as an argument.
-1. For each |brand| in |brands|:
-    1. Let |parameter| be a [=dictionary=], initially empty.
-    1. Set |parameter|["param_name"] to "v".
-    1. Set |parameter|["param_value"] to |brand|'s {{NavigatorUABrandVersion/version}}.
-    1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and
-        |parameter|.
-    1. Append |pair| to |versionList|.
-1. Return the output of running [=serializing a list=] with |versionList| as input.
+    |versionType| passed as an argument.
+1. Let |list| be the result of
+    <a lt="create a brand-version list">creating a brand-version list</a>, with
+    |brands| and |versionType| passed as arguments.
+1. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
@@ -821,6 +814,22 @@ To <dfn>create an arbitrary version</dfn> with |versionType|, run the following 
 
 Note: User Agents may decide to send arbitrarily low versions to ensure proper version checking, and should vary them
 over time.
+
+<h4 id="create-brand-version-list"
+    algorithm="to create a brand-version list">Create a brand-version list</h4>
+
+To <dfn>create a brand-version list</dfn> with |brands| and |versionType|, the [=user agent=]
+ MUST run these steps:
+
+    1. Let |list| be a [=/list=], initially empty.
+    1. For each |brand| in |brands|:
+        1. Let |parameter| be a [=dictionary=], initially empty.
+        1. Set |parameter|["param_key"] to "v".
+        1. Set |parameter|["param_value"] to |versionType|.
+        1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and
+            |parameter|.
+        1. Append |pair| to |list|.
+    1. Return |list|.
 
 <h4 id="getters">Getters</h4>
 

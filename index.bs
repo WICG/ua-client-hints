@@ -428,10 +428,13 @@ has defined a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
       "cURL", "Edge", "The World's Best Web Browser")
-*   <dfn for="user agent" export>significant version</dfn> - The [=user agent=]'s marketing version,
-      which includes distinguishable web-exposed features (e.g., "72", "3", or "12.1")
-*   <dfn for="user agent" export>full version</dfn> - The [=user agent=]'s build version (e.g.,
-      "72.0.3245.12", "3.14159", or "297.70E04154A")
+*   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
+      distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
+      [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or
+      any other [=equivalence classes=] full version).
+*   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
+      "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the [=user agent=], or any
+      of the brands in its [=brands=] list.
 *   <dfn for="user agent" export>platform brand</dfn> - The [=user agent=]'s operating system's
       commercial name. (e.g., "Windows", "iOS", or "AmazingOS")
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's

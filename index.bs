@@ -537,7 +537,7 @@ The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
 --------------------------------
 
 Advisement: `Sec-CH-UA-Full-Version` is deprecated and will be removed in the future. Developers
-should use <a href="#sec-ch-ua-version-list">`Sec-CH-UA-Version-List`</a> instead.
+should use <a href="#sec-ch-ua-full-version-list">`Sec-CH-UA-Full-Version-List`</a> instead.
 
 The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
 about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
@@ -652,20 +652,20 @@ The header's ABNF is:
   Sec-CH-UA-Platform-Version = sf-string
 ```
 
-The 'Sec-CH-UA-Version-List' Header Field {#sec-ch-ua-version-list}
+The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
 --------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Version-List`</dfn> request header field gives a server information
-about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
+The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
+information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
 [=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]].
 
 The header's ABNF is:
 
 ``` abnf
-  Sec-CH-UA-Version-List = sf-list
+  Sec-CH-UA-Full-Version-List = sf-list
 ```
 
-To <dfn abstract-op>return the `Sec-CH-UA-Version-List` value for a request</dfn>, perform the
+To <dfn abstract-op>return the `Sec-CH-UA-Full-Version-List` value for a request</dfn>, perform the
 following steps:
 
 1. Let |version type| be the type [=user agent/full version=].
@@ -677,7 +677,7 @@ following steps:
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
-`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Version-List`
+`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Full-Version-List`
 
 Interface {#interface}
 =================
@@ -696,8 +696,8 @@ dictionary UADataValues {
   DOMString model;
   DOMString platform;
   DOMString platformVersion;
-  DOMString uaFullVersion; // deprecated in favor of versionList
-  FrozenArray&lt;NavigatorUABrandVersion&gt; versionList;
+  DOMString uaFullVersion; // deprecated in favor of fullVersionList
+  FrozenArray&lt;NavigatorUABrandVersion&gt; fullVersionList;
 };
 
 dictionary UALowEntropyJSON {
@@ -866,7 +866,7 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         to the [=user agent=]'s [=user agent/platform version=].
     1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
         to the user agent's [=user agent/full version=].
-    1. If |hints| [=list/contains=] "versionList", set |uaData|["{{UADataValues/versionList}}"]
+    1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
         to [=this=]'s [=relevant global object=]'s
         [=WindowOrWorkerGlobalScope/version list frozen array=].
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
@@ -1009,7 +1009,7 @@ IANA Considerations {#iana}
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
 `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, and the `Sec-CH-UA-Version-List` HTTP request header fields, and
+`Sec-CH-UA-Platform-Version`, and the `Sec-CH-UA-Full-Version-List` HTTP request header fields, and
 register them in the permanent message header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
@@ -1118,10 +1118,10 @@ Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-platform-version]])
 
-'Sec-CH-UA-Version-List' Header Field {#iana-version-list}
+'Sec-CH-UA-Full-Version-List' Header Field {#iana-full-version-list}
 -------------------------
 
-Header field name: Sec-CH-UA-Version-List
+Header field name: Sec-CH-UA-Full-Version-List
 
 Applicable protocol: http
 
@@ -1129,7 +1129,7 @@ Status: standard
 
 Author/Change controller: IETF
 
-Specification document: this specification ([[#sec-ch-ua-version-list]])
+Specification document: this specification ([[#sec-ch-ua-full-version-list]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

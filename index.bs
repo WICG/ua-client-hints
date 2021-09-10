@@ -743,8 +743,8 @@ initially the result of [=create a frozen array|creating a frozen array=] from t
 Additionally, every {{WindowOrWorkerGlobalScope}} object has an associated
 <dfn for="WindowOrWorkerGlobalScope">version list frozen array</dfn>, which is a
 <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
-initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s
-[=brands=], with [=user agent/full version=] passed as an argument.
+the result of [=create a frozen array|creating a frozen array=] from running [=create brands=] with
+[=user agent/full version=].
 
 <h4 algorithm="to create brands" id="create-ua-list-section">Create brands</h4>
 

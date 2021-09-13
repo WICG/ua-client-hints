@@ -741,7 +741,7 @@ initially the result of [=create a frozen array|creating a frozen array=] from t
 [=brands=].
 
 Additionally, every {{WindowOrWorkerGlobalScope}} object has an associated
-<dfn for="WindowOrWorkerGlobalScope">version list frozen array</dfn>, which is a
+<dfn for="WindowOrWorkerGlobalScope">full version list frozen array</dfn>, which is a
 <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
 the result of [=create a frozen array|creating a frozen array=] from running [=create brands=] with
 [=user agent/full version=].
@@ -868,7 +868,7 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         to the user agent's [=user agent/full version=].
     1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
         to [=this=]'s [=relevant global object=]'s
-        [=WindowOrWorkerGlobalScope/version list frozen array=].
+        [=WindowOrWorkerGlobalScope/full version list frozen array=].
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 4.  Return |p|.

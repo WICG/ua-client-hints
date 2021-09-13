@@ -169,7 +169,7 @@ In response, the user agent includes the platform version information in the nex
   Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
   Sec-CH-UA-Mobile: ?0
   Sec-CH-UA-Platform: "Windows"
-  Sec-CH-UA-Full-Version: "14.0.0"
+  Sec-CH-UA-Platform-Version: "14.0.0"
 ```
 
 ## Use Cases ## {#use-cases}
@@ -428,10 +428,13 @@ has defined a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
       "cURL", "Edge", "The World's Best Web Browser")
-*   <dfn for="user agent" export>significant version</dfn> - The [=user agent=]'s marketing version,
-      which includes distinguishable web-exposed features (e.g., "72", "3", or "12.1")
-*   <dfn for="user agent" export>full version</dfn> - The [=user agent=]'s build version (e.g.,
-      "72.0.3245.12", "3.14159", or "297.70E04154A")
+*   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
+      distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
+      [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or
+      any other [=equivalence classes=] full version).
+*   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
+      "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the [=user agent=], or any
+      of the brands in its [=brands=] list.
 *   <dfn for="user agent" export>platform brand</dfn> - The [=user agent=]'s operating system's
       commercial name. (e.g., "Windows", "iOS", or "AmazingOS")
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
@@ -485,23 +488,13 @@ The header's ABNF is:
   Sec-CH-UA = sf-list
 ```
 
-To <dfn abstract-op local-lt="set-ua">return the `Sec-CH-UA` value for a request</dfn>, [=user agents=] MUST:
+To <dfn abstract-op>return the `Sec-CH-UA` value for a request</dfn>, perform the following steps:
 
-1.  Let |list| be a [=/list=], initially empty.
-
-2. For each |brandVersion| in [=user agent/brands=]:
-
-    1. Let |parameter| be a [=dictionary=], initially empty.
-
-    2. Set |parameter|["param_name"] to "v".
-
-    3. Set |parameter|["param_value"] to |brandVersion|'s {{NavigatorUABrandVersion/version}}.
-
-    2. Let |pair| be a tuple comprised of |brandVersion|'s {{NavigatorUABrandVersion/brand}} and |parameter|.
-
-    3. Append |pair| to |list|.
-
-3. Return the output of running [=serializing a list=] with |list| as input.
+1. Let |version type| be the type [=user agent/significant version=].
+1. Let |brands| be the result of running [=create brands=] with |version type|.
+1. Let |list| be the result of <a lt="create a brand-version list">creating a brand-version list</a>,
+    with |brands| and |version type|.
+1. Return the output of running [=serializing a list=] with |list|.
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
@@ -542,6 +535,9 @@ The header's ABNF is:
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
 --------------------------------
+
+Advisement: `Sec-CH-UA-Full-Version` is deprecated and will be removed in the future. Developers
+should use <a href="#sec-ch-ua-full-version-list">`Sec-CH-UA-Full-Version-List`</a> instead.
 
 The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
 about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
@@ -654,10 +650,32 @@ The header's ABNF is:
   Sec-CH-UA-Platform-Version = sf-string
 ```
 
+The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
+information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
+[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Full-Version-List = sf-list
+```
+
+To <dfn abstract-op>return the `Sec-CH-UA-Full-Version-List` value for a request</dfn>, perform the
+following steps:
+
+1. Let |version type| be the type [=user agent/full version=].
+1. Let |brands| be the result of running [=create brands=] with |version type|.
+1. Let |list| be the result of
+    <a lt="create a brand-version list">creating a brand-version list</a>, with |brands| and
+    |version type|.
+1. Return the output of running [=serializing a list=] with |list| as input.
+
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
-`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`
-
+`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Full-Version-List`
 
 Interface {#interface}
 =================
@@ -669,14 +687,15 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  sequence&lt;NavigatorUABrandVersion&gt; brands;
+  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
-  DOMString platform;
   DOMString architecture;
   DOMString bitness;
   DOMString model;
+  DOMString platform;
   DOMString platformVersion;
-  DOMString uaFullVersion;
+  DOMString uaFullVersion; // deprecated in favor of fullVersionList
+  FrozenArray&lt;NavigatorUABrandVersion&gt; fullVersionList;
 };
 
 dictionary UALowEntropyJSON {
@@ -710,44 +729,47 @@ Processing model {#processing}
 
 <h4 id="monkeypatch-html-windoworworkerglobalscope"><code>WindowOrWorkerGlobalScope</code></h4>
 
-Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=] created by running
-[=create brands=].
+Each [=user agent=] has an associated <dfn for="user agent">brands</dfn>, which is a [=/list=]
+created by running [=create brands=] with [=user agent/significant version=].
 
-Every {{WindowOrWorkerGlobalScope}} object has an associated <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>,
-which is a <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is initially the
-result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s [=brands=].
+Every {{WindowOrWorkerGlobalScope}} object has an associated
+<dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>, which is a
+<code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
+initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s
+[=brands=].
 
-<h4 id="create-ua-list-section">Create brands</h4>
+Additionally, every {{WindowOrWorkerGlobalScope}} object has an associated
+<dfn for="WindowOrWorkerGlobalScope">full version list frozen array</dfn>, which is a
+<code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
+the result of [=create a frozen array|creating a frozen array=] from running [=create brands=] with
+[=user agent/full version=].
 
-When asked to run the <dfn>create brands</dfn> algorithm, the [=user agent=] MUST run the following steps:
+<h4 algorithm="to create brands" id="create-ua-list-section">Create brands</h4>
+
+When asked to <dfn>create brands</dfn> with |version type|, run the following steps:
+
 1. Let |list| be a [=/list=].
-
-2. Collect pairs of [=user agent/brand=] and [=user agent/significant version=] which represent the [=user agent=] or
-    [=equivalence classes=].
-
-3. For each pair:
-
-    1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary,
-        with [=user agent/brand=] as {{NavigatorUABrandVersion/brand}} and [=user agent/significant version=] as
+1. Collect pairs of [=user agent/brand=] and versions of type |version type| which represent the
+    [=user agent=] or [=equivalence classes=].
+1. For each pair:
+    1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary, with [=user agent/brand=] as
+        {{NavigatorUABrandVersion/brand}} and a string of type |version type| as
         {{NavigatorUABrandVersion/version}}.
-
-    2. Append |dict| to |list|.
-
-4.  The [=user agent=] SHOULD execute the following steps:
-
-    1.  [=list/Append=] one additional [=list/item=] to |list| containing a {{NavigatorUABrandVersion}} dictionary,
-        initialized with <a lt="create an arbitrary brand">arbitrary brand</a> and <a lt="create an arbitrary version">
-        arbitrary version</a> combinations.
-
-    2.  Randomize the order of the [=list/items=] in |list|.
+    1. Append |dict| to |list|.
+1.  The [=user agent=] SHOULD execute the following steps:
+    1. [=list/Append=] one additional [=list/item=] to |list| containing a
+        {{NavigatorUABrandVersion}} dictionary, initialized with
+        <a lt="create an arbitrary brand">arbitrary brand</a> as {{NavigatorUABrandVersion/brand}}
+        and the result of <a lt="create an arbitrary version">creating an arbitrary version</a> with
+        {{NavigatorUABrandVersion/version}}.
+    1.  Randomize the order of the [=list/items=] in |list|.
 
     Note: One approach to minimize caching variance when generating these random components could be to
     determine them at build time, and keep them identical throughout the lifetime of the [=user agent=]'s significant
     version.
 
     Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
-
-5. Return |list|.
+1. Return |list|.
 
 An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with
 each other. A shared rendering engine may form an [=equivalence class=], for example.
@@ -778,11 +800,34 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     Note: [=Structured Headers=] allows for escaped 0x22 (\") and 0x5C (\\) inside a [=structured header/string=], but
           these are known to not be web-compatible.
 
-To <dfn>create an arbitrary version</dfn>, return a [=/string=] that MUST match the format of the [=user agent=]'s
-[=user agent/significant version=], but MUST NOT match the value.
+To <dfn>create an arbitrary version</dfn> given |version type|, run the following steps:
+    1. Let |arbitrary version| be a [=/string=].
+    1. If |version type| is [=user agent/significant version=], set |arbitrary version| to a string
+        that matches the format of the [=user agent=]'s [=user agent/significant version=], but not
+        the value.
+    1. If |version type| is [=user agent/full version=], set |arbitrary version| to to a string that
+        matches the format of the [=user agent=]'s [=user agent/full version=], but not the value.
+    1. Return |arbitrary version|.
 
 Note: User Agents may decide to send arbitrarily low versions to ensure proper version checking, and should vary them
 over time.
+
+<h4 id="create-brand-version-list"
+    algorithm="to create a brand-version list">Create a brand-version list</h4>
+
+To <dfn>create a brand-version list</dfn> given |brands| and |version type|, perform the following
+steps:
+
+    1. Let |list| be a [=/list=], initially empty.
+    1. For each |brand| in |brands|:
+        1. Let |parameter| be a [=dictionary=], initially empty.
+        1. Set |parameter|["param_key"] to "v".
+        1. Set |parameter|["param_value"] to a string of type |version type| that corresponds
+            to |brand|.
+        1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and
+            |parameter|.
+        1. Append |pair| to |list|.
+    1. Return |list|.
 
 <h4 id="getters">Getters</h4>
 
@@ -805,8 +850,8 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
 3. Otherwise, run the following steps [=in parallel=]:
 
     1. Let |uaData| be a new {{UADataValues}}.
-
-    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
+    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s
+        [=WindowOrWorkerGlobalScope/brands frozen array=].
     1. set |uaData|["{{UADataValues/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
     1. set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to
@@ -817,8 +862,11 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         [=user agent=]'s [=user agent/model=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
         to the [=user agent=]'s [=user agent/platform version=].
-    1. If |hints| [=list/contains=] "uaFullVersion", let |uaData|["{{UADataValues/uaFullVersion}}"]
-        be the the user agent's [=user agent/full version=].
+    1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
+        to the user agent's [=user agent/full version=].
+    1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
+        to [=this=]'s [=relevant global object=]'s
+        [=WindowOrWorkerGlobalScope/full version list frozen array=].
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 4.  Return |p|.
@@ -958,9 +1006,9 @@ IANA Considerations {#iana}
 ===================
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
-`Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, and the
-`Sec-CH-UA-Platform-Version` HTTP request header fields, and register them in the permanent message
-header field registry ([[RFC3864]]).
+`Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
+`Sec-CH-UA-Platform-Version`, and the `Sec-CH-UA-Full-Version-List` HTTP request header fields, and
+register them in the permanent message header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
 
@@ -1010,7 +1058,7 @@ Header field name: Sec-CH-UA-Full-Version
 
 Applicable protocol: http
 
-Status: standard
+Status: deprecated
 
 Author/Change controller: IETF
 
@@ -1067,6 +1115,19 @@ Status: standard
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-platform-version]])
+
+'Sec-CH-UA-Full-Version-List' Header Field {#iana-full-version-list}
+-------------------------
+
+Header field name: Sec-CH-UA-Full-Version-List
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-full-version-list]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

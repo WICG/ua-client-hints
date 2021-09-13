@@ -12,7 +12,8 @@ a corresponding JavaScript API:
 * `Sec-CH-UA-Platform`
 * `Sec-CH-UA-Platform-Version`
 * `Sec-CH-UA`
-* `Sec-CH-UA-Full-Version`
+* `Sec-CH-UA-Full-Version` (deprecated in favor of `Sec-CH-UA-Full-Version-List`)
+* `Sec-CH-UA-Full-Version-List`
 
 
 ## Contributing
@@ -219,11 +220,21 @@ accomplish this as follows:
         Sec-CH-UA-Full-Version: "73.1.2343B.TR"
         ```
 
+        Advisement: `Sec-CH-UA-Full-Version` is deprecated and will be removed in the future.
+        Developers should use `Sec-CH-UA-Full-Version-List` instead.
+
     1.  The `Sec-CH-UA-Platform` header field represents the platform's brand and major version. For
         example:
 
         ```http
         Sec-CH-UA-Platform: "Windows"
+        ```
+
+    1.  The `Sec-CH-UA-Full-Version-List` header field represents the full version for each brand in its
+        brand list. For example:
+
+        ```http
+        Sec-CH-UA-Full-Version-List: "Microsoft Edge"; v="92.0.902.73", "Chromium"; v="92.0.4515.131", "?Not:Your Browser"; v="3.1.2.0"
         ```
 
 4.  These client hints should also be exposed via JavaScript APIs via a new
@@ -237,12 +248,15 @@ accomplish this as follows:
     };
 
     dictionary UADataValues {
+      FrozenArray&lt;NavigatorUABrandVersion&gt; brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
+      boolean mobile;             // true
       DOMString architecture;     // "arm"
       DOMString bitness;          // "64"
+      FrozenArray&lt;NavigatorUABrandVersion&gt; fullVersionList; // [ {brand: "Google Chrome", version: "84.0.4147.0"}, {brand: "Chromium", version: "84.0.4147"} ]
       DOMString model;            // "X644GTM"
       DOMString platform;         // "PhoneOS"
       DOMString platformVersion;  // "10A"
-      DOMString uaFullVersion;    // "73.32.AGX.5"
+      DOMString uaFullVersion; // deprecated in favor of fullVersionList
     };
 
     [Exposed=(Window,Worker)]
@@ -250,7 +264,7 @@ accomplish this as follows:
       readonly attribute FrozenArray<NavigatorUABrandVersion> brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile; // false
       readonly attribute platform; // "PhoneOS"
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { "arm", "64", "X644GTM", "PhoneOS", "10A", "73.32.AGX.5" }
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { architecture: "arm", bitness: "64", model: "X644GTM", platform: "PhoneOS", platformVersion: "10A", fullVersionList: [ {brand: "Google Chrome", version: "84.1.2.3"}, {brand: "Chromium", version: "84.1.2.3"}, {brand: "Not A;Brand", version: "101.3.2.9"} ] }
     };
 
     interface mixin NavigatorUA {
@@ -292,7 +306,7 @@ Sec-CH-UA-Platform: “Windows”
 If a server delivers the following response header:
 
 ```http
-Accept-CH: Sec-CH-UA-Full-Version, Sec-CH-UA-Arch
+Accept-CH: Sec-CH-UA-Full-Version-List, Sec-CH-UA-Arch
 ```
 
 Then subsequent requests to `https://example.com` will include the following request headers:
@@ -303,7 +317,7 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 Sec-CH-UA: "Chrome"; v="74", ";Not)Your=Browser"; v="13"
 Sec-CH-UA-Mobile: ?0
 Sec-CH-UA-Platform: "Windows"
-Sec-CH-UA-Full-Version: "74.0.3424.124"
+Sec-CH-UA-Full-Version-List: "Chrome"; v="74.0.3729.0", "Chromium"; v="74.0.3729.0", "?Not:Your Browser"; v="13.0.1.0"
 Sec-CH-UA-Arch: "arm"
 ```
 
@@ -321,12 +335,12 @@ Sec-CH-UA-Mobile: ?0
 Sec-CH-UA-Platform: “Windows”
 ```
 
-The server responds that the `Sec-CH-UA-Full-Version` is required on first-request in order to
+The server responds that the `Sec-CH-UA-Full-Version-List` is required on first-request in order to
 deliver some optimized resource, for example:
 
 ```http
-Accept-CH: Sec-CH-UA-Full-Version
-Critical-CH: Sec-CH-UA-Full-Version
+Accept-CH: Sec-CH-UA-Full-Version-List
+Critical-CH: Sec-CH-UA-Full-Version-List
 ```
 
 The client then retries the initial request with the requested hints:
@@ -337,7 +351,7 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 Sec-CH-UA: "Chrome"; v="74", ";Not)Your=Browser"; v="13"
 Sec-CH-UA-Mobile: ?0
 Sec-CH-UA-Platform: “Windows”
-Sec-CH-UA-Full-Version: “74.0.1234.5”
+Sec-CH-UA-Full-Version-List: "Chrome"; v="74.0.3729.0", "Chromium"; v="74.0.3729.0", "?Not:Your Browser"; v="13.0.1.0"
 ```
 
 The user agent can make reasonable decisions about when to honor requests for detailed user agent
@@ -353,7 +367,7 @@ use the JavaScript API:
   const brands = uaData.brands;     // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
   const mobileness = uaData.mobile; // false
   const platform = uaData.platform; // “macOS”
-  (async ()=>{
+  (async () => {
     // `getHighEntropyValues()` returns a Promise, so needs to be `await`ed on.
     const highEntropyValues = await uaData.getHighEntropyValues(
       ["platformVersion", "architecture", “bitness”, "model", "uaFullVersion"]);

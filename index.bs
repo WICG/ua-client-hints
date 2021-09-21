@@ -490,10 +490,9 @@ The header's ABNF is:
 
 To <dfn abstract-op>return the `Sec-CH-UA` value for a request</dfn>, perform the following steps:
 
-1. Let |version type| be "significant version".
-1. Let |brands| be the result of running [=create brands=] with |version type|.
+1. Let |brands| be the result of running [=create brands=] with "significant version".
 1. Let |list| be the result of <a lt="create a brand-version list">creating a brand-version list</a>,
-    with |brands| and |version type|.
+    with |brands| and "significant version".
 1. Return the output of running [=serializing a list=] with |list|.
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
@@ -666,11 +665,9 @@ The header's ABNF is:
 To <dfn abstract-op>return the `Sec-CH-UA-Full-Version-List` value for a request</dfn>, perform the
 following steps:
 
-1. Let |version type| be "full version".
-1. Let |brands| be the result of running [=create brands=] with |version type|.
-1. Let |list| be the result of
-    <a lt="create a brand-version list">creating a brand-version list</a>, with |brands| and
-    |version type|.
+1. Let |brands| be the result of running [=create brands=] with "full version".
+1. Let |list| be the result of [=creating a brand-version list|create a brand-version list=], with
+    |brands| and "full version".
 1. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
@@ -749,13 +746,14 @@ the result of [=create a frozen array|creating a frozen array=] from running [=c
 When asked to <dfn>create brands</dfn> with |version type|, run the following steps:
 
 1. Let |list| be a [=/list=].
+1. [=Assert=] |version type| is either "full version" or "significant version".
 1. For each [=user agent/brand=] that represents the [=user agent=]—or an [=equivalence class=]—as
     |brand|:
-    1. Let |version| be a [=/string=].
-    1. If |version type| is "full version", set |version| to a string that corresponds to the
-        [=user agent/full version=].
-    1. If |version type| is "significant version", set |version| to a string that corresponds to the
-        [=user agent/significant version=].
+    1. Let |version| be a [=/string=], initialized accordingly:
+        1. If |version type| is "full version", set |version| to a string that corresponds to the
+            [=user agent/full version=].
+        1. If |version type| is "significant version", set |version| to a string that corresponds to
+            the [=user agent/significant version=].
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary, with
         {{NavigatorUABrandVersion/brand}} set to |brand| and
         {{NavigatorUABrandVersion/version}} set to |version|.
@@ -805,11 +803,12 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
           these are known to not be web-compatible.
 
 To <dfn>create an arbitrary version</dfn> given |version type|, run the following steps:
-    1. Let |arbitrary version| be a [=/string=].
-    1. If |version type| is "full version", set |arbitrary version| to a string that matches the
-        format of the [=user agent/full version=], but not the value.
-    1. If |version type| is "significant version", set |arbitrary version| to a string that matches
-        the format of [=user agent/significant version=], but not the value.
+    1. [=Assert=] |version type| is either "full version" or "significant version".
+    1. Let |arbitrary version| be a [=/string=], initialized accordingly:
+        1. If |version type| is "full version", set |arbitrary version| to a string that matches the
+            format of the [=user agent/full version=], but not the value.
+        1. If |version type| is "significant version", set |arbitrary version| to a string that
+            matches the format of [=user agent/significant version=], but not the value.
     1. Return |arbitrary version|.
 
 Note: User Agents may decide to send arbitrarily low versions to ensure proper version checking, and should vary them
@@ -822,12 +821,13 @@ To <dfn>create a brand-version list</dfn> given |brands| and |version type|, per
 steps:
 
     1. Let |list| be a [=/list=], initially empty.
+    1. [=Assert=] |version type| is either "full version" or "significant version".
     1. For each |brand| in |brands|:
-        1. Let |version| be a string.
-        1. If |version type| is "full version", set |version| to a string that corresponds to the
-        [=user agent/full version=].
-        1. If |version type| is "significant version", set |version| to a string that corresponds to
-        the [=user agent/significant version=].
+        1. Let |version| be a string, initialized accordingly:
+            1. If |version type| is "full version", set |version| to a string that corresponds to
+                the [=user agent/full version=].
+            1. If |version type| is "significant version", set |version| to a string that
+                corresponds to the [=user agent/significant version=].
         1. Let |parameter| be a [=dictionary=], initially empty.
         1. Set |parameter|["param_key"] to "v".
         1. Set |parameter|["param_value"] to |version|.

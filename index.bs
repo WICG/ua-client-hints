@@ -687,7 +687,7 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  FrozenArray&lt;NavigatorUABrandVersion&gt; brands;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
   boolean mobile;
   DOMString architecture;
   DOMString bitness;
@@ -695,7 +695,7 @@ dictionary UADataValues {
   DOMString platform;
   DOMString platformVersion;
   DOMString uaFullVersion; // deprecated in favor of fullVersionList
-  FrozenArray&lt;NavigatorUABrandVersion&gt; fullVersionList;
+  sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
 };
 
 dictionary UALowEntropyJSON {

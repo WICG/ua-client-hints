@@ -14,6 +14,7 @@ Abstract:
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and
     [=passive fingerprinting=] surface exposed by the venerable <code>User-Agent</code> header.
 Indent: 4
+Include MDN Panels: no
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
 Boilerplate: omit conformance, omit feedback-header

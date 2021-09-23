@@ -916,12 +916,20 @@ That delegation is defined as part of [=append client hints to request=].
 Fingerprinting {#fingerprinting}
 --------------
 
-The primary goal of User Agent Client Hints is to reduce the default entropy
-available to a server for [=passive fingerprinting=]. However, it will still be possible
-for some, or all, hints to be requested and used for [=active fingerprinting=] purposes by
-first or delegated third parties. As noted in [[#access]], [=User agents=] should consider
-policies to restrict or reduce access to parties that are known to <a lt="active fingerprinting">
-actively fingerprint</a> their users.
+The *primary goal* of User Agent Client Hints is to reduce the amount of default entropy exposed to
+the web at large through the User-Agent header field, which may be used for
+[=passive fingerprinting=] purposes.
+
+[=User agents=] naturally vary in the types and values of information exposed by the UA
+string and some have made deliberate privacy-focused choices to not expose certain bits, such
+as device [=model=] on mobile. This specification makes no requirements for a [=user agent=] to
+expose more entropy via User Agent Client Hints than it does through the User-Agent header field
+today—the empty string is a valid value for all such high-entropy hints.
+
+However, it will still be possible for some, or all, hints to be requested and used for
+[=active fingerprinting=] purposes by first or delegated third parties. As noted in [[#access]],
+[=user agents=] should consider policies to restrict or reduce access to parties that are known to
+<a lt="active fingerprinting">actively fingerprint</a> their users.
 
 Access Restrictions {#access}
 -------------------

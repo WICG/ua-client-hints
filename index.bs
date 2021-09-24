@@ -14,6 +14,7 @@ Abstract:
     perform agent-based content negotiation when necessary, while avoiding the historical baggage and
     [=passive fingerprinting=] surface exposed by the venerable <code>User-Agent</code> header.
 Indent: 4
+Include MDN Panels: no
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
 Boilerplate: omit conformance, omit feedback-header
@@ -408,11 +409,12 @@ be able to replace `User-Agent` string matching for this use case.
 Infrastructure {#infrastructure}
 ==============
 
-This specification depends on Client Hints Infrastructure, HTTP Client Hints, and the Infra
-Standard.
+This specification depends on Client Hints Infrastructure, HTTP Client Hints, Infra
+Standard, and Permissions Policy.
 [[!CLIENT-HINTS-INFRASTRUCTURE]]
 [[!RFC8942]]
 [[!INFRA]]
+[[!permissions-policy-1]]
 
 Some of the terms used in this specification are defined in <cite>Structured Field Values for
 HTTP</cite>.
@@ -904,8 +906,9 @@ of a given agent's behavior over time.
 Delegation {#delegation}
 ----------
 
-Client Hints will be delegated from top-level pages via Permissions Policy. This reduces the likelihood that [=user agent=]
-information will be delivered along with subresource requests, which reduces the potential for
+Client Hints will be delegated from top-level pages via Permissions Policy
+([[!permissions-policy-1]]). This reduces the likelihood that [=user agent=] information will be
+delivered along with subresource requests, which reduces the potential for
 [=passive fingerprinting=].
 
 That delegation is defined as part of [=append client hints to request=].
@@ -913,12 +916,19 @@ That delegation is defined as part of [=append client hints to request=].
 Fingerprinting {#fingerprinting}
 --------------
 
-The primary goal of User Agent Client Hints is to reduce the default entropy
-available to a server for [=passive fingerprinting=]. However, it will still be possible
-for some, or all, hints to be requested and used for [=active fingerprinting=] purposes by
-first or delegated third parties. As noted in [[#access]], [=User agents=] should consider
-policies to restrict or reduce access to parties that are known to <a lt="active fingerprinting">
-actively fingerprint</a> their users.
+The *primary goal* of User Agent Client Hints is to reduce the amount of default entropy exposed to
+the web at large through the User-Agent header field, which may be used for
+[=passive fingerprinting=] purposes.
+
+A [=user agent=] is able to decide which hints it provides, with the expectation that no more
+information is provided than would be included in an unredacted User-Agent header field. A
+[=user agent=] can provide an empty string for any value that it does not wish to provide, or refuse
+to return a hint entirely.
+
+However, it will still be possible for some, or all, hints to be requested and used for
+[=active fingerprinting=] purposes by first or delegated third parties. As noted in [[#access]],
+[=user agents=] should consider policies to restrict or reduce access to parties that are known to
+<a lt="active fingerprinting">actively fingerprint</a> their users.
 
 Access Restrictions {#access}
 -------------------
@@ -1159,5 +1169,6 @@ Erik Anderson,
 jasonwee, <!-- github -->
 Luke Williams,
 Mike West,
+Martin Thomson,
 and Toru Kobayashi
 for valuable feedback and contributions to this specification.

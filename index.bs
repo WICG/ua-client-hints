@@ -920,11 +920,10 @@ The *primary goal* of User Agent Client Hints is to reduce the amount of default
 the web at large through the User-Agent header field, which may be used for
 [=passive fingerprinting=] purposes.
 
-[=User agents=] naturally vary in the types and values of information exposed by the UA
-string and some have made deliberate privacy-focused choices to not expose certain bits, such
-as device [=model=] on mobile. This specification makes no requirements for a [=user agent=] to
-expose more entropy via User Agent Client Hints than it does through the User-Agent header field
-today—the empty string is a valid value for all such high-entropy hints.
+A [=user agent=] is able to decide which hints it provides, with the expectation that no more
+information is provided than would be included in an unredacted User-Agent header field. A
+[=user agent=] can provide an empty string for any value that it does not wish to provide, or refuse
+to return a hint entirely.
 
 However, it will still be possible for some, or all, hints to be requested and used for
 [=active fingerprinting=] purposes by first or delegated third parties. As noted in [[#access]],
@@ -1170,5 +1169,6 @@ Erik Anderson,
 jasonwee, <!-- github -->
 Luke Williams,
 Mike West,
+Martin Thomson,
 and Toru Kobayashi
 for valuable feedback and contributions to this specification.

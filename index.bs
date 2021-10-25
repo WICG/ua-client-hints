@@ -429,7 +429,8 @@ defined in [[!RFC8942]]. The definitions below assume that each [=user agent=]
 has defined a number of properties for itself:
 
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
-      "cURL", "Edge", "The World's Best Web Browser")
+      "cURL", "Edge", "The World's Best Web Browser"), which MUST be shorter than 32 [=ASCII alpha=]
+      characters.
 *   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
       distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
       [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or

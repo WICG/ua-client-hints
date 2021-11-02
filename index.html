@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="ab31750045e47339182f5a27c3795077f590b61b" name="document-revision">
+  <meta content="89e4153dadef1ca4bb31e76acd5ed19a8eaa0d0f" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -588,7 +588,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-10-25">25 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-11-02">2 November 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -743,6 +743,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <p><em>This section is non-normative</em>.</p>
    <p>Today, user agents generally identify themselves to servers by sending a <code>User-Agent</code> HTTP request
 header field along with each request (defined in Section 5.5.3 of <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>). Ideally, this header
 would give servers the ability to perform content negotiation, sending down exactly those bits that
@@ -794,6 +795,7 @@ the underlying device. Rather than broadcasting this data to everyone, all the t
 make reasonable decisions about how to respond to given sites' requests for more granular data,
 reducing the <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting" id="ref-for-dfn-passive-fingerprinting①">passive fingerprinting</a> surface area exposed to the network (see <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases" id="ref-for-avoid-passive-increases">Best Practice 1</a> in <a data-link-type="biblio" href="#biblio-fingerprinting-guidance">[FINGERPRINTING-GUIDANCE]</a>).</p>
    <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
+   <p><em>This section is non-normative</em>.</p>
    <p>A user navigates to <code>https://example.com/</code> for the first time using the latest version of the
 "Examplary Browser". Their user agent sends the following headers along with the HTTP request:</p>
 <pre class="language-http highlight">  Sec-CH-UA: "Examplary Browser"; v="73", ";Not?A.Brand"; v="27"
@@ -811,6 +813,7 @@ and asks for a little more information by sending an <code>Accept-CH</code> head
   Sec-CH-UA-Platform-Version: "14.0.0"
 </pre>
    <h3 class="heading settled" data-level="1.2" id="use-cases"><span class="secno">1.2. </span><span class="content">Use Cases</span><a class="self-link" href="#use-cases"></a></h3>
+   <p><em>This section is non-normative</em>.</p>
    <p>This section attempts to document the current uses for the <code>User-Agent</code> string,
 and how similar functionality could be enabled using User-Agent Client Hints (UA-CH).</p>
    <h4 class="heading settled" data-level="1.2.1" id="differential-serving-use-case"><span class="secno">1.2.1. </span><span class="content">Differential serving</span><a class="self-link" href="#differential-serving-use-case"></a></h4>

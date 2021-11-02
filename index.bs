@@ -86,6 +86,8 @@ urlPrefix: https://w3c.github.io/fingerprinting-guidance/
 Introduction {#intro}
 ============
 
+*This section is non-normative*.
+
 Today, user agents generally identify themselves to servers by sending a `User-Agent` HTTP request
 header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). Ideally, this header
 would give servers the ability to perform content negotiation, sending down exactly those bits that
@@ -147,6 +149,8 @@ in [[FINGERPRINTING-GUIDANCE]]).
 Examples {#examples}
 --------
 
+*This section is non-normative*.
+
 A user navigates to `https://example.com/` for the first time using the latest version of the
 "Examplary Browser". Their user agent sends the following headers along with the HTTP request:
 
@@ -174,6 +178,8 @@ In response, the user agent includes the platform version information in the nex
 ```
 
 ## Use Cases ## {#use-cases}
+
+*This section is non-normative*.
 
 This section attempts to document the current uses for the `User-Agent` string,
 and how similar functionality could be enabled using User-Agent Client Hints (UA-CH).

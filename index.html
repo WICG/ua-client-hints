@@ -3,10 +3,10 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <title>User-Agent Client Hints</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
+  <meta content="Bikeshed version dfbc2b297, updated Thu Nov 11 15:52:32 2021 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="89e4153dadef1ca4bb31e76acd5ed19a8eaa0d0f" name="document-revision">
+  <meta content="10bb1df4777962c39e77c9e8c054157bd56dbcdb" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -586,9 +586,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-11-02">2 November 2021</time></span></h2>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2021-11-15">15 November 2021</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -641,7 +641,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
           <li><a href="#based-on-browser-features-use-case"><span class="secno">1.2.1.1</span> <span class="content">Based on browser features</span></a>
           <li><a href="#browser-bug-workaround-use-case"><span class="secno">1.2.1.2</span> <span class="content">Browser bug workaround</span></a>
          </ol>
-        <li><a href="#marketshare-analytics-use-case"><span class="secno">1.2.2</span> <span class="content">Marketshare Analytics</span></a>
+        <li><a href="#marketshare-analytics-use-case"><span class="secno">1.2.2</span> <span class="content">Market Share Analytics</span></a>
         <li>
          <a href="#content-adaptation-use-case"><span class="secno">1.2.3</span> <span class="content">Content adaptation</span></a>
          <ol class="toc">
@@ -840,14 +840,16 @@ altogether for affected browser versions.
 browser bugs that impact them, and apply workarounds if the current browser version is impacted.</p>
    <p>Services that wish to do that using UA-CH will need to inspect the <code>Sec-CH-UA</code> header, sent by
 default on every request, and use it to modify their response.</p>
-   <h4 class="heading settled" data-level="1.2.2" id="marketshare-analytics-use-case"><span class="secno">1.2.2. </span><span class="content">Marketshare Analytics</span><a class="self-link" href="#marketshare-analytics-use-case"></a></h4>
+   <h4 class="heading settled" data-level="1.2.2" id="marketshare-analytics-use-case"><span class="secno">1.2.2. </span><span class="content">Market Share Analytics</span><a class="self-link" href="#marketshare-analytics-use-case"></a></h4>
     A browser’s market share can be extremely important. Having visibility into a browser’s usage can
 encourage developers to test in that particular browser, ensuring fewer compatibility issues for
 its users. On top of that, a browser’s market share can have a direct impact on the browser vendors'
 business goals, ensuring future development of the browser. 
-   <p>For market share analytics to work, the server needs to be aware of the browser and its meaningful
-version, in order to be able to register them and find their relative market shares.</p>
-   <p>Sites that wish to provide market share analytics using UA-CH will need to inspect the <code>Sec-CH-UA</code> header, that is sent by default on every request, and keep a record of it.</p>
+   <p>For market share analytics to work, a server needs to be aware of one or more of the following:
+user agent name and its meaningful version, operating system and its version, and device model. It
+can then register them and find their relative market shares.</p>
+   <p>Sites that wish to provide market share analytics using UA-CH will need to inspect the <code>Sec-CH-UA</code> header, that is sent by default on every request, and keep a record of it. Additional UA client
+hints may also be requested depending on the use case (e.g., mobile device model analytics).</p>
    <p>By design, looking at individual entries in the brands list makes it hard to distinguish between a
 less-popular browser’s truthful brand name and a more-popular browser’s arbitrary GREASE. Since the
 less-popular browser may include several popular brand names for compatibility purposes, its users
@@ -1635,7 +1637,7 @@ Martin Thomson,
 and Toru Kobayashi
 for valuable feedback and contributions to this specification.</p>
   </main>
-<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">

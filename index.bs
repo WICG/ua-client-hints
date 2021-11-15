@@ -217,17 +217,19 @@ browser bugs that impact them, and apply workarounds if the current browser vers
 Services that wish to do that using UA-CH will need to inspect the `Sec-CH-UA` header, sent by
 default on every request, and use it to modify their response.
 
-### Marketshare Analytics ### {#marketshare-analytics-use-case}
+### Market Share Analytics ### {#marketshare-analytics-use-case}
 A browser's market share can be extremely important. Having visibility into a browser's usage can
 encourage developers to test in that particular browser, ensuring fewer compatibility issues for
 its users. On top of that, a browser's market share can have a direct impact on the browser vendors'
 business goals, ensuring future development of the browser.
 
-For market share analytics to work, the server needs to be aware of the browser and its meaningful
-version, in order to be able to register them and find their relative market shares.
+For market share analytics to work, a server needs to be aware of one or more of the following:
+user agent name and its meaningful version, operating system and its version, and device model. It
+can then register them and find their relative market shares.
 
 Sites that wish to provide market share analytics using UA-CH will need to inspect the `Sec-CH-UA`
-header, that is sent by default on every request, and keep a record of it.
+header, that is sent by default on every request, and keep a record of it. Additional UA client
+hints may also be requested depending on the use case (e.g., mobile device model analytics).
 
 By design, looking at individual entries in the brands list makes it hard to distinguish between a
 less-popular browser's truthful brand name and a more-popular browser's arbitrary GREASE. Since the

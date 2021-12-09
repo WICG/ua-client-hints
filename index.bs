@@ -908,7 +908,7 @@ Secure Transport {#secure-transport}
 ----------------
 
 Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of [[!RFC8941]]). This means that [=user agent=] information will not
+Section 2.2.1 of [[!RFC8942]]). This means that [=user agent=] information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent's behavior over time.
 

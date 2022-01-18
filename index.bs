@@ -458,6 +458,7 @@ has defined a number of properties for itself:
       "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
       device is a mobile device. (e.g., ?0 or ?1)
+*   <dfn for="user agent" export>wow64-ness</dfn> - A boolean indicating if the [=user agent=]'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)
 
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
@@ -481,8 +482,9 @@ or [=platform bitness=] unless the user's platform is one where both the followi
 Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
 platforms where the model is typically exposed.
 
-[=User agents=] MAY return the empty string or a fictitious value for [=full version=], [=platform
-architecture=], [=platform bitness=] or [=model=], for privacy, compatibility, or other reasons.
+[=User agents=] MAY return the empty string for hints of type `sf-string`,
+`false` for hints of type `sf-boolean`, or any other fictitious value, for
+privacy, compatibility, or other reasons, given a request for any the following hints: [=full version=], [=platform architecture=], [=platform bitness=], [=wow64-ness=] or [=model=].
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
@@ -681,9 +683,22 @@ The header's ABNF is:
   Sec-CH-UA-Platform-Version = sf-string
 ```
 
+The 'Sec-CH-UA-WoW64' Header Field {#sec-ch-ua-wow64}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-WoW64`</dfn> request header field gives a server information about
+whether or not a [=user agent=] binary is running in 32-bit mode on 64-bit Windows.
+It is a [=Structured Header=] whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-WoW64 = sf-boolean
+```
+
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
-`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Full-Version-List`
+`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, `Sec-CH-UA-Full-Version-List`
 
 Interface {#interface}
 =================
@@ -703,6 +718,7 @@ dictionary UADataValues {
   DOMString platform;
   DOMString platformVersion;
   DOMString uaFullVersion; // deprecated in favor of fullVersionList
+  boolean wow64;
   sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
 };
 
@@ -881,7 +897,8 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
         to the [=user agent=]'s [=user agent/platform version=].
     1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
-        to the user agent's [=user agent/full version=].
+    1. If |hints| [=list/contains=] "wow64", set |uaData|["{{UADataValues/wow64}}"]
+        to the user agent's [=user agent/wow64-ness=].
     1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
         to [=this=]'s [=relevant global object=]'s
         [=WindowOrWorkerGlobalScope/full version list frozen array=].
@@ -1033,7 +1050,7 @@ IANA Considerations {#iana}
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
 `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, and the `Sec-CH-UA-Full-Version-List` HTTP request header fields, and
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the `Sec-CH-UA-Full-Version-List` HTTP request header fields, and
 register them in the permanent message header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
@@ -1142,6 +1159,19 @@ Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-platform-version]])
 
+'Sec-CH-UA-WoW64' Header Field {#iana-wow64}
+-------------------------
+
+Header field name: Sec-CH-UA-WoW64
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-wow64]])
+
 'Sec-CH-UA-Full-Version-List' Header Field {#iana-full-version-list}
 -------------------------
 
@@ -1173,6 +1203,7 @@ Acknowledgments {#ack}
 
 Thanks to
 Aaron Tagliaboschi,
+Ali Beyad,
 ArkUmbra, <!-- github -->
 Erik Anderson,
 jasonwee, <!-- github -->

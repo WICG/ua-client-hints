@@ -14,6 +14,7 @@ a corresponding JavaScript API:
 * `Sec-CH-UA`
 * `Sec-CH-UA-Full-Version` (deprecated in favor of `Sec-CH-UA-Full-Version-List`)
 * `Sec-CH-UA-Full-Version-List`
+* `Sec-CH-UA-WoW64`
 
 
 ## Contributing
@@ -63,6 +64,7 @@ and pull requests. Before getting started, please read our
   - [How does `Sec-CH-UA-Mobile` define "mobile"?](#how-does-sec-ch-ua-mobile-define-mobile)
   - [Aren’t we duplicating a lot of information already in the `User-Agent` header?](#arent-we-duplicating-a-lot-of-information-already-in-the-user-agent-header)
   - [Aren’t you adding a lot of new headers? Isn’t that going to bloat requests?](#arent-you-adding-a-lot-of-new-headers-isnt-that-going-to-bloat-requests)
+  - [Why does a WoW64 hint exist?](#why-does-a-wow64-hint-exist)
 - [Considered alternatives](#considered-alternatives)
   - [Freezing the UA string and reducing its information density without providing an alternative mechanism](#freezing-the-ua-string-and-reducing-its-information-density-without-providing-an-alternative-mechanism)
   - [Restructuring of the User-Agent string](#restructuring-of-the-user-agent-string)
@@ -738,6 +740,10 @@ these requests. It’s also useful to keep in mind that by default User-Agent Cl
 sent to top-level origins by default—explicit delegation is required to send them to third-party
 origins or embedded frames. We feel the privacy wins and moving away from `User-Agent`’s legacy are
 a worthwhile tradeoff here, at the expense of adding some new headers to requests.
+
+## Why does a WoW64 hint exist?
+
+[WoW64](https://en.wikipedia.org/wiki/WoW64) indicates that a 32-bit User-Agent application is running on a 64-bit Windows machine. It was commonly used to know which NPAPI plugin installer should be offered for download. It's included here for backwards compatibility considerations, to provide a one to one mapping from the UA string of certain browsers to UA-CH. Note that not all browsers today have exposed this, and it may not always return a useful value.
 
 # Considered alternatives
 ## Freezing the UA string and reducing its information density without providing an alternative mechanism

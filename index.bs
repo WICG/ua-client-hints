@@ -697,8 +697,9 @@ The header's ABNF is:
 ```
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
-`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,
-`Sec-CH-UA-Model`, `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, `Sec-CH-UA-Full-Version-List`
+`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`,
+`Sec-CH-UA-Full-Version-List`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`
 
 Interface {#interface}
 =================
@@ -892,6 +893,9 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         the [=user agent=]'s [=user agent/platform architecture=].
     1. If |hints| [=list/contains=] "bitness", set |uaData|["{{UADataValues/bitness}}"] to
         the [=user agent=]'s [=user agent/platform bitness=].
+    1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
+        to [=this=]'s [=relevant global object=]'s
+        [=WindowOrWorkerGlobalScope/full version list frozen array=].
     1. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the
         [=user agent=]'s [=user agent/model=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
@@ -899,9 +903,6 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
     1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
     1. If |hints| [=list/contains=] "wow64", set |uaData|["{{UADataValues/wow64}}"]
         to the user agent's [=user agent/wow64-ness=].
-    1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
-        to [=this=]'s [=relevant global object=]'s
-        [=WindowOrWorkerGlobalScope/full version list frozen array=].
     1. [=Queue a task=] on the [=permission task source=] to [=resolve=] |p| with |uaData|.
 
 4.  Return |p|.
@@ -1050,8 +1051,8 @@ IANA Considerations {#iana}
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
 `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the `Sec-CH-UA-Full-Version-List` HTTP request header fields, and
-register them in the permanent message header field registry ([[RFC3864]]).
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the `Sec-CH-UA-Full-Version-List` HTTP request
+header fields, and register them in the permanent message header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
 
@@ -1106,6 +1107,19 @@ Status: deprecated
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-full-version]])
+
+'Sec-CH-UA-Full-Version-List' Header Field {#iana-full-version-list}
+-------------------------
+
+Header field name: Sec-CH-UA-Full-Version-List
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-full-version-list]])
 
 'Sec-CH-UA-Mobile' Header Field {#iana-mobile}
 ----------------------------
@@ -1171,19 +1185,6 @@ Status: standard
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-wow64]])
-
-'Sec-CH-UA-Full-Version-List' Header Field {#iana-full-version-list}
--------------------------
-
-Header field name: Sec-CH-UA-Full-Version-List
-
-Applicable protocol: http
-
-Status: standard
-
-Author/Change controller: IETF
-
-Specification document: this specification ([[#sec-ch-ua-full-version-list]])
 
 'User-Agent' Header Field {#iana-user-agent}
 -------------------------

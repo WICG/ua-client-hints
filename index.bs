@@ -559,6 +559,27 @@ The header's ABNF is:
   Sec-CH-UA-Full-Version = sf-string
 ```
 
+The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
+--------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
+information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
+[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]].
+
+The header's ABNF is:
+
+``` abnf
+  Sec-CH-UA-Full-Version-List = sf-list
+```
+
+To <dfn abstract-op>return the `Sec-CH-UA-Full-Version-List` value for a request</dfn>, perform the
+following steps:
+
+1. Let |brands| be the result of running [=create brands=] with "full version".
+1. Let |list| be the result of [=creating a brand-version list|create a brand-version list=], with
+    |brands| and "full version".
+1. Return the output of running [=serializing a list=] with |list| as input.
+
 The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
 --------------------------------
 
@@ -659,27 +680,6 @@ The header's ABNF is:
 ``` abnf
   Sec-CH-UA-Platform-Version = sf-string
 ```
-
-The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
---------------------------------
-
-The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
-information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
-[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]].
-
-The header's ABNF is:
-
-``` abnf
-  Sec-CH-UA-Full-Version-List = sf-list
-```
-
-To <dfn abstract-op>return the `Sec-CH-UA-Full-Version-List` value for a request</dfn>, perform the
-following steps:
-
-1. Let |brands| be the result of running [=create brands=] with "full version".
-1. Let |list| be the result of [=creating a brand-version list|create a brand-version list=], with
-    |brands| and "full version".
-1. Return the output of running [=serializing a list=] with |list| as input.
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
 `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`,

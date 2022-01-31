@@ -645,7 +645,9 @@ significant platform versions by running these steps:
         * If the platform is Windows:
             1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
                 the result of querying the `Windows.Foundation.UniversalApiContract` integer version
-                and converting it to a string. Otherwise, let |platformReturnedVersionString| be "0".
+                and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
+                result of
+                [=get the legacy Windows version number|getting the legacy Windows version number=].
             1. Let |platformVersionComponentList| be the result of running
                  <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
                  with |platformReturnedVersionString|.
@@ -658,8 +660,18 @@ significant platform versions by running these steps:
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
         FULL STOP (`.`) separator.
 
-<p>The <dfn>parse a platform-returned version string</dfn> algorithm, given a string |input|, runs
-these steps:
+To <dfn>get the legacy Windows version number</dfn>, run the following steps:
+    1. Let |major| be the value of `OSVERSIONINFO`'s `dwMajorVersion` member returned from the
+         Win32 `GetVersionEx` API.
+    1. Let |minor| be the value of `OSVERSIONINFO`'s `dwMinorVersion` member returned from the
+         Win32 `GetVersionEx` API.
+    1. If |major| is `6` and |minor| is `3` (i.e., Windows 8.1), return "0.3".
+    1. If |major| is `6` and |minor| is `2` (i.e., Windows 8), return "0.2".
+    1. If |major| is `6` and |minor| is `1` (i.e., Windows 7), return "0.1".
+    1. Otherwise, return "0".
+
+To <dfn>parse a platform-returned version string</dfn>, given a string |input|, run the following
+steps:
     1. Let |platformVersionComponentList| be a [=list=] and |index| be 0.
     1. Let |platformVersionUnprocessedTokenList| be the [=list=] returned by
         [=strictly split a string|strictly splitting=] |input| on the U+002E FULL STOP character (`.`):

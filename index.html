@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="4731098cba520417d4726bf53d00649392ebe720" name="document-revision">
+  <meta content="639034a8f10db2727e4152a3b8189997ceee7a63" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -588,7 +588,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-02-01">1 February 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-02-09">9 February 2022</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1121,8 +1121,8 @@ receiving the header via an <code>Accept-CH</code> header (although it can still
 bit of information directly controllable by the user.</p>
    <h3 class="heading settled" data-level="3.7" id="sec-ch-ua-model"><span class="secno">3.7. </span><span class="content">The 'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#sec-ch-ua-model"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-model"><code>Sec-CH-UA-Model</code><a class="self-link" href="#http-headerdef-sec-ch-ua-model"></a></dfn> request header field gives a server information about
-the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="termref-for-⑥">Structured Header</a> whose value MUST
-be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3④">string</a> <a data-link-type="biblio" href="#biblio-rfc8941">[RFC8941]</a>.</p>
+the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="termref-for-⑥">Structured Header</a> whose value
+MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3④">string</a> <a data-link-type="biblio" href="#biblio-rfc8941">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Model</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
@@ -1139,7 +1139,8 @@ the header via an <code>Accept-CH</code> header (although it can still be contro
    <h3 class="heading settled" data-level="3.9" id="sec-ch-ua-platform-version"><span class="secno">3.9. </span><span class="content">The 'Sec-CH-UA-Platform-Version' Header Field</span><a class="self-link" href="#sec-ch-ua-platform-version"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform-version"><code>Sec-CH-UA-Platform-Version</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform-version"></a></dfn> request header field gives a server
 information about the platform version on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑦">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="termref-for-⑧">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑥">string</a> <a data-link-type="biblio" href="#biblio-rfc8941">[RFC8941]</a>.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑧">User agents</a> SHOULD return a version with a platform-specific format that allows differentiating significant platform versions by running these steps:</p>
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑧">User agents</a> SHOULD return a version with a platform-specific format that allows differentiating
+significant platform versions by running these steps:</p>
    <ol>
     <li data-md>
      <p>If the platform is Linux:</p>
@@ -1162,7 +1163,8 @@ information about the platform version on which a given <a data-link-type="dfn" 
        <p>If the platform is iOS:</p>
        <ol>
         <li data-md>
-         <p>Let <var>platformReturnedVersionString</var> be the result of querying the <code>UIDevice</code> returned by <code>currentDevice</code> and reading its <code>systemVersion</code>.</p>
+         <p>Let <var>platformReturnedVersionString</var> be the result of querying the <code>UIDevice</code> returned
+by <code>currentDevice</code> and reading its <code>systemVersion</code>.</p>
         <li data-md>
          <p>Let <var>platformVersionComponentList</var> be the result of running <a data-link-type="dfn" href="#parse-a-platform-returned-version-string" id="ref-for-parse-a-platform-returned-version-string①">parse a platform-returned version string</a> with <var>platformReturnedVersionString</var>.</p>
        </ol>
@@ -1172,13 +1174,17 @@ information about the platform version on which a given <a data-link-type="dfn" 
         <li data-md>
          <p>Let <var>platformReturnedVersionString</var> be the result of querying the <code>NSProcessInfo</code> returned by <code>processInfo</code> and reading its <code>operatingSystemVersion</code>.</p>
         <li data-md>
-         <p>Append the <code>majorVersion</code>, <code>minorVersion</code>, and <code>patchVersion</code> components (in that order) to <var>platformVersionComponentList</var>.</p>
+         <p>Append the <code>majorVersion</code>, <code>minorVersion</code>, and <code>patchVersion</code> components (in that
+order) to <var>platformVersionComponentList</var>.</p>
        </ol>
       <li data-md>
        <p>If the platform is Windows:</p>
        <ol>
         <li data-md>
-         <p>If available (i.e., on Windows 10 or higher), let <var>platformReturnedVersionString</var> be the result of querying the <code>Windows.Foundation.UniversalApiContract</code> integer version and converting it to a string. Otherwise, let <var>platformReturnedVersionString</var> be "0".</p>
+         <p>If available (i.e., on Windows 10 or higher), let <var>platformReturnedVersionString</var> be
+the result of querying the <code>Windows.Foundation.UniversalApiContract</code> integer version
+and converting it to a string. Otherwise, let <var>platformReturnedVersionString</var> be the
+result of <a data-link-type="dfn" href="#get-the-legacy-windows-version-number" id="ref-for-get-the-legacy-windows-version-number">getting the legacy Windows version number</a>.</p>
         <li data-md>
          <p>Let <var>platformVersionComponentList</var> be the result of running <a data-link-type="dfn" href="#parse-a-platform-returned-version-string" id="ref-for-parse-a-platform-returned-version-string②">parse a platform-returned version string</a> with <var>platformReturnedVersionString</var>.</p>
        </ol>
@@ -1186,15 +1192,35 @@ information about the platform version on which a given <a data-link-type="dfn" 
        <p>Otherwise:</p>
        <ol>
         <li data-md>
-         <p>Append one to three version parts based on the a format likely to lead to interoperability with other browsers running on that platform to <var>platformVersionComponentList</var>.</p>
+         <p>Append one to three version parts based on the a format likely to lead to
+interoperability with other browsers running on that platform to <var>platformVersionComponentList</var>.</p>
         <li data-md>
          <p>While <var>platformVersionComponentList</var>’s length is less than 3, append "0" to <var>platformVersionComponentList</var>.</p>
        </ol>
      </ul>
     <li data-md>
-     <p>Return the result of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-concatenate" id="ref-for-string-concatenate">concatenation</a> of <var>platformVersionComponentList</var> with a U+002E FULL STOP (<code>.</code>) separator.</p>
+     <p>Return the result of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-concatenate" id="ref-for-string-concatenate">concatenation</a> of <var>platformVersionComponentList</var> with a U+002E
+FULL STOP (<code>.</code>) separator.</p>
    </ol>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="parse-a-platform-returned-version-string">parse a platform-returned version string</dfn> algorithm, given a string <var>input</var>, runs these steps: </p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-the-legacy-windows-version-number">get the legacy Windows version number</dfn>, run the following steps:</p>
+   <ol>
+    <li data-md>
+     <p>Let <var>major</var> be the value of <code>OSVERSIONINFO</code>'s <code>dwMajorVersion</code> member returned from the
+ Win32 <code>GetVersionEx</code> API.</p>
+    <li data-md>
+     <p>Let <var>minor</var> be the value of <code>OSVERSIONINFO</code>'s <code>dwMinorVersion</code> member returned from the
+ Win32 <code>GetVersionEx</code> API.</p>
+    <li data-md>
+     <p>If <var>major</var> is <code>6</code> and <var>minor</var> is <code>3</code> (i.e., Windows 8.1), return "0.3".</p>
+    <li data-md>
+     <p>If <var>major</var> is <code>6</code> and <var>minor</var> is <code>2</code> (i.e., Windows 8), return "0.2".</p>
+    <li data-md>
+     <p>If <var>major</var> is <code>6</code> and <var>minor</var> is <code>1</code> (i.e., Windows 7), return "0.1".</p>
+    <li data-md>
+     <p>Otherwise, return "0".</p>
+   </ol>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="parse-a-platform-returned-version-string">parse a platform-returned version string</dfn>, given a string <var>input</var>, run the following
+steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>platformVersionComponentList</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a> and <var>index</var> be 0.</p>
@@ -1207,7 +1233,8 @@ information about the platform version on which a given <a data-link-type="dfn" 
        <p>If <var>index</var> is less than the length of <var>platformVersionUnprocessedTokenList</var>:</p>
        <ol>
         <li data-md>
-         <p>If <var>platformVersionUnprocessedTokenList</var>[<var>index</var>] is an unsigned integer, convert it to a string and append it to <var>platformVersionComponentList</var>.</p>
+         <p>If <var>platformVersionUnprocessedTokenList</var>[<var>index</var>] is an unsigned integer, convert it
+to a string and append it to <var>platformVersionComponentList</var>.</p>
         <li data-md>
          <p>Otherwise, append "0" to <var>platformVersionComponentList</var>.</p>
        </ol>
@@ -1693,6 +1720,7 @@ for valuable feedback and contributions to this specification.</p>
      <li><a href="#dom-navigatorua-gethighentropyvalues">method for NavigatorUA</a><span>, in § 4.1.6</span>
      <li><a href="#dom-navigatoruadata-gethighentropyvalues">method for NavigatorUAData</a><span>, in § 4</span>
     </ul>
+   <li><a href="#get-the-legacy-windows-version-number">get the legacy Windows version number</a><span>, in § 3.9</span>
    <li>
     mobile
     <ul>
@@ -2292,6 +2320,12 @@ for valuable feedback and contributions to this specification.</p>
    <ul>
     <li><a href="#ref-for-user-agent-wow64-ness">3. User Agent Hints</a>
     <li><a href="#ref-for-user-agent-wow64-ness①">4.1.6. getHighEntropyValues method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="get-the-legacy-windows-version-number">
+   <b><a href="#get-the-legacy-windows-version-number">#get-the-legacy-windows-version-number</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-get-the-legacy-windows-version-number">3.9. The 'Sec-CH-UA-Platform-Version' Header Field</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="parse-a-platform-returned-version-string">

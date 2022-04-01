@@ -57,7 +57,7 @@ No.
 
 Each new client hint in this specification can be abused to store 1 extra bit in the Accept-CH cache, as described at https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache-definition. No other new identifying information is exposed.
 
-[=User agents=] should take care to not introduce fingerprinting vectors through GREASE-like brand lists that might be unique for an individual or a very small group of users. Rather, a strategy should be employed where the arbitrary brand is either shared across many users (e.g., stable across major versions for all users) or unstable and unpredictable (e.g., regenerated per-request).
+[=User agents=] should take care to not introduce fingerprinting vectors through GREASE-like brand lists that might be unique for an individual or a very small group of users. Rather, a strategy should be employed where the arbitrary brand is either shared across many users (e.g., stable across major versions for all users).
 
 **13. How does this specification distinguish between behavior in first-party and third-party contexts?**
 

@@ -992,9 +992,8 @@ However, it will still be possible for some, or all, hints to be requested and u
 
 [=User agents=] should take care to not introduce fingerprinting vectors through GREASE-like brand
 lists that might be unique for an individual or a very small group of users. Rather, a strategy
-should be employed where the arbitrary brand is either shared across many users (e.g., stable across
-major versions for all users) or unstable and unpredictable (e.g., regenerated per-request). However
-see [[#grease]] for balancing the needs of reducing cache variance and analystics use-cases.
+should be employed where the arbitrary brand is shared across many users (e.g., stable across
+major versions for all users).
 
 Access Restrictions {#access}
 -------------------

@@ -517,6 +517,10 @@ and the significant version number (both of which are fairly clearly sniffable b
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
 
+Note: <a http-header>`Sec-CH-UA`</a> reveals the major version for each brand in the [=brands=]
+list. For use cases requiring the [=user agent/significant version=], see
+<a http-header>`Sec-CH-UA-Full-Version-List`</a>.
+
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
 ------------------------------
 

@@ -621,8 +621,8 @@ The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information
 about the platform on which a given [=user agent=] is executing. It is a [=Structured Header=]
 whose value MUST be a [=structured header/string=] [[!RFC8941]]. Its value SHOULD match one of the
-following common platform values: "Android", "Chrome OS", "iOS", "Linux", "macOS", "Windows", or
-"Unknown".
+following common platform values: "Android", "Chrome OS", "Fuchsia", "iOS", "Linux", "macOS",
+"Windows", or "Unknown".
 
 The header's ABNF is:
 

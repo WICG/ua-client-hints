@@ -484,16 +484,17 @@ platforms where the model is typically exposed.
 
 [=User agents=] MAY return the empty string for hints of type `sf-string`,
 `false` for hints of type `sf-boolean`, or any other fictitious value, for
-privacy, compatibility, or other reasons, given a request for any the following hints: [=full version=], [=platform architecture=], [=platform bitness=], [=wow64-ness=] or [=model=].
+privacy, compatibility, or other reasons, given a request for any the following hints:
+[=full version=], [=platform architecture=], [=platform bitness=], [=wow64-ness=] or [=model=].
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
 
 The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server information about a
-[=user agent=]'s branding and version. It is a [=Structured Header=] whose value MUST be a
-[=structured header/list=] [[!RFC8941]]. The list's items MUST be
-[=structured header/string=]. The value of each item SHOULD include a "v" parameter, indicating the
-[=user agent=]'s version.
+[=user agent=]'s [=user agent/branding=] and [=user agent/significant version=]. It is a
+[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]]. The list's
+items MUST be [=structured header/string=]. The value of each item SHOULD include a "v" parameter,
+indicating the [=user agent=]'s version.
 
 The header's ABNF is:
 
@@ -516,6 +517,10 @@ It is considered low entropy because it includes only the [=user agent=]'s brand
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
+
+Note: <a http-header>`Sec-CH-UA`</a> reveals the major version for each brand in the [=brands=]
+list. For use cases requiring the [=user agent/full version=], see
+<a http-header>`Sec-CH-UA-Full-Version-List`</a>.
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
 ------------------------------

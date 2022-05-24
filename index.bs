@@ -644,9 +644,9 @@ The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
 ----------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field gives a server
-information about the platform version on which a given [=user agent=] is executing. It is a
-[=Structured Header=] whose value MUST be a [=structured header/string=]
-[[!RFC8941]].
+information about the [=user agent/platform version=] on which a given [=user agent=] is executing.
+It is a [=Structured Header=] whose value MUST be a [=structured header/string=][[!RFC8941]]. Its
+value is the result of [=getting the platform version=] with [=user agent/platform brand=].
 
 To <dfn>get the platform version</dfn>, given |platform|, run the following steps:
     1. If |platform| is Linux:
@@ -933,7 +933,7 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
     1. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the
         [=user agent=]'s [=user agent/model=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
-        to the [=user agent=]'s [=user agent/platform version=].
+        to the result of [=getting the platform version=] with [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
     1. If |hints| [=list/contains=] "wow64", set |uaData|["{{UADataValues/wow64}}"]
         to the user agent's [=user agent/wow64-ness=].

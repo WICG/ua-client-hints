@@ -648,45 +648,40 @@ information about the platform version on which a given [=user agent=] is execut
 [=Structured Header=] whose value MUST be a [=structured header/string=]
 [[!RFC8941]].
 
-[=User agents=] SHOULD return a version with a platform-specific format that allows differentiating
-significant platform versions by running these steps:
-    1. If the platform is Linux:
+To <dfn>get the platform version</dfn>, given |platform|, run the following steps:
+    1. If |platform| is Linux:
         1. Return the empty string.
-    1. Else, let |platformVersionComponentList| be a [=list=] and use per-platform logic:
-        * If the platform is Android:
-            1. Let |platformReturnedVersionString| be the result of querying the OS's
-                 `android.os.Build.VERSION.RELEASE` string.
-            1. Let |platformVersionComponentList| be the result of running
-                 <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                 with |platformReturnedVersionString|.
-        * If the platform is iOS:
-            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned
-                by `currentDevice` and reading its `systemVersion`.
-            1. Let |platformVersionComponentList| be the result of running
-                <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                with |platformReturnedVersionString|.
-        * If the platform is macOS:
-            1. Let |platformReturnedVersionString| be the result of querying the `NSProcessInfo`
-                returned by `processInfo` and reading its `operatingSystemVersion`.
-            2. Append the `majorVersion`, `minorVersion`, and `patchVersion` components (in that
-                order) to |platformVersionComponentList|.
-        * If the platform is Windows:
-            1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
-                the result of querying the `Windows.Foundation.UniversalApiContract` integer version
-                and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
-                result of
-                [=get the legacy Windows version number|getting the legacy Windows version number=].
-            1. Let |platformVersionComponentList| be the result of running
-                 <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                 with |platformReturnedVersionString|.
-        * Otherwise:
-            1. Append one to three version parts based on the a format likely to lead to
-                interoperability with other browsers running on that platform to
-                |platformVersionComponentList|.
-            2. While |platformVersionComponentList|'s length is less than 3, append "0" to
-                |platformVersionComponentList|.
+    1. If |platform| is Android:
+        1. Let |platformReturnedVersionString| be the result of querying the OS's
+           `android.os.Build.VERSION.RELEASE` string.
+        1. Return the result of <a>creating a unified platform version string</a> with
+           |platformReturnedVersionString|.
+    1. If |platform| is iOS:
+        1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned
+           by `currentDevice` and reading its `systemVersion`.
+        1. Return the result of
+           <a>creating a unified platform version string</a> with |platformReturnedVersionString|.
+    1. If |platform| is Windows:
+        1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
+           the result of querying the `Windows.Foundation.UniversalApiContract` integer version
+           and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
+           result of [=getting the legacy Windows version number=].
+        1. Return the result of <a>creating a unified platform version string</a> with
+           |platformReturnedVersionString|.
+    1. Let |platformVersionComponentList| be a <a>list</a>.
+    1. If |platform| is macOS:
+        1. Let |macOSVersion| be the `operatingSystemVersion` property of the `NSProcessInfo` object
+           returned by getting the `processInfo` information agent.
+        2. Append |macOSVersion|'s `majorVersion`, `minorVersion`, and `patchVersion`
+           components (in that order) to |platformVersionComponentList|.
+    1. If |platform| is some other value:
+        1. Append one to three version parts based on the format most likely to lead to
+           interoperability with other browsers running on |platform| to
+           |platformVersionComponentList|.
+        2. While |platformVersionComponentList|'s length is less than 3, append "0" to
+           |platformVersionComponentList|.
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
-        FULL STOP (`.`) separator.
+       FULL STOP (`.`) separator.
 
 To <dfn>get the legacy Windows version number</dfn>, run the following steps:
     1. Let |major| be the value of `OSVERSIONINFO`'s `dwMajorVersion` member returned from the
@@ -698,7 +693,7 @@ To <dfn>get the legacy Windows version number</dfn>, run the following steps:
     1. If |major| is `6` and |minor| is `1` (i.e., Windows 7), return "0.1".
     1. Otherwise, return "0".
 
-To <dfn>parse a platform-returned version string</dfn>, given a string |input|, run the following
+To <dfn>create a unified platform version string</dfn>, given a string |input|, run the following
 steps:
     1. Let |platformVersionComponentList| be a [=list=] and |index| be 0.
     1. Let |platformVersionUnprocessedTokenList| be the [=list=] returned by
@@ -712,7 +707,8 @@ steps:
             |platformVersionUnprocessedTokenList|:
             1. Append "0" to |platformVersionComponentList|.
         1. Increment |index| by 1.
-    1. Return |platformVersionComponentList|.
+    1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
+    FULL STOP (`.`) separator.
 
 
 The header's ABNF is:

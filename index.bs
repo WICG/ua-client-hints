@@ -672,13 +672,13 @@ To <dfn>get the platform version</dfn>, given a string |platform|, run the follo
     1. If |platform| is "macOS":
         1. Let |macOSVersion| be the `operatingSystemVersion` property of the `NSProcessInfo` object
             returned by getting the `processInfo` information agent.
-        2. Append |macOSVersion|'s `majorVersion`, `minorVersion`, and `patchVersion`
+        2. [=list/Append=] |macOSVersion|'s `majorVersion`, `minorVersion`, and `patchVersion`
             components (in that order) to |platformVersionComponentList|.
     1. If |platform| is some other value:
-        1. Append one to three version parts based on the format most likely to lead to
+        1. [=list/Append=] one to three version parts based on the format most likely to lead to
             interoperability with other browsers running on |platform| to
             |platformVersionComponentList|.
-        2. While |platformVersionComponentList|'s length is less than 3, append "0" to
+        2. While |platformVersionComponentList|'s length is less than 3, [=list/append=] "0" to
             |platformVersionComponentList|.
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
           FULL STOP (`.`) separator.
@@ -701,11 +701,11 @@ steps:
     1. While |index| is less than 3:
         1. If |index| is less than the length of |platformVersionUnprocessedTokenList|:
             1. If |platformVersionUnprocessedTokenList|[|index|] is an unsigned integer, convert it
-                to a string and append it to |platformVersionComponentList|.
-            1. Otherwise, append "0" to |platformVersionComponentList|.
+                to a string and [=list/append=] it to |platformVersionComponentList|.
+            1. Otherwise, [=list/append=] "0" to |platformVersionComponentList|.
         1. Otherwise, if |index| is greater than or equal to the length of
             |platformVersionUnprocessedTokenList|:
-            1. Append "0" to |platformVersionComponentList|.
+            1. [=list/Append=] "0" to |platformVersionComponentList|.
         1. Increment |index| by 1.
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
         FULL STOP (`.`) separator.
@@ -819,7 +819,7 @@ When asked to <dfn>create brands</dfn> with |version type|, run the following st
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary, with
         {{NavigatorUABrandVersion/brand}} set to |brand| and
         {{NavigatorUABrandVersion/version}} set to |version|.
-    1. Append |dict| to |list|.
+    1. [=list/Append=] |dict| to |list|.
 1.  The [=user agent=] SHOULD execute the following steps:
     1. [=list/Append=] one additional [=list/item=] to |list| containing a
         {{NavigatorUABrandVersion}} dictionary, initialized with {{NavigatorUABrandVersion/brand}}
@@ -855,8 +855,8 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     1. Let |greaseyBrandList| be a [=list=] and |index| be 0.
     1. While |greaseyStack| [=stack/is not empty=]:
         1. Let |item| be the result of <a lt="pop">popping</a> from |greaseyStack|.
-        1. Append |item| to |greaseyBrandList|.
-        1. Append |arbitraryBrandList|[|index|] to |greaseyBrandList|.
+        1. [=list/Append=] |item| to |greaseyBrandList|.
+        1. [=list/Append=] |arbitraryBrandList|[|index|] to |greaseyBrandList|.
         1. Increment |index| by 1.
     1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading and trailing ASCII
          whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no separator).
@@ -895,7 +895,7 @@ steps:
         1. Set |parameter|["param_value"] to |version|.
         1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and
             |parameter|.
-        1. Append |pair| to |list|.
+        1. [=list/Append=] |pair| to |list|.
     1. Return |list|.
 
 <h4 id="getters">Getters</h4>

@@ -644,49 +644,44 @@ The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
 ----------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field gives a server
-information about the platform version on which a given [=user agent=] is executing. It is a
-[=Structured Header=] whose value MUST be a [=structured header/string=]
-[[!RFC8941]].
+information about the [=user agent/platform version=] on which a given [=user agent=] is executing.
+It is a [=Structured Header=] whose value MUST be a [=structured header/string=][[!RFC8941]]. Its
+value is the result of [=getting the platform version=] with [=user agent/platform brand=].
 
-[=User agents=] SHOULD return a version with a platform-specific format that allows differentiating
-significant platform versions by running these steps:
-    1. If the platform is Linux:
+To <dfn>get the platform version</dfn>, given a string |platform|, run the following steps:
+    1. If |platform| is "Linux":
         1. Return the empty string.
-    1. Else, let |platformVersionComponentList| be a [=list=] and use per-platform logic:
-        * If the platform is Android:
-            1. Let |platformReturnedVersionString| be the result of querying the OS's
-                 `android.os.Build.VERSION.RELEASE` string.
-            1. Let |platformVersionComponentList| be the result of running
-                 <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                 with |platformReturnedVersionString|.
-        * If the platform is iOS:
-            1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned
-                by `currentDevice` and reading its `systemVersion`.
-            1. Let |platformVersionComponentList| be the result of running
-                <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                with |platformReturnedVersionString|.
-        * If the platform is macOS:
-            1. Let |platformReturnedVersionString| be the result of querying the `NSProcessInfo`
-                returned by `processInfo` and reading its `operatingSystemVersion`.
-            2. Append the `majorVersion`, `minorVersion`, and `patchVersion` components (in that
-                order) to |platformVersionComponentList|.
-        * If the platform is Windows:
-            1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
-                the result of querying the `Windows.Foundation.UniversalApiContract` integer version
-                and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
-                result of
-                [=get the legacy Windows version number|getting the legacy Windows version number=].
-            1. Let |platformVersionComponentList| be the result of running
-                 <a lt="parse a platform-returned version string">parse a platform-returned version string</a>
-                 with |platformReturnedVersionString|.
-        * Otherwise:
-            1. Append one to three version parts based on the a format likely to lead to
-                interoperability with other browsers running on that platform to
-                |platformVersionComponentList|.
-            2. While |platformVersionComponentList|'s length is less than 3, append "0" to
-                |platformVersionComponentList|.
+    1. If |platform| is "Android":
+        1. Let |platformReturnedVersionString| be the result of querying the OS's
+            `android.os.Build.VERSION.RELEASE` string.
+        1. Return the result of [=creating a unified platform version string=] with
+            |platformReturnedVersionString|.
+    1. If |platform| is "iOS":
+        1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` object
+            returned by `currentDevice` and reading its `systemVersion`.
+        1. Return the result of [=creating a unified platform version string=] with
+            |platformReturnedVersionString|.
+    1. If |platform| is "Windows":
+        1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
+            the result of querying the `Windows.Foundation.UniversalApiContract` integer version
+            and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
+            result of [=getting the legacy Windows version number=].
+        1. Return the result of [=creating a unified platform version string=] with
+            |platformReturnedVersionString|.
+    1. Let |platformVersionComponentList| be a [=list=].
+    1. If |platform| is "macOS":
+        1. Let |macOSVersion| be the `operatingSystemVersion` property of the `NSProcessInfo` object
+            returned by getting the `processInfo` information agent.
+        2. [=list/Append=] |macOSVersion|'s `majorVersion`, `minorVersion`, and `patchVersion`
+            components (in that order) to |platformVersionComponentList|.
+    1. If |platform| is some other value:
+        1. [=list/Append=] one to three version parts based on the format most likely to lead to
+            interoperability with other browsers running on |platform| to
+            |platformVersionComponentList|.
+        2. While |platformVersionComponentList|'s length is less than 3, [=list/append=] "0" to
+            |platformVersionComponentList|.
     1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
-        FULL STOP (`.`) separator.
+          FULL STOP (`.`) separator.
 
 To <dfn>get the legacy Windows version number</dfn>, run the following steps:
     1. Let |major| be the value of `OSVERSIONINFO`'s `dwMajorVersion` member returned from the
@@ -698,7 +693,7 @@ To <dfn>get the legacy Windows version number</dfn>, run the following steps:
     1. If |major| is `6` and |minor| is `1` (i.e., Windows 7), return "0.1".
     1. Otherwise, return "0".
 
-To <dfn>parse a platform-returned version string</dfn>, given a string |input|, run the following
+To <dfn>create a unified platform version string</dfn>, given a string |input|, run the following
 steps:
     1. Let |platformVersionComponentList| be a [=list=] and |index| be 0.
     1. Let |platformVersionUnprocessedTokenList| be the [=list=] returned by
@@ -706,13 +701,14 @@ steps:
     1. While |index| is less than 3:
         1. If |index| is less than the length of |platformVersionUnprocessedTokenList|:
             1. If |platformVersionUnprocessedTokenList|[|index|] is an unsigned integer, convert it
-                to a string and append it to |platformVersionComponentList|.
-            1. Otherwise, append "0" to |platformVersionComponentList|.
+                to a string and [=list/append=] it to |platformVersionComponentList|.
+            1. Otherwise, [=list/append=] "0" to |platformVersionComponentList|.
         1. Otherwise, if |index| is greater than or equal to the length of
             |platformVersionUnprocessedTokenList|:
-            1. Append "0" to |platformVersionComponentList|.
+            1. [=list/Append=] "0" to |platformVersionComponentList|.
         1. Increment |index| by 1.
-    1. Return |platformVersionComponentList|.
+    1. Return the result of the [=concatenation=] of |platformVersionComponentList| with a U+002E
+        FULL STOP (`.`) separator.
 
 
 The header's ABNF is:
@@ -823,7 +819,7 @@ When asked to <dfn>create brands</dfn> with |version type|, run the following st
     1. Let |dict| be a new {{NavigatorUABrandVersion}} dictionary, with
         {{NavigatorUABrandVersion/brand}} set to |brand| and
         {{NavigatorUABrandVersion/version}} set to |version|.
-    1. Append |dict| to |list|.
+    1. [=list/Append=] |dict| to |list|.
 1.  The [=user agent=] SHOULD execute the following steps:
     1. [=list/Append=] one additional [=list/item=] to |list| containing a
         {{NavigatorUABrandVersion}} dictionary, initialized with {{NavigatorUABrandVersion/brand}}
@@ -859,8 +855,8 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     1. Let |greaseyBrandList| be a [=list=] and |index| be 0.
     1. While |greaseyStack| [=stack/is not empty=]:
         1. Let |item| be the result of <a lt="pop">popping</a> from |greaseyStack|.
-        1. Append |item| to |greaseyBrandList|.
-        1. Append |arbitraryBrandList|[|index|] to |greaseyBrandList|.
+        1. [=list/Append=] |item| to |greaseyBrandList|.
+        1. [=list/Append=] |arbitraryBrandList|[|index|] to |greaseyBrandList|.
         1. Increment |index| by 1.
     1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading and trailing ASCII
          whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no separator).
@@ -899,7 +895,7 @@ steps:
         1. Set |parameter|["param_value"] to |version|.
         1. Let |pair| be a tuple comprised of |brand|'s {{NavigatorUABrandVersion/brand}} and
             |parameter|.
-        1. Append |pair| to |list|.
+        1. [=list/Append=] |pair| to |list|.
     1. Return |list|.
 
 <h4 id="getters">Getters</h4>
@@ -937,7 +933,7 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
     1. If |hints| [=list/contains=] "model", set |uaData|["{{UADataValues/model}}"] to the
         [=user agent=]'s [=user agent/model=].
     1. If |hints| [=list/contains=] "platformVersion", set |uaData|["{{UADataValues/platformVersion}}"]
-        to the [=user agent=]'s [=user agent/platform version=].
+        to the result of [=getting the platform version=] with [=user agent/platform brand=].
     1. If |hints| [=list/contains=] "uaFullVersion", set |uaData|["{{UADataValues/uaFullVersion}}"]
     1. If |hints| [=list/contains=] "wow64", set |uaData|["{{UADataValues/wow64}}"]
         to the user agent's [=user agent/wow64-ness=].

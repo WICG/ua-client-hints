@@ -648,20 +648,20 @@ information about the [=user agent/platform version=] on which a given [=user ag
 It is a [=Structured Header=] whose value MUST be a [=structured header/string=][[!RFC8941]]. Its
 value is the result of [=getting the platform version=] with [=user agent/platform brand=].
 
-To <dfn>get the platform version</dfn>, given |platform|, run the following steps:
-    1. If |platform| is Linux:
+To <dfn>get the platform version</dfn>, given a string |platform|, run the following steps:
+    1. If |platform| is "Linux":
         1. Return the empty string.
-    1. If |platform| is Android:
+    1. If |platform| is "Android":
         1. Let |platformReturnedVersionString| be the result of querying the OS's
             `android.os.Build.VERSION.RELEASE` string.
         1. Return the result of [=creating a unified platform version string=] with
             |platformReturnedVersionString|.
-    1. If |platform| is iOS:
-        1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` returned
-            by `currentDevice` and reading its `systemVersion`.
+    1. If |platform| is "iOS":
+        1. Let |platformReturnedVersionString| be the result of querying the `UIDevice` object
+            returned by `currentDevice` and reading its `systemVersion`.
         1. Return the result of [=creating a unified platform version string=] with
             |platformReturnedVersionString|.
-    1. If |platform| is Windows:
+    1. If |platform| is "Windows":
         1. If available (i.e., on Windows 10 or higher), let |platformReturnedVersionString| be
             the result of querying the `Windows.Foundation.UniversalApiContract` integer version
             and converting it to a string. Otherwise, let |platformReturnedVersionString| be the
@@ -669,7 +669,7 @@ To <dfn>get the platform version</dfn>, given |platform|, run the following step
         1. Return the result of [=creating a unified platform version string=] with
             |platformReturnedVersionString|.
     1. Let |platformVersionComponentList| be a [=list=].
-    1. If |platform| is macOS:
+    1. If |platform| is "macOS":
         1. Let |macOSVersion| be the `operatingSystemVersion` property of the `NSProcessInfo` object
             returned by getting the `processInfo` information agent.
         2. Append |macOSVersion|'s `majorVersion`, `minorVersion`, and `patchVersion`

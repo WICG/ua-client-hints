@@ -478,10 +478,6 @@ or [=platform bitness=] unless the user's platform is one where both the followi
  * Different CPU architectures are likely to require different binary executable resources, and
      different binary executable resources are likely to be available.
 
-[=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
-Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
-platforms where the model is typically exposed.
-
 [=User agents=] MAY return the empty string for hints of type `sf-string`,
 `false` for hints of type `sf-boolean`, or any other fictitious value, for
 privacy, compatibility, or other reasons, given a request for any the following hints:

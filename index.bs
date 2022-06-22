@@ -850,13 +850,15 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     1. Let |greaseyStack| be a [=stack=].
     1. Let |greaseyChars| be the [=list=] of [=ASCII bytes=] « 0x20 (SP), 0x28 (left parenthesis), 0x29
          (right parenthesis), 0x2D (-), 0x2E (.), 0x2F (/), 0x3A (:), 0x3B (;), 0x3D (=), 0x3F (?), 0x5F (_) ».
-    1. For each item of |arbitraryBrandList|, [=stack/push=] a randomly selected [=list/item=] from |greaseyChars| onto
-         |greaseyStack|.
-    1. Let |greaseyBrandList| be a [=list=] and |index| be 0.
+    1. Let |index| be 0.
+    1. While |index| is less than the [=list/size=] of |arbitraryBrandList|:
+        1. [=stack/Push=] a randomly selected [=list/item=] from |greaseyChars| onto |greaseyStack|.
+        1. Increment |index| by 1.
+    1. Let |greaseyBrandList| be a [=list=] and set |index| to 0.
     1. While |greaseyStack| [=stack/is not empty=]:
-        1. Let |item| be the result of <a lt="pop">popping</a> from |greaseyStack|.
-        1. [=list/Append=] |item| to |greaseyBrandList|.
         1. [=list/Append=] |arbitraryBrandList|[|index|] to |greaseyBrandList|.
+        1. Let |item| be the result of [=popping=] from |greaseyStack|.
+        1. [=list/Append=] |item| to |greaseyBrandList|.
         1. Increment |index| by 1.
     1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading and trailing ASCII
          whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no separator).

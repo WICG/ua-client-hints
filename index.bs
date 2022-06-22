@@ -89,7 +89,7 @@ Introduction {#intro}
 *This section is non-normative*.
 
 Today, user agents generally identify themselves to servers by sending a `User-Agent` HTTP request
-header field along with each request (defined in Section 5.5.3 of [[RFC7231]]). Ideally, this header
+header field along with each request (defined in Section 5.5.3 of [[rfc9110]]). Ideally, this header
 would give servers the ability to perform content negotiation, sending down exactly those bits that
 best represent the requested resource in a given user agent, optimizing both bandwidth and user
 experience. In practice, however, this header's value exposes far more information about the user's
@@ -1238,7 +1238,7 @@ Status: deprecated
 
 Author/Change controller: IETF
 
-Specification document: this specification ([[#user-agent]]), and Section 5.5.3 of [[RFC7231]]
+Specification document: this specification ([[#user-agent]]), and Section 5.5.3 of [[rfc9110]]
 
 Acknowledgments {#ack}
 =============================

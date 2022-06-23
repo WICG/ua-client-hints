@@ -864,8 +864,8 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
     1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading and trailing ASCII
          whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no separator).
 
-    Note: [=Structured Headers=] allows for escaped 0x22 (\") and 0x5C (\\) inside a [=structured header/string=], but
-          these are known to not be web-compatible.
+    Note: This algorithm should result in an arbitrary brand without leading or trailing
+      |greaseyChars|, as implmentation experience has shown these are not web-compatibile.
 
 To <dfn>create an arbitrary version</dfn> given |version type|, run the following steps:
     1. [=Assert=] |version type| is either "full version" or "significant version".

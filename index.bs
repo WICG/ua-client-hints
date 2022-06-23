@@ -843,13 +843,14 @@ each other. A shared rendering engine may form an [=equivalence class=], for exa
 
 To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps:
 
-    1. Let |arbitraryBrand| be a [=/string=] composed of [=ASCII alpha=]. |arbitraryBrand| MUST contain one or more
-         0x20 (SP) bytes and be no longer than twenty [=ASCII bytes=].
-    1. Let |arbitraryBrandList| be the result of <a lt="split on ASCII whitespace">splitting |arbitraryBrand| on ASCII
-         whitespace</a>.
+    1. Let |arbitraryBrand| be a [=/string=] composed of [=ASCII alpha=]. |arbitraryBrand| MUST
+        contain one or more 0x20 (SP) bytes and be no longer than twenty [=ASCII bytes=].
+    1. Let |arbitraryBrandList| be the result of <a lt="split on ASCII whitespace">splitting
+        |arbitraryBrand| on ASCII whitespace</a>.
     1. Let |greaseyStack| be a [=stack=].
-    1. Let |greaseyChars| be the [=list=] of [=ASCII bytes=] « 0x20 (SP), 0x28 (left parenthesis), 0x29
-         (right parenthesis), 0x2D (-), 0x2E (.), 0x2F (/), 0x3A (:), 0x3B (;), 0x3D (=), 0x3F (?), 0x5F (_) ».
+    1. Let |greaseyChars| be the [=list=] of [=ASCII bytes=] « 0x20 (SP), 0x28 (left parenthesis),
+        0x29 (right parenthesis), 0x2D (-), 0x2E (.), 0x2F (/), 0x3A (:), 0x3B (;), 0x3D (=), 0x3F
+        (?), 0x5F (_) ».
     1. Let |index| be 0.
     1. While |index| is less than the [=list/size=] of |arbitraryBrandList| minus one:
         1. [=stack/Push=] a randomly selected [=list/item=] from |greaseyChars| onto |greaseyStack|.
@@ -861,8 +862,9 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
         1. [=list/Append=] |item| to |greaseyBrandList|.
         1. Increment |index| by 1.
     1. [=list/Append=] |arbitraryBrandList|[|index|] to |greaseyBrandList|.
-    1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading and trailing ASCII
-         whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no separator).
+    1. Return the result of <a lt="strip leading and trailing ASCII whitespace"> stripping leading
+        and trailing ASCII whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no
+        separator).
 
     Note: This algorithm should result in an arbitrary brand without leading or trailing
       |greaseyChars|, as implmentation experience has shown these are not web-compatibile.

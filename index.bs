@@ -835,7 +835,7 @@ When asked to <dfn>create brands</dfn> with |version type|, run the following st
     Note: See [[#grease]] for more details on when and why these randomization steps might be appropriate.
 1. Return |list|.
 
-An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatibile with
+An <dfn for="user agent" export>equivalence class</dfn> represents a group of browsers believed to be compatible with
 each other. A shared rendering engine may form an [=equivalence class=], for example.
 
 <h4 id="create-arbitrary-brands-section"
@@ -867,7 +867,7 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
         separator).
 
     Note: This algorithm should result in an arbitrary brand without leading or trailing
-      |greaseyChars|, as implmentation experience has shown these are not web-compatibile.
+      |greaseyChars|, as implementation experience has shown these are not web-compatible.
 
 To <dfn>create an arbitrary version</dfn> given |version type|, run the following steps:
     1. [=Assert=] |version type| is either "full version" or "significant version".

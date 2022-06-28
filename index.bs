@@ -866,8 +866,15 @@ To <dfn>create an arbitrary brand</dfn>, the [=user agent=] MUST run these steps
         and trailing ASCII whitespace</a> from the [=concatenation=] of |greaseyBrandList| (with no
         separator).
 
-    Note: This algorithm should result in an arbitrary brand without leading or trailing
-      |greaseyChars|, as implementation experience has shown these are not web-compatible.
+<div class="note">
+This algorithm should result in an arbitrary brand without leading or trailing |greaseyChars|, as
+implementation experience has shown these are not web-compatible.
+
+In addition, despite
+[=Structured Headers=] allowing for escaped 0x22 (\") and 0x5C (\\) inside a
+[=structured header/string=], these characters have also created compatibility issues with
+firewalls.
+</div>
 
 To <dfn>create an arbitrary version</dfn> given |version type|, run the following steps:
     1. [=Assert=] |version type| is either "full version" or "significant version".

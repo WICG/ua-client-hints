@@ -250,11 +250,11 @@ accomplish this as follows:
     };
 
     dictionary UADataValues {
-      FrozenArray&lt;NavigatorUABrandVersion&gt; brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
+      FrozenArray<NavigatorUABrandVersion> brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       boolean mobile;             // true
       DOMString architecture;     // "arm"
       DOMString bitness;          // "64"
-      FrozenArray&lt;NavigatorUABrandVersion&gt; fullVersionList; // [ {brand: "Google Chrome", version: "84.0.4147.0"}, {brand: "Chromium", version: "84.0.4147"} ]
+      FrozenArray<NavigatorUABrandVersion> fullVersionList; // [ {brand: "Google Chrome", version: "84.0.4147.0"}, {brand: "Chromium", version: "84.0.4147"} ]
       DOMString model;            // "X644GTM"
       DOMString platform;         // "PhoneOS"
       DOMString platformVersion;  // "10A"

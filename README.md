@@ -65,6 +65,7 @@ and pull requests. Before getting started, please read our
   - [Aren’t we duplicating a lot of information already in the `User-Agent` header?](#arent-we-duplicating-a-lot-of-information-already-in-the-user-agent-header)
   - [Aren’t you adding a lot of new headers? Isn’t that going to bloat requests?](#arent-you-adding-a-lot-of-new-headers-isnt-that-going-to-bloat-requests)
   - [Why does a WoW64 hint exist?](#why-does-a-wow64-hint-exist)
+  - [I'm an SSP. How can I be ready?](#im-an-ssp-how-can-i-be-ready)
 - [Considered alternatives](#considered-alternatives)
   - [Freezing the UA string and reducing its information density without providing an alternative mechanism](#freezing-the-ua-string-and-reducing-its-information-density-without-providing-an-alternative-mechanism)
   - [Restructuring of the User-Agent string](#restructuring-of-the-user-agent-string)
@@ -514,6 +515,40 @@ a worthwhile tradeoff here, at the expense of adding some new headers to request
 ## Why does a WoW64 hint exist?
 
 [WoW64](https://en.wikipedia.org/wiki/WoW64) indicates that a 32-bit User-Agent application is running on a 64-bit Windows machine. It was commonly used to know which NPAPI plugin installer should be offered for download. It's included here for backwards compatibility considerations, to provide a one to one mapping from the UA string of certain browsers to UA-CH. Note that not all browsers today have exposed this, and it may not always return a useful value.
+
+## I'm an SSP. How can I be ready?
+
+### Considerations
+
+To continue to get accurate values you will need to call the User-Agent Client Hints API (“UA-CH”) which is accessed via JavaScript or HTTP Headers.
+
+[Open RTB 2.6](https://iabtechlab.com/wp-content/uploads/2022/04/OpenRTB-2-6_FINAL.pdf) introduces a new field for Structured UA in section 3.2.29 which standardized how you would pass it into the bidstream after populating from UA-CH.
+
+To minimize disruption for ongoing campaigns, we recommend integrating with UA-CH, passing the data in the bidstream following the OpenRTB 2.6 spec, and notifying your DSP partners of this change ensuring they are looking at `device.sua`.
+
+If you need more time, you can retain access through late May 2023 via the [reduction deprecation trial](https://developer.chrome.com/blog/user-agent-reduction-deprecation-trial/).
+
+### Questions to ask your team
+*	Have you already integrated with User-Agent Client Hints and are passing that data into the bidstream?
+*	Are you passing UA-CH into the bidstream in line with the OpenRTB 2.6 spec? (see section 3.2.29 which describes capturing structured UA within device.sua). 
+*	Have you coordinated with your buy-side partners to ensure they are aware of and relying on the new Structured UA fields within your bidstream?
+
+Answered yes to all the above? Great! You are ready and successfully migrated to UA-CH. If you answered no to any of the prior questions please make sure you review "Actions to take" below to ensure you're ready.
+
+### Actions to take
+*	Integrate with UA-CH
+	*	See [Migrate to User-Agent Client Hints](https://web.dev/migrate-to-ua-ch/) for recommendations on how to integrate with the API through HTTP Headers or JavaScript.
+	*	For an API overview, see [this introductory article](https://developer.chrome.com/articles/user-agent-client-hints/).
+*	Updated your bidstream to include UA-CH 
+	*	We recommend updating your bidstream spec following section 3.2.29 of [Open RTB 2.6 spec](https://iabtechlab.com/wp-content/uploads/2022/04/OpenRTB-2-6_FINAL.pdf).
+	*	If there are technical blockers to updating to [Open RTB 2.6](https://iabtechlab.com/wp-content/uploads/2022/04/OpenRTB-2-6_FINAL.pdf), consider following the device.sua data structure recommended in 3.2.29 to include UACH values within the `ext object` to enable continued access to your DSP partners.
+*	(Optional) Extend access to the legacy User-Agent string
+	*	Companies who need more time to migrate to the UA-CH API can join the [reduction deprecation trial](https://developer.chrome.com/blog/user-agent-reduction-deprecation-trial/) that extends access to the legacy User-Agent string through the end of May 2023.
+	*	 Once registered, you will need to [update your HTTP Response headers](https://developer.chrome.com/blog/user-agent-reduction-deprecation-trial/#setup) for your production traffic.
+	*	While this provides access until May 23, 2023, you should still integrate with UA-CH to continue to have access to accurate values.
+*	Raise awareness to your DSP partners
+	*	Reach out to your DSP partners and let them know you are passing ua information like device model and OS version in the `device.sua` of OpenRTB 2.6. 
+	*	If they continue to rely only on the `device.ua`, they will no longer be able to access information like device model or Android OS version.
 
 # Considered alternatives
 ## Freezing the UA string and reducing its information density without providing an alternative mechanism

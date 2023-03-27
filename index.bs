@@ -435,13 +435,16 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
       "cURL", "Edge", "The World's Best Web Browser"), which MUST be shorter than 32 [=ASCII alpha=]
       characters.
-*   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
-      distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
-      [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or
-      any other [=equivalence classes=] full version).
+*   <dfn for="user agent" export>form-factor</dfn> - The form-factor of a device, historically
+      represted as a &lt;[=deviceCompat=]&gt; token in the User-Agent string (e.g., "Tablet", "VR",
+      etc.)
 *   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
       "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the [=user agent=], or any
       of the brands in its [=brands=] list.
+*   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (e.g., "", or
+      "Pixel 2 XL")
+*   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
+      device is a mobile device. (e.g., ?0 or ?1)
 *   <dfn for="user agent" export>platform brand</dfn> - The [=user agent=]'s operating system's
       commercial name. (e.g., "Windows", "iOS", or "AmazingOS")
 *   <dfn for="user agent" export>platform version</dfn> - The [=user agent=]'s operating system's
@@ -450,10 +453,10 @@ has defined a number of properties for itself:
       architecture (e.g., "ARM", or "x86")
 *   <dfn for="user agent" export>platform bitness</dfn> - The [=user agent=]'s underlying CPU
       architecture bitness (e.g., "32" or "64")
-*   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (e.g., "", or
-      "Pixel 2 XL")
-*   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
-      device is a mobile device. (e.g., ?0 or ?1)
+*   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
+      distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
+      [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or
+      any other [=equivalence classes=] full version).
 *   <dfn for="user agent" export>wow64-ness</dfn> - A boolean indicating if the [=user agent=]'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)
 
 
@@ -536,14 +539,31 @@ The 'Sec-CH-UA-Bitness' Header Field {#sec-ch-ua-bitness}
 ------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Bitness`</dfn> request header field gives a server information about
-the bitness of the architecture of the platform on which a given [=user agent=] is executing. It is
-a [=Structured Header=] whose value MUST be a [=structured header/string=]
+the [=platform bitness=] of the architecture of the platform on which a given [=user agent=] is
+executing. It is a [=Structured Header=] whose value MUST be a [=structured header/string=]
 [[!RFC8941]].
 
 The header's ABNF is:
 
 ~~~ abnf
   Sec-CH-UA-Bitness = sf-string
+~~~
+
+The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
+------------------------------
+
+The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a server information
+about the [=user agent=]'s [=form-factor=]. It is a [=Structured Header=] whose value MUST be a
+[=structured header/string=]. Its value SHOULD match one of the following common form-factor values:
+"Automobile", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string.
+[[!RFC8941]].
+
+Note: A "desktop" form-factor would be represented by the empty string.
+
+The header's ABNF is:
+
+~~~ abnf
+  Sec-CH-UA-Form-Factor = sf-string
 ~~~
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
@@ -727,9 +747,9 @@ The header's ABNF is:
 ```
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
-`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Full-Version`,
-`Sec-CH-UA-Full-Version-List`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`
+`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Form-Factor`,
+`Sec-CH-UA-Full-Version`, `Sec-CH-UA-Full-Version-List`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`,
+`Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`
 
 Interface {#interface}
 =================
@@ -741,16 +761,17 @@ dictionary NavigatorUABrandVersion {
 };
 
 dictionary UADataValues {
-  sequence&lt;NavigatorUABrandVersion&gt; brands;
-  boolean mobile;
   DOMString architecture;
   DOMString bitness;
+  sequence&lt;NavigatorUABrandVersion&gt; brands;
+  DOMString formFactor;
+  sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
   DOMString model;
+  boolean mobile;
   DOMString platform;
   DOMString platformVersion;
   DOMString uaFullVersion; // deprecated in favor of fullVersionList
   boolean wow64;
-  sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
 };
 
 dictionary UALowEntropyJSON {
@@ -936,6 +957,8 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         the [=user agent=]'s [=user agent/platform architecture=].
     1. If |hints| [=list/contains=] "bitness", set |uaData|["{{UADataValues/bitness}}"] to
         the [=user agent=]'s [=user agent/platform bitness=].
+    1. If |hints| [=list/contains=] "formFactor", set |uaData|["{{UADataValues/formFactor}}"] to
+        the [=user agent=]'s [=user agent/form-factor=].
     1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
         to [=this=]'s [=relevant global object=]'s
         [=WindowOrWorkerGlobalScope/full version list frozen array=].
@@ -1098,9 +1121,10 @@ IANA Considerations {#iana}
 ===================
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
-`Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`, `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the `Sec-CH-UA-Full-Version-List` HTTP request
-header fields, and register them in the permanent message header field registry ([[RFC3864]]).
+`Sec-CH-UA-Form-Factor`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`,
+`Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the
+`Sec-CH-UA-Full-Version-List` HTTP request header fields, and register them in the permanent message
+ header field registry ([[RFC3864]]).
 
 It also intends to deprecate usage of the `User-Agent` header field.
 
@@ -1142,6 +1166,19 @@ Status: standard
 Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-bitness]])
+
+'Sec-CH-UA-Form-Factor' Header Field {#iana-form-factor}
+--------------------------
+
+Header field name: Sec-CH-UA-Form-Factor
+
+Applicable protocol: http
+
+Status: standard
+
+Author/Change controller: IETF
+
+Specification document: this specification ([[#sec-ch-ua-form-factor]])
 
 'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
 ----------------------------

@@ -12,6 +12,7 @@ a corresponding JavaScript API:
 * `Sec-CH-UA-Platform`
 * `Sec-CH-UA-Platform-Version`
 * `Sec-CH-UA`
+* `Sec-CH-UA-Form-Factor`
 * `Sec-CH-UA-Full-Version` (deprecated in favor of `Sec-CH-UA-Full-Version-List`)
 * `Sec-CH-UA-Full-Version-List`
 * `Sec-CH-UA-WoW64`
@@ -202,6 +203,16 @@ accomplish this as follows:
         Sec-CH-UA-Bitness: "64"
         ```
 
+    1.  The `Sec-CH-UA-Form-Factor` header field represents the form-factor of a device, historically
+      represented as a &lt;deviceCompat&gt; token in the User-Agent string (e.g., "Tablet", "VR",
+      etc.)
+
+        For example:
+
+        ```http
+        Sec-CH-UA-Form-Factor: "XR"
+        ```
+
     1.  The `Sec-CH-UA-Mobile` header field represents whether the user agent should receive a
         specifically "mobile" UX.
 
@@ -254,6 +265,7 @@ accomplish this as follows:
       boolean mobile;             // true
       DOMString architecture;     // "arm"
       DOMString bitness;          // "64"
+      DOMString formFactor;       // "Automobile"
       FrozenArray<NavigatorUABrandVersion> fullVersionList; // [ {brand: "Google Chrome", version: "84.0.4147.0"}, {brand: "Chromium", version: "84.0.4147"} ]
       DOMString model;            // "X644GTM"
       DOMString platform;         // "PhoneOS"
@@ -266,7 +278,7 @@ accomplish this as follows:
       readonly attribute FrozenArray<NavigatorUABrandVersion> brands; // [ {brand: "Google Chrome", version: "84"}, {brand: "Chromium", version: "84"} ]
       readonly attribute boolean mobile; // false
       readonly attribute platform; // "PhoneOS"
-      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { architecture: "arm", bitness: "64", model: "X644GTM", platform: "PhoneOS", platformVersion: "10A", fullVersionList: [ {brand: "Google Chrome", version: "84.1.2.3"}, {brand: "Chromium", version: "84.1.2.3"}, {brand: "Not A;Brand", version: "101.3.2.9"} ] }
+      Promise<UADataValues> getHighEntropyValues(sequence<DOMString> hints); // { architecture: "arm", bitness: "64", model: "X644GTM", platform: "PhoneOS", platformVersion: "10A", formFactor: "VR", fullVersionList: [ {brand: "Google Chrome", version: "84.1.2.3"}, {brand: "Chromium", version: "84.1.2.3"}, {brand: "Not A;Brand", version: "101.3.2.9"} ] }
     };
 
     interface mixin NavigatorUA {

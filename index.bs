@@ -436,7 +436,7 @@ has defined a number of properties for itself:
       "cURL", "Edge", "The World's Best Web Browser"), which MUST be shorter than 32 [=ASCII alpha=]
       characters.
 *   <dfn for="user agent" export>form-factor</dfn> - The form-factor of a device, historically
-      represted as a &lt;[=deviceCompat=]&gt; token in the User-Agent string (e.g., "Tablet", "VR",
+      represented as a &lt;[=deviceCompat=]&gt; token in the User-Agent string (e.g., "Tablet", "VR",
       etc.)
 *   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
       "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the [=user agent=], or any

@@ -265,7 +265,7 @@ accomplish this as follows:
       boolean mobile;             // true
       DOMString architecture;     // "arm"
       DOMString bitness;          // "64"
-      DOMString formFactor;       // "Automobile"
+      DOMString formFactor;       // "Automotive"
       FrozenArray<NavigatorUABrandVersion> fullVersionList; // [ {brand: "Google Chrome", version: "84.0.4147.0"}, {brand: "Chromium", version: "84.0.4147"} ]
       DOMString model;            // "X644GTM"
       DOMString platform;         // "PhoneOS"

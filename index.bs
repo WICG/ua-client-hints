@@ -555,7 +555,7 @@ The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
 The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a server information
 about the [=user agent=]'s [=form-factor=]. It is a [=Structured Header=] whose value MUST be a
 [=structured header/string=]. Its value SHOULD match one of the following common form-factor values:
-"Automobile", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string.
+"Automotive", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string.
 [[!RFC8941]].
 
 Note: A "desktop" form-factor would be represented by the empty string.

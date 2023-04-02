@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d9bd89757, updated Thu Mar 23 10:06:53 2023 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="e24995c1ba5e99737697de559f87d553fdd68846" name="document-revision">
+  <meta content="d937348771fd834b9f2d960c43d151e8d5f0dc7e" name="document-revision">
 <style>/* style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -598,7 +598,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-03-30">30 March 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-04-02">2 April 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1107,7 +1107,7 @@ executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc
    <h3 class="heading settled" data-level="3.4" id="sec-ch-ua-form-factor"><span class="secno">3.4. </span><span class="content">The 'Sec-CH-UA-Form-Factor' Header Field</span><a class="self-link" href="#sec-ch-ua-form-factor"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-form-factor"><code>Sec-CH-UA-Form-Factor</code><a class="self-link" href="#http-headerdef-sec-ch-ua-form-factor"></a></dfn> request header field gives a server information
 about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factor" id="ref-for-user-agent-form-factor">form-factor</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3③">string</a>. Its value SHOULD match one of the following common form-factor values:
-"Automobile", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string. <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+"Automotive", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string. <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p class="note" role="note"><span class="marker">Note:</span> A "desktop" form-factor would be represented by the empty string.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Form-Factor</c-> <c- o>=</c-> <c- nc>sf-string</c->

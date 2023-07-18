@@ -575,6 +575,7 @@ device.
  * "VR" refers to an immersive, gesture-oriented device.
  * "XR" is similar to "VR"  but includes devices that integrate with the
     environment around the user.
+
 </div>
 
 The header's ABNF is:

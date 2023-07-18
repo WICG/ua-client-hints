@@ -560,7 +560,8 @@ one or more of the following common form-factor values: "Desktop",
 "Automotive", "Mobile", "Tablet", "TV", "VR", or "XR". Order of the values
 in the list is not significant.
 
-Note: The form-factor of a device describes how the user interacts with the
+<div class="note" heading="">
+The form-factor of a device describes how the user interacts with the
 device.
  * "Desktop" refers to a user-agent running on a personal computer.
  * "Automotive" refers to a user-agent embedded in a vehicle, where the user
@@ -574,6 +575,7 @@ device.
  * "VR" refers to an immersive, gesture-oriented device.
  * "XR" is similar to "VR"  but includes devices that integrate with the
     environment around the user.
+</div>
 
 The header's ABNF is:
 

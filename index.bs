@@ -552,18 +552,33 @@ The header's ABNF is:
 The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
 ------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a server information
-about the [=user agent=]'s [=form-factor=]. It is a [=Structured Header=] whose value MUST be a
-[=structured header/string=]. Its value SHOULD match one of the following common form-factor values:
-"Automotive", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string.
-[[!RFC8941]].
+The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a
+server information about the [=user agent=]'s [=form-factor=]. It is a
+[=Structured Header=] whose value MUST be a [=structured header/list=]
+[[!RFC8941]]. Its values SHOULD describe the form-factor of the device using
+one or more of the following common form-factor values: "Desktop",
+"Automotive", "Mobile", "Tablet", "TV", "VR", or "XR". Order of the values
+in the list is not significant.
 
-Note: A "desktop" form-factor would be represented by the empty string.
+Note: The form-factor of a device describes how the user interacts with the
+device.
+ * "Desktop" refers to a user-agent running on a personal computer.
+ * "Automotive" refers to a user-agent embedded in a vehicle, where the user
+    may be responsible for operating the vehicle and unable to attend to small
+    details.
+ * "Mobile" refers to small, touch-oriented device typically carried on a
+    user's person.
+ * "Tablet" refers to a touch-oriented device larger than "Mobile" and not
+    typically carried on a user's person.
+ * "TV" refers to a large, multi-user device desiged primarily for viewing videos.
+ * "VR" refers to an immersive, gesture-oriented device.
+ * "XR" is similar to "VR"  but includes devices that integrate with the
+    environment around the user.
 
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-UA-Form-Factor = sf-string
+  Sec-CH-UA-Form-Factor = sf-list
 ~~~
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}

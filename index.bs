@@ -555,14 +555,17 @@ The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
 The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a
 server information about the [=user agent=]'s [=form-factor=]. It is a
 [=Structured Header=] whose value MUST be a [=structured header/list=]
-[[!RFC8941]]. Its values SHOULD describe the form-factor of the device using
-one or more of the following common form-factor values: "Desktop",
-"Automotive", "Mobile", "Tablet", "TV", "VR", or "XR". Order of the values
-in the list is not significant.
+[[!RFC8941]]. The header's values MUST be given in lexical order.
+
+The header SHOULD describe the form-factor of the device using one or more of
+the following common form-factor values: "Desktop", "Automotive", "Mobile",
+"Tablet", or "XR". All applicable form-factor values SHOULD be included.
 
 <div class="note" heading="">
-The form-factor of a device describes how the user interacts with the
-device.
+
+The form-factor of a user-agent describes how the user interacts with the
+user-agent. The meanings of the allowed values are:
+
  * "Desktop" refers to a user-agent running on a personal computer.
  * "Automotive" refers to a user-agent embedded in a vehicle, where the user
     may be responsible for operating the vehicle and unable to attend to small
@@ -571,10 +574,14 @@ device.
     user's person.
  * "Tablet" refers to a touch-oriented device larger than "Mobile" and not
     typically carried on a user's person.
- * "TV" refers to a large, multi-user device desiged primarily for viewing videos.
- * "VR" refers to an immersive, gesture-oriented device.
- * "XR" is similar to "VR"  but includes devices that integrate with the
-    environment around the user.
+ * "XR" refers to immersive devices that augment or replace the environment
+    around the user.
+
+A new value should be proposed and added to the specification when there is a
+new form-factor that users interact with in a meaningfully different way; a
+compelling use-case where sites would like to change how they interact with
+users on that device; and no reliable way to identify that new form-factor
+using existing hints.
 
 </div>
 

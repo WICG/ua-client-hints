@@ -552,18 +552,43 @@ The header's ABNF is:
 The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
 ------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a server information
-about the [=user agent=]'s [=form-factor=]. It is a [=Structured Header=] whose value MUST be a
-[=structured header/string=]. Its value SHOULD match one of the following common form-factor values:
-"Automotive", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string.
-[[!RFC8941]].
+The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a
+server information about the [=user agent=]'s [=form-factor=]. It is a
+[=Structured Header=] whose value MUST be a [=structured header/list=]
+[[!RFC8941]]. The header's values MUST be given in lexical order.
 
-Note: A "desktop" form-factor would be represented by the empty string.
+The header SHOULD describe the form-factor of the device using one or more of
+the following common form-factor values: "Desktop", "Automotive", "Mobile",
+"Tablet", or "XR". All applicable form-factor values SHOULD be included.
+
+<div class="note" heading="">
+
+The form-factor of a user-agent describes how the user interacts with the
+user-agent. The meanings of the allowed values are:
+
+ * "Desktop" refers to a user-agent running on a personal computer.
+ * "Automotive" refers to a user-agent embedded in a vehicle, where the user
+    may be responsible for operating the vehicle and unable to attend to small
+    details.
+ * "Mobile" refers to small, touch-oriented device typically carried on a
+    user's person.
+ * "Tablet" refers to a touch-oriented device larger than "Mobile" and not
+    typically carried on a user's person.
+ * "XR" refers to immersive devices that augment or replace the environment
+    around the user.
+
+A new value should be proposed and added to the specification when there is a
+new form-factor that users interact with in a meaningfully different way; a
+compelling use-case where sites would like to change how they interact with
+users on that device; and no reliable way to identify that new form-factor
+using existing hints.
+
+</div>
 
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-UA-Form-Factor = sf-string
+  Sec-CH-UA-Form-Factor = sf-list
 ~~~
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}

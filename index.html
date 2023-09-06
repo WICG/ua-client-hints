@@ -4,10 +4,10 @@
   <title>User-Agent Client Hints</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d9bd89757, updated Thu Mar 23 10:06:53 2023 -0700" name="generator">
+  <meta content="Bikeshed version 6edc88947, updated Thu Aug 17 11:18:09 2023 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="d937348771fd834b9f2d960c43d151e8d5f0dc7e" name="document-revision">
-<style>/* style-autolinks */
+  <meta content="6bcecb677120d89b3a47bbd2f2efb16277bd4537" name="document-revision">
+<style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -68,8 +68,16 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
 </style>
-<style>/* style-colors */
+<style>/* Boilerplate: style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
@@ -178,231 +186,6 @@ pre .property::before, pre .property::after {
 
     --editedrec-bg: darkorange;
 }
-</style>
-<style>/* style-counters */
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}
-</style>
-<style>/* style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    min-width: min-content;
-    max-width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0; }
-.dfn-panel li { list-style: inside; }
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled { cursor: pointer; }
-</style>
-<style>/* style-issues */
-a[href].issue-return {
-    float: right;
-    float: inline-end;
-    color: var(--issueheading-text);
-    font-weight: bold;
-    text-decoration: none;
-}
-</style>
-<style>/* style-md-lists */
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}
-</style>
-<style>/* style-selflinks */
-
-:root {
-    --selflink-text: white;
-    --selflink-bg: gray;
-    --selflink-hover-text: black;
-}
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-.example > a.self-link,
-.note > a.self-link,
-.issue > a.self-link {
-    /* These blocks are overflow:auto, so positioning outside
-       doesn't work. */
-    left: auto;
-    right: 0;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: var(--selflink-bg);
-    color: var(--selflink-text);
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: var(--selflink-hover-text);
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }
-</style>
-<style>/* style-syntax-highlighting */
-
-            pre.idl.highlight {
-                background: var(--borderedblock-bg, var(--def-bg));
-            }
-            
-code.highlight { padding: .1em; border-radius: .3em; }
-pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
-
-.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
-c-[a] { color: #990055 } /* Keyword.Declaration */
-c-[b] { color: #990055 } /* Keyword.Type */
-c-[c] { color: #708090 } /* Comment */
-c-[d] { color: #708090 } /* Comment.Multiline */
-c-[e] { color: #0077aa } /* Name.Attribute */
-c-[f] { color: #669900 } /* Name.Tag */
-c-[g] { color: #222222 } /* Name.Variable */
-c-[k] { color: #990055 } /* Keyword */
-c-[l] { color: #000000 } /* Literal */
-c-[m] { color: #000000 } /* Literal.Number */
-c-[n] { color: #0077aa } /* Name */
-c-[o] { color: #999999 } /* Operator */
-c-[p] { color: #999999 } /* Punctuation */
-c-[s] { color: #a67f59 } /* Literal.String */
-c-[t] { color: #a67f59 } /* Literal.String.Single */
-c-[u] { color: #a67f59 } /* Literal.String.Double */
-c-[cp] { color: #708090 } /* Comment.Preproc */
-c-[c1] { color: #708090 } /* Comment.Single */
-c-[cs] { color: #708090 } /* Comment.Special */
-c-[kc] { color: #990055 } /* Keyword.Constant */
-c-[kn] { color: #990055 } /* Keyword.Namespace */
-c-[kp] { color: #990055 } /* Keyword.Pseudo */
-c-[kr] { color: #990055 } /* Keyword.Reserved */
-c-[ld] { color: #000000 } /* Literal.Date */
-c-[nc] { color: #0077aa } /* Name.Class */
-c-[no] { color: #0077aa } /* Name.Constant */
-c-[nd] { color: #0077aa } /* Name.Decorator */
-c-[ni] { color: #0077aa } /* Name.Entity */
-c-[ne] { color: #0077aa } /* Name.Exception */
-c-[nf] { color: #0077aa } /* Name.Function */
-c-[nl] { color: #0077aa } /* Name.Label */
-c-[nn] { color: #0077aa } /* Name.Namespace */
-c-[py] { color: #0077aa } /* Name.Property */
-c-[ow] { color: #999999 } /* Operator.Word */
-c-[mb] { color: #000000 } /* Literal.Number.Bin */
-c-[mf] { color: #000000 } /* Literal.Number.Float */
-c-[mh] { color: #000000 } /* Literal.Number.Hex */
-c-[mi] { color: #000000 } /* Literal.Number.Integer */
-c-[mo] { color: #000000 } /* Literal.Number.Oct */
-c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
-c-[sc] { color: #a67f59 } /* Literal.String.Char */
-c-[sd] { color: #a67f59 } /* Literal.String.Doc */
-c-[se] { color: #a67f59 } /* Literal.String.Escape */
-c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
-c-[si] { color: #a67f59 } /* Literal.String.Interpol */
-c-[sx] { color: #a67f59 } /* Literal.String.Other */
-c-[sr] { color: #a67f59 } /* Literal.String.Regex */
-c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
-c-[vc] { color: #0077aa } /* Name.Variable.Class */
-c-[vg] { color: #0077aa } /* Name.Variable.Global */
-c-[vi] { color: #0077aa } /* Name.Variable.Instance */
-c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
-</style>
-<style>/* style-var-click-highlighting */
-
-    var { cursor: pointer; }
-    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
-    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
-    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
-    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
-    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
-    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
-    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
-    </style>
-<style>/* style-darkmode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -515,21 +298,287 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        which is quite common in practice... */
     img { background: white; }
 }
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --selflink-text: black;
-        --selflink-bg: silver;
-        --selflink-hover-text: white;
-    }
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
 }
 
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
 }
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* Boilerplate: style-syntax-highlighting */
+
+            pre.idl.highlight {
+                background: var(--borderedblock-bg, var(--def-bg));
+            }
+            
+</style>
+<style>/* Boilerplate: style-syntax-highlighting */
+
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+
+.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
+
 
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
@@ -594,11 +643,32 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
 }
 </style>
+<style>/* Boilerplate: style-var-click-highlighting */
+/*
+Colors were chosen in Lab using https://nixsensor.com/free-color-converter/
+D50 2deg illuminant, L in [0,100], a and b in [-128, 128]
+0 = lab(85,0,85)
+1 = lab(85,80,30)
+2 = lab(85,-40,40)
+3 = lab(85,-50,0)
+4 = lab(85,5,15)
+5 = lab(85,-10,-50)
+6 = lab(85,35,-15)
+*/
+var { cursor: pointer; }
+var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-04-02">2 April 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-09-06">6 September 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1067,7 +1137,7 @@ platforms where the model is typically exposed.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑧">User agents</a> MAY return the empty string for hints of type <code>sf-string</code>, <code>false</code> for hints of type <code>sf-boolean</code>, or any other fictitious value, for
 privacy, compatibility, or other reasons, given a request for any the following hints: <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version">full version</a>, <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture②">platform architecture</a>, <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness①">platform bitness</a>, <a data-link-type="dfn" href="#user-agent-wow64-ness" id="ref-for-user-agent-wow64-ness">wow64-ness</a> or <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model②">model</a>.</p>
    <h3 class="heading settled" data-level="3.1" id="sec-ch-ua"><span class="secno">3.1. </span><span class="content">The 'Sec-CH-UA' Header Field</span><a class="self-link" href="#sec-ch-ua"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></dfn> request header field gives a server information about a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. The list’s
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></dfn> request header field gives a server information about a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. The list’s
 items MUST be <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3">string</a>. The value of each item SHOULD include a "v" parameter,
 indicating the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⓪">user agent</a>'s version.</p>
    <p>The header’s ABNF is:</p>
@@ -1093,36 +1163,64 @@ introduced or modified between releases of a particular browser" <a data-link-ty
    <p class="note" role="note"><span class="marker">Note:</span> <a data-link-type="http-header" href="#http-headerdef-sec-ch-ua" id="ref-for-http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></a> reveals the major version for each brand in the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands②">brands</a> list. For use cases requiring the <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version①">full version</a>, see <a data-link-type="http-header" href="#http-headerdef-sec-ch-ua-full-version-list" id="ref-for-http-headerdef-sec-ch-ua-full-version-list"><code>Sec-CH-UA-Full-Version-List</code></a>.</p>
    <h3 class="heading settled" data-level="3.2" id="sec-ch-ua-arch"><span class="secno">3.2. </span><span class="content">The 'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#sec-ch-ua-arch"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-arch"><code>Sec-CH-UA-Arch</code><a class="self-link" href="#http-headerdef-sec-ch-ua-arch"></a></dfn> request header field gives a server information about
-the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②②">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31①">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3①">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②②">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something①">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3①">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Arch</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
    <h3 class="heading settled" data-level="3.3" id="sec-ch-ua-bitness"><span class="secno">3.3. </span><span class="content">The 'Sec-CH-UA-Bitness' Header Field</span><a class="self-link" href="#sec-ch-ua-bitness"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-bitness"><code>Sec-CH-UA-Bitness</code><a class="self-link" href="#http-headerdef-sec-ch-ua-bitness"></a></dfn> request header field gives a server information about
 the <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness②">platform bitness</a> of the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a> is
-executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31②">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something②">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3②">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Bitness</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
    <h3 class="heading settled" data-level="3.4" id="sec-ch-ua-form-factor"><span class="secno">3.4. </span><span class="content">The 'Sec-CH-UA-Form-Factor' Header Field</span><a class="self-link" href="#sec-ch-ua-form-factor"></a></h3>
-   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-form-factor"><code>Sec-CH-UA-Form-Factor</code><a class="self-link" href="#http-headerdef-sec-ch-ua-form-factor"></a></dfn> request header field gives a server information
-about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factor" id="ref-for-user-agent-form-factor">form-factor</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3③">string</a>. Its value SHOULD match one of the following common form-factor values:
-"Automotive", "Mobile", "Tablet", "TV", "VR", "XR", "Unknown" or the empty string. <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
-   <p class="note" role="note"><span class="marker">Note:</span> A "desktop" form-factor would be represented by the empty string.</p>
+   <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-form-factor"><code>Sec-CH-UA-Form-Factor</code><a class="self-link" href="#http-headerdef-sec-ch-ua-form-factor"></a></dfn> request header field gives a
+server information about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factor" id="ref-for-user-agent-form-factor">form-factor</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.1" id="ref-for-section-3.1①">list</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. The header’s values MUST be given in lexical order.</p>
+   <p>The header SHOULD describe the form-factor of the device using one or more of
+the following common form-factor values: "Desktop", "Automotive", "Mobile",
+"Tablet", or "XR". All applicable form-factor values SHOULD be included.</p>
+   <div class="note no-marker" role="note">
+    <div class="marker">NOTE: </div>
+    <p>The form-factor of a user-agent describes how the user interacts with the
+user-agent. The meanings of the allowed values are:</p>
+    <ul>
+     <li data-md>
+      <p>"Desktop" refers to a user-agent running on a personal computer.</p>
+     <li data-md>
+      <p>"Automotive" refers to a user-agent embedded in a vehicle, where the user
+may be responsible for operating the vehicle and unable to attend to small
+details.</p>
+     <li data-md>
+      <p>"Mobile" refers to small, touch-oriented device typically carried on a
+user’s person.</p>
+     <li data-md>
+      <p>"Tablet" refers to a touch-oriented device larger than "Mobile" and not
+typically carried on a user’s person.</p>
+     <li data-md>
+      <p>"XR" refers to immersive devices that augment or replace the environment
+around the user.</p>
+    </ul>
+    <p>A new value should be proposed and added to the specification when there is a
+new form-factor that users interact with in a meaningfully different way; a
+compelling use-case where sites would like to change how they interact with
+users on that device; and no reliable way to identify that new form-factor
+using existing hints.</p>
+   </div>
    <p>The header’s ABNF is:</p>
-<pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Form-Factor</c-> <c- o>=</c-> <c- nc>sf-string</c->
+<pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Form-Factor</c-> <c- o>=</c-> <c- nc>sf-list</c->
 </pre>
    <h3 class="heading settled" data-level="3.5" id="sec-ch-ua-full-version"><span class="secno">3.5. </span><span class="content">The 'Sec-CH-UA-Full-Version' Header Field</span><a class="self-link" href="#sec-ch-ua-full-version"></a></h3>
    <p><strong class="advisement"> <code>Sec-CH-UA-Full-Version</code> is deprecated and will be removed in the future. Developers
 should use <a href="#sec-ch-ua-full-version-list"><code>Sec-CH-UA-Full-Version-List</code></a> instead.</strong></p>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-full-version"><code>Sec-CH-UA-Full-Version</code><a class="self-link" href="#http-headerdef-sec-ch-ua-full-version"></a></dfn> request header field gives a server information
-about the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version②">full version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31④">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3④">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+about the user agent’s <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version②">full version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something④">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3③">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Full-Version</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
    <h3 class="heading settled" data-level="3.6" id="sec-ch-ua-full-version-list"><span class="secno">3.6. </span><span class="content">The 'Sec-CH-UA-Full-Version-List' Header Field</span><a class="self-link" href="#sec-ch-ua-full-version-list"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-full-version-list"><code>Sec-CH-UA-Full-Version-List</code></dfn> request header field gives a server
-information about the <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version③">full version</a> for each brand in its <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands③">brands</a> list. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31⑤">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.1" id="ref-for-section-3.1①">list</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+information about the <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version③">full version</a> for each brand in its <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands③">brands</a> list. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something⑤">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.1" id="ref-for-section-3.1②">list</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Full-Version-List</c-> <c- o>=</c-> <c- nc>sf-list</c->
 </pre>
@@ -1138,7 +1236,7 @@ following steps:</p>
    </ol>
    <h3 class="heading settled" data-level="3.7" id="sec-ch-ua-mobile"><span class="secno">3.7. </span><span class="content">The 'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#sec-ch-ua-mobile"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-mobile"><code>Sec-CH-UA-Mobile</code><a class="self-link" href="#http-headerdef-sec-ch-ua-mobile"></a></dfn> request header field gives a server information about
-whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31⑥">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.6" id="ref-for-section-3.3.6">boolean</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something⑥">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.6" id="ref-for-section-3.3.6">boolean</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Mobile</c-> <c- o>=</c-> <c- nc>sf-boolean</c->
 </pre>
@@ -1148,14 +1246,14 @@ receiving the header via an <code>Accept-CH</code> header (although it can still
 bit of information directly controllable by the user.</p>
    <h3 class="heading settled" data-level="3.8" id="sec-ch-ua-model"><span class="secno">3.8. </span><span class="content">The 'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#sec-ch-ua-model"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-model"><code>Sec-CH-UA-Model</code><a class="self-link" href="#http-headerdef-sec-ch-ua-model"></a></dfn> request header field gives a server information about
-the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑥">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31⑦">Structured Header</a> whose value
-MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑤">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑥">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something⑦">Structured Header</a> whose value
+MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3④">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-Model</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
    <h3 class="heading settled" data-level="3.9" id="sec-ch-ua-platform"><span class="secno">3.9. </span><span class="content">The 'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#sec-ch-ua-platform"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform"></a></dfn> request header field gives a server information
-about the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑦">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31⑧">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑥">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. Its value SHOULD match one of the
+about the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑦">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something⑧">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑤">string</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. Its value SHOULD match one of the
 following common platform values: "Android", "Chrome OS", "Fuchsia", "iOS", "Linux", "macOS",
 "Windows", or "Unknown".</p>
    <p>The header’s ABNF is:</p>
@@ -1166,7 +1264,7 @@ the header via an <code>Accept-CH</code> header (although it can still be contro
    <h3 class="heading settled" data-level="3.10" id="sec-ch-ua-platform-version"><span class="secno">3.10. </span><span class="content">The 'Sec-CH-UA-Platform-Version' Header Field</span><a class="self-link" href="#sec-ch-ua-platform-version"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform-version"><code>Sec-CH-UA-Platform-Version</code><a class="self-link" href="#http-headerdef-sec-ch-ua-platform-version"></a></dfn> request header field gives a server
 information about the <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a> on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑧">user agent</a> is executing.
-It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31⑨">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑦">string</a><a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. Its
+It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something⑨">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑥">string</a><a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>. Its
 value is the result of <a data-link-type="dfn" href="#get-the-platform-version" id="ref-for-get-the-platform-version">getting the platform version</a> with <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-the-platform-version">get the platform version</dfn>, given a string <var>platform</var>, run the following steps:</p>
    <ol>
@@ -1231,10 +1329,10 @@ interoperability with other browsers running on <var>platform</var> to <var>plat
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-the-legacy-windows-version-number">get the legacy Windows version number</dfn>, run the following steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>major</var> be the value of <code>OSVERSIONINFO</code>'s <code>dwMajorVersion</code> member returned from the
+     <p>Let <var>major</var> be the value of <code>OSVERSIONINFO</code>’s <code>dwMajorVersion</code> member returned from the
  Win32 <code>GetVersionEx</code> API.</p>
     <li data-md>
-     <p>Let <var>minor</var> be the value of <code>OSVERSIONINFO</code>'s <code>dwMinorVersion</code> member returned from the
+     <p>Let <var>minor</var> be the value of <code>OSVERSIONINFO</code>’s <code>dwMinorVersion</code> member returned from the
  Win32 <code>GetVersionEx</code> API.</p>
     <li data-md>
      <p>If <var>major</var> is <code>6</code> and <var>minor</var> is <code>3</code> (i.e., Windows 8.1), return "0.3".</p>
@@ -1283,7 +1381,7 @@ FULL STOP (<code>.</code>) separator.</p>
    <h3 class="heading settled" data-level="3.11" id="sec-ch-ua-wow64"><span class="secno">3.11. </span><span class="content">The 'Sec-CH-UA-WoW64' Header Field</span><a class="self-link" href="#sec-ch-ua-wow64"></a></h3>
    <p>The <dfn data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-wow64"><code>Sec-CH-UA-WoW64</code><a class="self-link" href="#http-headerdef-sec-ch-ua-wow64"></a></dfn> request header field gives a server information about
 whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑨">user agent</a> binary is running in 32-bit mode on 64-bit Windows.
-It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31①⓪">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.6" id="ref-for-section-3.3.6①">boolean</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
+It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something①⓪">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.6" id="ref-for-section-3.3.6①">boolean</a> <a data-link-type="biblio" href="#biblio-rfc8941" title="Structured Field Values for HTTP">[RFC8941]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA-WoW64</c-> <c- o>=</c-> <c- nc>sf-boolean</c->
 </pre>
@@ -1427,7 +1525,7 @@ separator).</p>
    <div class="note" role="note">
      This algorithm should result in an arbitrary brand without leading or trailing <var>greaseyChars</var>, as
 implementation experience has shown these are not web-compatible. 
-    <p>In addition, despite <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-edc3e3324b8239e1191d55af2617bd31①①">Structured Headers</a> allowing for escaped 0x22 (\") and 0x5C (\\) inside a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑧">string</a>, these characters have also created compatibility issues with
+    <p>In addition, despite <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#" id="ref-for-something①①">Structured Headers</a> allowing for escaped 0x22 (\") and 0x5C (\\) inside a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8941#section-3.3.3" id="ref-for-section-3.3.3⑦">string</a>, these characters have also created compatibility issues with
 firewalls.</p>
    </div>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-an-arbitrary-version">create an arbitrary version</dfn> given <var>version type</var>, run the following steps:</p>
@@ -1837,475 +1935,88 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#dom-uadatavalues-wow64">wow64</a><span>, in § 4</span>
    <li><a href="#user-agent-wow64-ness">wow64-ness</a><span>, in § 3</span>
   </ul>
-  <aside aria-labelledby="infopaneltitle-for-3997f5197f70f1d443e7fae4bfdf7813" class="dfn-panel" data-for="3997f5197f70f1d443e7fae4bfdf7813" id="infopanel-for-3997f5197f70f1d443e7fae4bfdf7813">
-   <span id="infopaneltitle-for-3997f5197f70f1d443e7fae4bfdf7813" style="display:none">Info about the 'active fingerprinting' external reference.</span><a href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting">https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-active-fingerprinting">5.3. Fingerprinting</a> <a href="#ref-for-dfn-active-fingerprinting①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-2b590f303e1e5fffbc3446b9b26c8e4f" class="dfn-panel" data-for="2b590f303e1e5fffbc3446b9b26c8e4f" id="infopanel-for-2b590f303e1e5fffbc3446b9b26c8e4f">
-   <span id="infopaneltitle-for-2b590f303e1e5fffbc3446b9b26c8e4f" style="display:none">Info about the 'best practice 1' external reference.</span><a href="https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases">https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-avoid-passive-increases">1. Introduction</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-cfc84645713774846e370ab47464bdd6" class="dfn-panel" data-for="cfc84645713774846e370ab47464bdd6" id="infopanel-for-cfc84645713774846e370ab47464bdd6">
-   <span id="infopaneltitle-for-cfc84645713774846e370ab47464bdd6" style="display:none">Info about the 'current realm' external reference.</span><a href="https://tc39.es/ecma262/#current-realm">https://tc39.es/ecma262/#current-realm</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-current-realm">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-e602a07ee228912cb928210a662599bb" class="dfn-panel" data-for="e602a07ee228912cb928210a662599bb" id="infopanel-for-e602a07ee228912cb928210a662599bb">
-   <span id="infopaneltitle-for-e602a07ee228912cb928210a662599bb" style="display:none">Info about the 'passive fingerprinting' external reference.</span><a href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting">https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-passive-fingerprinting">Unnumbered Section</a>
-    <li><a href="#ref-for-dfn-passive-fingerprinting①">1. Introduction</a>
-    <li><a href="#ref-for-dfn-passive-fingerprinting②">5.2. Delegation</a>
-    <li><a href="#ref-for-dfn-passive-fingerprinting③">5.3. Fingerprinting</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-0e616968f50afe67919c71544b7ff178" class="dfn-panel" data-for="0e616968f50afe67919c71544b7ff178" id="infopanel-for-0e616968f50afe67919c71544b7ff178">
-   <span id="infopaneltitle-for-0e616968f50afe67919c71544b7ff178" style="display:none">Info about the 'permission task source' external reference.</span><a href="https://w3c.github.io/permissions/#dfn-permissions-task-source">https://w3c.github.io/permissions/#dfn-permissions-task-source</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-permissions-task-source">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f6ea1e00f886e38f90f930c2bb07d289" class="dfn-panel" data-for="f6ea1e00f886e38f90f930c2bb07d289" id="infopanel-for-f6ea1e00f886e38f90f930c2bb07d289">
-   <span id="infopaneltitle-for-f6ea1e00f886e38f90f930c2bb07d289" style="display:none">Info about the 'append client hints to request' external reference.</span><a href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request">https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-append-client-hints-to-request">5.2. Delegation</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-838052d91918daa0341851a344650d06" class="dfn-panel" data-for="838052d91918daa0341851a344650d06" id="infopanel-for-838052d91918daa0341851a344650d06">
-   <span id="infopaneltitle-for-838052d91918daa0341851a344650d06" style="display:none">Info about the 'client hints token' external reference.</span><a href="https://wicg.github.io/client-hints-infrastructure/#client-hints-token">https://wicg.github.io/client-hints-infrastructure/#client-hints-token</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-client-hints-token">3.11. The 'Sec-CH-UA-WoW64' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-1f9c7a637d2441cd6f3af324d00e6a87" class="dfn-panel" data-for="1f9c7a637d2441cd6f3af324d00e6a87" id="infopanel-for-1f9c7a637d2441cd6f3af324d00e6a87">
-   <span id="infopaneltitle-for-1f9c7a637d2441cd6f3af324d00e6a87" style="display:none">Info about the 'low entropy hint table' external reference.</span><a href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table">https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-low-entropy-hint-table">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-low-entropy-hint-table①">3.7. The 'Sec-CH-UA-Mobile' Header Field</a>
-    <li><a href="#ref-for-low-entropy-hint-table②">3.9. The 'Sec-CH-UA-Platform' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-cc29bfc56397134563b20d679eafd421" class="dfn-panel" data-for="cc29bfc56397134563b20d679eafd421" id="infopanel-for-cc29bfc56397134563b20d679eafd421">
-   <span id="infopaneltitle-for-cc29bfc56397134563b20d679eafd421" style="display:none">Info about the 'policy-controlled client hints features' external reference.</span><a href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features">https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-policy-controlled-client-hints-features">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-policy-controlled-client-hints-features①">3.7. The 'Sec-CH-UA-Mobile' Header Field</a>
-    <li><a href="#ref-for-policy-controlled-client-hints-features②">3.9. The 'Sec-CH-UA-Platform' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-8184daca5125998da6a4187ca2a1b4d2" class="dfn-panel" data-for="8184daca5125998da6a4187ca2a1b4d2" id="infopanel-for-8184daca5125998da6a4187ca2a1b4d2">
-   <span id="infopaneltitle-for-8184daca5125998da6a4187ca2a1b4d2" style="display:none">Info about the 'devicecompat' external reference.</span><a href="https://compat.spec.whatwg.org/#devicecompat">https://compat.spec.whatwg.org/#devicecompat</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-devicecompat">3. User Agent Hints</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-3c82b19be23a00eb4bb6896ec20cd7aa" class="dfn-panel" data-for="3c82b19be23a00eb4bb6896ec20cd7aa" id="infopanel-for-3c82b19be23a00eb4bb6896ec20cd7aa">
-   <span id="infopaneltitle-for-3c82b19be23a00eb4bb6896ec20cd7aa" style="display:none">Info about the 'Navigator' external reference.</span><a href="https://html.spec.whatwg.org/multipage/system-state.html#navigator">https://html.spec.whatwg.org/multipage/system-state.html#navigator</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-navigator">4. Interface</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-e027d9579874c4c69c0da88943bc748f" class="dfn-panel" data-for="e027d9579874c4c69c0da88943bc748f" id="infopanel-for-e027d9579874c4c69c0da88943bc748f">
-   <span id="infopaneltitle-for-e027d9579874c4c69c0da88943bc748f" style="display:none">Info about the 'WindowOrWorkerGlobalScope' external reference.</span><a href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope">https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-windoworworkerglobalscope">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-windoworworkerglobalscope①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f9c60134d1166b5cbe490d111703a3b0" class="dfn-panel" data-for="f9c60134d1166b5cbe490d111703a3b0" id="infopanel-for-f9c60134d1166b5cbe490d111703a3b0">
-   <span id="infopaneltitle-for-f9c60134d1166b5cbe490d111703a3b0" style="display:none">Info about the 'WorkerNavigator' external reference.</span><a href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator">https://html.spec.whatwg.org/multipage/workers.html#workernavigator</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-workernavigator">4. Interface</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-3a2763fcaa6bc82693554cf36780c0dd" class="dfn-panel" data-for="3a2763fcaa6bc82693554cf36780c0dd" id="infopanel-for-3a2763fcaa6bc82693554cf36780c0dd">
-   <span id="infopaneltitle-for-3a2763fcaa6bc82693554cf36780c0dd" style="display:none">Info about the 'in parallel' external reference.</span><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel">https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-in-parallel">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-da7ed5f190c4eedd375552d6f7876301" class="dfn-panel" data-for="da7ed5f190c4eedd375552d6f7876301" id="infopanel-for-da7ed5f190c4eedd375552d6f7876301">
-   <span id="infopaneltitle-for-da7ed5f190c4eedd375552d6f7876301" style="display:none">Info about the 'queue a task' external reference.</span><a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-queue-a-task">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-2233058c8f0998915af8393ee2abbc1d" class="dfn-panel" data-for="2233058c8f0998915af8393ee2abbc1d" id="infopanel-for-2233058c8f0998915af8393ee2abbc1d">
-   <span id="infopaneltitle-for-2233058c8f0998915af8393ee2abbc1d" style="display:none">Info about the 'relevant global object' external reference.</span><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-relevant-global">4.1.5. Getters</a>
-    <li><a href="#ref-for-concept-relevant-global①">4.1.6. getHighEntropyValues method</a> <a href="#ref-for-concept-relevant-global②">(2)</a>
-    <li><a href="#ref-for-concept-relevant-global③">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-fcfc8b0ed220faa237969aed00e2586d" class="dfn-panel" data-for="fcfc8b0ed220faa237969aed00e2586d" id="infopanel-for-fcfc8b0ed220faa237969aed00e2586d">
-   <span id="infopaneltitle-for-fcfc8b0ed220faa237969aed00e2586d" style="display:none">Info about the 'append' external reference.</span><a href="https://infra.spec.whatwg.org/#list-append">https://infra.spec.whatwg.org/#list-append</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-append">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a> <a href="#ref-for-list-append①">(2)</a> <a href="#ref-for-list-append②">(3)</a> <a href="#ref-for-list-append③">(4)</a> <a href="#ref-for-list-append④">(5)</a> <a href="#ref-for-list-append⑤">(6)</a>
-    <li><a href="#ref-for-list-append⑥">4.1.2. Create brands</a> <a href="#ref-for-list-append⑦">(2)</a>
-    <li><a href="#ref-for-list-append⑧">4.1.3. Create arbitrary brand and version values</a> <a href="#ref-for-list-append⑨">(2)</a> <a href="#ref-for-list-append①⓪">(3)</a>
-    <li><a href="#ref-for-list-append①①">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-e1e46f5ff1289bed869101f3ad873031" class="dfn-panel" data-for="e1e46f5ff1289bed869101f3ad873031" id="infopanel-for-e1e46f5ff1289bed869101f3ad873031">
-   <span id="infopaneltitle-for-e1e46f5ff1289bed869101f3ad873031" style="display:none">Info about the 'ascii alpha' external reference.</span><a href="https://infra.spec.whatwg.org/#ascii-alpha">https://infra.spec.whatwg.org/#ascii-alpha</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-ascii-alpha">3. User Agent Hints</a>
-    <li><a href="#ref-for-ascii-alpha①">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f7ea7339a0bfdd0024f0cbd9cf67997e" class="dfn-panel" data-for="f7ea7339a0bfdd0024f0cbd9cf67997e" id="infopanel-for-f7ea7339a0bfdd0024f0cbd9cf67997e">
-   <span id="infopaneltitle-for-f7ea7339a0bfdd0024f0cbd9cf67997e" style="display:none">Info about the 'ascii byte' external reference.</span><a href="https://infra.spec.whatwg.org/#ascii-byte">https://infra.spec.whatwg.org/#ascii-byte</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-ascii-byte">4.1.3. Create arbitrary brand and version values</a> <a href="#ref-for-ascii-byte①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-7618b9a6d44febb7e784c8f39faac140" class="dfn-panel" data-for="7618b9a6d44febb7e784c8f39faac140" id="infopanel-for-7618b9a6d44febb7e784c8f39faac140">
-   <span id="infopaneltitle-for-7618b9a6d44febb7e784c8f39faac140" style="display:none">Info about the 'assert' external reference.</span><a href="https://infra.spec.whatwg.org/#assert">https://infra.spec.whatwg.org/#assert</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-assert">4.1.2. Create brands</a>
-    <li><a href="#ref-for-assert①">4.1.3. Create arbitrary brand and version values</a>
-    <li><a href="#ref-for-assert②">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-b554fa62e66e696c005b983f794a74e2" class="dfn-panel" data-for="b554fa62e66e696c005b983f794a74e2" id="infopanel-for-b554fa62e66e696c005b983f794a74e2">
-   <span id="infopaneltitle-for-b554fa62e66e696c005b983f794a74e2" style="display:none">Info about the 'concatenation' external reference.</span><a href="https://infra.spec.whatwg.org/#string-concatenate">https://infra.spec.whatwg.org/#string-concatenate</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-string-concatenate">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a> <a href="#ref-for-string-concatenate①">(2)</a>
-    <li><a href="#ref-for-string-concatenate②">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-eb75379b05abc264a531a791358e1eba" class="dfn-panel" data-for="eb75379b05abc264a531a791358e1eba" id="infopanel-for-eb75379b05abc264a531a791358e1eba">
-   <span id="infopaneltitle-for-eb75379b05abc264a531a791358e1eba" style="display:none">Info about the 'contain' external reference.</span><a href="https://infra.spec.whatwg.org/#list-contain">https://infra.spec.whatwg.org/#list-contain</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-contain">4.1.6. getHighEntropyValues method</a> <a href="#ref-for-list-contain①">(2)</a> <a href="#ref-for-list-contain②">(3)</a> <a href="#ref-for-list-contain③">(4)</a> <a href="#ref-for-list-contain④">(5)</a> <a href="#ref-for-list-contain⑤">(6)</a> <a href="#ref-for-list-contain⑥">(7)</a> <a href="#ref-for-list-contain⑦">(8)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-a46173c17cabb7b019631b97ab2f07c6" class="dfn-panel" data-for="a46173c17cabb7b019631b97ab2f07c6" id="infopanel-for-a46173c17cabb7b019631b97ab2f07c6">
-   <span id="infopaneltitle-for-a46173c17cabb7b019631b97ab2f07c6" style="display:none">Info about the 'is not empty' external reference.</span><a href="https://infra.spec.whatwg.org/#list-is-empty">https://infra.spec.whatwg.org/#list-is-empty</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-is-empty">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-c783a9adeafb412d3bdeaeb1c6a29d96" class="dfn-panel" data-for="c783a9adeafb412d3bdeaeb1c6a29d96" id="infopanel-for-c783a9adeafb412d3bdeaeb1c6a29d96">
-   <span id="infopaneltitle-for-c783a9adeafb412d3bdeaeb1c6a29d96" style="display:none">Info about the 'item' external reference.</span><a href="https://infra.spec.whatwg.org/#list-item">https://infra.spec.whatwg.org/#list-item</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-item">4.1.2. Create brands</a> <a href="#ref-for-list-item①">(2)</a>
-    <li><a href="#ref-for-list-item②">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-fafd38d2108e357bcc9a6fd7f3cd04a7" class="dfn-panel" data-for="fafd38d2108e357bcc9a6fd7f3cd04a7" id="infopanel-for-fafd38d2108e357bcc9a6fd7f3cd04a7">
-   <span id="infopaneltitle-for-fafd38d2108e357bcc9a6fd7f3cd04a7" style="display:none">Info about the 'list' external reference.</span><a href="https://infra.spec.whatwg.org/#list">https://infra.spec.whatwg.org/#list</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a> <a href="#ref-for-list①">(2)</a> <a href="#ref-for-list②">(3)</a>
-    <li><a href="#ref-for-list③">4.1.1. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-list④">4.1.2. Create brands</a>
-    <li><a href="#ref-for-list⑤">4.1.3. Create arbitrary brand and version values</a> <a href="#ref-for-list⑥">(2)</a>
-    <li><a href="#ref-for-list⑦">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f5d2c37d1d4cf75f0a4c5c22df3b6431" class="dfn-panel" data-for="f5d2c37d1d4cf75f0a4c5c22df3b6431" id="infopanel-for-f5d2c37d1d4cf75f0a4c5c22df3b6431">
-   <span id="infopaneltitle-for-f5d2c37d1d4cf75f0a4c5c22df3b6431" style="display:none">Info about the 'pop' external reference.</span><a href="https://infra.spec.whatwg.org/#stack-pop">https://infra.spec.whatwg.org/#stack-pop</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-stack-pop">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-297d79b515c58dd17d08f7a65252af8f" class="dfn-panel" data-for="297d79b515c58dd17d08f7a65252af8f" id="infopanel-for-297d79b515c58dd17d08f7a65252af8f">
-   <span id="infopaneltitle-for-297d79b515c58dd17d08f7a65252af8f" style="display:none">Info about the 'push' external reference.</span><a href="https://infra.spec.whatwg.org/#stack-push">https://infra.spec.whatwg.org/#stack-push</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-stack-push">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-bed8381510f5967f5d37a33de776e857" class="dfn-panel" data-for="bed8381510f5967f5d37a33de776e857" id="infopanel-for-bed8381510f5967f5d37a33de776e857">
-   <span id="infopaneltitle-for-bed8381510f5967f5d37a33de776e857" style="display:none">Info about the 'size' external reference.</span><a href="https://infra.spec.whatwg.org/#list-size">https://infra.spec.whatwg.org/#list-size</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-size">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-fc63a7270d7480e6e37f57b7d6b2b829" class="dfn-panel" data-for="fc63a7270d7480e6e37f57b7d6b2b829" id="infopanel-for-fc63a7270d7480e6e37f57b7d6b2b829">
-   <span id="infopaneltitle-for-fc63a7270d7480e6e37f57b7d6b2b829" style="display:none">Info about the 'split on ascii whitespace' external reference.</span><a href="https://infra.spec.whatwg.org/#split-on-ascii-whitespace">https://infra.spec.whatwg.org/#split-on-ascii-whitespace</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-split-on-ascii-whitespace">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-b4227545bc14365743d4f4634b1f6d3d" class="dfn-panel" data-for="b4227545bc14365743d4f4634b1f6d3d" id="infopanel-for-b4227545bc14365743d4f4634b1f6d3d">
-   <span id="infopaneltitle-for-b4227545bc14365743d4f4634b1f6d3d" style="display:none">Info about the 'stack' external reference.</span><a href="https://infra.spec.whatwg.org/#stack">https://infra.spec.whatwg.org/#stack</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-stack">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-adb176cd03e93496f5eaada8f9e4dc0f" class="dfn-panel" data-for="adb176cd03e93496f5eaada8f9e4dc0f" id="infopanel-for-adb176cd03e93496f5eaada8f9e4dc0f">
-   <span id="infopaneltitle-for-adb176cd03e93496f5eaada8f9e4dc0f" style="display:none">Info about the 'strictly split a string' external reference.</span><a href="https://infra.spec.whatwg.org/#strictly-split">https://infra.spec.whatwg.org/#strictly-split</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-strictly-split">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-40b59bc325bd4d66701dfd8b7f1847c0" class="dfn-panel" data-for="40b59bc325bd4d66701dfd8b7f1847c0" id="infopanel-for-40b59bc325bd4d66701dfd8b7f1847c0">
-   <span id="infopaneltitle-for-40b59bc325bd4d66701dfd8b7f1847c0" style="display:none">Info about the 'string' external reference.</span><a href="https://infra.spec.whatwg.org/#string">https://infra.spec.whatwg.org/#string</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-string">4.1.2. Create brands</a>
-    <li><a href="#ref-for-string①">4.1.3. Create arbitrary brand and version values</a> <a href="#ref-for-string②">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-de718597721576a078bc4d521df323a6" class="dfn-panel" data-for="de718597721576a078bc4d521df323a6" id="infopanel-for-de718597721576a078bc4d521df323a6">
-   <span id="infopaneltitle-for-de718597721576a078bc4d521df323a6" style="display:none">Info about the 'strip leading and trailing ascii whitespace' external reference.</span><a href="https://infra.spec.whatwg.org/#strip-leading-and-trailing-ascii-whitespace">https://infra.spec.whatwg.org/#strip-leading-and-trailing-ascii-whitespace</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-strip-leading-and-trailing-ascii-whitespace">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-52bdfc59f72538efe80e2a86647ac489" class="dfn-panel" data-for="52bdfc59f72538efe80e2a86647ac489" id="infopanel-for-52bdfc59f72538efe80e2a86647ac489">
-   <span id="infopaneltitle-for-52bdfc59f72538efe80e2a86647ac489" style="display:none">Info about the 'user agent' external reference.</span><a href="https://infra.spec.whatwg.org/#user-agent">https://infra.spec.whatwg.org/#user-agent</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent">3. User Agent Hints</a> <a href="#ref-for-user-agent①">(2)</a> <a href="#ref-for-user-agent②">(3)</a> <a href="#ref-for-user-agent③">(4)</a> <a href="#ref-for-user-agent④">(5)</a> <a href="#ref-for-user-agent⑤">(6)</a> <a href="#ref-for-user-agent⑥">(7)</a> <a href="#ref-for-user-agent⑦">(8)</a> <a href="#ref-for-user-agent⑧">(9)</a> <a href="#ref-for-user-agent⑨">(10)</a> <a href="#ref-for-user-agent①⓪">(11)</a> <a href="#ref-for-user-agent①①">(12)</a> <a href="#ref-for-user-agent①②">(13)</a> <a href="#ref-for-user-agent①③">(14)</a> <a href="#ref-for-user-agent①④">(15)</a> <a href="#ref-for-user-agent①⑤">(16)</a> <a href="#ref-for-user-agent①⑥">(17)</a> <a href="#ref-for-user-agent①⑦">(18)</a> <a href="#ref-for-user-agent①⑧">(19)</a>
-    <li><a href="#ref-for-user-agent①⑨">3.1. The 'Sec-CH-UA' Header Field</a> <a href="#ref-for-user-agent②⓪">(2)</a> <a href="#ref-for-user-agent②①">(3)</a>
-    <li><a href="#ref-for-user-agent②②">3.2. The 'Sec-CH-UA-Arch' Header Field</a>
-    <li><a href="#ref-for-user-agent②③">3.3. The 'Sec-CH-UA-Bitness' Header Field</a>
-    <li><a href="#ref-for-user-agent②④">3.4. The 'Sec-CH-UA-Form-Factor' Header Field</a>
-    <li><a href="#ref-for-user-agent②⑤">3.7. The 'Sec-CH-UA-Mobile' Header Field</a>
-    <li><a href="#ref-for-user-agent②⑥">3.8. The 'Sec-CH-UA-Model' Header Field</a>
-    <li><a href="#ref-for-user-agent②⑦">3.9. The 'Sec-CH-UA-Platform' Header Field</a>
-    <li><a href="#ref-for-user-agent②⑧">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-    <li><a href="#ref-for-user-agent②⑨">3.11. The 'Sec-CH-UA-WoW64' Header Field</a>
-    <li><a href="#ref-for-user-agent③⓪">4. Interface</a>
-    <li><a href="#ref-for-user-agent③①">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-user-agent③②">(2)</a>
-    <li><a href="#ref-for-user-agent③③">4.1.2. Create brands</a> <a href="#ref-for-user-agent③④">(2)</a> <a href="#ref-for-user-agent③⑤">(3)</a>
-    <li><a href="#ref-for-user-agent③⑥">4.1.3. Create arbitrary brand and version values</a>
-    <li><a href="#ref-for-user-agent③⑦">4.1.5. Getters</a> <a href="#ref-for-user-agent③⑧">(2)</a>
-    <li><a href="#ref-for-user-agent③⑨">4.1.6. getHighEntropyValues method</a> <a href="#ref-for-user-agent④⓪">(2)</a> <a href="#ref-for-user-agent④①">(3)</a> <a href="#ref-for-user-agent④②">(4)</a> <a href="#ref-for-user-agent④③">(5)</a> <a href="#ref-for-user-agent④④">(6)</a> <a href="#ref-for-user-agent④⑤">(7)</a>
-    <li><a href="#ref-for-user-agent④⑥">4.1.7. toJSON method</a> <a href="#ref-for-user-agent④⑦">(2)</a>
-    <li><a href="#ref-for-user-agent④⑧">5.1. Secure Transport</a>
-    <li><a href="#ref-for-user-agent④⑨">5.2. Delegation</a>
-    <li><a href="#ref-for-user-agent⑤⓪">5.3. Fingerprinting</a> <a href="#ref-for-user-agent⑤①">(2)</a> <a href="#ref-for-user-agent⑤②">(3)</a> <a href="#ref-for-user-agent⑤③">(4)</a>
-    <li><a href="#ref-for-user-agent⑤④">5.4. Access Restrictions</a> <a href="#ref-for-user-agent⑤⑤">(2)</a>
-    <li><a href="#ref-for-user-agent⑤⑥">6.1. The 'User-Agent' Header</a> <a href="#ref-for-user-agent⑤⑦">(2)</a>
-    <li><a href="#ref-for-user-agent⑤⑧">6.2. GREASE-like UA Brand Lists</a> <a href="#ref-for-user-agent⑤⑨">(2)</a> <a href="#ref-for-user-agent⑥⓪">(3)</a> <a href="#ref-for-user-agent⑥①">(4)</a> <a href="#ref-for-user-agent⑥②">(5)</a> <a href="#ref-for-user-agent⑥③">(6)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-5bb426afb0158d16c2665b4c871137e8" class="dfn-panel" data-for="5bb426afb0158d16c2665b4c871137e8" id="infopanel-for-5bb426afb0158d16c2665b4c871137e8">
-   <span id="infopaneltitle-for-5bb426afb0158d16c2665b4c871137e8" style="display:none">Info about the 'boolean' external reference.</span><a href="https://tools.ietf.org/html/rfc8941#section-3.3.6">https://tools.ietf.org/html/rfc8941#section-3.3.6</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-3.3.6">3.7. The 'Sec-CH-UA-Mobile' Header Field</a>
-    <li><a href="#ref-for-section-3.3.6①">3.11. The 'Sec-CH-UA-WoW64' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-6274216a854620c22387e26067966b4e" class="dfn-panel" data-for="6274216a854620c22387e26067966b4e" id="infopanel-for-6274216a854620c22387e26067966b4e">
-   <span id="infopaneltitle-for-6274216a854620c22387e26067966b4e" style="display:none">Info about the 'list' external reference.</span><a href="https://tools.ietf.org/html/rfc8941#section-3.1">https://tools.ietf.org/html/rfc8941#section-3.1</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-3.1">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-section-3.1①">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-ac7a70e01f20468344f56a6bf551ceb9" class="dfn-panel" data-for="ac7a70e01f20468344f56a6bf551ceb9" id="infopanel-for-ac7a70e01f20468344f56a6bf551ceb9">
-   <span id="infopaneltitle-for-ac7a70e01f20468344f56a6bf551ceb9" style="display:none">Info about the 'serializing a list' external reference.</span><a href="https://tools.ietf.org/html/rfc8941#section-4.1.1">https://tools.ietf.org/html/rfc8941#section-4.1.1</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-4.1.1">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-section-4.1.1①">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-74d52bb72ef9fb1bb5520406f010079c" class="dfn-panel" data-for="74d52bb72ef9fb1bb5520406f010079c" id="infopanel-for-74d52bb72ef9fb1bb5520406f010079c">
-   <span id="infopaneltitle-for-74d52bb72ef9fb1bb5520406f010079c" style="display:none">Info about the 'string' external reference.</span><a href="https://tools.ietf.org/html/rfc8941#section-3.3.3">https://tools.ietf.org/html/rfc8941#section-3.3.3</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-3.3.3">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3①">3.2. The 'Sec-CH-UA-Arch' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3②">3.3. The 'Sec-CH-UA-Bitness' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3③">3.4. The 'Sec-CH-UA-Form-Factor' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3④">3.5. The 'Sec-CH-UA-Full-Version' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3⑤">3.8. The 'Sec-CH-UA-Model' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3⑥">3.9. The 'Sec-CH-UA-Platform' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3⑦">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-    <li><a href="#ref-for-section-3.3.3⑧">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-edc3e3324b8239e1191d55af2617bd31" class="dfn-panel" data-for="edc3e3324b8239e1191d55af2617bd31" id="infopanel-for-edc3e3324b8239e1191d55af2617bd31">
-   <span id="infopaneltitle-for-edc3e3324b8239e1191d55af2617bd31" style="display:none">Info about the 'structured header' external reference.</span><a href="https://tools.ietf.org/html/rfc8941#">https://tools.ietf.org/html/rfc8941#</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.2. The 'Sec-CH-UA-Arch' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.3. The 'Sec-CH-UA-Bitness' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.4. The 'Sec-CH-UA-Form-Factor' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.5. The 'Sec-CH-UA-Full-Version' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.7. The 'Sec-CH-UA-Mobile' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.8. The 'Sec-CH-UA-Model' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.9. The 'Sec-CH-UA-Platform' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">3.11. The 'Sec-CH-UA-WoW64' Header Field</a>
-    <li><a href="#ref-for-edc3e3324b8239e1191d55af2617bd31">4.1.3. Create arbitrary brand and version values</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-d0f238a61de9310f1738a214749fab18" class="dfn-panel" data-for="d0f238a61de9310f1738a214749fab18" id="infopanel-for-d0f238a61de9310f1738a214749fab18">
-   <span id="infopaneltitle-for-d0f238a61de9310f1738a214749fab18" style="display:none">Info about the 'DOMString' external reference.</span><a href="https://webidl.spec.whatwg.org/#idl-DOMString">https://webidl.spec.whatwg.org/#idl-DOMString</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-DOMString">4. Interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a> <a href="#ref-for-idl-DOMString⑤">(6)</a> <a href="#ref-for-idl-DOMString⑥">(7)</a> <a href="#ref-for-idl-DOMString⑦">(8)</a> <a href="#ref-for-idl-DOMString⑧">(9)</a> <a href="#ref-for-idl-DOMString⑨">(10)</a> <a href="#ref-for-idl-DOMString①⓪">(11)</a> <a href="#ref-for-idl-DOMString①①">(12)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dde049eb112f043fc45407ec0d4cb457" class="dfn-panel" data-for="dde049eb112f043fc45407ec0d4cb457" id="infopanel-for-dde049eb112f043fc45407ec0d4cb457">
-   <span id="infopaneltitle-for-dde049eb112f043fc45407ec0d4cb457" style="display:none">Info about the 'Exposed' external reference.</span><a href="https://webidl.spec.whatwg.org/#Exposed">https://webidl.spec.whatwg.org/#Exposed</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-Exposed">4. Interface</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-30e8367dc9a547b9096d98ba691987d9" class="dfn-panel" data-for="30e8367dc9a547b9096d98ba691987d9" id="infopanel-for-30e8367dc9a547b9096d98ba691987d9">
-   <span id="infopaneltitle-for-30e8367dc9a547b9096d98ba691987d9" style="display:none">Info about the 'FrozenArray' external reference.</span><a href="https://webidl.spec.whatwg.org/#idl-frozen-array">https://webidl.spec.whatwg.org/#idl-frozen-array</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-frozen-array">4. Interface</a>
-    <li><a href="#ref-for-idl-frozen-array①">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-idl-frozen-array②">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-aa43258e2b51dc6ebe6268a36e6fd733" class="dfn-panel" data-for="aa43258e2b51dc6ebe6268a36e6fd733" id="infopanel-for-aa43258e2b51dc6ebe6268a36e6fd733">
-   <span id="infopaneltitle-for-aa43258e2b51dc6ebe6268a36e6fd733" style="display:none">Info about the 'NotAllowedError' external reference.</span><a href="https://webidl.spec.whatwg.org/#notallowederror">https://webidl.spec.whatwg.org/#notallowederror</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-notallowederror">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-93669c631ec1ef8e696b4c083bdbe12c" class="dfn-panel" data-for="93669c631ec1ef8e696b4c083bdbe12c" id="infopanel-for-93669c631ec1ef8e696b4c083bdbe12c">
-   <span id="infopaneltitle-for-93669c631ec1ef8e696b4c083bdbe12c" style="display:none">Info about the 'Promise' external reference.</span><a href="https://webidl.spec.whatwg.org/#idl-promise">https://webidl.spec.whatwg.org/#idl-promise</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-promise">4. Interface</a> <a href="#ref-for-idl-promise①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-cdf224ec60dc3b08449a2fbdf3a90406" class="dfn-panel" data-for="cdf224ec60dc3b08449a2fbdf3a90406" id="infopanel-for-cdf224ec60dc3b08449a2fbdf3a90406">
-   <span id="infopaneltitle-for-cdf224ec60dc3b08449a2fbdf3a90406" style="display:none">Info about the 'SecureContext' external reference.</span><a href="https://webidl.spec.whatwg.org/#SecureContext">https://webidl.spec.whatwg.org/#SecureContext</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-SecureContext">4. Interface</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-bbe33fc7ac016834e4aaddbfd1b084a1" class="dfn-panel" data-for="bbe33fc7ac016834e4aaddbfd1b084a1" id="infopanel-for-bbe33fc7ac016834e4aaddbfd1b084a1">
-   <span id="infopaneltitle-for-bbe33fc7ac016834e4aaddbfd1b084a1" style="display:none">Info about the 'a new promise' external reference.</span><a href="https://webidl.spec.whatwg.org/#a-new-promise">https://webidl.spec.whatwg.org/#a-new-promise</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-a-new-promise">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f8062b07e25ed0281f5cbfb9a54070b4" class="dfn-panel" data-for="f8062b07e25ed0281f5cbfb9a54070b4" id="infopanel-for-f8062b07e25ed0281f5cbfb9a54070b4">
-   <span id="infopaneltitle-for-f8062b07e25ed0281f5cbfb9a54070b4" style="display:none">Info about the 'boolean' external reference.</span><a href="https://webidl.spec.whatwg.org/#idl-boolean">https://webidl.spec.whatwg.org/#idl-boolean</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-boolean">4. Interface</a> <a href="#ref-for-idl-boolean①">(2)</a> <a href="#ref-for-idl-boolean②">(3)</a> <a href="#ref-for-idl-boolean③">(4)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-0a99406bd73373ee3ccdafd36af2e87b" class="dfn-panel" data-for="0a99406bd73373ee3ccdafd36af2e87b" id="infopanel-for-0a99406bd73373ee3ccdafd36af2e87b">
-   <span id="infopaneltitle-for-0a99406bd73373ee3ccdafd36af2e87b" style="display:none">Info about the 'create a frozen array' external reference.</span><a href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array">https://webidl.spec.whatwg.org/#dfn-create-frozen-array</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-create-frozen-array">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-dfn-create-frozen-array①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-e111d752819bc457f7b554b621087a4a" class="dfn-panel" data-for="e111d752819bc457f7b554b621087a4a" id="infopanel-for-e111d752819bc457f7b554b621087a4a">
-   <span id="infopaneltitle-for-e111d752819bc457f7b554b621087a4a" style="display:none">Info about the 'dictionary' external reference.</span><a href="https://webidl.spec.whatwg.org/#dfn-dictionary">https://webidl.spec.whatwg.org/#dfn-dictionary</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-dictionary">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f7204c0306e7ffcb24c31adf6e629e1d" class="dfn-panel" data-for="f7204c0306e7ffcb24c31adf6e629e1d" id="infopanel-for-f7204c0306e7ffcb24c31adf6e629e1d">
-   <span id="infopaneltitle-for-f7204c0306e7ffcb24c31adf6e629e1d" style="display:none">Info about the 'reject' external reference.</span><a href="https://webidl.spec.whatwg.org/#reject">https://webidl.spec.whatwg.org/#reject</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-reject">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-f4f973f92274819781816b033aea1f11" class="dfn-panel" data-for="f4f973f92274819781816b033aea1f11" id="infopanel-for-f4f973f92274819781816b033aea1f11">
-   <span id="infopaneltitle-for-f4f973f92274819781816b033aea1f11" style="display:none">Info about the 'resolve' external reference.</span><a href="https://webidl.spec.whatwg.org/#resolve">https://webidl.spec.whatwg.org/#resolve</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-resolve">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-38ab7db52e46bed36993204c29f67202" class="dfn-panel" data-for="38ab7db52e46bed36993204c29f67202" id="infopanel-for-38ab7db52e46bed36993204c29f67202">
-   <span id="infopaneltitle-for-38ab7db52e46bed36993204c29f67202" style="display:none">Info about the 'sequence' external reference.</span><a href="https://webidl.spec.whatwg.org/#idl-sequence">https://webidl.spec.whatwg.org/#idl-sequence</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-sequence">4. Interface</a> <a href="#ref-for-idl-sequence①">(2)</a> <a href="#ref-for-idl-sequence②">(3)</a> <a href="#ref-for-idl-sequence③">(4)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-be0933df03cd63338f98de217c4158c7" class="dfn-panel" data-for="be0933df03cd63338f98de217c4158c7" id="infopanel-for-be0933df03cd63338f98de217c4158c7">
-   <span id="infopaneltitle-for-be0933df03cd63338f98de217c4158c7" style="display:none">Info about the 'this' external reference.</span><a href="https://webidl.spec.whatwg.org/#this">https://webidl.spec.whatwg.org/#this</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-this">4.1.5. Getters</a>
-    <li><a href="#ref-for-this①">4.1.6. getHighEntropyValues method</a> <a href="#ref-for-this②">(2)</a>
-    <li><a href="#ref-for-this③">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
     <a data-link-type="biblio">[]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="3997f5197f70f1d443e7fae4bfdf7813">active fingerprinting</span>
-     <li><span class="dfn-paneled" id="2b590f303e1e5fffbc3446b9b26c8e4f">best practice 1</span>
-     <li><span class="dfn-paneled" id="cfc84645713774846e370ab47464bdd6">current realm</span>
-     <li><span class="dfn-paneled" id="e602a07ee228912cb928210a662599bb">passive fingerprinting</span>
-     <li><span class="dfn-paneled" id="0e616968f50afe67919c71544b7ff178">permission task source</span>
+     <li><span class="dfn-paneled" id="15edd6b4">active fingerprinting</span>
+     <li><span class="dfn-paneled" id="bc612dfe">best practice 1</span>
+     <li><span class="dfn-paneled" id="3aec4bbc">current realm</span>
+     <li><span class="dfn-paneled" id="c9898e54">passive fingerprinting</span>
+     <li><span class="dfn-paneled" id="0407598e">permission task source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[CLIENT-HINTS-INFRASTRUCTURE]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="f6ea1e00f886e38f90f930c2bb07d289">append client hints to request</span>
-     <li><span class="dfn-paneled" id="838052d91918daa0341851a344650d06">client hints token</span>
-     <li><span class="dfn-paneled" id="1f9c7a637d2441cd6f3af324d00e6a87">low entropy hint table</span>
-     <li><span class="dfn-paneled" id="cc29bfc56397134563b20d679eafd421">policy-controlled client hints features</span>
+     <li><span class="dfn-paneled" id="6360ebfe">append client hints to request</span>
+     <li><span class="dfn-paneled" id="ea0ecaa0">client hints token</span>
+     <li><span class="dfn-paneled" id="c7a20f42">low entropy hint table</span>
+     <li><span class="dfn-paneled" id="f391224b">policy-controlled client hints features</span>
     </ul>
    <li>
     <a data-link-type="biblio">[COMPAT]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="8184daca5125998da6a4187ca2a1b4d2">devicecompat</span>
+     <li><span class="dfn-paneled" id="966ed8e9">devicecompat</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="3c82b19be23a00eb4bb6896ec20cd7aa">Navigator</span>
-     <li><span class="dfn-paneled" id="e027d9579874c4c69c0da88943bc748f">WindowOrWorkerGlobalScope</span>
-     <li><span class="dfn-paneled" id="f9c60134d1166b5cbe490d111703a3b0">WorkerNavigator</span>
-     <li><span class="dfn-paneled" id="3a2763fcaa6bc82693554cf36780c0dd">in parallel</span>
-     <li><span class="dfn-paneled" id="da7ed5f190c4eedd375552d6f7876301">queue a task</span>
-     <li><span class="dfn-paneled" id="2233058c8f0998915af8393ee2abbc1d">relevant global object</span>
+     <li><span class="dfn-paneled" id="be0c27b2">Navigator</span>
+     <li><span class="dfn-paneled" id="5f6d392d">WindowOrWorkerGlobalScope</span>
+     <li><span class="dfn-paneled" id="a4785085">WorkerNavigator</span>
+     <li><span class="dfn-paneled" id="a72449dd">in parallel</span>
+     <li><span class="dfn-paneled" id="9a517a7d">queue a task</span>
+     <li><span class="dfn-paneled" id="e99bd18e">relevant global object</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="fcfc8b0ed220faa237969aed00e2586d">append</span>
-     <li><span class="dfn-paneled" id="e1e46f5ff1289bed869101f3ad873031">ascii alpha</span>
-     <li><span class="dfn-paneled" id="f7ea7339a0bfdd0024f0cbd9cf67997e">ascii byte</span>
-     <li><span class="dfn-paneled" id="7618b9a6d44febb7e784c8f39faac140">assert</span>
-     <li><span class="dfn-paneled" id="b554fa62e66e696c005b983f794a74e2">concatenation</span>
-     <li><span class="dfn-paneled" id="eb75379b05abc264a531a791358e1eba">contain</span>
-     <li><span class="dfn-paneled" id="a46173c17cabb7b019631b97ab2f07c6">is not empty</span>
-     <li><span class="dfn-paneled" id="c783a9adeafb412d3bdeaeb1c6a29d96">item</span>
-     <li><span class="dfn-paneled" id="fafd38d2108e357bcc9a6fd7f3cd04a7">list</span>
-     <li><span class="dfn-paneled" id="f5d2c37d1d4cf75f0a4c5c22df3b6431">pop</span>
-     <li><span class="dfn-paneled" id="297d79b515c58dd17d08f7a65252af8f">push</span>
-     <li><span class="dfn-paneled" id="bed8381510f5967f5d37a33de776e857">size</span>
-     <li><span class="dfn-paneled" id="fc63a7270d7480e6e37f57b7d6b2b829">split on ascii whitespace</span>
-     <li><span class="dfn-paneled" id="b4227545bc14365743d4f4634b1f6d3d">stack</span>
-     <li><span class="dfn-paneled" id="adb176cd03e93496f5eaada8f9e4dc0f">strictly split a string</span>
-     <li><span class="dfn-paneled" id="40b59bc325bd4d66701dfd8b7f1847c0">string</span>
-     <li><span class="dfn-paneled" id="de718597721576a078bc4d521df323a6">strip leading and trailing ascii whitespace</span>
-     <li><span class="dfn-paneled" id="52bdfc59f72538efe80e2a86647ac489">user agent</span>
+     <li><span class="dfn-paneled" id="53275e46">append</span>
+     <li><span class="dfn-paneled" id="02f9bf93">ascii alpha</span>
+     <li><span class="dfn-paneled" id="617d690e">ascii byte</span>
+     <li><span class="dfn-paneled" id="77b4c09a">assert</span>
+     <li><span class="dfn-paneled" id="e28ccd60">concatenation</span>
+     <li><span class="dfn-paneled" id="ae8def21">contain</span>
+     <li><span class="dfn-paneled" id="dd460c8e">is not empty</span>
+     <li><span class="dfn-paneled" id="5afbefcd">item</span>
+     <li><span class="dfn-paneled" id="649608b9">list</span>
+     <li><span class="dfn-paneled" id="fca74142">pop</span>
+     <li><span class="dfn-paneled" id="7c3de606">push</span>
+     <li><span class="dfn-paneled" id="0204d188">size</span>
+     <li><span class="dfn-paneled" id="a682cc44">split on ascii whitespace</span>
+     <li><span class="dfn-paneled" id="ceacaa1c">stack</span>
+     <li><span class="dfn-paneled" id="7a3dbdb1">strictly split a string</span>
+     <li><span class="dfn-paneled" id="0698d556">string</span>
+     <li><span class="dfn-paneled" id="a37f05fd">strip leading and trailing ascii whitespace</span>
+     <li><span class="dfn-paneled" id="6d19ac93">user agent</span>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC8941]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="5bb426afb0158d16c2665b4c871137e8">boolean</span>
-     <li><span class="dfn-paneled" id="6274216a854620c22387e26067966b4e">list</span>
-     <li><span class="dfn-paneled" id="ac7a70e01f20468344f56a6bf551ceb9">serializing a list</span>
-     <li><span class="dfn-paneled" id="74d52bb72ef9fb1bb5520406f010079c">string</span>
-     <li><span class="dfn-paneled" id="edc3e3324b8239e1191d55af2617bd31">structured header</span>
+     <li><span class="dfn-paneled" id="6acd627c">boolean</span>
+     <li><span class="dfn-paneled" id="33f5a360">list</span>
+     <li><span class="dfn-paneled" id="25adf95e">serializing a list</span>
+     <li><span class="dfn-paneled" id="e982618f">string</span>
+     <li><span class="dfn-paneled" id="80c33376">structured header</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="d0f238a61de9310f1738a214749fab18">DOMString</span>
-     <li><span class="dfn-paneled" id="dde049eb112f043fc45407ec0d4cb457">Exposed</span>
-     <li><span class="dfn-paneled" id="30e8367dc9a547b9096d98ba691987d9">FrozenArray</span>
-     <li><span class="dfn-paneled" id="aa43258e2b51dc6ebe6268a36e6fd733">NotAllowedError</span>
-     <li><span class="dfn-paneled" id="93669c631ec1ef8e696b4c083bdbe12c">Promise</span>
-     <li><span class="dfn-paneled" id="cdf224ec60dc3b08449a2fbdf3a90406">SecureContext</span>
-     <li><span class="dfn-paneled" id="bbe33fc7ac016834e4aaddbfd1b084a1">a new promise</span>
-     <li><span class="dfn-paneled" id="f8062b07e25ed0281f5cbfb9a54070b4">boolean</span>
-     <li><span class="dfn-paneled" id="0a99406bd73373ee3ccdafd36af2e87b">create a frozen array</span>
-     <li><span class="dfn-paneled" id="e111d752819bc457f7b554b621087a4a">dictionary</span>
-     <li><span class="dfn-paneled" id="f7204c0306e7ffcb24c31adf6e629e1d">reject</span>
-     <li><span class="dfn-paneled" id="f4f973f92274819781816b033aea1f11">resolve</span>
-     <li><span class="dfn-paneled" id="38ab7db52e46bed36993204c29f67202">sequence</span>
-     <li><span class="dfn-paneled" id="be0933df03cd63338f98de217c4158c7">this</span>
+     <li><span class="dfn-paneled" id="8855a9aa">DOMString</span>
+     <li><span class="dfn-paneled" id="889e932f">Exposed</span>
+     <li><span class="dfn-paneled" id="dcf5fafa">FrozenArray</span>
+     <li><span class="dfn-paneled" id="ba556545">NotAllowedError</span>
+     <li><span class="dfn-paneled" id="bdbd19d1">Promise</span>
+     <li><span class="dfn-paneled" id="b75bb3bd">SecureContext</span>
+     <li><span class="dfn-paneled" id="dacde8b5">a new promise</span>
+     <li><span class="dfn-paneled" id="5372cca8">boolean</span>
+     <li><span class="dfn-paneled" id="1641b9ef">create a frozen array</span>
+     <li><span class="dfn-paneled" id="bec98d30">dictionary</span>
+     <li><span class="dfn-paneled" id="b262501e">reject</span>
+     <li><span class="dfn-paneled" id="3b90bdcd">resolve</span>
+     <li><span class="dfn-paneled" id="9cce47fd">sequence</span>
+     <li><span class="dfn-paneled" id="4013a022">this</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -2393,352 +2104,68 @@ for valuable feedback and contributions to this specification.</p>
   <div style="counter-reset:issue">
    <div class="issue"> We can improve upon when and why a UA decides to refuse a hint once <a href="https://github.com/WICG/ua-client-hints/issues/151">Issue #151</a> is resolved. <a class="issue-return" href="#issue-22962aa8" title="Jump to section">↵</a></div>
   </div>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-brand" class="dfn-panel" data-for="user-agent-brand" id="infopanel-for-user-agent-brand">
-   <span id="infopaneltitle-for-user-agent-brand" style="display:none">Info about the 'brand' definition.</span><b><a href="#user-agent-brand">#user-agent-brand</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-brand">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-brand①">4.1.2. Create brands</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-form-factor" class="dfn-panel" data-for="user-agent-form-factor" id="infopanel-for-user-agent-form-factor">
-   <span id="infopaneltitle-for-user-agent-form-factor" style="display:none">Info about the 'form-factor' definition.</span><b><a href="#user-agent-form-factor">#user-agent-form-factor</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-form-factor">3.4. The 'Sec-CH-UA-Form-Factor' Header Field</a>
-    <li><a href="#ref-for-user-agent-form-factor①">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-full-version" class="dfn-panel" data-for="user-agent-full-version" id="infopanel-for-user-agent-full-version">
-   <span id="infopaneltitle-for-user-agent-full-version" style="display:none">Info about the 'full version' definition.</span><b><a href="#user-agent-full-version">#user-agent-full-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-full-version">3. User Agent Hints</a>
-    <li><a href="#ref-for-user-agent-full-version①">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-full-version②">3.5. The 'Sec-CH-UA-Full-Version' Header Field</a>
-    <li><a href="#ref-for-user-agent-full-version③">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-    <li><a href="#ref-for-user-agent-full-version④">4.1.1. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-user-agent-full-version⑤">4.1.2. Create brands</a>
-    <li><a href="#ref-for-user-agent-full-version⑥">4.1.3. Create arbitrary brand and version values</a>
-    <li><a href="#ref-for-user-agent-full-version⑦">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-model" class="dfn-panel" data-for="user-agent-model" id="infopanel-for-user-agent-model">
-   <span id="infopaneltitle-for-user-agent-model" style="display:none">Info about the 'model' definition.</span><b><a href="#user-agent-model">#user-agent-model</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-model">3. User Agent Hints</a> <a href="#ref-for-user-agent-model①">(2)</a> <a href="#ref-for-user-agent-model②">(3)</a>
-    <li><a href="#ref-for-user-agent-model③">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-mobileness" class="dfn-panel" data-for="user-agent-mobileness" id="infopanel-for-user-agent-mobileness">
-   <span id="infopaneltitle-for-user-agent-mobileness" style="display:none">Info about the 'mobileness' definition.</span><b><a href="#user-agent-mobileness">#user-agent-mobileness</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-mobileness">3. User Agent Hints</a> <a href="#ref-for-user-agent-mobileness①">(2)</a>
-    <li><a href="#ref-for-user-agent-mobileness②">4.1.5. Getters</a>
-    <li><a href="#ref-for-user-agent-mobileness③">4.1.6. getHighEntropyValues method</a>
-    <li><a href="#ref-for-user-agent-mobileness④">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-platform-brand" class="dfn-panel" data-for="user-agent-platform-brand" id="infopanel-for-user-agent-platform-brand">
-   <span id="infopaneltitle-for-user-agent-platform-brand" style="display:none">Info about the 'platform brand' definition.</span><b><a href="#user-agent-platform-brand">#user-agent-platform-brand</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-platform-brand">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-    <li><a href="#ref-for-user-agent-platform-brand①">4.1.5. Getters</a>
-    <li><a href="#ref-for-user-agent-platform-brand②">4.1.6. getHighEntropyValues method</a> <a href="#ref-for-user-agent-platform-brand③">(2)</a>
-    <li><a href="#ref-for-user-agent-platform-brand④">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-platform-version" class="dfn-panel" data-for="user-agent-platform-version" id="infopanel-for-user-agent-platform-version">
-   <span id="infopaneltitle-for-user-agent-platform-version" style="display:none">Info about the 'platform version' definition.</span><b><a href="#user-agent-platform-version">#user-agent-platform-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-platform-version">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-platform-architecture" class="dfn-panel" data-for="user-agent-platform-architecture" id="infopanel-for-user-agent-platform-architecture">
-   <span id="infopaneltitle-for-user-agent-platform-architecture" style="display:none">Info about the 'platform architecture' definition.</span><b><a href="#user-agent-platform-architecture">#user-agent-platform-architecture</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-platform-architecture">3. User Agent Hints</a> <a href="#ref-for-user-agent-platform-architecture①">(2)</a> <a href="#ref-for-user-agent-platform-architecture②">(3)</a>
-    <li><a href="#ref-for-user-agent-platform-architecture③">4.1.6. getHighEntropyValues method</a>
-    <li><a href="#ref-for-user-agent-platform-architecture④">5.4. Access Restrictions</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-platform-bitness" class="dfn-panel" data-for="user-agent-platform-bitness" id="infopanel-for-user-agent-platform-bitness">
-   <span id="infopaneltitle-for-user-agent-platform-bitness" style="display:none">Info about the 'platform bitness' definition.</span><b><a href="#user-agent-platform-bitness">#user-agent-platform-bitness</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-platform-bitness">3. User Agent Hints</a> <a href="#ref-for-user-agent-platform-bitness①">(2)</a>
-    <li><a href="#ref-for-user-agent-platform-bitness②">3.3. The 'Sec-CH-UA-Bitness' Header Field</a>
-    <li><a href="#ref-for-user-agent-platform-bitness③">4.1.6. getHighEntropyValues method</a>
-    <li><a href="#ref-for-user-agent-platform-bitness④">5.4. Access Restrictions</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-significant-version" class="dfn-panel" data-for="user-agent-significant-version" id="infopanel-for-user-agent-significant-version">
-   <span id="infopaneltitle-for-user-agent-significant-version" style="display:none">Info about the 'significant version' definition.</span><b><a href="#user-agent-significant-version">#user-agent-significant-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-significant-version">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-significant-version①">4.1.1. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-user-agent-significant-version②">4.1.2. Create brands</a>
-    <li><a href="#ref-for-user-agent-significant-version③">4.1.3. Create arbitrary brand and version values</a>
-    <li><a href="#ref-for-user-agent-significant-version④">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-wow64-ness" class="dfn-panel" data-for="user-agent-wow64-ness" id="infopanel-for-user-agent-wow64-ness">
-   <span id="infopaneltitle-for-user-agent-wow64-ness" style="display:none">Info about the 'wow64-ness' definition.</span><b><a href="#user-agent-wow64-ness">#user-agent-wow64-ness</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-wow64-ness">3. User Agent Hints</a>
-    <li><a href="#ref-for-user-agent-wow64-ness①">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-http-headerdef-sec-ch-ua" class="dfn-panel" data-for="http-headerdef-sec-ch-ua" id="infopanel-for-http-headerdef-sec-ch-ua">
-   <span id="infopaneltitle-for-http-headerdef-sec-ch-ua" style="display:none">Info about the 'Sec-CH-UA' definition.</span><b><a href="#http-headerdef-sec-ch-ua">#http-headerdef-sec-ch-ua</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-http-headerdef-sec-ch-ua">3.1. The 'Sec-CH-UA' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-http-headerdef-sec-ch-ua-full-version-list" class="dfn-panel" data-for="http-headerdef-sec-ch-ua-full-version-list" id="infopanel-for-http-headerdef-sec-ch-ua-full-version-list">
-   <span id="infopaneltitle-for-http-headerdef-sec-ch-ua-full-version-list" style="display:none">Info about the 'Sec-CH-UA-Full-Version-List' definition.</span><b><a href="#http-headerdef-sec-ch-ua-full-version-list">#http-headerdef-sec-ch-ua-full-version-list</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-http-headerdef-sec-ch-ua-full-version-list">3.1. The 'Sec-CH-UA' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-get-the-platform-version" class="dfn-panel" data-for="get-the-platform-version" id="infopanel-for-get-the-platform-version">
-   <span id="infopaneltitle-for-get-the-platform-version" style="display:none">Info about the 'get the platform version' definition.</span><b><a href="#get-the-platform-version">#get-the-platform-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-get-the-platform-version">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-    <li><a href="#ref-for-get-the-platform-version①">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-get-the-legacy-windows-version-number" class="dfn-panel" data-for="get-the-legacy-windows-version-number" id="infopanel-for-get-the-legacy-windows-version-number">
-   <span id="infopaneltitle-for-get-the-legacy-windows-version-number" style="display:none">Info about the 'get the legacy Windows version number' definition.</span><b><a href="#get-the-legacy-windows-version-number">#get-the-legacy-windows-version-number</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-get-the-legacy-windows-version-number">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-create-a-unified-platform-version-string" class="dfn-panel" data-for="create-a-unified-platform-version-string" id="infopanel-for-create-a-unified-platform-version-string">
-   <span id="infopaneltitle-for-create-a-unified-platform-version-string" style="display:none">Info about the 'create a unified platform version string' definition.</span><b><a href="#create-a-unified-platform-version-string">#create-a-unified-platform-version-string</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-create-a-unified-platform-version-string">3.10. The 'Sec-CH-UA-Platform-Version' Header Field</a> <a href="#ref-for-create-a-unified-platform-version-string①">(2)</a> <a href="#ref-for-create-a-unified-platform-version-string②">(3)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dictdef-navigatoruabrandversion" class="dfn-panel" data-for="dictdef-navigatoruabrandversion" id="infopanel-for-dictdef-navigatoruabrandversion">
-   <span id="infopaneltitle-for-dictdef-navigatoruabrandversion" style="display:none">Info about the 'NavigatorUABrandVersion' definition.</span><b><a href="#dictdef-navigatoruabrandversion">#dictdef-navigatoruabrandversion</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dictdef-navigatoruabrandversion">4. Interface</a> <a href="#ref-for-dictdef-navigatoruabrandversion①">(2)</a> <a href="#ref-for-dictdef-navigatoruabrandversion②">(3)</a> <a href="#ref-for-dictdef-navigatoruabrandversion③">(4)</a>
-    <li><a href="#ref-for-dictdef-navigatoruabrandversion④">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-dictdef-navigatoruabrandversion⑤">(2)</a>
-    <li><a href="#ref-for-dictdef-navigatoruabrandversion⑥">4.1.2. Create brands</a> <a href="#ref-for-dictdef-navigatoruabrandversion⑦">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-navigatoruabrandversion-brand" class="dfn-panel" data-for="dom-navigatoruabrandversion-brand" id="infopanel-for-dom-navigatoruabrandversion-brand">
-   <span id="infopaneltitle-for-dom-navigatoruabrandversion-brand" style="display:none">Info about the 'brand' definition.</span><b><a href="#dom-navigatoruabrandversion-brand">#dom-navigatoruabrandversion-brand</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruabrandversion-brand">4.1.2. Create brands</a> <a href="#ref-for-dom-navigatoruabrandversion-brand①">(2)</a>
-    <li><a href="#ref-for-dom-navigatoruabrandversion-brand②">4.1.4. Create a brand-version list</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-navigatoruabrandversion-version" class="dfn-panel" data-for="dom-navigatoruabrandversion-version" id="infopanel-for-dom-navigatoruabrandversion-version">
-   <span id="infopaneltitle-for-dom-navigatoruabrandversion-version" style="display:none">Info about the 'version' definition.</span><b><a href="#dom-navigatoruabrandversion-version">#dom-navigatoruabrandversion-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruabrandversion-version">4.1.2. Create brands</a> <a href="#ref-for-dom-navigatoruabrandversion-version①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dictdef-uadatavalues" class="dfn-panel" data-for="dictdef-uadatavalues" id="infopanel-for-dictdef-uadatavalues">
-   <span id="infopaneltitle-for-dictdef-uadatavalues" style="display:none">Info about the 'UADataValues' definition.</span><b><a href="#dictdef-uadatavalues">#dictdef-uadatavalues</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dictdef-uadatavalues">4. Interface</a>
-    <li><a href="#ref-for-dictdef-uadatavalues①">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-architecture" class="dfn-panel" data-for="dom-uadatavalues-architecture" id="infopanel-for-dom-uadatavalues-architecture">
-   <span id="infopaneltitle-for-dom-uadatavalues-architecture" style="display:none">Info about the 'architecture' definition.</span><b><a href="#dom-uadatavalues-architecture">#dom-uadatavalues-architecture</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-architecture">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-bitness" class="dfn-panel" data-for="dom-uadatavalues-bitness" id="infopanel-for-dom-uadatavalues-bitness">
-   <span id="infopaneltitle-for-dom-uadatavalues-bitness" style="display:none">Info about the 'bitness' definition.</span><b><a href="#dom-uadatavalues-bitness">#dom-uadatavalues-bitness</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-bitness">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-brands" class="dfn-panel" data-for="dom-uadatavalues-brands" id="infopanel-for-dom-uadatavalues-brands">
-   <span id="infopaneltitle-for-dom-uadatavalues-brands" style="display:none">Info about the 'brands' definition.</span><b><a href="#dom-uadatavalues-brands">#dom-uadatavalues-brands</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-brands">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-formfactor" class="dfn-panel" data-for="dom-uadatavalues-formfactor" id="infopanel-for-dom-uadatavalues-formfactor">
-   <span id="infopaneltitle-for-dom-uadatavalues-formfactor" style="display:none">Info about the 'formFactor' definition.</span><b><a href="#dom-uadatavalues-formfactor">#dom-uadatavalues-formfactor</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-formfactor">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-fullversionlist" class="dfn-panel" data-for="dom-uadatavalues-fullversionlist" id="infopanel-for-dom-uadatavalues-fullversionlist">
-   <span id="infopaneltitle-for-dom-uadatavalues-fullversionlist" style="display:none">Info about the 'fullVersionList' definition.</span><b><a href="#dom-uadatavalues-fullversionlist">#dom-uadatavalues-fullversionlist</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-fullversionlist">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-model" class="dfn-panel" data-for="dom-uadatavalues-model" id="infopanel-for-dom-uadatavalues-model">
-   <span id="infopaneltitle-for-dom-uadatavalues-model" style="display:none">Info about the 'model' definition.</span><b><a href="#dom-uadatavalues-model">#dom-uadatavalues-model</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-model">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-mobile" class="dfn-panel" data-for="dom-uadatavalues-mobile" id="infopanel-for-dom-uadatavalues-mobile">
-   <span id="infopaneltitle-for-dom-uadatavalues-mobile" style="display:none">Info about the 'mobile' definition.</span><b><a href="#dom-uadatavalues-mobile">#dom-uadatavalues-mobile</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-mobile">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-platform" class="dfn-panel" data-for="dom-uadatavalues-platform" id="infopanel-for-dom-uadatavalues-platform">
-   <span id="infopaneltitle-for-dom-uadatavalues-platform" style="display:none">Info about the 'platform' definition.</span><b><a href="#dom-uadatavalues-platform">#dom-uadatavalues-platform</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-platform">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-platformversion" class="dfn-panel" data-for="dom-uadatavalues-platformversion" id="infopanel-for-dom-uadatavalues-platformversion">
-   <span id="infopaneltitle-for-dom-uadatavalues-platformversion" style="display:none">Info about the 'platformVersion' definition.</span><b><a href="#dom-uadatavalues-platformversion">#dom-uadatavalues-platformversion</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-platformversion">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-uafullversion" class="dfn-panel" data-for="dom-uadatavalues-uafullversion" id="infopanel-for-dom-uadatavalues-uafullversion">
-   <span id="infopaneltitle-for-dom-uadatavalues-uafullversion" style="display:none">Info about the 'uaFullVersion' definition.</span><b><a href="#dom-uadatavalues-uafullversion">#dom-uadatavalues-uafullversion</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-uafullversion">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-uadatavalues-wow64" class="dfn-panel" data-for="dom-uadatavalues-wow64" id="infopanel-for-dom-uadatavalues-wow64">
-   <span id="infopaneltitle-for-dom-uadatavalues-wow64" style="display:none">Info about the 'wow64' definition.</span><b><a href="#dom-uadatavalues-wow64">#dom-uadatavalues-wow64</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-uadatavalues-wow64">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dictdef-ualowentropyjson" class="dfn-panel" data-for="dictdef-ualowentropyjson" id="infopanel-for-dictdef-ualowentropyjson">
-   <span id="infopaneltitle-for-dictdef-ualowentropyjson" style="display:none">Info about the 'UALowEntropyJSON' definition.</span><b><a href="#dictdef-ualowentropyjson">#dictdef-ualowentropyjson</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dictdef-ualowentropyjson">4. Interface</a>
-    <li><a href="#ref-for-dictdef-ualowentropyjson①">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-ualowentropyjson-brands" class="dfn-panel" data-for="dom-ualowentropyjson-brands" id="infopanel-for-dom-ualowentropyjson-brands">
-   <span id="infopaneltitle-for-dom-ualowentropyjson-brands" style="display:none">Info about the 'brands' definition.</span><b><a href="#dom-ualowentropyjson-brands">#dom-ualowentropyjson-brands</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-ualowentropyjson-brands">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-ualowentropyjson-mobile" class="dfn-panel" data-for="dom-ualowentropyjson-mobile" id="infopanel-for-dom-ualowentropyjson-mobile">
-   <span id="infopaneltitle-for-dom-ualowentropyjson-mobile" style="display:none">Info about the 'mobile' definition.</span><b><a href="#dom-ualowentropyjson-mobile">#dom-ualowentropyjson-mobile</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-ualowentropyjson-mobile">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-ualowentropyjson-platform" class="dfn-panel" data-for="dom-ualowentropyjson-platform" id="infopanel-for-dom-ualowentropyjson-platform">
-   <span id="infopaneltitle-for-dom-ualowentropyjson-platform" style="display:none">Info about the 'platform' definition.</span><b><a href="#dom-ualowentropyjson-platform">#dom-ualowentropyjson-platform</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-ualowentropyjson-platform">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-navigatoruadata" class="dfn-panel" data-for="navigatoruadata" id="infopanel-for-navigatoruadata">
-   <span id="infopaneltitle-for-navigatoruadata" style="display:none">Info about the 'NavigatorUAData' definition.</span><b><a href="#navigatoruadata">#navigatoruadata</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-navigatoruadata">4. Interface</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-navigatoruadata-brands" class="dfn-panel" data-for="dom-navigatoruadata-brands" id="infopanel-for-dom-navigatoruadata-brands">
-   <span id="infopaneltitle-for-dom-navigatoruadata-brands" style="display:none">Info about the 'brands' definition.</span><b><a href="#dom-navigatoruadata-brands">#dom-navigatoruadata-brands</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-brands">4.1.5. Getters</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-navigatoruadata-mobile" class="dfn-panel" data-for="dom-navigatoruadata-mobile" id="infopanel-for-dom-navigatoruadata-mobile">
-   <span id="infopaneltitle-for-dom-navigatoruadata-mobile" style="display:none">Info about the 'mobile' definition.</span><b><a href="#dom-navigatoruadata-mobile">#dom-navigatoruadata-mobile</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-mobile">4.1.5. Getters</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-dom-navigatoruadata-platform" class="dfn-panel" data-for="dom-navigatoruadata-platform" id="infopanel-for-dom-navigatoruadata-platform">
-   <span id="infopaneltitle-for-dom-navigatoruadata-platform" style="display:none">Info about the 'platform' definition.</span><b><a href="#dom-navigatoruadata-platform">#dom-navigatoruadata-platform</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-navigatoruadata-platform">4.1.5. Getters</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-navigatorua" class="dfn-panel" data-for="navigatorua" id="infopanel-for-navigatorua">
-   <span id="infopaneltitle-for-navigatorua" style="display:none">Info about the 'NavigatorUA' definition.</span><b><a href="#navigatorua">#navigatorua</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-navigatorua">4. Interface</a> <a href="#ref-for-navigatorua①">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-brands" class="dfn-panel" data-for="user-agent-brands" id="infopanel-for-user-agent-brands">
-   <span id="infopaneltitle-for-user-agent-brands" style="display:none">Info about the 'brands' definition.</span><b><a href="#user-agent-brands">#user-agent-brands</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-brands">3. User Agent Hints</a> <a href="#ref-for-user-agent-brands①">(2)</a>
-    <li><a href="#ref-for-user-agent-brands②">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-user-agent-brands③">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-    <li><a href="#ref-for-user-agent-brands④">4.1.1. WindowOrWorkerGlobalScope</a>
-    <li><a href="#ref-for-user-agent-brands⑤">6.2. GREASE-like UA Brand Lists</a> <a href="#ref-for-user-agent-brands⑥">(2)</a> <a href="#ref-for-user-agent-brands⑦">(3)</a> <a href="#ref-for-user-agent-brands⑧">(4)</a> <a href="#ref-for-user-agent-brands⑨">(5)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-windoworworkerglobalscope-brands-frozen-array" class="dfn-panel" data-for="windoworworkerglobalscope-brands-frozen-array" id="infopanel-for-windoworworkerglobalscope-brands-frozen-array">
-   <span id="infopaneltitle-for-windoworworkerglobalscope-brands-frozen-array" style="display:none">Info about the 'brands frozen array' definition.</span><b><a href="#windoworworkerglobalscope-brands-frozen-array">#windoworworkerglobalscope-brands-frozen-array</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-windoworworkerglobalscope-brands-frozen-array">4.1.5. Getters</a>
-    <li><a href="#ref-for-windoworworkerglobalscope-brands-frozen-array①">4.1.6. getHighEntropyValues method</a>
-    <li><a href="#ref-for-windoworworkerglobalscope-brands-frozen-array②">4.1.7. toJSON method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-windoworworkerglobalscope-full-version-list-frozen-array" class="dfn-panel" data-for="windoworworkerglobalscope-full-version-list-frozen-array" id="infopanel-for-windoworworkerglobalscope-full-version-list-frozen-array">
-   <span id="infopaneltitle-for-windoworworkerglobalscope-full-version-list-frozen-array" style="display:none">Info about the 'full version list frozen array' definition.</span><b><a href="#windoworworkerglobalscope-full-version-list-frozen-array">#windoworworkerglobalscope-full-version-list-frozen-array</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-windoworworkerglobalscope-full-version-list-frozen-array">4.1.6. getHighEntropyValues method</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-create-brands" class="dfn-panel" data-for="create-brands" id="infopanel-for-create-brands">
-   <span id="infopaneltitle-for-create-brands" style="display:none">Info about the 'create brands' definition.</span><b><a href="#create-brands">#create-brands</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-create-brands">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-create-brands①">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-    <li><a href="#ref-for-create-brands②">4.1.1. WindowOrWorkerGlobalScope</a> <a href="#ref-for-create-brands③">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-user-agent-equivalence-class" class="dfn-panel" data-for="user-agent-equivalence-class" id="infopanel-for-user-agent-equivalence-class">
-   <span id="infopaneltitle-for-user-agent-equivalence-class" style="display:none">Info about the 'equivalence class' definition.</span><b><a href="#user-agent-equivalence-class">#user-agent-equivalence-class</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-user-agent-equivalence-class">3. User Agent Hints</a>
-    <li><a href="#ref-for-user-agent-equivalence-class①">4.1.2. Create brands</a> <a href="#ref-for-user-agent-equivalence-class②">(2)</a>
-    <li><a href="#ref-for-user-agent-equivalence-class③">6.2. GREASE-like UA Brand Lists</a> <a href="#ref-for-user-agent-equivalence-class④">(2)</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-create-an-arbitrary-brand" class="dfn-panel" data-for="create-an-arbitrary-brand" id="infopanel-for-create-an-arbitrary-brand">
-   <span id="infopaneltitle-for-create-an-arbitrary-brand" style="display:none">Info about the 'create an arbitrary brand' definition.</span><b><a href="#create-an-arbitrary-brand">#create-an-arbitrary-brand</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-create-an-arbitrary-brand">4.1.2. Create brands</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-create-an-arbitrary-version" class="dfn-panel" data-for="create-an-arbitrary-version" id="infopanel-for-create-an-arbitrary-version">
-   <span id="infopaneltitle-for-create-an-arbitrary-version" style="display:none">Info about the 'create an arbitrary version' definition.</span><b><a href="#create-an-arbitrary-version">#create-an-arbitrary-version</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-create-an-arbitrary-version">4.1.2. Create brands</a>
-   </ul>
-  </aside>
-  <aside aria-labelledby="infopaneltitle-for-create-a-brand-version-list" class="dfn-panel" data-for="create-a-brand-version-list" id="infopanel-for-create-a-brand-version-list">
-   <span id="infopaneltitle-for-create-a-brand-version-list" style="display:none">Info about the 'create a brand-version list' definition.</span><b><a href="#create-a-brand-version-list">#create-a-brand-version-list</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-create-a-brand-version-list">3.1. The 'Sec-CH-UA' Header Field</a>
-    <li><a href="#ref-for-create-a-brand-version-list①">3.6. The 'Sec-CH-UA-Full-Version-List' Header Field</a>
-   </ul>
-  </aside>
-<script>/* script-dfn-panel */
+<script>/* Boilerplate: script-dfn-panel */
 "use strict";
 {
-    function queryAll(sel) {
-        return [].slice.call(document.querySelectorAll(sel));
+    const dfnsJson = window.dfnsJson || {};
+
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
     }
 
-    // Add popup behavior to all dfns to show the corresponding dfn-panel.
-    var dfns = document.querySelectorAll('.dfn-paneled');
-    for (let dfn of dfns) { insertDfnPopupAction(dfn); }
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
+            }
+        }
+    }
 
-    document.body.addEventListener("click", (e) => {
-        // If not handled already, just hide all dfn panels.
-        hideAllDfnPanels();
-    });
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
 
     function hideAllDfnPanels() {
         // Turn off any currently "on" or "activated" panels.
@@ -2788,134 +2215,596 @@ for valuable feedback and contributions to this specification.</p>
         }
     }
 
-    function insertDfnPopupAction(dfn) {
+    function insertDfnPopupAction(dfn, dfnPanel) {
         // Find dfn panel
-        const dfnPanel = document.querySelector(`.dfn-panel[data-for='${dfn.id}']`);
-        if (dfnPanel) {
-            const panelWrapper = document.createElement('span');
-            panelWrapper.appendChild(dfnPanel);
-            panelWrapper.style.position = "relative";
-            panelWrapper.style.height = "0px";
-            dfn.insertAdjacentElement("afterend", panelWrapper);
-            dfn.setAttribute('role', 'button');
-            dfn.setAttribute('aria-expanded', 'false')
-            dfn.tabIndex = 0;
-            dfn.classList.add('has-dfn-panel');
-            dfn.addEventListener('click', (event) => {
-                showDfnPanel(dfnPanel, dfn);
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
                 event.stopPropagation();
-            });
-            dfn.addEventListener('keypress', (event) => {
-                const kc = event.keyCode;
-                // 32->Space, 13->Enter
-                if(kc == 32 || kc == 13) {
-                    toggleDfnPanel(dfnPanel, dfn);
-                    event.stopPropagation();
-                    event.preventDefault();
-                }
-            });
+                event.preventDefault();
+            }
+        });
 
-            dfnPanel.addEventListener('click', (event) => {
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
                 pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
                 event.stopPropagation();
-            });
-
-            dfnPanel.addEventListener('keydown', (event) => {
-                if(event.keyCode == 27) { // Escape key
-                    hideDfnPanel(dfnPanel, dfn);
-                    event.stopPropagation();
-                    event.preventDefault();
-                }
-            })
-
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + dfn.id + "']");
-        }
+                event.preventDefault();
+            }
+        })
     }
 }
 </script>
-<script>/* script-var-click-highlighting */
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
 
-    "use strict";
-    {
-        document.addEventListener("click", e=>{
-            if(e.target.nodeName == "VAR") {
-                highlightSameAlgoVars(e.target);
-            }
-        });
-        const indexCounts = new Map();
-        const indexNames = new Map();
-        function highlightSameAlgoVars(v) {
-            // Find the algorithm container.
-            let algoContainer = null;
-            let searchEl = v;
-            while(algoContainer == null && searchEl != document.body) {
-                searchEl = searchEl.parentNode;
-                if(searchEl.hasAttribute("data-algorithm")) {
-                    algoContainer = searchEl;
-                }
-            }
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
 
-            // Not highlighting document-global vars,
-            // too likely to be unrelated.
-            if(algoContainer == null) return;
-
-            const algoName = algoContainer.getAttribute("data-algorithm");
-            const varName = getVarName(v);
-            const addClass = !v.classList.contains("selected");
-            let highlightClass = null;
-            if(addClass) {
-                const index = chooseHighlightIndex(algoName, varName);
-                indexCounts.get(algoName)[index] += 1;
-                indexNames.set(algoName+"///"+varName, index);
-                highlightClass = nameFromIndex(index);
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
             } else {
-                const index = previousHighlightIndex(algoName, varName);
-                indexCounts.get(algoName)[index] -= 1;
-                highlightClass = nameFromIndex(index);
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
             }
-
-            // Find all same-name vars, and toggle their class appropriately.
-            for(const el of algoContainer.querySelectorAll("var")) {
-                if(getVarName(el) == varName) {
-                    el.classList.toggle("selected", addClass);
-                    el.classList.toggle(highlightClass, addClass);
-                }
-            }
-        }
-        function getVarName(el) {
-            return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
-        }
-        function chooseHighlightIndex(algoName, varName) {
-            let indexes = null;
-            if(indexCounts.has(algoName)) {
-                indexes = indexCounts.get(algoName);
-            } else {
-                // 7 classes right now
-                indexes = [0,0,0,0,0,0,0];
-                indexCounts.set(algoName, indexes);
-            }
-
-            // If the element was recently unclicked,
-            // *and* that color is still unclaimed,
-            // give it back the same color.
-            const lastIndex = previousHighlightIndex(algoName, varName);
-            if(indexes[lastIndex] === 0) return lastIndex;
-
-            // Find the earliest index with the lowest count.
-            const minCount = Math.min.apply(null, indexes);
-            let index = null;
-            for(var i = 0; i < indexes.length; i++) {
-                if(indexes[i] == minCount) {
-                    return i;
-                }
-            }
-        }
-        function previousHighlightIndex(algoName, varName) {
-            return indexNames.get(algoName+"///"+varName);
-        }
-        function nameFromIndex(index) {
-            return "selected" + index;
         }
     }
-    </script>
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel-json */
+window.dfnpanelData = {};
+window.dfnpanelData['15edd6b4'] = {"dfnID": "15edd6b4", "url": "https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting", "dfnText": "active fingerprinting", "refSections": [{"refs": [{"id": "ref-for-dfn-active-fingerprinting"}, {"id": "ref-for-dfn-active-fingerprinting\u2460"}], "title": "5.3. Fingerprinting"}], "external": true};
+window.dfnpanelData['bc612dfe'] = {"dfnID": "bc612dfe", "url": "https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases", "dfnText": "best practice 1", "refSections": [{"refs": [{"id": "ref-for-avoid-passive-increases"}], "title": "1. Introduction"}], "external": true};
+window.dfnpanelData['3aec4bbc'] = {"dfnID": "3aec4bbc", "url": "https://tc39.es/ecma262/#current-realm", "dfnText": "current realm", "refSections": [{"refs": [{"id": "ref-for-current-realm"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['c9898e54'] = {"dfnID": "c9898e54", "url": "https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting", "dfnText": "passive fingerprinting", "refSections": [{"refs": [{"id": "ref-for-dfn-passive-fingerprinting"}], "title": "Unnumbered Section"}, {"refs": [{"id": "ref-for-dfn-passive-fingerprinting\u2460"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-dfn-passive-fingerprinting\u2461"}], "title": "5.2. Delegation"}, {"refs": [{"id": "ref-for-dfn-passive-fingerprinting\u2462"}], "title": "5.3. Fingerprinting"}], "external": true};
+window.dfnpanelData['0407598e'] = {"dfnID": "0407598e", "url": "https://w3c.github.io/permissions/#dfn-permissions-task-source", "dfnText": "permission task source", "refSections": [{"refs": [{"id": "ref-for-dfn-permissions-task-source"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['6360ebfe'] = {"dfnID": "6360ebfe", "url": "https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request", "dfnText": "append client hints to request", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-append-client-hints-to-request"}], "title": "5.2. Delegation"}], "external": true};
+window.dfnpanelData['ea0ecaa0'] = {"dfnID": "ea0ecaa0", "url": "https://wicg.github.io/client-hints-infrastructure/#client-hints-token", "dfnText": "client hints token", "refSections": [{"refs": [{"id": "ref-for-client-hints-token"}], "title": "3.11. The 'Sec-CH-UA-WoW64' Header Field"}], "external": true};
+window.dfnpanelData['c7a20f42'] = {"dfnID": "c7a20f42", "url": "https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table", "dfnText": "low entropy hint table", "refSections": [{"refs": [{"id": "ref-for-low-entropy-hint-table"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-low-entropy-hint-table\u2460"}], "title": "3.7. The 'Sec-CH-UA-Mobile' Header Field"}, {"refs": [{"id": "ref-for-low-entropy-hint-table\u2461"}], "title": "3.9. The 'Sec-CH-UA-Platform' Header Field"}], "external": true};
+window.dfnpanelData['f391224b'] = {"dfnID": "f391224b", "url": "https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features", "dfnText": "policy-controlled client hints features", "refSections": [{"refs": [{"id": "ref-for-policy-controlled-client-hints-features"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-policy-controlled-client-hints-features\u2460"}], "title": "3.7. The 'Sec-CH-UA-Mobile' Header Field"}, {"refs": [{"id": "ref-for-policy-controlled-client-hints-features\u2461"}], "title": "3.9. The 'Sec-CH-UA-Platform' Header Field"}], "external": true};
+window.dfnpanelData['966ed8e9'] = {"dfnID": "966ed8e9", "url": "https://compat.spec.whatwg.org/#devicecompat", "dfnText": "devicecompat", "refSections": [{"refs": [{"id": "ref-for-devicecompat"}], "title": "3. User Agent Hints"}], "external": true};
+window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['5f6d392d'] = {"dfnID": "5f6d392d", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope", "dfnText": "WindowOrWorkerGlobalScope", "refSections": [{"refs": [{"id": "ref-for-windoworworkerglobalscope"}, {"id": "ref-for-windoworworkerglobalscope\u2460"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}], "external": true};
+window.dfnpanelData['a4785085'] = {"dfnID": "a4785085", "url": "https://html.spec.whatwg.org/multipage/workers.html#workernavigator", "dfnText": "WorkerNavigator", "refSections": [{"refs": [{"id": "ref-for-workernavigator"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['a72449dd'] = {"dfnID": "a72449dd", "url": "https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel", "dfnText": "in parallel", "refSections": [{"refs": [{"id": "ref-for-in-parallel"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['9a517a7d'] = {"dfnID": "9a517a7d", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task", "dfnText": "queue a task", "refSections": [{"refs": [{"id": "ref-for-queue-a-task"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['e99bd18e'] = {"dfnID": "e99bd18e", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global", "dfnText": "relevant global object", "refSections": [{"refs": [{"id": "ref-for-concept-relevant-global"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-concept-relevant-global\u2460"}, {"id": "ref-for-concept-relevant-global\u2461"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-concept-relevant-global\u2462"}], "title": "4.1.7. toJSON method"}], "external": true};
+window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.spec.whatwg.org/#list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-list-append"}, {"id": "ref-for-list-append\u2460"}, {"id": "ref-for-list-append\u2461"}, {"id": "ref-for-list-append\u2462"}, {"id": "ref-for-list-append\u2463"}, {"id": "ref-for-list-append\u2464"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-list-append\u2465"}, {"id": "ref-for-list-append\u2466"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-list-append\u2467"}, {"id": "ref-for-list-append\u2468"}, {"id": "ref-for-list-append\u2460\u24ea"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-list-append\u2460\u2460"}], "title": "4.1.4. Create a brand-version list"}], "external": true};
+window.dfnpanelData['02f9bf93'] = {"dfnID": "02f9bf93", "url": "https://infra.spec.whatwg.org/#ascii-alpha", "dfnText": "ascii alpha", "refSections": [{"refs": [{"id": "ref-for-ascii-alpha"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-ascii-alpha\u2460"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['617d690e'] = {"dfnID": "617d690e", "url": "https://infra.spec.whatwg.org/#ascii-byte", "dfnText": "ascii byte", "refSections": [{"refs": [{"id": "ref-for-ascii-byte"}, {"id": "ref-for-ascii-byte\u2460"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['77b4c09a'] = {"dfnID": "77b4c09a", "url": "https://infra.spec.whatwg.org/#assert", "dfnText": "assert", "refSections": [{"refs": [{"id": "ref-for-assert"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-assert\u2460"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-assert\u2461"}], "title": "4.1.4. Create a brand-version list"}], "external": true};
+window.dfnpanelData['e28ccd60'] = {"dfnID": "e28ccd60", "url": "https://infra.spec.whatwg.org/#string-concatenate", "dfnText": "concatenation", "refSections": [{"refs": [{"id": "ref-for-string-concatenate"}, {"id": "ref-for-string-concatenate\u2460"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-string-concatenate\u2461"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}, {"id": "ref-for-list-contain\u2460"}, {"id": "ref-for-list-contain\u2461"}, {"id": "ref-for-list-contain\u2462"}, {"id": "ref-for-list-contain\u2463"}, {"id": "ref-for-list-contain\u2464"}, {"id": "ref-for-list-contain\u2465"}, {"id": "ref-for-list-contain\u2466"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['dd460c8e'] = {"dfnID": "dd460c8e", "url": "https://infra.spec.whatwg.org/#list-is-empty", "dfnText": "is not empty", "refSections": [{"refs": [{"id": "ref-for-list-is-empty"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['5afbefcd'] = {"dfnID": "5afbefcd", "url": "https://infra.spec.whatwg.org/#list-item", "dfnText": "item", "refSections": [{"refs": [{"id": "ref-for-list-item"}, {"id": "ref-for-list-item\u2460"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-list-item\u2461"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['649608b9'] = {"dfnID": "649608b9", "url": "https://infra.spec.whatwg.org/#list", "dfnText": "list", "refSections": [{"refs": [{"id": "ref-for-list"}, {"id": "ref-for-list\u2460"}, {"id": "ref-for-list\u2461"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-list\u2462"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-list\u2463"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-list\u2464"}, {"id": "ref-for-list\u2465"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-list\u2466"}], "title": "4.1.4. Create a brand-version list"}], "external": true};
+window.dfnpanelData['fca74142'] = {"dfnID": "fca74142", "url": "https://infra.spec.whatwg.org/#stack-pop", "dfnText": "pop", "refSections": [{"refs": [{"id": "ref-for-stack-pop"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['7c3de606'] = {"dfnID": "7c3de606", "url": "https://infra.spec.whatwg.org/#stack-push", "dfnText": "push", "refSections": [{"refs": [{"id": "ref-for-stack-push"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['0204d188'] = {"dfnID": "0204d188", "url": "https://infra.spec.whatwg.org/#list-size", "dfnText": "size", "refSections": [{"refs": [{"id": "ref-for-list-size"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['a682cc44'] = {"dfnID": "a682cc44", "url": "https://infra.spec.whatwg.org/#split-on-ascii-whitespace", "dfnText": "split on ascii whitespace", "refSections": [{"refs": [{"id": "ref-for-split-on-ascii-whitespace"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['ceacaa1c'] = {"dfnID": "ceacaa1c", "url": "https://infra.spec.whatwg.org/#stack", "dfnText": "stack", "refSections": [{"refs": [{"id": "ref-for-stack"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['7a3dbdb1'] = {"dfnID": "7a3dbdb1", "url": "https://infra.spec.whatwg.org/#strictly-split", "dfnText": "strictly split a string", "refSections": [{"refs": [{"id": "ref-for-strictly-split"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}], "external": true};
+window.dfnpanelData['0698d556'] = {"dfnID": "0698d556", "url": "https://infra.spec.whatwg.org/#string", "dfnText": "string", "refSections": [{"refs": [{"id": "ref-for-string"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-string\u2460"}, {"id": "ref-for-string\u2461"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['a37f05fd'] = {"dfnID": "a37f05fd", "url": "https://infra.spec.whatwg.org/#strip-leading-and-trailing-ascii-whitespace", "dfnText": "strip leading and trailing ascii whitespace", "refSections": [{"refs": [{"id": "ref-for-strip-leading-and-trailing-ascii-whitespace"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['6d19ac93'] = {"dfnID": "6d19ac93", "url": "https://infra.spec.whatwg.org/#user-agent", "dfnText": "user agent", "refSections": [{"refs": [{"id": "ref-for-user-agent"}, {"id": "ref-for-user-agent\u2460"}, {"id": "ref-for-user-agent\u2461"}, {"id": "ref-for-user-agent\u2462"}, {"id": "ref-for-user-agent\u2463"}, {"id": "ref-for-user-agent\u2464"}, {"id": "ref-for-user-agent\u2465"}, {"id": "ref-for-user-agent\u2466"}, {"id": "ref-for-user-agent\u2467"}, {"id": "ref-for-user-agent\u2468"}, {"id": "ref-for-user-agent\u2460\u24ea"}, {"id": "ref-for-user-agent\u2460\u2460"}, {"id": "ref-for-user-agent\u2460\u2461"}, {"id": "ref-for-user-agent\u2460\u2462"}, {"id": "ref-for-user-agent\u2460\u2463"}, {"id": "ref-for-user-agent\u2460\u2464"}, {"id": "ref-for-user-agent\u2460\u2465"}, {"id": "ref-for-user-agent\u2460\u2466"}, {"id": "ref-for-user-agent\u2460\u2467"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent\u2460\u2468"}, {"id": "ref-for-user-agent\u2461\u24ea"}, {"id": "ref-for-user-agent\u2461\u2460"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2461"}], "title": "3.2. The 'Sec-CH-UA-Arch' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2462"}], "title": "3.3. The 'Sec-CH-UA-Bitness' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2463"}], "title": "3.4. The 'Sec-CH-UA-Form-Factor' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2464"}], "title": "3.7. The 'Sec-CH-UA-Mobile' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2465"}], "title": "3.8. The 'Sec-CH-UA-Model' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2466"}], "title": "3.9. The 'Sec-CH-UA-Platform' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2467"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2461\u2468"}], "title": "3.11. The 'Sec-CH-UA-WoW64' Header Field"}, {"refs": [{"id": "ref-for-user-agent\u2462\u24ea"}], "title": "4. Interface"}, {"refs": [{"id": "ref-for-user-agent\u2462\u2460"}, {"id": "ref-for-user-agent\u2462\u2461"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-user-agent\u2462\u2462"}, {"id": "ref-for-user-agent\u2462\u2463"}, {"id": "ref-for-user-agent\u2462\u2464"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-user-agent\u2462\u2465"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-user-agent\u2462\u2466"}, {"id": "ref-for-user-agent\u2462\u2467"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-user-agent\u2462\u2468"}, {"id": "ref-for-user-agent\u2463\u24ea"}, {"id": "ref-for-user-agent\u2463\u2460"}, {"id": "ref-for-user-agent\u2463\u2461"}, {"id": "ref-for-user-agent\u2463\u2462"}, {"id": "ref-for-user-agent\u2463\u2463"}, {"id": "ref-for-user-agent\u2463\u2464"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-user-agent\u2463\u2465"}, {"id": "ref-for-user-agent\u2463\u2466"}], "title": "4.1.7. toJSON method"}, {"refs": [{"id": "ref-for-user-agent\u2463\u2467"}], "title": "5.1. Secure Transport"}, {"refs": [{"id": "ref-for-user-agent\u2463\u2468"}], "title": "5.2. Delegation"}, {"refs": [{"id": "ref-for-user-agent\u2464\u24ea"}, {"id": "ref-for-user-agent\u2464\u2460"}, {"id": "ref-for-user-agent\u2464\u2461"}, {"id": "ref-for-user-agent\u2464\u2462"}], "title": "5.3. Fingerprinting"}, {"refs": [{"id": "ref-for-user-agent\u2464\u2463"}, {"id": "ref-for-user-agent\u2464\u2464"}], "title": "5.4. Access Restrictions"}, {"refs": [{"id": "ref-for-user-agent\u2464\u2465"}, {"id": "ref-for-user-agent\u2464\u2466"}], "title": "6.1. The 'User-Agent' Header"}, {"refs": [{"id": "ref-for-user-agent\u2464\u2467"}, {"id": "ref-for-user-agent\u2464\u2468"}, {"id": "ref-for-user-agent\u2465\u24ea"}, {"id": "ref-for-user-agent\u2465\u2460"}, {"id": "ref-for-user-agent\u2465\u2461"}, {"id": "ref-for-user-agent\u2465\u2462"}], "title": "6.2. GREASE-like UA Brand Lists"}], "external": true};
+window.dfnpanelData['6acd627c'] = {"dfnID": "6acd627c", "url": "https://tools.ietf.org/html/rfc8941#section-3.3.6", "dfnText": "boolean", "refSections": [{"refs": [{"id": "ref-for-section-3.3.6"}], "title": "3.7. The 'Sec-CH-UA-Mobile' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.6\u2460"}], "title": "3.11. The 'Sec-CH-UA-WoW64' Header Field"}], "external": true};
+window.dfnpanelData['33f5a360'] = {"dfnID": "33f5a360", "url": "https://tools.ietf.org/html/rfc8941#section-3.1", "dfnText": "list", "refSections": [{"refs": [{"id": "ref-for-section-3.1"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-section-3.1\u2460"}], "title": "3.4. The 'Sec-CH-UA-Form-Factor' Header Field"}, {"refs": [{"id": "ref-for-section-3.1\u2461"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}], "external": true};
+window.dfnpanelData['25adf95e'] = {"dfnID": "25adf95e", "url": "https://tools.ietf.org/html/rfc8941#section-4.1.1", "dfnText": "serializing a list", "refSections": [{"refs": [{"id": "ref-for-section-4.1.1"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-section-4.1.1\u2460"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}], "external": true};
+window.dfnpanelData['e982618f'] = {"dfnID": "e982618f", "url": "https://tools.ietf.org/html/rfc8941#section-3.3.3", "dfnText": "string", "refSections": [{"refs": [{"id": "ref-for-section-3.3.3"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2460"}], "title": "3.2. The 'Sec-CH-UA-Arch' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2461"}], "title": "3.3. The 'Sec-CH-UA-Bitness' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2462"}], "title": "3.5. The 'Sec-CH-UA-Full-Version' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2463"}], "title": "3.8. The 'Sec-CH-UA-Model' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2464"}], "title": "3.9. The 'Sec-CH-UA-Platform' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2465"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-section-3.3.3\u2466"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['80c33376'] = {"dfnID": "80c33376", "url": "https://tools.ietf.org/html/rfc8941#", "dfnText": "structured header", "refSections": [{"refs": [{"id": "ref-for-something"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-something\u2460"}], "title": "3.2. The 'Sec-CH-UA-Arch' Header Field"}, {"refs": [{"id": "ref-for-something\u2461"}], "title": "3.3. The 'Sec-CH-UA-Bitness' Header Field"}, {"refs": [{"id": "ref-for-something\u2462"}], "title": "3.4. The 'Sec-CH-UA-Form-Factor' Header Field"}, {"refs": [{"id": "ref-for-something\u2463"}], "title": "3.5. The 'Sec-CH-UA-Full-Version' Header Field"}, {"refs": [{"id": "ref-for-something\u2464"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}, {"refs": [{"id": "ref-for-something\u2465"}], "title": "3.7. The 'Sec-CH-UA-Mobile' Header Field"}, {"refs": [{"id": "ref-for-something\u2466"}], "title": "3.8. The 'Sec-CH-UA-Model' Header Field"}, {"refs": [{"id": "ref-for-something\u2467"}], "title": "3.9. The 'Sec-CH-UA-Platform' Header Field"}, {"refs": [{"id": "ref-for-something\u2468"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-something\u2460\u24ea"}], "title": "3.11. The 'Sec-CH-UA-WoW64' Header Field"}, {"refs": [{"id": "ref-for-something\u2460\u2460"}], "title": "4.1.3. Create arbitrary brand and version values"}], "external": true};
+window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}, {"id": "ref-for-idl-DOMString\u2461"}, {"id": "ref-for-idl-DOMString\u2462"}, {"id": "ref-for-idl-DOMString\u2463"}, {"id": "ref-for-idl-DOMString\u2464"}, {"id": "ref-for-idl-DOMString\u2465"}, {"id": "ref-for-idl-DOMString\u2466"}, {"id": "ref-for-idl-DOMString\u2467"}, {"id": "ref-for-idl-DOMString\u2468"}, {"id": "ref-for-idl-DOMString\u2460\u24ea"}, {"id": "ref-for-idl-DOMString\u2460\u2460"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['dcf5fafa'] = {"dfnID": "dcf5fafa", "url": "https://webidl.spec.whatwg.org/#idl-frozen-array", "dfnText": "FrozenArray", "refSections": [{"refs": [{"id": "ref-for-idl-frozen-array"}], "title": "4. Interface"}, {"refs": [{"id": "ref-for-idl-frozen-array\u2460"}, {"id": "ref-for-idl-frozen-array\u2461"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}], "external": true};
+window.dfnpanelData['ba556545'] = {"dfnID": "ba556545", "url": "https://webidl.spec.whatwg.org/#notallowederror", "dfnText": "NotAllowedError", "refSections": [{"refs": [{"id": "ref-for-notallowederror"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['bdbd19d1'] = {"dfnID": "bdbd19d1", "url": "https://webidl.spec.whatwg.org/#idl-promise", "dfnText": "Promise", "refSections": [{"refs": [{"id": "ref-for-idl-promise"}, {"id": "ref-for-idl-promise\u2460"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['b75bb3bd'] = {"dfnID": "b75bb3bd", "url": "https://webidl.spec.whatwg.org/#SecureContext", "dfnText": "SecureContext", "refSections": [{"refs": [{"id": "ref-for-SecureContext"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.spec.whatwg.org/#a-new-promise", "dfnText": "a new promise", "refSections": [{"refs": [{"id": "ref-for-a-new-promise"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['5372cca8'] = {"dfnID": "5372cca8", "url": "https://webidl.spec.whatwg.org/#idl-boolean", "dfnText": "boolean", "refSections": [{"refs": [{"id": "ref-for-idl-boolean"}, {"id": "ref-for-idl-boolean\u2460"}, {"id": "ref-for-idl-boolean\u2461"}, {"id": "ref-for-idl-boolean\u2462"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['1641b9ef'] = {"dfnID": "1641b9ef", "url": "https://webidl.spec.whatwg.org/#dfn-create-frozen-array", "dfnText": "create a frozen array", "refSections": [{"refs": [{"id": "ref-for-dfn-create-frozen-array"}, {"id": "ref-for-dfn-create-frozen-array\u2460"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}], "external": true};
+window.dfnpanelData['bec98d30'] = {"dfnID": "bec98d30", "url": "https://webidl.spec.whatwg.org/#dfn-dictionary", "dfnText": "dictionary", "refSections": [{"refs": [{"id": "ref-for-dfn-dictionary"}], "title": "4.1.4. Create a brand-version list"}], "external": true};
+window.dfnpanelData['b262501e'] = {"dfnID": "b262501e", "url": "https://webidl.spec.whatwg.org/#reject", "dfnText": "reject", "refSections": [{"refs": [{"id": "ref-for-reject"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}], "title": "4.1.6. getHighEntropyValues method"}], "external": true};
+window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}, {"id": "ref-for-idl-sequence\u2460"}, {"id": "ref-for-idl-sequence\u2461"}, {"id": "ref-for-idl-sequence\u2462"}], "title": "4. Interface"}], "external": true};
+window.dfnpanelData['4013a022'] = {"dfnID": "4013a022", "url": "https://webidl.spec.whatwg.org/#this", "dfnText": "this", "refSections": [{"refs": [{"id": "ref-for-this"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-this\u2460"}, {"id": "ref-for-this\u2461"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-this\u2462"}], "title": "4.1.7. toJSON method"}], "external": true};
+window.dfnpanelData['user-agent-brand'] = {"dfnID": "user-agent-brand", "url": "#user-agent-brand", "dfnText": "brand", "refSections": [{"refs": [{"id": "ref-for-user-agent-brand"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-user-agent-brand\u2460"}], "title": "4.1.2. Create brands"}], "external": false};
+window.dfnpanelData['user-agent-form-factor'] = {"dfnID": "user-agent-form-factor", "url": "#user-agent-form-factor", "dfnText": "form-factor", "refSections": [{"refs": [{"id": "ref-for-user-agent-form-factor"}], "title": "3.4. The 'Sec-CH-UA-Form-Factor' Header Field"}, {"refs": [{"id": "ref-for-user-agent-form-factor\u2460"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['user-agent-full-version'] = {"dfnID": "user-agent-full-version", "url": "#user-agent-full-version", "dfnText": "full version", "refSections": [{"refs": [{"id": "ref-for-user-agent-full-version"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2460"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2461"}], "title": "3.5. The 'Sec-CH-UA-Full-Version' Header Field"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2462"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2463"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2464"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2465"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-user-agent-full-version\u2466"}], "title": "4.1.4. Create a brand-version list"}], "external": false};
+window.dfnpanelData['user-agent-model'] = {"dfnID": "user-agent-model", "url": "#user-agent-model", "dfnText": "model", "refSections": [{"refs": [{"id": "ref-for-user-agent-model"}, {"id": "ref-for-user-agent-model\u2460"}, {"id": "ref-for-user-agent-model\u2461"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-model\u2462"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['user-agent-mobileness'] = {"dfnID": "user-agent-mobileness", "url": "#user-agent-mobileness", "dfnText": "mobileness", "refSections": [{"refs": [{"id": "ref-for-user-agent-mobileness"}, {"id": "ref-for-user-agent-mobileness\u2460"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-mobileness\u2461"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-user-agent-mobileness\u2462"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-user-agent-mobileness\u2463"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['user-agent-platform-brand'] = {"dfnID": "user-agent-platform-brand", "url": "#user-agent-platform-brand", "dfnText": "platform brand", "refSections": [{"refs": [{"id": "ref-for-user-agent-platform-brand"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-user-agent-platform-brand\u2460"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-user-agent-platform-brand\u2461"}, {"id": "ref-for-user-agent-platform-brand\u2462"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-user-agent-platform-brand\u2463"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['user-agent-platform-version'] = {"dfnID": "user-agent-platform-version", "url": "#user-agent-platform-version", "dfnText": "platform version", "refSections": [{"refs": [{"id": "ref-for-user-agent-platform-version"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}], "external": false};
+window.dfnpanelData['user-agent-platform-architecture'] = {"dfnID": "user-agent-platform-architecture", "url": "#user-agent-platform-architecture", "dfnText": "platform architecture", "refSections": [{"refs": [{"id": "ref-for-user-agent-platform-architecture"}, {"id": "ref-for-user-agent-platform-architecture\u2460"}, {"id": "ref-for-user-agent-platform-architecture\u2461"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-platform-architecture\u2462"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-user-agent-platform-architecture\u2463"}], "title": "5.4. Access Restrictions"}], "external": false};
+window.dfnpanelData['user-agent-platform-bitness'] = {"dfnID": "user-agent-platform-bitness", "url": "#user-agent-platform-bitness", "dfnText": "platform bitness", "refSections": [{"refs": [{"id": "ref-for-user-agent-platform-bitness"}, {"id": "ref-for-user-agent-platform-bitness\u2460"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-platform-bitness\u2461"}], "title": "3.3. The 'Sec-CH-UA-Bitness' Header Field"}, {"refs": [{"id": "ref-for-user-agent-platform-bitness\u2462"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-user-agent-platform-bitness\u2463"}], "title": "5.4. Access Restrictions"}], "external": false};
+window.dfnpanelData['user-agent-significant-version'] = {"dfnID": "user-agent-significant-version", "url": "#user-agent-significant-version", "dfnText": "significant version", "refSections": [{"refs": [{"id": "ref-for-user-agent-significant-version"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-user-agent-significant-version\u2460"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-user-agent-significant-version\u2461"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-user-agent-significant-version\u2462"}], "title": "4.1.3. Create arbitrary brand and version values"}, {"refs": [{"id": "ref-for-user-agent-significant-version\u2463"}], "title": "4.1.4. Create a brand-version list"}], "external": false};
+window.dfnpanelData['user-agent-wow64-ness'] = {"dfnID": "user-agent-wow64-ness", "url": "#user-agent-wow64-ness", "dfnText": "wow64-ness", "refSections": [{"refs": [{"id": "ref-for-user-agent-wow64-ness"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-wow64-ness\u2460"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['http-headerdef-sec-ch-ua'] = {"dfnID": "http-headerdef-sec-ch-ua", "url": "#http-headerdef-sec-ch-ua", "dfnText": "Sec-CH-UA", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-ch-ua"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}], "external": false};
+window.dfnpanelData['http-headerdef-sec-ch-ua-full-version-list'] = {"dfnID": "http-headerdef-sec-ch-ua-full-version-list", "url": "#http-headerdef-sec-ch-ua-full-version-list", "dfnText": "Sec-CH-UA-Full-Version-List", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-ch-ua-full-version-list"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}], "external": false};
+window.dfnpanelData['get-the-platform-version'] = {"dfnID": "get-the-platform-version", "url": "#get-the-platform-version", "dfnText": "get the platform version", "refSections": [{"refs": [{"id": "ref-for-get-the-platform-version"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}, {"refs": [{"id": "ref-for-get-the-platform-version\u2460"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['get-the-legacy-windows-version-number'] = {"dfnID": "get-the-legacy-windows-version-number", "url": "#get-the-legacy-windows-version-number", "dfnText": "get the legacy Windows version number", "refSections": [{"refs": [{"id": "ref-for-get-the-legacy-windows-version-number"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}], "external": false};
+window.dfnpanelData['create-a-unified-platform-version-string'] = {"dfnID": "create-a-unified-platform-version-string", "url": "#create-a-unified-platform-version-string", "dfnText": "create a unified platform version string", "refSections": [{"refs": [{"id": "ref-for-create-a-unified-platform-version-string"}, {"id": "ref-for-create-a-unified-platform-version-string\u2460"}, {"id": "ref-for-create-a-unified-platform-version-string\u2461"}], "title": "3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}], "external": false};
+window.dfnpanelData['dictdef-navigatoruabrandversion'] = {"dfnID": "dictdef-navigatoruabrandversion", "url": "#dictdef-navigatoruabrandversion", "dfnText": "NavigatorUABrandVersion", "refSections": [{"refs": [{"id": "ref-for-dictdef-navigatoruabrandversion"}, {"id": "ref-for-dictdef-navigatoruabrandversion\u2460"}, {"id": "ref-for-dictdef-navigatoruabrandversion\u2461"}, {"id": "ref-for-dictdef-navigatoruabrandversion\u2462"}], "title": "4. Interface"}, {"refs": [{"id": "ref-for-dictdef-navigatoruabrandversion\u2463"}, {"id": "ref-for-dictdef-navigatoruabrandversion\u2464"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-dictdef-navigatoruabrandversion\u2465"}, {"id": "ref-for-dictdef-navigatoruabrandversion\u2466"}], "title": "4.1.2. Create brands"}], "external": false};
+window.dfnpanelData['dom-navigatoruabrandversion-brand'] = {"dfnID": "dom-navigatoruabrandversion-brand", "url": "#dom-navigatoruabrandversion-brand", "dfnText": "brand", "refSections": [{"refs": [{"id": "ref-for-dom-navigatoruabrandversion-brand"}, {"id": "ref-for-dom-navigatoruabrandversion-brand\u2460"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-dom-navigatoruabrandversion-brand\u2461"}], "title": "4.1.4. Create a brand-version list"}], "external": false};
+window.dfnpanelData['dom-navigatoruabrandversion-version'] = {"dfnID": "dom-navigatoruabrandversion-version", "url": "#dom-navigatoruabrandversion-version", "dfnText": "version", "refSections": [{"refs": [{"id": "ref-for-dom-navigatoruabrandversion-version"}, {"id": "ref-for-dom-navigatoruabrandversion-version\u2460"}], "title": "4.1.2. Create brands"}], "external": false};
+window.dfnpanelData['dictdef-uadatavalues'] = {"dfnID": "dictdef-uadatavalues", "url": "#dictdef-uadatavalues", "dfnText": "UADataValues", "refSections": [{"refs": [{"id": "ref-for-dictdef-uadatavalues"}], "title": "4. Interface"}, {"refs": [{"id": "ref-for-dictdef-uadatavalues\u2460"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-architecture'] = {"dfnID": "dom-uadatavalues-architecture", "url": "#dom-uadatavalues-architecture", "dfnText": "architecture", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-architecture"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-bitness'] = {"dfnID": "dom-uadatavalues-bitness", "url": "#dom-uadatavalues-bitness", "dfnText": "bitness", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-bitness"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-brands'] = {"dfnID": "dom-uadatavalues-brands", "url": "#dom-uadatavalues-brands", "dfnText": "brands", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-brands"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-formfactor'] = {"dfnID": "dom-uadatavalues-formfactor", "url": "#dom-uadatavalues-formfactor", "dfnText": "formFactor", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-formfactor"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-fullversionlist'] = {"dfnID": "dom-uadatavalues-fullversionlist", "url": "#dom-uadatavalues-fullversionlist", "dfnText": "fullVersionList", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-fullversionlist"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-model'] = {"dfnID": "dom-uadatavalues-model", "url": "#dom-uadatavalues-model", "dfnText": "model", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-model"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-mobile'] = {"dfnID": "dom-uadatavalues-mobile", "url": "#dom-uadatavalues-mobile", "dfnText": "mobile", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-mobile"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-platform'] = {"dfnID": "dom-uadatavalues-platform", "url": "#dom-uadatavalues-platform", "dfnText": "platform", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-platform"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-platformversion'] = {"dfnID": "dom-uadatavalues-platformversion", "url": "#dom-uadatavalues-platformversion", "dfnText": "platformVersion", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-platformversion"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-uafullversion'] = {"dfnID": "dom-uadatavalues-uafullversion", "url": "#dom-uadatavalues-uafullversion", "dfnText": "uaFullVersion", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-uafullversion"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dom-uadatavalues-wow64'] = {"dfnID": "dom-uadatavalues-wow64", "url": "#dom-uadatavalues-wow64", "dfnText": "wow64", "refSections": [{"refs": [{"id": "ref-for-dom-uadatavalues-wow64"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['dictdef-ualowentropyjson'] = {"dfnID": "dictdef-ualowentropyjson", "url": "#dictdef-ualowentropyjson", "dfnText": "UALowEntropyJSON", "refSections": [{"refs": [{"id": "ref-for-dictdef-ualowentropyjson"}], "title": "4. Interface"}, {"refs": [{"id": "ref-for-dictdef-ualowentropyjson\u2460"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['dom-ualowentropyjson-brands'] = {"dfnID": "dom-ualowentropyjson-brands", "url": "#dom-ualowentropyjson-brands", "dfnText": "brands", "refSections": [{"refs": [{"id": "ref-for-dom-ualowentropyjson-brands"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['dom-ualowentropyjson-mobile'] = {"dfnID": "dom-ualowentropyjson-mobile", "url": "#dom-ualowentropyjson-mobile", "dfnText": "mobile", "refSections": [{"refs": [{"id": "ref-for-dom-ualowentropyjson-mobile"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['dom-ualowentropyjson-platform'] = {"dfnID": "dom-ualowentropyjson-platform", "url": "#dom-ualowentropyjson-platform", "dfnText": "platform", "refSections": [{"refs": [{"id": "ref-for-dom-ualowentropyjson-platform"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['navigatoruadata'] = {"dfnID": "navigatoruadata", "url": "#navigatoruadata", "dfnText": "NavigatorUAData", "refSections": [{"refs": [{"id": "ref-for-navigatoruadata"}], "title": "4. Interface"}], "external": false};
+window.dfnpanelData['dom-navigatoruadata-brands'] = {"dfnID": "dom-navigatoruadata-brands", "url": "#dom-navigatoruadata-brands", "dfnText": "brands", "refSections": [{"refs": [{"id": "ref-for-dom-navigatoruadata-brands"}], "title": "4.1.5. Getters"}], "external": false};
+window.dfnpanelData['dom-navigatoruadata-mobile'] = {"dfnID": "dom-navigatoruadata-mobile", "url": "#dom-navigatoruadata-mobile", "dfnText": "mobile", "refSections": [{"refs": [{"id": "ref-for-dom-navigatoruadata-mobile"}], "title": "4.1.5. Getters"}], "external": false};
+window.dfnpanelData['dom-navigatoruadata-platform'] = {"dfnID": "dom-navigatoruadata-platform", "url": "#dom-navigatoruadata-platform", "dfnText": "platform", "refSections": [{"refs": [{"id": "ref-for-dom-navigatoruadata-platform"}], "title": "4.1.5. Getters"}], "external": false};
+window.dfnpanelData['navigatorua'] = {"dfnID": "navigatorua", "url": "#navigatorua", "dfnText": "NavigatorUA", "refSections": [{"refs": [{"id": "ref-for-navigatorua"}, {"id": "ref-for-navigatorua\u2460"}], "title": "4. Interface"}], "external": false};
+window.dfnpanelData['user-agent-brands'] = {"dfnID": "user-agent-brands", "url": "#user-agent-brands", "dfnText": "brands", "refSections": [{"refs": [{"id": "ref-for-user-agent-brands"}, {"id": "ref-for-user-agent-brands\u2460"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-brands\u2461"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-user-agent-brands\u2462"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}, {"refs": [{"id": "ref-for-user-agent-brands\u2463"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}, {"refs": [{"id": "ref-for-user-agent-brands\u2464"}, {"id": "ref-for-user-agent-brands\u2465"}, {"id": "ref-for-user-agent-brands\u2466"}, {"id": "ref-for-user-agent-brands\u2467"}, {"id": "ref-for-user-agent-brands\u2468"}], "title": "6.2. GREASE-like UA Brand Lists"}], "external": false};
+window.dfnpanelData['windoworworkerglobalscope-brands-frozen-array'] = {"dfnID": "windoworworkerglobalscope-brands-frozen-array", "url": "#windoworworkerglobalscope-brands-frozen-array", "dfnText": "brands frozen array", "refSections": [{"refs": [{"id": "ref-for-windoworworkerglobalscope-brands-frozen-array"}], "title": "4.1.5. Getters"}, {"refs": [{"id": "ref-for-windoworworkerglobalscope-brands-frozen-array\u2460"}], "title": "4.1.6. getHighEntropyValues method"}, {"refs": [{"id": "ref-for-windoworworkerglobalscope-brands-frozen-array\u2461"}], "title": "4.1.7. toJSON method"}], "external": false};
+window.dfnpanelData['windoworworkerglobalscope-full-version-list-frozen-array'] = {"dfnID": "windoworworkerglobalscope-full-version-list-frozen-array", "url": "#windoworworkerglobalscope-full-version-list-frozen-array", "dfnText": "full version list frozen array", "refSections": [{"refs": [{"id": "ref-for-windoworworkerglobalscope-full-version-list-frozen-array"}], "title": "4.1.6. getHighEntropyValues method"}], "external": false};
+window.dfnpanelData['create-brands'] = {"dfnID": "create-brands", "url": "#create-brands", "dfnText": "create brands", "refSections": [{"refs": [{"id": "ref-for-create-brands"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-create-brands\u2460"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}, {"refs": [{"id": "ref-for-create-brands\u2461"}, {"id": "ref-for-create-brands\u2462"}], "title": "4.1.1. WindowOrWorkerGlobalScope"}], "external": false};
+window.dfnpanelData['user-agent-equivalence-class'] = {"dfnID": "user-agent-equivalence-class", "url": "#user-agent-equivalence-class", "dfnText": "equivalence class", "refSections": [{"refs": [{"id": "ref-for-user-agent-equivalence-class"}], "title": "3. User Agent Hints"}, {"refs": [{"id": "ref-for-user-agent-equivalence-class\u2460"}, {"id": "ref-for-user-agent-equivalence-class\u2461"}], "title": "4.1.2. Create brands"}, {"refs": [{"id": "ref-for-user-agent-equivalence-class\u2462"}, {"id": "ref-for-user-agent-equivalence-class\u2463"}], "title": "6.2. GREASE-like UA Brand Lists"}], "external": false};
+window.dfnpanelData['create-an-arbitrary-brand'] = {"dfnID": "create-an-arbitrary-brand", "url": "#create-an-arbitrary-brand", "dfnText": "create an arbitrary brand", "refSections": [{"refs": [{"id": "ref-for-create-an-arbitrary-brand"}], "title": "4.1.2. Create brands"}], "external": false};
+window.dfnpanelData['create-an-arbitrary-version'] = {"dfnID": "create-an-arbitrary-version", "url": "#create-an-arbitrary-version", "dfnText": "create an arbitrary version", "refSections": [{"refs": [{"id": "ref-for-create-an-arbitrary-version"}], "title": "4.1.2. Create brands"}], "external": false};
+window.dfnpanelData['create-a-brand-version-list'] = {"dfnID": "create-a-brand-version-list", "url": "#create-a-brand-version-list", "dfnText": "create a brand-version list", "refSections": [{"refs": [{"id": "ref-for-create-a-brand-version-list"}], "title": "3.1. The 'Sec-CH-UA' Header Field"}, {"refs": [{"id": "ref-for-create-a-brand-version-list\u2460"}], "title": "3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}], "external": false};
+</script>
+<script>/* Boilerplate: script-dom-helper */
+function query(sel) { return document.querySelector(sel); }
+
+function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
+
+function iter(obj) {
+	if(!obj) return [];
+	var it = obj[Symbol.iterator];
+	if(it) return it;
+	return Object.entries(obj);
+}
+
+function mk(tagname, attrs, ...children) {
+	const el = document.createElement(tagname);
+	for(const [k,v] of iter(attrs)) {
+		if(k.slice(0,3) == "_on") {
+			const eventName = k.slice(3);
+			el.addEventListener(eventName, v);
+		} else if(k[0] == "_") {
+			// property, not attribute
+			el[k.slice(1)] = v;
+		} else {
+			if(v === false || v == null) {
+        continue;
+      } else if(v === true) {
+        el.setAttribute(k, "");
+        continue;
+      } else {
+  			el.setAttribute(k, v);
+      }
+		}
+	}
+	append(el, children);
+	return el;
+}
+
+/* Create shortcuts for every known HTML element */
+[
+  "a",
+  "abbr",
+  "acronym",
+  "address",
+  "applet",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "basefont",
+  "bdo",
+  "big",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "center",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "font",
+  "footer",
+  "form",
+  "frame",
+  "frameset",
+  "head",
+  "header",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "meta",
+  "meter",
+  "nav",
+  "nobr",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "pre",
+  "progress",
+  "q",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "small",
+  "source",
+  "span",
+  "strike",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "xmp",
+].forEach(tagname=>{
+	mk[tagname] = (...args) => mk(tagname, ...args);
+});
+
+function* nodesFromChildList(children) {
+	for(const child of children.flat(Infinity)) {
+		if(child instanceof Node) {
+			yield child;
+		} else {
+			yield new Text(child);
+		}
+	}
+}
+function append(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		if(el instanceof Node) el.appendChild(child);
+		else el.push(child);
+	}
+	return el;
+}
+
+function insertAfter(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		el.parentNode.insertBefore(child, el.nextSibling);
+	}
+	return el;
+}
+
+function clearContents(el) {
+	el.innerHTML = "";
+	return el;
+}
+
+function parseHTML(markup) {
+	if(markup.toLowerCase().trim().indexOf('<!doctype') === 0) {
+		const doc = document.implementation.createHTMLDocument("");
+		doc.documentElement.innerHTML = markup;
+		return doc;
+	} else {
+		const el = mk.template({});
+		el.innerHTML = markup;
+		return el.content;
+	}
+}
+</script>
+<script>/* Boilerplate: script-var-click-highlighting */
+/*
+Color-choosing design:
+
+Colors are ordered by goodness.
+Each color has a usage count (initially zero).
+Each variable has a last-used color.
+
+* If the var has a last-used color, and that color's usage is 0,
+    return that color.
+* Otherwise, return the lowest-indexed color with the lowest usage.
+    Increment the color's usage and set it as the last-used color
+    for that var.
+* On unclicking, decrement usage of the color.
+*/
+"use strict";
+{
+    document.addEventListener("click", e=>{
+        if(e.target.nodeName == "VAR") {
+            highlightSameAlgoVars(e.target);
+        }
+    });
+    const indexCounts = new Map();
+    const indexNames = new Map();
+    function highlightSameAlgoVars(v) {
+        // Find the algorithm container.
+        let algoContainer = null;
+        let searchEl = v;
+        while(algoContainer == null && searchEl != document.body) {
+            searchEl = searchEl.parentNode;
+            if(searchEl.hasAttribute("data-algorithm")) {
+                algoContainer = searchEl;
+            }
+        }
+
+        // Not highlighting document-global vars,
+        // too likely to be unrelated.
+        if(algoContainer == null) return;
+
+        const algoName = algoContainer.getAttribute("data-algorithm");
+        const varName = getVarName(v);
+        const addClass = !v.classList.contains("selected");
+        let highlightClass = null;
+        if(addClass) {
+            const index = chooseHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] += 1;
+            indexNames.set(algoName+"///"+varName, index);
+            highlightClass = nameFromIndex(index);
+        } else {
+            const index = previousHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] -= 1;
+            highlightClass = nameFromIndex(index);
+        }
+
+        // Find all same-name vars, and toggle their class appropriately.
+        for(const el of algoContainer.querySelectorAll("var")) {
+            if(getVarName(el) == varName) {
+                el.classList.toggle("selected", addClass);
+                el.classList.toggle(highlightClass, addClass);
+            }
+        }
+    }
+    function getVarName(el) {
+        return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+    }
+    function chooseHighlightIndex(algoName, varName) {
+        let indexes = null;
+        if(indexCounts.has(algoName)) {
+            indexes = indexCounts.get(algoName);
+        } else {
+            // 7 classes right now
+            indexes = [0,0,0,0,0,0,0];
+            indexCounts.set(algoName, indexes);
+        }
+
+        // If the element was recently unclicked,
+        // *and* that color is still unclaimed,
+        // give it back the same color.
+        const lastIndex = previousHighlightIndex(algoName, varName);
+        if(indexes[lastIndex] === 0) return lastIndex;
+
+        // Find the earliest index with the lowest count.
+        const minCount = Math.min.apply(null, indexes);
+        let index = null;
+        for(var i = 0; i < indexes.length; i++) {
+            if(indexes[i] == minCount) {
+                return i;
+            }
+        }
+    }
+    function previousHighlightIndex(algoName, varName) {
+        return indexNames.get(algoName+"///"+varName);
+    }
+    function nameFromIndex(index) {
+        return "selected" + index;
+    }
+}
+</script>

@@ -555,11 +555,14 @@ The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
 The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a
 server information about the [=user agent=]'s [=form-factor=]. It is a
 [=Structured Header=] whose value MUST be a [=structured header/list=]
-[[!RFC8941]]. The header's values MUST be given in lexical order.
+[[!RFC8941]]. In order to avoid providing additional fingerprinting entropy,
+the header's values MUST be given in lexical order, and values are
+case-sensitive.
 
 The header SHOULD describe the form-factor of the device using one or more of
 the following common form-factor values: "Desktop", "Automotive", "Mobile",
-"Tablet", or "XR". All applicable form-factor values SHOULD be included.
+"Tablet", "XR", "EInk", or "Watch". All applicable form-factor values SHOULD be
+included.
 
 <div class="note" heading="">
 
@@ -576,6 +579,11 @@ user-agent. The meanings of the allowed values are:
     typically carried on a user's person.
  * "XR" refers to immersive devices that augment or replace the environment
     around the user.
+ * "EInk" refers to a device characterized by slow screen updates and limited
+    or no color resolution.
+ * "Watch" refers to a mobile device with a tiny screen (typically less than 2
+    [[css-values-4#absolute-lengths|in]]), carried in such a way that the user
+    can glance at it quickly.
 
 A new value should be proposed and added to the specification when there is a
 new form-factor that users interact with in a meaningfully different way; a
@@ -789,7 +797,7 @@ dictionary UADataValues {
   DOMString architecture;
   DOMString bitness;
   sequence&lt;NavigatorUABrandVersion&gt; brands;
-  DOMString formFactor;
+  sequence&lt;DOMString&gt; formFactor;
   sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
   DOMString model;
   boolean mobile;

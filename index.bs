@@ -1254,6 +1254,7 @@ Thanks to
 Aaron Tagliaboschi,
 Ali Beyad,
 ArkUmbra, <!-- github -->
+Dustin Mitchell,
 Erik Anderson,
 jasonwee, <!-- github -->
 Luke Williams,

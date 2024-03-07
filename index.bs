@@ -435,7 +435,7 @@ has defined a number of properties for itself:
 *   <dfn for="user agent" export>brand</dfn> - The [=user agent=]'s commercial name (e.g.,
       "cURL", "Edge", "The World's Best Web Browser"), which MUST be shorter than 32 [=ASCII alpha=]
       characters.
-*   <dfn for="user agent" export>form-factor</dfn> - The form-factor of a device, historically
+*   <dfn for="user agent" export>form-factors</dfn> - The form-factors of a device, historically
       represented as a &lt;[=deviceCompat=]&gt; token in the User-Agent string (e.g., "Tablet", "VR",
       etc.)
 *   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
@@ -549,24 +549,24 @@ The header's ABNF is:
   Sec-CH-UA-Bitness = sf-string
 ~~~
 
-The 'Sec-CH-UA-Form-Factor' Header Field {#sec-ch-ua-form-factor}
+The 'Sec-CH-UA-Form-Factors' Header Field {#sec-ch-ua-form-factors}
 ------------------------------
 
-The <dfn http-header>`Sec-CH-UA-Form-Factor`</dfn> request header field gives a
-server information about the [=user agent=]'s [=form-factor=]. It is a
+The <dfn http-header>`Sec-CH-UA-Form-Factors`</dfn> request header field gives a
+server information about the [=user agent=]'s [=form-factors=]. It is a
 [=Structured Header=] whose value MUST be a [=structured header/list=]
 [[!RFC8941]]. In order to avoid providing additional fingerprinting entropy,
 the header's values MUST be given in lexical order, and values are
 case-sensitive.
 
-The header SHOULD describe the form-factor of the device using one or more of
+The header SHOULD describe the form-factors of the device using one or more of
 the following common form-factor values: "Desktop", "Automotive", "Mobile",
 "Tablet", "XR", "EInk", or "Watch". All applicable form-factor values SHOULD be
 included.
 
 <div class="note" heading="">
 
-The form-factor of a user-agent describes how the user interacts with the
+The form-factors of a user-agent describe how the user interacts with the
 user-agent. The meanings of the allowed values are:
 
  * "Desktop" refers to a user-agent running on a personal computer.
@@ -596,7 +596,7 @@ using existing hints.
 The header's ABNF is:
 
 ~~~ abnf
-  Sec-CH-UA-Form-Factor = sf-list
+  Sec-CH-UA-Form-Factors = sf-list
 ~~~
 
 The 'Sec-CH-UA-Full-Version' Header Field {#sec-ch-ua-full-version}
@@ -780,7 +780,7 @@ The header's ABNF is:
 ```
 
 Note: These client hints can be evoked with the following set of [=client hints tokens=]:
-`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Form-Factor`,
+`Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`, `Sec-CH-UA-Form-Factors`,
 `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Full-Version-List`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`,
 `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`
 
@@ -797,7 +797,7 @@ dictionary UADataValues {
   DOMString architecture;
   DOMString bitness;
   sequence&lt;NavigatorUABrandVersion&gt; brands;
-  sequence&lt;DOMString&gt; formFactor;
+  sequence&lt;DOMString&gt; formFactors;
   sequence&lt;NavigatorUABrandVersion&gt; fullVersionList;
   DOMString model;
   boolean mobile;
@@ -990,8 +990,8 @@ ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to re
         the [=user agent=]'s [=user agent/platform architecture=].
     1. If |hints| [=list/contains=] "bitness", set |uaData|["{{UADataValues/bitness}}"] to
         the [=user agent=]'s [=user agent/platform bitness=].
-    1. If |hints| [=list/contains=] "formFactor", set |uaData|["{{UADataValues/formFactor}}"] to
-        the [=user agent=]'s [=user agent/form-factor=].
+    1. If |hints| [=list/contains=] "formFactors", set |uaData|["{{UADataValues/formFactors}}"] to
+        the [=user agent=]'s [=user agent/form-factors=].
     1. If |hints| [=list/contains=] "fullVersionList", set |uaData|["{{UADataValues/fullVersionList}}"]
         to [=this=]'s [=relevant global object=]'s
         [=WindowOrWorkerGlobalScope/full version list frozen array=].
@@ -1154,7 +1154,7 @@ IANA Considerations {#iana}
 ===================
 
 This document intends to define the `Sec-CH-UA`, `Sec-CH-UA-Arch`, `Sec-CH-UA-Bitness`,
-`Sec-CH-UA-Form-Factor`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`,
+`Sec-CH-UA-Form-Factors`, `Sec-CH-UA-Full-Version`, `Sec-CH-UA-Mobile`, `Sec-CH-UA-Model`,
 `Sec-CH-UA-Platform`, `Sec-CH-UA-Platform-Version`, `Sec-CH-UA-WoW64`, and the
 `Sec-CH-UA-Full-Version-List` HTTP request header fields, and register them in the permanent message
  header field registry ([[RFC3864]]).
@@ -1200,10 +1200,10 @@ Author/Change controller: IETF
 
 Specification document: this specification ([[#sec-ch-ua-bitness]])
 
-'Sec-CH-UA-Form-Factor' Header Field {#iana-form-factor}
+'Sec-CH-UA-Form-Factors' Header Field {#iana-form-factors}
 --------------------------
 
-Header field name: Sec-CH-UA-Form-Factor
+Header field name: Sec-CH-UA-Form-Factors
 
 Applicable protocol: http
 
@@ -1211,7 +1211,7 @@ Status: standard
 
 Author/Change controller: IETF
 
-Specification document: this specification ([[#sec-ch-ua-form-factor]])
+Specification document: this specification ([[#sec-ch-ua-form-factors]])
 
 'Sec-CH-UA-Full-Version' Header Field {#iana-full-version}
 ----------------------------

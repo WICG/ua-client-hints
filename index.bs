@@ -17,7 +17,7 @@ Indent: 4
 Include MDN Panels: no
 Default Biblio Status: current
 Markup Shorthands: css off, markdown on
-Boilerplate: omit conformance, omit feedback-header
+Boilerplate: omit feedback-header
 !Participate: <a href="https://github.com/WICG/ua-client-hints/issues/new">File an issue</a> (<a href="https://github.com/WICG/ua-client-hints/issues">open issues</a>)
 </pre>
 <pre class="link-defaults">

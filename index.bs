@@ -510,7 +510,7 @@ To <dfn abstract-op>return the `Sec-CH-UA` value for a request</dfn>, perform th
 
 Note: Unlike most Client Hints, since it's included in the [=low entropy hint table=],
 the `Sec-CH-UA` header will be sent by default, whether or not the server opted-into
-receiving the header via an `Accept-CH` header (although it can still be controlled by it's
+receiving the header via an `Accept-CH` header (although it can still be controlled by its
 [=policy-controlled client hints feature=].
 It is considered low entropy because it includes only the [=user agent=]'s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the

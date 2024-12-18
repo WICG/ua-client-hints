@@ -27,16 +27,16 @@ spec:infra; type:dfn; text:user agent
 spec:infra; type:dfn; for:/; text:list
 </pre>
 <pre class="anchors">
-urlPrefix: https://tools.ietf.org/html/rfc8941; spec: rfc8941
+urlPrefix: https://tools.ietf.org/html/rfc9651; spec: rfc9651
     type: dfn
         text: structured header; url: #
     for: structured header
         type: dfn
-            text: token; url: #section-3.3.4
             text: boolean; url: #section-3.3.6
-            text: string; url: #section-3.3.3
             text: list; url: #section-3.1
             text: serializing a list; url: #section-4.1.1
+            text: string; url: #section-3.3.3
+            text: token; url: #section-3.3.4
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
 urlPrefix: https://tc39.es/ecma262/
@@ -422,7 +422,7 @@ Standard, and Permissions Policy.
 
 Some of the terms used in this specification are defined in <cite>Structured Field Values for
 HTTP</cite>.
-[[!RFC8941]]
+[[!rfc9651]]
 
 User Agent Hints {#http-ua-hints}
 ================
@@ -491,7 +491,7 @@ The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 
 The <dfn http-header>`Sec-CH-UA`</dfn> request header field gives a server information about a
 [=user agent=]'s [=user agent/branding=] and [=user agent/significant version=]. It is a
-[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]]. The list's
+[=Structured Header=] whose value MUST be a [=structured header/list=] [[!rfc9651]]. The list's
 items MUST be [=structured header/string=]. The value of each item SHOULD include a "v" parameter,
 indicating the [=user agent=]'s version.
 
@@ -527,7 +527,7 @@ The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
 The <dfn http-header>`Sec-CH-UA-Arch`</dfn> request header field gives a server information about
 the architecture of the platform on which a given [=user agent=] is executing. It is a
 [=Structured Header=] whose value MUST be a [=structured header/string=]
-[[!RFC8941]].
+[[!rfc9651]].
 
 The header's ABNF is:
 
@@ -541,7 +541,7 @@ The 'Sec-CH-UA-Bitness' Header Field {#sec-ch-ua-bitness}
 The <dfn http-header>`Sec-CH-UA-Bitness`</dfn> request header field gives a server information about
 the [=platform bitness=] of the architecture of the platform on which a given [=user agent=] is
 executing. It is a [=Structured Header=] whose value MUST be a [=structured header/string=]
-[[!RFC8941]].
+[[!rfc9651]].
 
 The header's ABNF is:
 
@@ -555,7 +555,7 @@ The 'Sec-CH-UA-Form-Factors' Header Field {#sec-ch-ua-form-factors}
 The <dfn http-header>`Sec-CH-UA-Form-Factors`</dfn> request header field gives a
 server information about the [=user agent=]'s [=form-factors=]. It is a
 [=Structured Header=] whose value MUST be a [=structured header/list=]
-[[!RFC8941]]. In order to avoid providing additional fingerprinting entropy,
+[[!rfc9651]]. In order to avoid providing additional fingerprinting entropy,
 the header's values MUST be given in lexical order, and values are
 case-sensitive.
 
@@ -607,7 +607,7 @@ should use <a href="#sec-ch-ua-full-version-list">`Sec-CH-UA-Full-Version-List`<
 
 The <dfn http-header>`Sec-CH-UA-Full-Version`</dfn> request header field gives a server information
 about the user agent's [=user agent/full version=]. It is a [=Structured Header=]
-whose value MUST be a [=structured header/string=] [[!RFC8941]].
+whose value MUST be a [=structured header/string=] [[!rfc9651]].
 
 The header's ABNF is:
 
@@ -620,7 +620,7 @@ The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
 
 The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
 information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
-[=Structured Header=] whose value MUST be a [=structured header/list=] [[!RFC8941]].
+[=Structured Header=] whose value MUST be a [=structured header/list=] [[!rfc9651]].
 
 The header's ABNF is:
 
@@ -641,7 +641,7 @@ The 'Sec-CH-UA-Mobile' Header Field {#sec-ch-ua-mobile}
 
 The <dfn http-header>`Sec-CH-UA-Mobile`</dfn> request header field gives a server information about
 whether or not a [=user agent=] prefers a "mobile" user experience. It is a [=Structured Header=]
-whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
+whose value MUST be a [=structured header/boolean=] [[!rfc9651]].
 
 The header's ABNF is:
 
@@ -660,7 +660,7 @@ The 'Sec-CH-UA-Model' Header Field {#sec-ch-ua-model}
 
 The <dfn http-header>`Sec-CH-UA-Model`</dfn> request header field gives a server information about
 the device on which a given [=user agent=] is executing. It is a [=Structured Header=] whose value
-MUST be a [=structured header/string=] [[!RFC8941]].
+MUST be a [=structured header/string=] [[!rfc9651]].
 
 The header's ABNF is:
 
@@ -674,7 +674,7 @@ The 'Sec-CH-UA-Platform' Header Field {#sec-ch-ua-platform}
 
 The <dfn http-header>`Sec-CH-UA-Platform`</dfn> request header field gives a server information
 about the platform on which a given [=user agent=] is executing. It is a [=Structured Header=]
-whose value MUST be a [=structured header/string=] [[!RFC8941]]. Its value SHOULD match one of the
+whose value MUST be a [=structured header/string=] [[!rfc9651]]. Its value SHOULD match one of the
 following common platform values: "Android", "Chrome OS", "Fuchsia", "iOS", "Linux", "macOS",
 "Windows", or "Unknown".
 
@@ -694,7 +694,7 @@ The 'Sec-CH-UA-Platform-Version' Header Field {#sec-ch-ua-platform-version}
 
 The <dfn http-header>`Sec-CH-UA-Platform-Version`</dfn> request header field gives a server
 information about the [=user agent/platform version=] on which a given [=user agent=] is executing.
-It is a [=Structured Header=] whose value MUST be a [=structured header/string=][[!RFC8941]]. Its
+It is a [=Structured Header=] whose value MUST be a [=structured header/string=][[!rfc9651]]. Its
 value is the result of [=getting the platform version=] with [=user agent/platform brand=].
 
 To <dfn>get the platform version</dfn>, given a string |platform|, run the following steps:
@@ -771,7 +771,7 @@ The 'Sec-CH-UA-WoW64' Header Field {#sec-ch-ua-wow64}
 
 The <dfn http-header>`Sec-CH-UA-WoW64`</dfn> request header field gives a server information about
 whether or not a [=user agent=] binary is running in 32-bit mode on 64-bit Windows.
-It is a [=Structured Header=] whose value MUST be a [=structured header/boolean=] [[!RFC8941]].
+It is a [=Structured Header=] whose value MUST be a [=structured header/boolean=] [[!rfc9651]].
 
 The header's ABNF is:
 

@@ -338,7 +338,7 @@ brand of the browser to the user. These messages often also include the platform
 order to make sure the user knows which device is in question.
 
 Since such messaging doesn't require any server-side adaptation, it's better for this case to use
-the `userAgentData.getHighEntropyData()` method in order to retrieve the required information.
+the `userAgentData.getHighEntropyValues()` method in order to retrieve the required information.
 
 ### Download of appropriate binary executables ### {#binary-executable-downloads}
 Some sites are used to download binary executables of native applications, and need to be able to
@@ -373,7 +373,7 @@ the lower entropy values available through `Sec-CH-UA` for logging purposes, or 
 higher-entropy hints. The latter doesn't seem like something services should do just for forensic
 purposes. On the other hand, when specific issues are encountered, it may make sense for those
 services to opt-in to receive more details on the user agent, or use the
-`userAgentData.getHighEntropyData()` API for that purpose.
+`userAgentData.getHighEntropyValues()` API for that purpose.
 
 ### Fingerprinting ### {#fingerprinting-use-case}
 
@@ -971,21 +971,25 @@ On getting, the {{NavigatorUAData/platform}} attribute must return the [=user ag
 
 <h4 id="getHighEntropyValues"><code>getHighEntropyValues</code> method</h4>
 
-The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run these steps:
+The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run
+these steps:
 
 1. Let |p| be a [=a new promise=] created in the [=current realm=].
 
-2. If the [=user agent=] decides one or more values in |hints| should not be returned, then [=reject=] and return |p| with a "{{NotAllowedError}}".
+1. Let |uaData| be a new {{UADataValues}}.
 
-ISSUE(wicg/ua-client-hints): We can improve upon when and why a UA decides to refuse a hint once [Issue #151](https://github.com/WICG/ua-client-hints/issues/151) is resolved.
+1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s
+    [=WindowOrWorkerGlobalScope/brands frozen array=].
 
-3. Otherwise, run the following steps [=in parallel=]:
+1. set |uaData|["{{UADataValues/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
 
-    1. Let |uaData| be a new {{UADataValues}}.
-    1. set |uaData|["{{UADataValues/brands}}"] to [=this=]'s [=relevant global object=]'s
-        [=WindowOrWorkerGlobalScope/brands frozen array=].
-    1. set |uaData|["{{UADataValues/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
-    1. set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+1. set |uaData|["{{UADataValues/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+
+1. If [=this=]'s [=relevant global object=]'s [=associated Document=] is not [=allowed to use=] the
+    [=ch-ua-high-entropy-values=] feature, resolve |p| with |uaData|.
+
+1. Otherwise, run the following steps [=in parallel=]:
+
     1. If |hints| [=list/contains=] "architecture", set |uaData|["{{UADataValues/architecture}}"] to
         the [=user agent=]'s [=user agent/platform architecture=].
     1. If |hints| [=list/contains=] "bitness", set |uaData|["{{UADataValues/bitness}}"] to
@@ -1012,11 +1016,22 @@ The <dfn method for="NavigatorUA"><code>toJSON()</code></dfn> method MUST run th
 
 1. Let |uaLowEntropyData| be a new {{UALowEntropyJSON}}
 
-1. set |uaLowEntropyData|["{{UALowEntropyJSON/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
-1. set |uaLowEntropyData|["{{UALowEntropyJSON/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
-1. set |uaLowEntropyData|["{{UALowEntropyJSON/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
+1. Set |uaLowEntropyData|["{{UALowEntropyJSON/brands}}"] to [=this=]'s [=relevant global object=]'s [=WindowOrWorkerGlobalScope/brands frozen array=].
+1. Set |uaLowEntropyData|["{{UALowEntropyJSON/mobile}}"] to the [=user agent=]'s [=user agent/mobileness=].
+1. Set |uaLowEntropyData|["{{UALowEntropyJSON/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
 
 1. Return |uaLowEntropyData|
+
+Permissions-Policy Integration {#permisisons-policy-integration}
+==============================
+
+This specification defines a [=policy-controlled feature=] identified by the string
+"<code><dfn export>ch-ua-high-entropy-values</dfn></code>" which has a [=default allowlist=] of
+`'*'`. This determines if a given document is allowed to return [=high-entropy client hint=] values
+via the {{NavigatorUAData/getHighEntropyValues(hints)/hints|getHighEntropyValues()}} API.
+
+Note: If a given document is not allowed to use the `"ch-ua-high-entropy-values"` feature, the
+`getHighEntropyValues()` API will continue to return the low-entropy values for convenience.
 
 Security and Privacy Considerations {#security-privacy}
 ===================================

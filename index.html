@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version ac5ea272d, updated Fri Dec 6 15:45:15 2024 -0800" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="7acf88f6a8159bbfdc88085b513210d125d5c629" name="revision">
+  <meta content="d7717eadf254c1d5c24e321be0c216b1b3ffa9f7" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -737,7 +737,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-12-18">18 December 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-12-24">24 December 2024</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -845,38 +845,39 @@ perform agent-based content negotiation when necessary, while avoiding the histo
         <li><a href="#toJSON"><span class="secno">4.1.7</span> <span class="content"><code>toJSON</code> method</span></a>
        </ol>
      </ol>
+    <li><a href="#permisisons-policy-integration"><span class="secno">5</span> <span class="content">Permissions-Policy Integration</span></a>
     <li>
-     <a href="#security-privacy"><span class="secno">5</span> <span class="content">Security and Privacy Considerations</span></a>
+     <a href="#security-privacy"><span class="secno">6</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#secure-transport"><span class="secno">5.1</span> <span class="content">Secure Transport</span></a>
-      <li><a href="#delegation"><span class="secno">5.2</span> <span class="content">Delegation</span></a>
-      <li><a href="#fingerprinting"><span class="secno">5.3</span> <span class="content">Fingerprinting</span></a>
-      <li><a href="#access"><span class="secno">5.4</span> <span class="content">Access Restrictions</span></a>
+      <li><a href="#secure-transport"><span class="secno">6.1</span> <span class="content">Secure Transport</span></a>
+      <li><a href="#delegation"><span class="secno">6.2</span> <span class="content">Delegation</span></a>
+      <li><a href="#fingerprinting"><span class="secno">6.3</span> <span class="content">Fingerprinting</span></a>
+      <li><a href="#access"><span class="secno">6.4</span> <span class="content">Access Restrictions</span></a>
      </ol>
     <li>
-     <a href="#impl-considerations"><span class="secno">6</span> <span class="content">Implementation Considerations</span></a>
+     <a href="#impl-considerations"><span class="secno">7</span> <span class="content">Implementation Considerations</span></a>
      <ol class="toc">
-      <li><a href="#user-agent"><span class="secno">6.1</span> <span class="content">The 'User-Agent' Header</span></a>
-      <li><a href="#grease"><span class="secno">6.2</span> <span class="content">GREASE-like UA Brand Lists</span></a>
-      <li><a href="#sec-ch"><span class="secno">6.3</span> <span class="content">The 'Sec-CH-' prefix</span></a>
+      <li><a href="#user-agent"><span class="secno">7.1</span> <span class="content">The 'User-Agent' Header</span></a>
+      <li><a href="#grease"><span class="secno">7.2</span> <span class="content">GREASE-like UA Brand Lists</span></a>
+      <li><a href="#sec-ch"><span class="secno">7.3</span> <span class="content">The 'Sec-CH-' prefix</span></a>
      </ol>
     <li>
-     <a href="#iana"><span class="secno">7</span> <span class="content">IANA Considerations</span></a>
+     <a href="#iana"><span class="secno">8</span> <span class="content">IANA Considerations</span></a>
      <ol class="toc">
-      <li><a href="#iana-ua"><span class="secno">7.1</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
-      <li><a href="#iana-arch"><span class="secno">7.2</span> <span class="content">'Sec-CH-UA-Arch' Header Field</span></a>
-      <li><a href="#iana-bitness"><span class="secno">7.3</span> <span class="content">'Sec-CH-UA-Bitness' Header Field</span></a>
-      <li><a href="#iana-form-factors"><span class="secno">7.4</span> <span class="content">'Sec-CH-UA-Form-Factors' Header Field</span></a>
-      <li><a href="#iana-full-version"><span class="secno">7.5</span> <span class="content">'Sec-CH-UA-Full-Version' Header Field</span></a>
-      <li><a href="#iana-full-version-list"><span class="secno">7.6</span> <span class="content">'Sec-CH-UA-Full-Version-List' Header Field</span></a>
-      <li><a href="#iana-mobile"><span class="secno">7.7</span> <span class="content">'Sec-CH-UA-Mobile' Header Field</span></a>
-      <li><a href="#iana-model"><span class="secno">7.8</span> <span class="content">'Sec-CH-UA-Model' Header Field</span></a>
-      <li><a href="#iana-platform"><span class="secno">7.9</span> <span class="content">'Sec-CH-UA-Platform' Header Field</span></a>
-      <li><a href="#iana-platform-version"><span class="secno">7.10</span> <span class="content">'Sec-CH-UA-Platform-Version' Header Field</span></a>
-      <li><a href="#iana-wow64"><span class="secno">7.11</span> <span class="content">'Sec-CH-UA-WoW64' Header Field</span></a>
-      <li><a href="#iana-user-agent"><span class="secno">7.12</span> <span class="content">'User-Agent' Header Field</span></a>
+      <li><a href="#iana-ua"><span class="secno">8.1</span> <span class="content">'Sec-CH-UA' Header Field</span></a>
+      <li><a href="#iana-arch"><span class="secno">8.2</span> <span class="content">'Sec-CH-UA-Arch' Header Field</span></a>
+      <li><a href="#iana-bitness"><span class="secno">8.3</span> <span class="content">'Sec-CH-UA-Bitness' Header Field</span></a>
+      <li><a href="#iana-form-factors"><span class="secno">8.4</span> <span class="content">'Sec-CH-UA-Form-Factors' Header Field</span></a>
+      <li><a href="#iana-full-version"><span class="secno">8.5</span> <span class="content">'Sec-CH-UA-Full-Version' Header Field</span></a>
+      <li><a href="#iana-full-version-list"><span class="secno">8.6</span> <span class="content">'Sec-CH-UA-Full-Version-List' Header Field</span></a>
+      <li><a href="#iana-mobile"><span class="secno">8.7</span> <span class="content">'Sec-CH-UA-Mobile' Header Field</span></a>
+      <li><a href="#iana-model"><span class="secno">8.8</span> <span class="content">'Sec-CH-UA-Model' Header Field</span></a>
+      <li><a href="#iana-platform"><span class="secno">8.9</span> <span class="content">'Sec-CH-UA-Platform' Header Field</span></a>
+      <li><a href="#iana-platform-version"><span class="secno">8.10</span> <span class="content">'Sec-CH-UA-Platform-Version' Header Field</span></a>
+      <li><a href="#iana-wow64"><span class="secno">8.11</span> <span class="content">'Sec-CH-UA-WoW64' Header Field</span></a>
+      <li><a href="#iana-user-agent"><span class="secno">8.12</span> <span class="content">'User-Agent' Header Field</span></a>
      </ol>
-    <li><a href="#ack"><span class="secno">8</span> <span class="content">Acknowledgments</span></a>
+    <li><a href="#ack"><span class="secno">9</span> <span class="content">Acknowledgments</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -895,7 +896,6 @@ perform agent-based content negotiation when necessary, while avoiding the histo
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
@@ -1087,7 +1087,7 @@ login that’s done by them or on their behalf.
 brand of the browser to the user. These messages often also include the platform and its version in
 order to make sure the user knows which device is in question.</p>
    <p>Since such messaging doesn’t require any server-side adaptation, it’s better for this case to use
-the <code>userAgentData.getHighEntropyData()</code> method in order to retrieve the required information.</p>
+the <code>userAgentData.getHighEntropyValues()</code> method in order to retrieve the required information.</p>
    <h4 class="heading settled" data-level="1.2.5" id="binary-executable-downloads"><span class="secno">1.2.5. </span><span class="content">Download of appropriate binary executables</span><a class="self-link" href="#binary-executable-downloads"></a></h4>
     Some sites are used to download binary executables of native applications, and need to be able to
 propose the right binary to the user by default.  The right binary executable for the current user
@@ -1112,7 +1112,7 @@ traffic or when trying to debug errors related to their service.  Those services
 the lower entropy values available through <code>Sec-CH-UA</code> for logging purposes, or opt-in to receive
 higher-entropy hints. The latter doesn’t seem like something services should do just for forensic
 purposes. On the other hand, when specific issues are encountered, it may make sense for those
-services to opt-in to receive more details on the user agent, or use the <code>userAgentData.getHighEntropyData()</code> API for that purpose. 
+services to opt-in to receive more details on the user agent, or use the <code>userAgentData.getHighEntropyValues()</code> API for that purpose. 
    <h4 class="heading settled" data-level="1.2.9" id="fingerprinting-use-case"><span class="secno">1.2.9. </span><span class="content">Fingerprinting</span><a class="self-link" href="#fingerprinting-use-case"></a></h4>
    <p>User fingerprinting is the practice of gathering multiple bits of user information from multiple
 sources and intersecting them together to create a unique signature of the user, that would enable
@@ -1554,7 +1554,7 @@ the <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-u
      <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize caching variance when generating these random components could be to
 determine them at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agent</a>'s significant
 version.</p>
-     <p class="note" role="note"><span class="marker">Note:</span> See <a href="#grease">§ 6.2 GREASE-like UA Brand Lists</a> for more details on when and why these randomization steps might be appropriate.</p>
+     <p class="note" role="note"><span class="marker">Note:</span> See <a href="#grease">§ 7.2 GREASE-like UA Brand Lists</a> for more details on when and why these randomization steps might be appropriate.</p>
     <li data-md>
      <p>Return <var>list</var>.</p>
    </ol>
@@ -1669,40 +1669,38 @@ corresponds to the <a data-link-type="dfn" href="#user-agent-significant-version
    <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness②">mobileness</a>.</p>
    <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand①">platform brand</a>.</p>
    <h4 class="heading settled" data-level="4.1.6" id="getHighEntropyValues"><span class="secno">4.1.6. </span><span class="content"><code>getHighEntropyValues</code> method</span><a class="self-link" href="#getHighEntropyValues"></a></h4>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code></dfn> method MUST run these steps:</p>
+   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code></dfn> method MUST run
+these steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>p</var> be a <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-new-promise" id="ref-for-a-new-promise">a new promise</a> created in the <a data-link-type="dfn" href="https://tc39.es/ecma262/#current-realm" id="ref-for-current-realm">current realm</a>.</p>
     <li data-md>
-     <p>If the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a> decides one or more values in <var>hints</var> should not be returned, then <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#reject" id="ref-for-reject">reject</a> and return <var>p</var> with a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>".</p>
-   </ol>
-   <p class="issue" id="issue-22962aa8"><a class="self-link" href="#issue-22962aa8"></a> We can improve upon when and why a UA decides to refuse a hint once <a href="https://github.com/WICG/ua-client-hints/issues/151">Issue #151</a> is resolved.</p>
-   <ol start="3">
+     <p>Let <var>uaData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues①">UADataValues</a></code>.</p>
+    <li data-md>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-brands" id="ref-for-dom-uadatavalues-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array①">brands frozen array</a>.</p>
+    <li data-md>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
+    <li data-md>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
+    <li data-md>
+     <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the <a data-link-type="dfn" href="#ch-ua-high-entropy-values" id="ref-for-ch-ua-high-entropy-values">ch-ua-high-entropy-values</a> feature, resolve <var>p</var> with <var>uaData</var>.</p>
     <li data-md>
      <p>Otherwise, run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
       <li data-md>
-       <p>Let <var>uaData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues①">UADataValues</a></code>.</p>
-      <li data-md>
-       <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-brands" id="ref-for-dom-uadatavalues-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array①">brands frozen array</a>.</p>
-      <li data-md>
-       <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
-      <li data-md>
-       <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
-      <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">contains</a> "bitness", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-bitness" id="ref-for-dom-uadatavalues-bitness">bitness</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> "formFactors", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-formfactors" id="ref-for-dom-uadatavalues-formfactors">formFactors</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> "fullVersionList", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-fullversionlist" id="ref-for-dom-uadatavalues-fullversionlist">fullVersionList</a></code>"]
-to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-full-version-list-frozen-array" id="ref-for-windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a>.</p>
+to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global③">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-full-version-list-frozen-array" id="ref-for-windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>'s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain⑤">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"]
 to the result of <a data-link-type="dfn" href="#get-the-platform-version" id="ref-for-get-the-platform-version①">getting the platform version</a> with <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand③">platform brand</a>.</p>
@@ -1723,63 +1721,68 @@ to the user agent’s <a data-link-type="dfn" href="#user-agent-wow64-ness" id="
     <li data-md>
      <p>Let <var>uaLowEntropyData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-ualowentropyjson" id="ref-for-dictdef-ualowentropyjson①">UALowEntropyJSON</a></code></p>
     <li data-md>
-     <p>set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-brands" id="ref-for-dom-ualowentropyjson-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global③">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array②">brands frozen array</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-brands" id="ref-for-dom-ualowentropyjson-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this④">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global④">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array②">brands frozen array</a>.</p>
     <li data-md>
-     <p>set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
     <li data-md>
-     <p>set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
     <li data-md>
      <p>Return <var>uaLowEntropyData</var></p>
    </ol>
-   <h2 class="heading settled" data-level="5" id="security-privacy"><span class="secno">5. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
-   <h3 class="heading settled" data-level="5.1" id="secure-transport"><span class="secno">5.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
+   <h2 class="heading settled" data-level="5" id="permisisons-policy-integration"><span class="secno">5. </span><span class="content">Permissions-Policy Integration</span><a class="self-link" href="#permisisons-policy-integration"></a></h2>
+   <p>This specification defines a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled feature</a> identified by the string
+"<code><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="ch-ua-high-entropy-values">ch-ua-high-entropy-values</dfn></code>" which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist">default allowlist</a> of <code>'*'</code>. This determines if a given document is allowed to return <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint" id="ref-for-high-entropy-client-hint">high-entropy client hint</a> values
+via the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-gethighentropyvalues-hints-hints" id="ref-for-dom-navigatoruadata-gethighentropyvalues-hints-hints">getHighEntropyValues()</a></code> API.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> If a given document is not allowed to use the <code>"ch-ua-high-entropy-values"</code> feature, the <code>getHighEntropyValues()</code> API will continue to return the low-entropy values for convenience.</p>
+   <h2 class="heading settled" data-level="6" id="security-privacy"><span class="secno">6. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
+   <h3 class="heading settled" data-level="6.1" id="secure-transport"><span class="secno">6.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">user agent</a> information will not
+Section 2.2.1 of <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agent</a> information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent’s behavior over time.</p>
-   <h3 class="heading settled" data-level="5.2" id="delegation"><span class="secno">5.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
+   <h3 class="heading settled" data-level="6.2" id="delegation"><span class="secno">6.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
    <p>Client Hints will be delegated from top-level pages via Permissions Policy
-(<a data-link-type="biblio" href="#biblio-permissions-policy-1" title="Permissions Policy">[permissions-policy-1]</a>). This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">user agent</a> information will be
+(<a data-link-type="biblio" href="#biblio-permissions-policy-1" title="Permissions Policy">[permissions-policy-1]</a>). This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">user agent</a> information will be
 delivered along with subresource requests, which reduces the potential for <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting" id="ref-for-dfn-passive-fingerprinting②">passive fingerprinting</a>.</p>
    <p>That delegation is defined as part of <a data-link-type="abstract-op" href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a>.</p>
-   <h3 class="heading settled" data-level="5.3" id="fingerprinting"><span class="secno">5.3. </span><span class="content">Fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="fingerprinting"><span class="secno">6.3. </span><span class="content">Fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
    <p>The <em>primary goal</em> of User Agent Client Hints is to reduce the amount of default entropy exposed to
 the web at large through the User-Agent header field, which may be used for <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting" id="ref-for-dfn-passive-fingerprinting③">passive fingerprinting</a> purposes.</p>
-   <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">user agent</a> is able to decide which hints it provides, with the expectation that no more
-information is provided than would be included in an unredacted User-Agent header field. A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agent</a> can provide an empty string for any value that it does not wish to provide, or refuse
+   <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">user agent</a> is able to decide which hints it provides, with the expectation that no more
+information is provided than would be included in an unredacted User-Agent header field. A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">user agent</a> can provide an empty string for any value that it does not wish to provide, or refuse
 to return a hint entirely.</p>
-   <p>However, it will still be possible for some, or all, hints to be requested and used for <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting">active fingerprinting</a> purposes by first or delegated third parties. As noted in <a href="#access">§ 5.4 Access Restrictions</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">user agents</a> should consider policies to restrict or reduce access to parties that are known to <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting①">actively fingerprint</a> their users.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤③">User agents</a> should take care to not introduce fingerprinting vectors through GREASE-like brand
+   <p>However, it will still be possible for some, or all, hints to be requested and used for <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting">active fingerprinting</a> purposes by first or delegated third parties. As noted in <a href="#access">§ 6.4 Access Restrictions</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agents</a> should consider policies to restrict or reduce access to parties that are known to <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting①">actively fingerprint</a> their users.</p>
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">User agents</a> should take care to not introduce fingerprinting vectors through GREASE-like brand
 lists that might be unique for an individual or a very small group of users. Rather, a strategy
 should be employed where the arbitrary brand is shared across many users (e.g., stable across
 major versions for all users).</p>
-   <h3 class="heading settled" data-level="5.4" id="access"><span class="secno">5.4. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="access"><span class="secno">6.4. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">User agents</a> ought to exercise judgement before
+agent and the device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤③">User agents</a> ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">user agents</a> could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture④">platform architecture</a> or <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness④">platform bitness</a> only on requests it intends
+transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">user agents</a> could choose to reveal <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture④">platform architecture</a> or <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness④">platform bitness</a> only on requests it intends
 to download, giving the server the opportunity to serve the right binary. Likewise, they could offer
 users control over the values revealed to servers, or gate access on explicit user interaction via a
 permission prompt or via a settings interface.</p>
-   <h2 class="heading settled" data-level="6" id="impl-considerations"><span class="secno">6. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
-   <h3 class="heading settled" data-level="6.1" id="user-agent"><span class="secno">6.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
+   <h2 class="heading settled" data-level="7" id="impl-considerations"><span class="secno">7. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
+   <h3 class="heading settled" data-level="7.1" id="user-agent"><span class="secno">7.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
 in favor of the Client Hints model described in this document. The header
 is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
 code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015" title="The Microsoft Edge Rendering Engine that makes the Web just work">[Rossi2015]</a> for a recent example of a new browser’s struggles
 in this area).</p>
-   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑦">user agent</a> to lock the value of its <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
+   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">user agent</a> to lock the value of its <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
 "like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.</p>
-   <h3 class="heading settled" data-level="6.2" id="grease"><span class="secno">6.2. </span><span class="content">GREASE-like UA Brand Lists</span><a class="self-link" href="#grease"></a></h3>
-   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑧">user agents</a> to lie about their branding
+   <h3 class="heading settled" data-level="7.2" id="grease"><span class="secno">7.2. </span><span class="content">GREASE-like UA Brand Lists</span><a class="self-link" href="#grease"></a></h3>
+   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑦">user agents</a> to lie about their branding
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.</p>
    <p>Resetting expectations may help to prevent abuse of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑤">brands</a> list in the short term, but
 probably won’t help in the long run. The world of network protocols introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease" title="Applying GREASE to TLS Extensibility">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑨">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> containing more than a single entry could encourage
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑧">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> containing more than a single entry could encourage
 standardized processing of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑦">brands</a> list. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.</p>
@@ -1814,15 +1817,15 @@ set, enabling sites to count them.</p>
        <p><code>"Chrome"; v="73", "Xwebs mega"; v="60", "Chromium"; v="73", "(Not;Browser"; v="12"</code></p>
      </ul>
    </ul>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⓪">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑧">brands</a>, where one of these values is an
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑨">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑧">brands</a>, where one of these values is an
 arbitrary value.</p>
    <p>The value order in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑨">brands</a> MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.</p>
-   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥①">user agents</a> SHOULD keep caching variance and analytics use
-cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">user agent</a> versions.</p>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⓪">user agents</a> SHOULD keep caching variance and analytics use
+cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥①">user agent</a> versions.</p>
    <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize variance for caching and analytics could be to determine the GREASE
-parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥③">user agent</a>'s significant version.</p>
-   <h3 class="heading settled" data-level="6.3" id="sec-ch"><span class="secno">6.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
+parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">user agent</a>'s significant version.</p>
+   <h3 class="heading settled" data-level="7.3" id="sec-ch"><span class="secno">7.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
 security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which
 require such user-land rewriting.</p>
@@ -1831,83 +1834,83 @@ reasonable to forbid write access to these headers from JavaScript (e.g. through
 Workers), and demarcate them as browser-controlled client hints so they can be documented and
 included in requests without triggering CORS preflights.</p>
    <p>Therefore, request headers defined in this specification include a <code>Sec-CH-</code> prefix.</p>
-   <h2 class="heading settled" data-level="7" id="iana"><span class="secno">7. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
+   <h2 class="heading settled" data-level="8" id="iana"><span class="secno">8. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
    <p>This document intends to define the <code>Sec-CH-UA</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Bitness</code>, <code>Sec-CH-UA-Form-Factors</code>, <code>Sec-CH-UA-Full-Version</code>, <code>Sec-CH-UA-Mobile</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA-WoW64</code>, and the <code>Sec-CH-UA-Full-Version-List</code> HTTP request header fields, and register them in the permanent message
  header field registry (<a data-link-type="biblio" href="#biblio-rfc3864" title="Registration Procedures for Message Header Fields">[RFC3864]</a>).</p>
    <p>It also intends to deprecate usage of the <code>User-Agent</code> header field.</p>
-   <h3 class="heading settled" data-level="7.1" id="iana-ua"><span class="secno">7.1. </span><span class="content">'Sec-CH-UA' Header Field</span><a class="self-link" href="#iana-ua"></a></h3>
+   <h3 class="heading settled" data-level="8.1" id="iana-ua"><span class="secno">8.1. </span><span class="content">'Sec-CH-UA' Header Field</span><a class="self-link" href="#iana-ua"></a></h3>
    <p>Header field name: Sec-CH-UA</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua">§ 3.1 The 'Sec-CH-UA' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.2" id="iana-arch"><span class="secno">7.2. </span><span class="content">'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
+   <h3 class="heading settled" data-level="8.2" id="iana-arch"><span class="secno">8.2. </span><span class="content">'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#iana-arch"></a></h3>
    <p>Header field name: Sec-CH-UA-Arch</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-arch">§ 3.2 The 'Sec-CH-UA-Arch' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.3" id="iana-bitness"><span class="secno">7.3. </span><span class="content">'Sec-CH-UA-Bitness' Header Field</span><a class="self-link" href="#iana-bitness"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="iana-bitness"><span class="secno">8.3. </span><span class="content">'Sec-CH-UA-Bitness' Header Field</span><a class="self-link" href="#iana-bitness"></a></h3>
    <p>Header field name: Sec-CH-UA-Bitness</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-bitness">§ 3.3 The 'Sec-CH-UA-Bitness' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.4" id="iana-form-factors"><span class="secno">7.4. </span><span class="content">'Sec-CH-UA-Form-Factors' Header Field</span><a class="self-link" href="#iana-form-factors"></a></h3>
+   <h3 class="heading settled" data-level="8.4" id="iana-form-factors"><span class="secno">8.4. </span><span class="content">'Sec-CH-UA-Form-Factors' Header Field</span><a class="self-link" href="#iana-form-factors"></a></h3>
    <p>Header field name: Sec-CH-UA-Form-Factors</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-form-factors">§ 3.4 The 'Sec-CH-UA-Form-Factors' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.5" id="iana-full-version"><span class="secno">7.5. </span><span class="content">'Sec-CH-UA-Full-Version' Header Field</span><a class="self-link" href="#iana-full-version"></a></h3>
+   <h3 class="heading settled" data-level="8.5" id="iana-full-version"><span class="secno">8.5. </span><span class="content">'Sec-CH-UA-Full-Version' Header Field</span><a class="self-link" href="#iana-full-version"></a></h3>
    <p>Header field name: Sec-CH-UA-Full-Version</p>
    <p>Applicable protocol: http</p>
    <p>Status: deprecated</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-full-version">§ 3.5 The 'Sec-CH-UA-Full-Version' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.6" id="iana-full-version-list"><span class="secno">7.6. </span><span class="content">'Sec-CH-UA-Full-Version-List' Header Field</span><a class="self-link" href="#iana-full-version-list"></a></h3>
+   <h3 class="heading settled" data-level="8.6" id="iana-full-version-list"><span class="secno">8.6. </span><span class="content">'Sec-CH-UA-Full-Version-List' Header Field</span><a class="self-link" href="#iana-full-version-list"></a></h3>
    <p>Header field name: Sec-CH-UA-Full-Version-List</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-full-version-list">§ 3.6 The 'Sec-CH-UA-Full-Version-List' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.7" id="iana-mobile"><span class="secno">7.7. </span><span class="content">'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
+   <h3 class="heading settled" data-level="8.7" id="iana-mobile"><span class="secno">8.7. </span><span class="content">'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#iana-mobile"></a></h3>
    <p>Header field name: Sec-CH-UA-Mobile</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-mobile">§ 3.7 The 'Sec-CH-UA-Mobile' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.8" id="iana-model"><span class="secno">7.8. </span><span class="content">'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
+   <h3 class="heading settled" data-level="8.8" id="iana-model"><span class="secno">8.8. </span><span class="content">'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#iana-model"></a></h3>
    <p>Header field name: Sec-CH-UA-Model</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-model">§ 3.8 The 'Sec-CH-UA-Model' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.9" id="iana-platform"><span class="secno">7.9. </span><span class="content">'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
+   <h3 class="heading settled" data-level="8.9" id="iana-platform"><span class="secno">8.9. </span><span class="content">'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#iana-platform"></a></h3>
    <p>Header field name: Sec-CH-UA-Platform</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-platform">§ 3.9 The 'Sec-CH-UA-Platform' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.10" id="iana-platform-version"><span class="secno">7.10. </span><span class="content">'Sec-CH-UA-Platform-Version' Header Field</span><a class="self-link" href="#iana-platform-version"></a></h3>
+   <h3 class="heading settled" data-level="8.10" id="iana-platform-version"><span class="secno">8.10. </span><span class="content">'Sec-CH-UA-Platform-Version' Header Field</span><a class="self-link" href="#iana-platform-version"></a></h3>
    <p>Header field name: Sec-CH-UA-Platform-Version</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-platform-version">§ 3.10 The 'Sec-CH-UA-Platform-Version' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.11" id="iana-wow64"><span class="secno">7.11. </span><span class="content">'Sec-CH-UA-WoW64' Header Field</span><a class="self-link" href="#iana-wow64"></a></h3>
+   <h3 class="heading settled" data-level="8.11" id="iana-wow64"><span class="secno">8.11. </span><span class="content">'Sec-CH-UA-WoW64' Header Field</span><a class="self-link" href="#iana-wow64"></a></h3>
    <p>Header field name: Sec-CH-UA-WoW64</p>
    <p>Applicable protocol: http</p>
    <p>Status: standard</p>
    <p>Author/Change controller: IETF</p>
    <p>Specification document: this specification (<a href="#sec-ch-ua-wow64">§ 3.11 The 'Sec-CH-UA-WoW64' Header Field</a>)</p>
-   <h3 class="heading settled" data-level="7.12" id="iana-user-agent"><span class="secno">7.12. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
+   <h3 class="heading settled" data-level="8.12" id="iana-user-agent"><span class="secno">8.12. </span><span class="content">'User-Agent' Header Field</span><a class="self-link" href="#iana-user-agent"></a></h3>
    <p>Header field name: User-Agent</p>
    <p>Applicable protocol: http</p>
    <p>Status: deprecated</p>
    <p>Author/Change controller: IETF</p>
-   <p>Specification document: this specification (<a href="#user-agent">§ 6.1 The 'User-Agent' Header</a>), and Section 5.5.3 of <a data-link-type="biblio" href="#biblio-rfc9110" title="HTTP Semantics">[rfc9110]</a></p>
-   <h2 class="heading settled" data-level="8" id="ack"><span class="secno">8. </span><span class="content">Acknowledgments</span><a class="self-link" href="#ack"></a></h2>
+   <p>Specification document: this specification (<a href="#user-agent">§ 7.1 The 'User-Agent' Header</a>), and Section 5.5.3 of <a data-link-type="biblio" href="#biblio-rfc9110" title="HTTP Semantics">[rfc9110]</a></p>
+   <h2 class="heading settled" data-level="9" id="ack"><span class="secno">9. </span><span class="content">Acknowledgments</span><a class="self-link" href="#ack"></a></h2>
    <p>Thanks to
 Aaron Tagliaboschi,
 Ali Beyad,
@@ -1969,6 +1972,7 @@ for valuable feedback and contributions to this specification.</p>
      <li><a href="#dom-ualowentropyjson-brands">dict-member for UALowEntropyJSON</a><span>, in § 4</span>
     </ul>
    <li><a href="#windoworworkerglobalscope-brands-frozen-array">brands frozen array</a><span>, in § 4.1.1</span>
+   <li><a href="#ch-ua-high-entropy-values">ch-ua-high-entropy-values</a><span>, in § 5</span>
    <li><a href="#create-a-brand-version-list">create a brand-version list</a><span>, in § 4.1.4</span>
    <li><a href="#create-an-arbitrary-brand">create an arbitrary brand</a><span>, in § 4.1.3</span>
    <li><a href="#create-an-arbitrary-version">create an arbitrary version</a><span>, in § 4.1.3</span>
@@ -2061,6 +2065,7 @@ for valuable feedback and contributions to this specification.</p>
     <ul>
      <li><span class="dfn-paneled" id="6360ebfe">append client hints to request</span>
      <li><span class="dfn-paneled" id="ea0ecaa0">client hints token</span>
+     <li><span class="dfn-paneled" id="531f1cf9">high-entropy client hint</span>
      <li><span class="dfn-paneled" id="c7a20f42">low entropy hint table</span>
      <li><span class="dfn-paneled" id="f391224b">policy-controlled client hints features</span>
     </ul>
@@ -2075,6 +2080,8 @@ for valuable feedback and contributions to this specification.</p>
      <li><span class="dfn-paneled" id="be0c27b2">Navigator</span>
      <li><span class="dfn-paneled" id="5f6d392d">WindowOrWorkerGlobalScope</span>
      <li><span class="dfn-paneled" id="a4785085">WorkerNavigator</span>
+     <li><span class="dfn-paneled" id="3610bd67">allowed to use</span>
+     <li><span class="dfn-paneled" id="3349d69f">associated Document</span>
      <li><span class="dfn-paneled" id="a72449dd">in parallel</span>
      <li><span class="dfn-paneled" id="9a517a7d">queue a task</span>
      <li><span class="dfn-paneled" id="e99bd18e">relevant global object</span>
@@ -2102,6 +2109,12 @@ for valuable feedback and contributions to this specification.</p>
      <li><span class="dfn-paneled" id="6d19ac93">user agent</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[PERMISSIONS-POLICY-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="1570624a">default allowlist</span>
+     <li><span class="dfn-paneled" id="cc890cc1">policy-controlled feature</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[RFC9651]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="61efa9be">boolean</span>
@@ -2116,14 +2129,12 @@ for valuable feedback and contributions to this specification.</p>
      <li><span class="dfn-paneled" id="8855a9aa">DOMString</span>
      <li><span class="dfn-paneled" id="889e932f">Exposed</span>
      <li><span class="dfn-paneled" id="dcf5fafa">FrozenArray</span>
-     <li><span class="dfn-paneled" id="ba556545">NotAllowedError</span>
      <li><span class="dfn-paneled" id="bdbd19d1">Promise</span>
      <li><span class="dfn-paneled" id="b75bb3bd">SecureContext</span>
      <li><span class="dfn-paneled" id="dacde8b5">a new promise</span>
      <li><span class="dfn-paneled" id="5372cca8">boolean</span>
      <li><span class="dfn-paneled" id="1641b9ef">create a frozen array</span>
      <li><span class="dfn-paneled" id="bec98d30">dictionary</span>
-     <li><span class="dfn-paneled" id="b262501e">reject</span>
      <li><span class="dfn-paneled" id="3b90bdcd">resolve</span>
      <li><span class="dfn-paneled" id="9cce47fd">sequence</span>
      <li><span class="dfn-paneled" id="4013a022">this</span>
@@ -2214,10 +2225,6 @@ for valuable feedback and contributions to this specification.</p>
 
 
 </pre>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue"> We can improve upon when and why a UA decides to refuse a hint once <a href="https://github.com/WICG/ua-client-hints/issues/151">Issue #151</a> is resolved. <a class="issue-return" href="#issue-22962aa8" title="Jump to section">↵</a></div>
-  </div>
 <script>/* Boilerplate: script-dom-helper */
 "use strict";
 function query(sel) { return document.querySelector(sel); }
@@ -2422,21 +2429,25 @@ let dfnPanelData = {
 "02f9bf93": {"dfnID":"02f9bf93","dfnText":"ASCII alpha","external":true,"refSections":[{"refs":[{"id":"ref-for-ascii-alpha"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-ascii-alpha\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#ascii-alpha"},
 "0407598e": {"dfnID":"0407598e","dfnText":"permission task source","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-permissions-task-source"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://w3c.github.io/permissions/#dfn-permissions-task-source"},
 "0698d556": {"dfnID":"0698d556","dfnText":"string","external":true,"refSections":[{"refs":[{"id":"ref-for-string"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-string\u2460"},{"id":"ref-for-string\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#string"},
-"15edd6b4": {"dfnID":"15edd6b4","dfnText":"active fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-active-fingerprinting"},{"id":"ref-for-dfn-active-fingerprinting\u2460"}],"title":"5.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
+"1570624a": {"dfnID":"1570624a","dfnText":"default allowlist","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-feature-default-allowlist"}],"title":"5. Permissions-Policy Integration"}],"url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist"},
+"15edd6b4": {"dfnID":"15edd6b4","dfnText":"active fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-active-fingerprinting"},{"id":"ref-for-dfn-active-fingerprinting\u2460"}],"title":"6.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
 "1641b9ef": {"dfnID":"1641b9ef","dfnText":"create a frozen array","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-create-frozen-array"},{"id":"ref-for-dfn-create-frozen-array\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://webidl.spec.whatwg.org/#dfn-create-frozen-array"},
+"3349d69f": {"dfnID":"3349d69f","dfnText":"associated Document","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document-window"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window"},
+"3610bd67": {"dfnID":"3610bd67","dfnText":"allowed to use","external":true,"refSections":[{"refs":[{"id":"ref-for-allowed-to-use"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use"},
 "3aec4bbc": {"dfnID":"3aec4bbc","dfnText":"current realm","external":true,"refSections":[{"refs":[{"id":"ref-for-current-realm"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://tc39.es/ecma262/#current-realm"},
 "3b90bdcd": {"dfnID":"3b90bdcd","dfnText":"resolve","external":true,"refSections":[{"refs":[{"id":"ref-for-resolve"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://webidl.spec.whatwg.org/#resolve"},
-"4013a022": {"dfnID":"4013a022","dfnText":"this","external":true,"refSections":[{"refs":[{"id":"ref-for-this"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-this\u2460"},{"id":"ref-for-this\u2461"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-this\u2462"}],"title":"4.1.7. toJSON method"}],"url":"https://webidl.spec.whatwg.org/#this"},
+"4013a022": {"dfnID":"4013a022","dfnText":"this","external":true,"refSections":[{"refs":[{"id":"ref-for-this"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-this\u2460"},{"id":"ref-for-this\u2461"},{"id":"ref-for-this\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-this\u2463"}],"title":"4.1.7. toJSON method"}],"url":"https://webidl.spec.whatwg.org/#this"},
 "4384386e": {"dfnID":"4384386e","dfnText":"serializing a list","external":true,"refSections":[{"refs":[{"id":"ref-for-section-4.1.1"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-4.1.1\u2460"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-4.1.1"},
+"531f1cf9": {"dfnID":"531f1cf9","dfnText":"high-entropy client hint","external":true,"refSections":[{"refs":[{"id":"ref-for-high-entropy-client-hint"}],"title":"5. Permissions-Policy Integration"}],"url":"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint"},
 "53275e46": {"dfnID":"53275e46","dfnText":"append","external":true,"refSections":[{"refs":[{"id":"ref-for-list-append"},{"id":"ref-for-list-append\u2460"},{"id":"ref-for-list-append\u2461"},{"id":"ref-for-list-append\u2462"},{"id":"ref-for-list-append\u2463"},{"id":"ref-for-list-append\u2464"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list-append\u2465"},{"id":"ref-for-list-append\u2466"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list-append\u2467"},{"id":"ref-for-list-append\u2468"},{"id":"ref-for-list-append\u2460\u24ea"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list-append\u2460\u2460"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list-append"},
 "5372cca8": {"dfnID":"5372cca8","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-boolean"},{"id":"ref-for-idl-boolean\u2460"},{"id":"ref-for-idl-boolean\u2461"},{"id":"ref-for-idl-boolean\u2462"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-boolean"},
 "5afbefcd": {"dfnID":"5afbefcd","dfnText":"item","external":true,"refSections":[{"refs":[{"id":"ref-for-list-item"},{"id":"ref-for-list-item\u2460"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list-item\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#list-item"},
 "5f6d392d": {"dfnID":"5f6d392d","dfnText":"WindowOrWorkerGlobalScope","external":true,"refSections":[{"refs":[{"id":"ref-for-windoworworkerglobalscope"},{"id":"ref-for-windoworworkerglobalscope\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope"},
 "617d690e": {"dfnID":"617d690e","dfnText":"ASCII byte","external":true,"refSections":[{"refs":[{"id":"ref-for-ascii-byte"},{"id":"ref-for-ascii-byte\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#ascii-byte"},
 "61efa9be": {"dfnID":"61efa9be","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.3.6"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-section-3.3.6\u2460"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.3.6"},
-"6360ebfe": {"dfnID":"6360ebfe","dfnText":"append client hints to request","external":true,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-append-client-hints-to-request"}],"title":"5.2. Delegation"}],"url":"https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request"},
+"6360ebfe": {"dfnID":"6360ebfe","dfnText":"append client hints to request","external":true,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-append-client-hints-to-request"}],"title":"6.2. Delegation"}],"url":"https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request"},
 "649608b9": {"dfnID":"649608b9","dfnText":"list","external":true,"refSections":[{"refs":[{"id":"ref-for-list"},{"id":"ref-for-list\u2460"},{"id":"ref-for-list\u2461"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list\u2462"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-list\u2463"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list\u2464"},{"id":"ref-for-list\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list\u2466"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list"},
-"6d19ac93": {"dfnID":"6d19ac93","dfnText":"user agent","external":true,"refSections":[{"refs":[{"id":"ref-for-user-agent"},{"id":"ref-for-user-agent\u2460"},{"id":"ref-for-user-agent\u2461"},{"id":"ref-for-user-agent\u2462"},{"id":"ref-for-user-agent\u2463"},{"id":"ref-for-user-agent\u2464"},{"id":"ref-for-user-agent\u2465"},{"id":"ref-for-user-agent\u2466"},{"id":"ref-for-user-agent\u2467"},{"id":"ref-for-user-agent\u2468"},{"id":"ref-for-user-agent\u2460\u24ea"},{"id":"ref-for-user-agent\u2460\u2460"},{"id":"ref-for-user-agent\u2460\u2461"},{"id":"ref-for-user-agent\u2460\u2462"},{"id":"ref-for-user-agent\u2460\u2463"},{"id":"ref-for-user-agent\u2460\u2464"},{"id":"ref-for-user-agent\u2460\u2465"},{"id":"ref-for-user-agent\u2460\u2466"},{"id":"ref-for-user-agent\u2460\u2467"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent\u2460\u2468"},{"id":"ref-for-user-agent\u2461\u24ea"},{"id":"ref-for-user-agent\u2461\u2460"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2461"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2462"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2463"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2464"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2465"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2466"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2467"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2468"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u24ea"}],"title":"4. Interface"},{"refs":[{"id":"ref-for-user-agent\u2462\u2460"},{"id":"ref-for-user-agent\u2462\u2461"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent\u2462\u2462"},{"id":"ref-for-user-agent\u2462\u2463"},{"id":"ref-for-user-agent\u2462\u2464"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent\u2462\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent\u2462\u2466"},{"id":"ref-for-user-agent\u2462\u2467"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent\u2462\u2468"},{"id":"ref-for-user-agent\u2463\u24ea"},{"id":"ref-for-user-agent\u2463\u2460"},{"id":"ref-for-user-agent\u2463\u2461"},{"id":"ref-for-user-agent\u2463\u2462"},{"id":"ref-for-user-agent\u2463\u2463"},{"id":"ref-for-user-agent\u2463\u2464"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2465"},{"id":"ref-for-user-agent\u2463\u2466"}],"title":"4.1.7. toJSON method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2467"}],"title":"5.1. Secure Transport"},{"refs":[{"id":"ref-for-user-agent\u2463\u2468"}],"title":"5.2. Delegation"},{"refs":[{"id":"ref-for-user-agent\u2464\u24ea"},{"id":"ref-for-user-agent\u2464\u2460"},{"id":"ref-for-user-agent\u2464\u2461"},{"id":"ref-for-user-agent\u2464\u2462"}],"title":"5.3. Fingerprinting"},{"refs":[{"id":"ref-for-user-agent\u2464\u2463"},{"id":"ref-for-user-agent\u2464\u2464"}],"title":"5.4. Access Restrictions"},{"refs":[{"id":"ref-for-user-agent\u2464\u2465"},{"id":"ref-for-user-agent\u2464\u2466"}],"title":"6.1. The 'User-Agent' Header"},{"refs":[{"id":"ref-for-user-agent\u2464\u2467"},{"id":"ref-for-user-agent\u2464\u2468"},{"id":"ref-for-user-agent\u2465\u24ea"},{"id":"ref-for-user-agent\u2465\u2460"},{"id":"ref-for-user-agent\u2465\u2461"},{"id":"ref-for-user-agent\u2465\u2462"}],"title":"6.2. GREASE-like UA Brand Lists"}],"url":"https://infra.spec.whatwg.org/#user-agent"},
+"6d19ac93": {"dfnID":"6d19ac93","dfnText":"user agent","external":true,"refSections":[{"refs":[{"id":"ref-for-user-agent"},{"id":"ref-for-user-agent\u2460"},{"id":"ref-for-user-agent\u2461"},{"id":"ref-for-user-agent\u2462"},{"id":"ref-for-user-agent\u2463"},{"id":"ref-for-user-agent\u2464"},{"id":"ref-for-user-agent\u2465"},{"id":"ref-for-user-agent\u2466"},{"id":"ref-for-user-agent\u2467"},{"id":"ref-for-user-agent\u2468"},{"id":"ref-for-user-agent\u2460\u24ea"},{"id":"ref-for-user-agent\u2460\u2460"},{"id":"ref-for-user-agent\u2460\u2461"},{"id":"ref-for-user-agent\u2460\u2462"},{"id":"ref-for-user-agent\u2460\u2463"},{"id":"ref-for-user-agent\u2460\u2464"},{"id":"ref-for-user-agent\u2460\u2465"},{"id":"ref-for-user-agent\u2460\u2466"},{"id":"ref-for-user-agent\u2460\u2467"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent\u2460\u2468"},{"id":"ref-for-user-agent\u2461\u24ea"},{"id":"ref-for-user-agent\u2461\u2460"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2461"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2462"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2463"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2464"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2465"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2466"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2467"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2468"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u24ea"}],"title":"4. Interface"},{"refs":[{"id":"ref-for-user-agent\u2462\u2460"},{"id":"ref-for-user-agent\u2462\u2461"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent\u2462\u2462"},{"id":"ref-for-user-agent\u2462\u2463"},{"id":"ref-for-user-agent\u2462\u2464"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent\u2462\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent\u2462\u2466"},{"id":"ref-for-user-agent\u2462\u2467"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent\u2462\u2468"},{"id":"ref-for-user-agent\u2463\u24ea"},{"id":"ref-for-user-agent\u2463\u2460"},{"id":"ref-for-user-agent\u2463\u2461"},{"id":"ref-for-user-agent\u2463\u2462"},{"id":"ref-for-user-agent\u2463\u2463"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2464"},{"id":"ref-for-user-agent\u2463\u2465"}],"title":"4.1.7. toJSON method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2466"}],"title":"6.1. Secure Transport"},{"refs":[{"id":"ref-for-user-agent\u2463\u2467"}],"title":"6.2. Delegation"},{"refs":[{"id":"ref-for-user-agent\u2463\u2468"},{"id":"ref-for-user-agent\u2464\u24ea"},{"id":"ref-for-user-agent\u2464\u2460"},{"id":"ref-for-user-agent\u2464\u2461"}],"title":"6.3. Fingerprinting"},{"refs":[{"id":"ref-for-user-agent\u2464\u2462"},{"id":"ref-for-user-agent\u2464\u2463"}],"title":"6.4. Access Restrictions"},{"refs":[{"id":"ref-for-user-agent\u2464\u2464"},{"id":"ref-for-user-agent\u2464\u2465"}],"title":"7.1. The 'User-Agent' Header"},{"refs":[{"id":"ref-for-user-agent\u2464\u2466"},{"id":"ref-for-user-agent\u2464\u2467"},{"id":"ref-for-user-agent\u2464\u2468"},{"id":"ref-for-user-agent\u2465\u24ea"},{"id":"ref-for-user-agent\u2465\u2460"},{"id":"ref-for-user-agent\u2465\u2461"}],"title":"7.2. GREASE-like UA Brand Lists"}],"url":"https://infra.spec.whatwg.org/#user-agent"},
 "70606718": {"dfnID":"70606718","dfnText":"structured header","external":true,"refSections":[{"refs":[{"id":"ref-for-something"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-something\u2460"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-something\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-something\u2462"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-something\u2463"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2464"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-something\u2465"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-something\u2466"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-something\u2467"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-something\u2468"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u24ea"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://tools.ietf.org/html/rfc9651#"},
 "77b4c09a": {"dfnID":"77b4c09a","dfnText":"assert","external":true,"refSections":[{"refs":[{"id":"ref-for-assert"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-assert\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-assert\u2461"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#assert"},
 "7a3dbdb1": {"dfnID":"7a3dbdb1","dfnText":"strictly split a string","external":true,"refSections":[{"refs":[{"id":"ref-for-strictly-split"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"https://infra.spec.whatwg.org/#strictly-split"},
@@ -2454,16 +2465,16 @@ let dfnPanelData = {
 "abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request": {"dfnID":"abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request","dfnText":"return the Sec-CH-UA-Full-Version-List value for a request","external":false,"refSections":[],"url":"#abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request"},
 "abstract-opdef-return-the-sec-ch-ua-value-for-a-request": {"dfnID":"abstract-opdef-return-the-sec-ch-ua-value-for-a-request","dfnText":"return the Sec-CH-UA value for a request","external":false,"refSections":[],"url":"#abstract-opdef-return-the-sec-ch-ua-value-for-a-request"},
 "ae8def21": {"dfnID":"ae8def21","dfnText":"contain","external":true,"refSections":[{"refs":[{"id":"ref-for-list-contain"},{"id":"ref-for-list-contain\u2460"},{"id":"ref-for-list-contain\u2461"},{"id":"ref-for-list-contain\u2462"},{"id":"ref-for-list-contain\u2463"},{"id":"ref-for-list-contain\u2464"},{"id":"ref-for-list-contain\u2465"},{"id":"ref-for-list-contain\u2466"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://infra.spec.whatwg.org/#list-contain"},
-"b262501e": {"dfnID":"b262501e","dfnText":"reject","external":true,"refSections":[{"refs":[{"id":"ref-for-reject"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://webidl.spec.whatwg.org/#reject"},
 "b75bb3bd": {"dfnID":"b75bb3bd","dfnText":"SecureContext","external":true,"refSections":[{"refs":[{"id":"ref-for-SecureContext"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#SecureContext"},
-"ba556545": {"dfnID":"ba556545","dfnText":"NotAllowedError","external":true,"refSections":[{"refs":[{"id":"ref-for-notallowederror"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://webidl.spec.whatwg.org/#notallowederror"},
 "bc612dfe": {"dfnID":"bc612dfe","dfnText":"Best Practice 1","external":true,"refSections":[{"refs":[{"id":"ref-for-avoid-passive-increases"}],"title":"1. Introduction"}],"url":"https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases"},
 "bdbd19d1": {"dfnID":"bdbd19d1","dfnText":"Promise","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-promise"},{"id":"ref-for-idl-promise\u2460"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-promise"},
 "be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"4. Interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
 "bec98d30": {"dfnID":"bec98d30","dfnText":"dictionary","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-dictionary"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://webidl.spec.whatwg.org/#dfn-dictionary"},
 "c7a20f42": {"dfnID":"c7a20f42","dfnText":"low entropy hint table","external":true,"refSections":[{"refs":[{"id":"ref-for-low-entropy-hint-table"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2460"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2461"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table"},
-"c9898e54": {"dfnID":"c9898e54","dfnText":"passive fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-passive-fingerprinting"}],"title":"Unnumbered Section"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2460"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2461"}],"title":"5.2. Delegation"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2462"}],"title":"5.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting"},
+"c9898e54": {"dfnID":"c9898e54","dfnText":"passive fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-passive-fingerprinting"}],"title":"Unnumbered Section"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2460"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2461"}],"title":"6.2. Delegation"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2462"}],"title":"6.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting"},
+"cc890cc1": {"dfnID":"cc890cc1","dfnText":"policy-controlled feature","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-feature"}],"title":"5. Permissions-Policy Integration"}],"url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature"},
 "ceacaa1c": {"dfnID":"ceacaa1c","dfnText":"stack","external":true,"refSections":[{"refs":[{"id":"ref-for-stack"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#stack"},
+"ch-ua-high-entropy-values": {"dfnID":"ch-ua-high-entropy-values","dfnText":"ch-ua-high-entropy-values","external":false,"refSections":[{"refs":[{"id":"ref-for-ch-ua-high-entropy-values"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"#ch-ua-high-entropy-values"},
 "create-a-brand-version-list": {"dfnID":"create-a-brand-version-list","dfnText":"create a brand-version list","external":false,"refSections":[{"refs":[{"id":"ref-for-create-a-brand-version-list"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-create-a-brand-version-list\u2460"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"#create-a-brand-version-list"},
 "create-a-unified-platform-version-string": {"dfnID":"create-a-unified-platform-version-string","dfnText":"create a unified platform version string","external":false,"refSections":[{"refs":[{"id":"ref-for-create-a-unified-platform-version-string"},{"id":"ref-for-create-a-unified-platform-version-string\u2460"},{"id":"ref-for-create-a-unified-platform-version-string\u2461"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"#create-a-unified-platform-version-string"},
 "create-an-arbitrary-brand": {"dfnID":"create-an-arbitrary-brand","dfnText":"create an arbitrary brand","external":false,"refSections":[{"refs":[{"id":"ref-for-create-an-arbitrary-brand"}],"title":"4.1.2. Create brands"}],"url":"#create-an-arbitrary-brand"},
@@ -2482,7 +2493,7 @@ let dfnPanelData = {
 "dom-navigatoruabrandversion-version": {"dfnID":"dom-navigatoruabrandversion-version","dfnText":"version","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigatoruabrandversion-version"},{"id":"ref-for-dom-navigatoruabrandversion-version\u2460"}],"title":"4.1.2. Create brands"}],"url":"#dom-navigatoruabrandversion-version"},
 "dom-navigatoruadata-brands": {"dfnID":"dom-navigatoruadata-brands","dfnText":"brands","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigatoruadata-brands"}],"title":"4.1.5. Getters"}],"url":"#dom-navigatoruadata-brands"},
 "dom-navigatoruadata-gethighentropyvalues": {"dfnID":"dom-navigatoruadata-gethighentropyvalues","dfnText":"getHighEntropyValues","external":false,"refSections":[],"url":"#dom-navigatoruadata-gethighentropyvalues"},
-"dom-navigatoruadata-gethighentropyvalues-hints-hints": {"dfnID":"dom-navigatoruadata-gethighentropyvalues-hints-hints","dfnText":"hints","external":false,"refSections":[],"url":"#dom-navigatoruadata-gethighentropyvalues-hints-hints"},
+"dom-navigatoruadata-gethighentropyvalues-hints-hints": {"dfnID":"dom-navigatoruadata-gethighentropyvalues-hints-hints","dfnText":"hints","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigatoruadata-gethighentropyvalues-hints-hints"}],"title":"5. Permissions-Policy Integration"}],"url":"#dom-navigatoruadata-gethighentropyvalues-hints-hints"},
 "dom-navigatoruadata-mobile": {"dfnID":"dom-navigatoruadata-mobile","dfnText":"mobile","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigatoruadata-mobile"}],"title":"4.1.5. Getters"}],"url":"#dom-navigatoruadata-mobile"},
 "dom-navigatoruadata-platform": {"dfnID":"dom-navigatoruadata-platform","dfnText":"platform","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigatoruadata-platform"}],"title":"4.1.5. Getters"}],"url":"#dom-navigatoruadata-platform"},
 "dom-navigatoruadata-tojson": {"dfnID":"dom-navigatoruadata-tojson","dfnText":"toJSON","external":false,"refSections":[],"url":"#dom-navigatoruadata-tojson"},
@@ -2501,7 +2512,7 @@ let dfnPanelData = {
 "dom-ualowentropyjson-mobile": {"dfnID":"dom-ualowentropyjson-mobile","dfnText":"mobile","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-ualowentropyjson-mobile"}],"title":"4.1.7. toJSON method"}],"url":"#dom-ualowentropyjson-mobile"},
 "dom-ualowentropyjson-platform": {"dfnID":"dom-ualowentropyjson-platform","dfnText":"platform","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-ualowentropyjson-platform"}],"title":"4.1.7. toJSON method"}],"url":"#dom-ualowentropyjson-platform"},
 "e28ccd60": {"dfnID":"e28ccd60","dfnText":"concatenation","external":true,"refSections":[{"refs":[{"id":"ref-for-string-concatenate"},{"id":"ref-for-string-concatenate\u2460"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-string-concatenate\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#string-concatenate"},
-"e99bd18e": {"dfnID":"e99bd18e","dfnText":"relevant global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-global"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-concept-relevant-global\u2460"},{"id":"ref-for-concept-relevant-global\u2461"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-concept-relevant-global\u2462"}],"title":"4.1.7. toJSON method"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
+"e99bd18e": {"dfnID":"e99bd18e","dfnText":"relevant global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-global"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-concept-relevant-global\u2460"},{"id":"ref-for-concept-relevant-global\u2461"},{"id":"ref-for-concept-relevant-global\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-concept-relevant-global\u2463"}],"title":"4.1.7. toJSON method"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
 "ea0ecaa0": {"dfnID":"ea0ecaa0","dfnText":"client hints token","external":true,"refSections":[{"refs":[{"id":"ref-for-client-hints-token"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#client-hints-token"},
 "ec293c42": {"dfnID":"ec293c42","dfnText":"string","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.3.3"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2460"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2462"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2463"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2464"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2465"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2466"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.3.3"},
 "f391224b": {"dfnID":"f391224b","dfnText":"policy-controlled client hints features","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-client-hints-features"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-policy-controlled-client-hints-features\u2460"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-policy-controlled-client-hints-features\u2461"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features"},
@@ -2522,14 +2533,14 @@ let dfnPanelData = {
 "navigatorua": {"dfnID":"navigatorua","dfnText":"NavigatorUA","external":false,"refSections":[{"refs":[{"id":"ref-for-navigatorua"},{"id":"ref-for-navigatorua\u2460"}],"title":"4. Interface"}],"url":"#navigatorua"},
 "navigatoruadata": {"dfnID":"navigatoruadata","dfnText":"NavigatorUAData","external":false,"refSections":[{"refs":[{"id":"ref-for-navigatoruadata"}],"title":"4. Interface"}],"url":"#navigatoruadata"},
 "user-agent-brand": {"dfnID":"user-agent-brand","dfnText":"brand","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-brand"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent-brand\u2460"}],"title":"4.1.2. Create brands"}],"url":"#user-agent-brand"},
-"user-agent-brands": {"dfnID":"user-agent-brands","dfnText":"brands","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-brands"},{"id":"ref-for-user-agent-brands\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-brands\u2461"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent-brands\u2462"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-user-agent-brands\u2463"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent-brands\u2464"},{"id":"ref-for-user-agent-brands\u2465"},{"id":"ref-for-user-agent-brands\u2466"},{"id":"ref-for-user-agent-brands\u2467"},{"id":"ref-for-user-agent-brands\u2468"}],"title":"6.2. GREASE-like UA Brand Lists"}],"url":"#user-agent-brands"},
-"user-agent-equivalence-class": {"dfnID":"user-agent-equivalence-class","dfnText":"equivalence class","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-equivalence-class"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-equivalence-class\u2460"},{"id":"ref-for-user-agent-equivalence-class\u2461"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent-equivalence-class\u2462"},{"id":"ref-for-user-agent-equivalence-class\u2463"}],"title":"6.2. GREASE-like UA Brand Lists"}],"url":"#user-agent-equivalence-class"},
+"user-agent-brands": {"dfnID":"user-agent-brands","dfnText":"brands","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-brands"},{"id":"ref-for-user-agent-brands\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-brands\u2461"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent-brands\u2462"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-user-agent-brands\u2463"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent-brands\u2464"},{"id":"ref-for-user-agent-brands\u2465"},{"id":"ref-for-user-agent-brands\u2466"},{"id":"ref-for-user-agent-brands\u2467"},{"id":"ref-for-user-agent-brands\u2468"}],"title":"7.2. GREASE-like UA Brand Lists"}],"url":"#user-agent-brands"},
+"user-agent-equivalence-class": {"dfnID":"user-agent-equivalence-class","dfnText":"equivalence class","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-equivalence-class"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-equivalence-class\u2460"},{"id":"ref-for-user-agent-equivalence-class\u2461"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent-equivalence-class\u2462"},{"id":"ref-for-user-agent-equivalence-class\u2463"}],"title":"7.2. GREASE-like UA Brand Lists"}],"url":"#user-agent-equivalence-class"},
 "user-agent-form-factors": {"dfnID":"user-agent-form-factors","dfnText":"form-factors","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-form-factors"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent-form-factors\u2460"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"#user-agent-form-factors"},
 "user-agent-full-version": {"dfnID":"user-agent-full-version","dfnText":"full version","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-full-version"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-full-version\u2460"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent-full-version\u2461"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent-full-version\u2462"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-user-agent-full-version\u2463"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent-full-version\u2464"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent-full-version\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent-full-version\u2466"}],"title":"4.1.4. Create a brand-version list"}],"url":"#user-agent-full-version"},
 "user-agent-mobileness": {"dfnID":"user-agent-mobileness","dfnText":"mobileness","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-mobileness"},{"id":"ref-for-user-agent-mobileness\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-mobileness\u2461"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent-mobileness\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-mobileness\u2463"}],"title":"4.1.7. toJSON method"}],"url":"#user-agent-mobileness"},
 "user-agent-model": {"dfnID":"user-agent-model","dfnText":"model","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-model"},{"id":"ref-for-user-agent-model\u2460"},{"id":"ref-for-user-agent-model\u2461"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-model\u2462"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"#user-agent-model"},
-"user-agent-platform-architecture": {"dfnID":"user-agent-platform-architecture","dfnText":"platform architecture","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-architecture"},{"id":"ref-for-user-agent-platform-architecture\u2460"},{"id":"ref-for-user-agent-platform-architecture\u2461"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-platform-architecture\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-platform-architecture\u2463"}],"title":"5.4. Access Restrictions"}],"url":"#user-agent-platform-architecture"},
-"user-agent-platform-bitness": {"dfnID":"user-agent-platform-bitness","dfnText":"platform bitness","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-bitness"},{"id":"ref-for-user-agent-platform-bitness\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2463"}],"title":"5.4. Access Restrictions"}],"url":"#user-agent-platform-bitness"},
+"user-agent-platform-architecture": {"dfnID":"user-agent-platform-architecture","dfnText":"platform architecture","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-architecture"},{"id":"ref-for-user-agent-platform-architecture\u2460"},{"id":"ref-for-user-agent-platform-architecture\u2461"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-platform-architecture\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-platform-architecture\u2463"}],"title":"6.4. Access Restrictions"}],"url":"#user-agent-platform-architecture"},
+"user-agent-platform-bitness": {"dfnID":"user-agent-platform-bitness","dfnText":"platform bitness","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-bitness"},{"id":"ref-for-user-agent-platform-bitness\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-platform-bitness\u2463"}],"title":"6.4. Access Restrictions"}],"url":"#user-agent-platform-bitness"},
 "user-agent-platform-brand": {"dfnID":"user-agent-platform-brand","dfnText":"platform brand","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-brand"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent-platform-brand\u2460"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent-platform-brand\u2461"},{"id":"ref-for-user-agent-platform-brand\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent-platform-brand\u2463"}],"title":"4.1.7. toJSON method"}],"url":"#user-agent-platform-brand"},
 "user-agent-platform-version": {"dfnID":"user-agent-platform-version","dfnText":"platform version","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-platform-version"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"#user-agent-platform-version"},
 "user-agent-significant-version": {"dfnID":"user-agent-significant-version","dfnText":"significant version","external":false,"refSections":[{"refs":[{"id":"ref-for-user-agent-significant-version"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent-significant-version\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent-significant-version\u2461"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent-significant-version\u2462"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent-significant-version\u2463"}],"title":"4.1.4. Create a brand-version list"}],"url":"#user-agent-significant-version"},
@@ -2924,6 +2935,7 @@ function genLinkingSyntaxes(dfn) {
 "use strict";
 {
 let refsData = {
+"#ch-ua-high-entropy-values": {"displayText":"ch-ua-high-entropy-values","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"ch-ua-high-entropy-values","type":"dfn","url":"#ch-ua-high-entropy-values"},
 "#create-a-brand-version-list": {"displayText":"create a brand-version list","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"create a brand-version list","type":"dfn","url":"#create-a-brand-version-list"},
 "#create-a-unified-platform-version-string": {"displayText":"create a unified platform version string","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"create a unified platform version string","type":"dfn","url":"#create-a-unified-platform-version-string"},
 "#create-an-arbitrary-brand": {"displayText":"create an arbitrary brand","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"create an arbitrary brand","type":"dfn","url":"#create-an-arbitrary-brand"},
@@ -2935,6 +2947,7 @@ let refsData = {
 "#dom-navigatoruabrandversion-brand": {"displayText":"brand","export":true,"for_":["NavigatorUABrandVersion"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"brand","type":"dict-member","url":"#dom-navigatoruabrandversion-brand"},
 "#dom-navigatoruabrandversion-version": {"displayText":"version","export":true,"for_":["NavigatorUABrandVersion"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"version","type":"dict-member","url":"#dom-navigatoruabrandversion-version"},
 "#dom-navigatoruadata-brands": {"displayText":"brands","export":true,"for_":["NavigatorUAData"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"brands","type":"attribute","url":"#dom-navigatoruadata-brands"},
+"#dom-navigatoruadata-gethighentropyvalues-hints-hints": {"displayText":"hints","export":true,"for_":["NavigatorUAData/getHighEntropyValues(hints)"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"hints","type":"argument","url":"#dom-navigatoruadata-gethighentropyvalues-hints-hints"},
 "#dom-navigatoruadata-mobile": {"displayText":"mobile","export":true,"for_":["NavigatorUAData"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"mobile","type":"attribute","url":"#dom-navigatoruadata-mobile"},
 "#dom-navigatoruadata-platform": {"displayText":"platform","export":true,"for_":["NavigatorUAData"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"platform","type":"attribute","url":"#dom-navigatoruadata-platform"},
 "#dom-uadatavalues-architecture": {"displayText":"architecture","export":true,"for_":["UADataValues"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"architecture","type":"dict-member","url":"#dom-uadatavalues-architecture"},
@@ -2973,7 +2986,9 @@ let refsData = {
 "#windoworworkerglobalscope-brands-frozen-array": {"displayText":"brands frozen array","export":true,"for_":["WindowOrWorkerGlobalScope"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"brands frozen array","type":"dfn","url":"#windoworworkerglobalscope-brands-frozen-array"},
 "#windoworworkerglobalscope-full-version-list-frozen-array": {"displayText":"full version list frozen array","export":true,"for_":["WindowOrWorkerGlobalScope"],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"full version list frozen array","type":"dfn","url":"#windoworworkerglobalscope-full-version-list-frozen-array"},
 "https://compat.spec.whatwg.org/#devicecompat": {"displayText":"deviceCompat","export":true,"for_":[],"level":"1","normative":true,"shortname":"compat","spec":"compat","status":"current","text":"devicecompat","type":"dfn","url":"https://compat.spec.whatwg.org/#devicecompat"},
+"https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use": {"displayText":"allowed to use","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"allowed to use","type":"dfn","url":"https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use"},
 "https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel": {"displayText":"in parallel","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"in parallel","type":"dfn","url":"https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel"},
+"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window": {"displayText":"associated Document","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"associated document","type":"dfn","url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window"},
 "https://html.spec.whatwg.org/multipage/system-state.html#navigator": {"displayText":"Navigator","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Navigator","type":"interface","url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
 "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global": {"displayText":"relevant global object","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"relevant global object","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
 "https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task": {"displayText":"queue a task","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"queue a task","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task"},
@@ -3007,6 +3022,8 @@ let refsData = {
 "https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting": {"displayText":"active fingerprinting","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"","status":"anchor-block","text":"active fingerprinting","type":"dfn","url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
 "https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting": {"displayText":"passive fingerprinting","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"","status":"anchor-block","text":"passive fingerprinting","type":"dfn","url":"https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting"},
 "https://w3c.github.io/permissions/#dfn-permissions-task-source": {"displayText":"permission task source","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"","status":"anchor-block","text":"permission task source","type":"dfn","url":"https://w3c.github.io/permissions/#dfn-permissions-task-source"},
+"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature": {"displayText":"policy-controlled feature","export":true,"for_":[],"level":"1","normative":true,"shortname":"permissions-policy","spec":"permissions-policy-1","status":"current","text":"policy-controlled feature","type":"dfn","url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature"},
+"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist": {"displayText":"default allowlist","export":true,"for_":["policy-controlled feature"],"level":"1","normative":true,"shortname":"permissions-policy","spec":"permissions-policy-1","status":"current","text":"default allowlist","type":"dfn","url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist"},
 "https://webidl.spec.whatwg.org/#Exposed": {"displayText":"Exposed","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
 "https://webidl.spec.whatwg.org/#SecureContext": {"displayText":"SecureContext","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"SecureContext","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#SecureContext"},
 "https://webidl.spec.whatwg.org/#a-new-promise": {"displayText":"a new promise","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"a new promise","type":"dfn","url":"https://webidl.spec.whatwg.org/#a-new-promise"},
@@ -3017,12 +3034,11 @@ let refsData = {
 "https://webidl.spec.whatwg.org/#idl-frozen-array": {"displayText":"FrozenArray","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"FrozenArray","type":"interface","url":"https://webidl.spec.whatwg.org/#idl-frozen-array"},
 "https://webidl.spec.whatwg.org/#idl-promise": {"displayText":"Promise","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Promise","type":"interface","url":"https://webidl.spec.whatwg.org/#idl-promise"},
 "https://webidl.spec.whatwg.org/#idl-sequence": {"displayText":"sequence","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"sequence","type":"dfn","url":"https://webidl.spec.whatwg.org/#idl-sequence"},
-"https://webidl.spec.whatwg.org/#notallowederror": {"displayText":"NotAllowedError","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"NotAllowedError","type":"exception","url":"https://webidl.spec.whatwg.org/#notallowederror"},
-"https://webidl.spec.whatwg.org/#reject": {"displayText":"reject","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"reject","type":"dfn","url":"https://webidl.spec.whatwg.org/#reject"},
 "https://webidl.spec.whatwg.org/#resolve": {"displayText":"resolve","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"resolve","type":"dfn","url":"https://webidl.spec.whatwg.org/#resolve"},
 "https://webidl.spec.whatwg.org/#this": {"displayText":"this","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"this","type":"dfn","url":"https://webidl.spec.whatwg.org/#this"},
 "https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request": {"displayText":"append client hints to request","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"append client hints to request","type":"abstract-op","url":"https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request"},
 "https://wicg.github.io/client-hints-infrastructure/#client-hints-token": {"displayText":"client hints token","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"client hints token","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#client-hints-token"},
+"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint": {"displayText":"high-entropy client hint","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"high-entropy client hint","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint"},
 "https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table": {"displayText":"low entropy hint table","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"low entropy hint table","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table"},
 "https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features": {"displayText":"policy-controlled client hints features","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"policy-controlled client hints features","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features"},
 };

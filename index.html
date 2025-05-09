@@ -4,9 +4,9 @@
   <title>User-Agent Client Hints</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version ac5ea272d, updated Fri Dec 6 15:45:15 2024 -0800" name="generator">
+  <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="d7717eadf254c1d5c24e321be0c216b1b3ffa9f7" name="revision">
+  <meta content="2280820567dded50add417808ab85ded0c0f9e53" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -735,9 +735,8 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">User-Agent Client Hints</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-12-24">24 December 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2025-05-09">9 May 2025</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -752,7 +751,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 the Contributors to the User-Agent Client Hints Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2025 the Contributors to the User-Agent Client Hints Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
 A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
    <hr title="Separator for header">
   </div>
@@ -1093,8 +1092,8 @@ the <code>userAgentData.getHighEntropyValues()</code> method in order to retriev
 propose the right binary to the user by default.  The right binary executable for the current user
 depends on a few factors: their operating system, its version, its bitness, as well as their CPU
 architecture. 
-   <p>In order to tackle that use case, download sites can opt-in to receive the <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA-Architecture</code>, and <code>Sec-CH-UA-Bitness</code> hints (or query
-them through the API), in order to ensure the right binary is offered to the user by default.</p>
+   <p>In order to tackle that use case, download sites can opt-in to receive the <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA-Arch</code>, and <code>Sec-CH-UA-Bitness</code> hints (or query them through
+the API), in order to ensure the right binary is offered to the user by default.</p>
    <h4 class="heading settled" data-level="1.2.6" id="conversion-modeling-use-case"><span class="secno">1.2.6. </span><span class="content">Conversion modeling</span><a class="self-link" href="#conversion-modeling-use-case"></a></h4>
     Some machine learning models use various details from the <code>User-Agent</code> string in order to estimate
 various things about users of those user agents.  Similar modeling would still be possible, but will
@@ -1150,7 +1149,7 @@ given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" i
 defined in <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a>. The definitions below assume that each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①">user agent</a> has defined a number of properties for itself:</p>
    <ul>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-brand">brand</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②">user agent</a>'s commercial name (e.g.,
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-brand">brand</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②">user agent</a>’s commercial name (e.g.,
   "cURL", "Edge", "The World’s Best Web Browser"), which MUST be shorter than 32 <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ascii-alpha" id="ref-for-ascii-alpha">ASCII alpha</a> characters.</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-form-factors">form-factors</dfn> - The form-factors of a device, historically
@@ -1161,32 +1160,32 @@ defined in <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client 
   "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③">user agent</a>, or any
   of the brands in its <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands">brands</a> list.</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-model">model</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④">user agent</a>'s device model (e.g., "", or
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-model">model</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④">user agent</a>’s device model (e.g., "", or
   "Pixel 2 XL")</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-mobileness">mobileness</dfn> - A boolean indicating if the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤">user agent</a>'s
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-mobileness">mobileness</dfn> - A boolean indicating if the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤">user agent</a>’s
   device is a mobile device. (e.g., ?0 or ?1)</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-brand">platform brand</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥">user agent</a>'s operating system’s
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-brand">platform brand</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥">user agent</a>’s operating system’s
   commercial name. (e.g., "Windows", "iOS", or "AmazingOS")</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-version">platform version</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑦">user agent</a>'s operating system’s
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-version">platform version</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑦">user agent</a>’s operating system’s
   version. (e.g., "NT 6.0", "15", or "17G")</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-architecture">platform architecture</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑧">user agent</a>'s underlying CPU
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-architecture">platform architecture</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑧">user agent</a>’s underlying CPU
   architecture (e.g., "ARM", or "x86")</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-bitness">platform bitness</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑨">user agent</a>'s underlying CPU
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-platform-bitness">platform bitness</dfn> - The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑨">user agent</a>’s underlying CPU
   architecture bitness (e.g., "32" or "64")</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-significant-version">significant version</dfn> - The marketing version which includes
   distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⓪">user agent</a>, or any of the brands in its <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands①">brands</a> list (e.g., rendering engine or
   any other <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class">equivalence classes</a> full version).</p>
     <li data-md>
-     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-wow64-ness">wow64-ness</dfn> - A boolean indicating if the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①①">user agent</a>'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)</p>
+     <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-wow64-ness">wow64-ness</dfn> - A boolean indicating if the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①①">user agent</a>’s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)</p>
    </ul>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①②">User agents</a> SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
-values for each, as they are all values constructed at the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①③">user agent</a>'s whim.</p>
+values for each, as they are all values constructed at the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①③">user agent</a>’s whim.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①④">User agents</a> MUST map higher-entropy <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture">platform architecture</a> values to the following buckets:</p>
    <ul>
     <li data-md>
@@ -1204,15 +1203,14 @@ mapped to the empty string.</p>
      <p>Different CPU architectures are likely to require different binary executable resources, and
  different binary executable resources are likely to be available.</p>
    </ul>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑥">User Agents</a> MUST return the empty string for <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model">model</a> if <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a> is false. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑦">User
-Agents</a> MUST return the empty string for <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model①">model</a> even if <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness①">mobileness</a> is true, except on
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑥">User Agents</a> MUST return the empty string for <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model">model</a> if <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness">mobileness</a> is false. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑦">User Agents</a> MUST return the empty string for <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model①">model</a> even if <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness①">mobileness</a> is true, except on
 platforms where the model is typically exposed.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑧">User agents</a> MAY return the empty string for hints of type <code>sf-string</code>, <code>false</code> for hints of type <code>sf-boolean</code>, or any other fictitious value, for
 privacy, compatibility, or other reasons, given a request for any the following hints: <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version">full version</a>, <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture②">platform architecture</a>, <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness①">platform bitness</a>, <a data-link-type="dfn" href="#user-agent-wow64-ness" id="ref-for-user-agent-wow64-ness">wow64-ness</a> or <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model②">model</a>.</p>
    <h3 class="heading settled" data-level="3.1" id="sec-ch-ua"><span class="secno">3.1. </span><span class="content">The 'Sec-CH-UA' Header Field</span><a class="self-link" href="#sec-ch-ua"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></dfn> request header field gives a server information about a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. The list’s
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></dfn> request header field gives a server information about a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. The list’s
 items MUST be <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3">string</a>. The value of each item SHOULD include a "v" parameter,
-indicating the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⓪">user agent</a>'s version.</p>
+indicating the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⓪">user agent</a>’s version.</p>
    <p>The header’s ABNF is:</p>
 <pre class="language-abnf highlight"><c- nc>Sec-CH-UA</c-> <c- o>=</c-> <c- nc>sf-list</c->
 </pre>
@@ -1229,7 +1227,7 @@ with <var>brands</var> and "significant version".</p>
    <p class="note" role="note"><span class="marker">Note:</span> Unlike most Client Hints, since it’s included in the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>,
 the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
 receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by its <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features">policy-controlled client hints feature</a>.
-It is considered low entropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②①">user agent</a>'s branding information,
+It is considered low entropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②①">user agent</a>’s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" <a data-link-type="biblio" href="#biblio-janc2014" title="Technical analysis of client identification mechanisms">[Janc2014]</a>).</p>
@@ -1249,7 +1247,7 @@ executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc
 </pre>
    <h3 class="heading settled" data-level="3.4" id="sec-ch-ua-form-factors"><span class="secno">3.4. </span><span class="content">The 'Sec-CH-UA-Form-Factors' Header Field</span><a class="self-link" href="#sec-ch-ua-form-factors"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-form-factors"><code>Sec-CH-UA-Form-Factors</code></dfn> request header field gives a
-server information about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors">form-factors</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1①">list</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. In order to avoid providing additional fingerprinting entropy,
+server information about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors">form-factors</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1①">list</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. In order to avoid providing additional fingerprinting entropy,
 the header’s values MUST be given in lexical order, and values are
 case-sensitive.</p>
    <p>The header SHOULD describe the form-factors of the device using one or more of
@@ -1516,7 +1514,7 @@ It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="
    <h4 class="heading settled" data-level="4.1.1" id="monkeypatch-html-windoworworkerglobalscope"><span class="secno">4.1.1. </span><span class="content"><code>WindowOrWorkerGlobalScope</code></span><a class="self-link" href="#monkeypatch-html-windoworworkerglobalscope"></a></h4>
    <p>Each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-brands">brands</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a> created by running <a data-link-type="dfn" href="#create-brands" id="ref-for-create-brands②">create brands</a> with <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version①">significant version</a>.</p>
    <p>Every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> object has an associated <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-brands-frozen-array">brands frozen array</dfn>, which is a <code><a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array①">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion④">NavigatorUABrandVersion</a>></code>. It is
-initially the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agent</a>'s <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands④">brands</a>.</p>
+initially the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agent</a>’s <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands④">brands</a>.</p>
    <p>Additionally, every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope①">WindowOrWorkerGlobalScope</a></code> object has an associated <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</dfn>, which is a <code><a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array②">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion⑤">NavigatorUABrandVersion</a>></code>. It is
 the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array①">creating a frozen array</a> from running <a data-link-type="dfn" href="#create-brands" id="ref-for-create-brands③">create brands</a> with <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version④">full version</a>.</p>
    <h4 class="heading settled algorithm" data-algorithm="to create brands" data-level="4.1.2" id="create-ua-list-section"><span class="secno">4.1.2. </span><span class="content">Create brands</span><a class="self-link" href="#create-ua-list-section"></a></h4>
@@ -1552,7 +1550,7 @@ the <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-u
        <p>Randomize the order of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-item" id="ref-for-list-item①">items</a> in <var>list</var>.</p>
      </ol>
      <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize caching variance when generating these random components could be to
-determine them at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agent</a>'s significant
+determine them at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agent</a>’s significant
 version.</p>
      <p class="note" role="note"><span class="marker">Note:</span> See <a href="#grease">§ 7.2 GREASE-like UA Brand Lists</a> for more details on when and why these randomization steps might be appropriate.</p>
     <li data-md>
@@ -1665,9 +1663,9 @@ corresponds to the <a data-link-type="dfn" href="#user-agent-significant-version
      <p>Return <var>list</var>.</p>
    </ol>
    <h4 class="heading settled" data-level="4.1.5" id="getters"><span class="secno">4.1.5. </span><span class="content">Getters</span><a class="self-link" href="#getters"></a></h4>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brands" id="ref-for-dom-navigatoruadata-brands">brands</a></code> attribute MUST return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array">brands frozen array</a>.</p>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness②">mobileness</a>.</p>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand①">platform brand</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brands" id="ref-for-dom-navigatoruadata-brands">brands</a></code> attribute MUST return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array">brands frozen array</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness②">mobileness</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand①">platform brand</a>.</p>
    <h4 class="heading settled" data-level="4.1.6" id="getHighEntropyValues"><span class="secno">4.1.6. </span><span class="content"><code>getHighEntropyValues</code> method</span><a class="self-link" href="#getHighEntropyValues"></a></h4>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code></dfn> method MUST run
 these steps:</p>
@@ -1677,30 +1675,30 @@ these steps:</p>
     <li data-md>
      <p>Let <var>uaData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-uadatavalues" id="ref-for-dictdef-uadatavalues①">UADataValues</a></code>.</p>
     <li data-md>
-     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-brands" id="ref-for-dom-uadatavalues-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array①">brands frozen array</a>.</p>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-brands" id="ref-for-dom-uadatavalues-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array①">brands frozen array</a>.</p>
     <li data-md>
-     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
     <li data-md>
-     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
     <li data-md>
-     <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the <a data-link-type="dfn" href="#ch-ua-high-entropy-values" id="ref-for-ch-ua-high-entropy-values">ch-ua-high-entropy-values</a> feature, resolve <var>p</var> with <var>uaData</var>.</p>
+     <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the <a data-link-type="dfn" href="#ch-ua-high-entropy-values" id="ref-for-ch-ua-high-entropy-values">ch-ua-high-entropy-values</a> feature, resolve <var>p</var> with <var>uaData</var>.</p>
     <li data-md>
      <p>Otherwise, run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>:</p>
      <ol>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">contains</a> "bitness", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-bitness" id="ref-for-dom-uadatavalues-bitness">bitness</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> "formFactors", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-formfactors" id="ref-for-dom-uadatavalues-formfactors">formFactors</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>'s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> "fullVersionList", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-fullversionlist" id="ref-for-dom-uadatavalues-fullversionlist">fullVersionList</a></code>"]
-to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global③">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-full-version-list-frozen-array" id="ref-for-windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a>.</p>
+to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global③">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-full-version-list-frozen-array" id="ref-for-windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a>.</p>
       <li data-md>
-       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>'s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
+       <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain⑤">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"]
 to the result of <a data-link-type="dfn" href="#get-the-platform-version" id="ref-for-get-the-platform-version①">getting the platform version</a> with <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand③">platform brand</a>.</p>
@@ -1721,11 +1719,11 @@ to the user agent’s <a data-link-type="dfn" href="#user-agent-wow64-ness" id="
     <li data-md>
      <p>Let <var>uaLowEntropyData</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-ualowentropyjson" id="ref-for-dictdef-ualowentropyjson①">UALowEntropyJSON</a></code></p>
     <li data-md>
-     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-brands" id="ref-for-dom-ualowentropyjson-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this④">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global④">relevant global object</a>'s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array②">brands frozen array</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-brands" id="ref-for-dom-ualowentropyjson-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this④">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global④">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array②">brands frozen array</a>.</p>
     <li data-md>
-     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>'s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
     <li data-md>
-     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>'s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
     <li data-md>
      <p>Return <var>uaLowEntropyData</var></p>
    </ol>
@@ -1824,7 +1822,7 @@ from relying on certain values being in certain locations in the list.</p>
    <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⓪">user agents</a> SHOULD keep caching variance and analytics use
 cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥①">user agent</a> versions.</p>
    <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize variance for caching and analytics could be to determine the GREASE
-parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">user agent</a>'s significant version.</p>
+parts of the UA set at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">user agent</a>’s significant version.</p>
    <h3 class="heading settled" data-level="7.3" id="sec-ch"><span class="secno">7.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
 security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which
@@ -2144,7 +2142,7 @@ for valuable feedback and contributions to this specification.</p>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]
-   <dd><a href="https://wicg.github.io/client-hints-infrastructure/"><cite>Client Hints Infrastructure</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/client-hints-infrastructure/">https://wicg.github.io/client-hints-infrastructure/</a>
+   <dd><a href="https://wicg.github.io/client-hints-infrastructure/"><cite>Client Hints Infrastructure</cite></a>. Draft Community Group Report. URL: <a href="https://wicg.github.io/client-hints-infrastructure/">https://wicg.github.io/client-hints-infrastructure/</a>
    <dt id="biblio-compat">[COMPAT]
    <dd>Mike Taylor. <a href="https://compat.spec.whatwg.org/"><cite>Compatibility Standard</cite></a>. Living Standard. URL: <a href="https://compat.spec.whatwg.org/">https://compat.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
@@ -2169,7 +2167,7 @@ for valuable feedback and contributions to this specification.</p>
    <dt id="biblio-facebookyearclass">[FacebookYearClass]
    <dd>Chris Marra; Daniel Weaver. <a href="https://engineering.fb.com/android/year-class-a-classification-system-for-android/"><cite>Year class: A classification system for Android</cite></a>. URL: <a href="https://engineering.fb.com/android/year-class-a-classification-system-for-android/">https://engineering.fb.com/android/year-class-a-classification-system-for-android/</a>
    <dt id="biblio-fingerprinting-guidance">[FINGERPRINTING-GUIDANCE]
-   <dd>Nick Doty. <a href="https://w3c.github.io/fingerprinting-guidance/"><cite>Mitigating Browser Fingerprinting in Web Specifications</cite></a>. URL: <a href="https://w3c.github.io/fingerprinting-guidance/">https://w3c.github.io/fingerprinting-guidance/</a>
+   <dd>Nick Doty; Tom Ritter. <a href="https://w3c.github.io/fingerprinting-guidance/"><cite>Mitigating Browser Fingerprinting in Web Specifications</cite></a>. URL: <a href="https://w3c.github.io/fingerprinting-guidance/">https://w3c.github.io/fingerprinting-guidance/</a>
    <dt id="biblio-i-dietf-tls-grease">[I-D.ietf-tls-grease]
    <dd>David Benjamin. <a href="https://tools.ietf.org/html/draft-ietf-tls-grease"><cite>Applying GREASE to TLS Extensibility</cite></a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-tls-grease">https://tools.ietf.org/html/draft-ietf-tls-grease</a>
    <dt id="biblio-janc2014">[Janc2014]
@@ -3122,7 +3120,12 @@ function hideRefHint(refHint) {
 function showRefHint(link) {
     if(link.classList.contains("dfn-link")) return;
     const url = link.getAttribute("href");
-    const ref = refsData[url];
+    const refHintKey = link.getAttribute("data-refhint-key");
+    let key = url;
+    if(refHintKey) {
+        key = refHintKey + "_" + url;
+    }
+    const ref = refsData[key];
     if(!ref) return;
 
     hideAllRefHints(); // Only display one at this time.

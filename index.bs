@@ -347,8 +347,8 @@ depends on a few factors: their operating system, its version, its bitness, as w
 architecture.
 
 In order to tackle that use case, download sites can opt-in to receive the `Sec-CH-UA-Platform`,
-`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Architecture`, and `Sec-CH-UA-Bitness` hints (or query
-them through the API), in order to ensure the right binary is offered to the user by default.
+`Sec-CH-UA-Platform-Version`, `Sec-CH-UA-Arch`, and `Sec-CH-UA-Bitness` hints (or query them through
+the API), in order to ensure the right binary is offered to the user by default.
 
 ### Conversion modeling ### {#conversion-modeling-use-case}
 Some machine learning models use various details from the `User-Agent` string in order to estimate

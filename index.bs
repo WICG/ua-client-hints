@@ -698,7 +698,7 @@ It is a [=Structured Header=] whose value MUST be a [=structured header/string=]
 value is the result of [=getting the platform version=] with [=user agent/platform brand=].
 
 To <dfn>get the platform version</dfn>, given a string |platform|, run the following steps:
-    1. If |platform| is "Linux":
+    1. If |platform| is either "Linux" or "Fuchsia":
         1. Return the empty string.
     1. If |platform| is "Android":
         1. Let |platformReturnedVersionString| be the result of querying the OS's

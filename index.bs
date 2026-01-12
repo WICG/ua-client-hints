@@ -25,6 +25,8 @@ spec:fetch; type:dfn; for:/; text:request
 spec:webidl; type:dfn; text:resolve
 spec:infra; type:dfn; text:user agent
 spec:infra; type:dfn; for:/; text:list
+spec:html; type:dfn; text:allowed to use
+spec:webdriver2; type:dfn; text:success
 </pre>
 <pre class="anchors">
 urlPrefix: https://tools.ietf.org/html/rfc9651; spec: rfc9651
@@ -50,6 +52,15 @@ urlPrefix: https://w3c.github.io/fingerprinting-guidance/
         text: passive fingerprinting; url: #dfn-passive-fingerprinting
         text: active fingerprinting; url: #dfn-active-fingerprinting
         text: Best Practice 1; url: #avoid-passive-increases
+urlPrefix: https://w3c.github.io/webdriver-bidi/; spec: webdriver-bidi
+    type: dfn
+        text: get related navigables; url: #get-related-navigables
+        text: user context; url: #user-context
+        text: get valid top-level traversables by ids; url: #get-valid-top-level-traversables-by-ids
+        text: get valid user contexts; url: #get-valid-user-contexts
+        text: error; url: #error
+    type: type
+        text: error; url: #error
 
 </pre>
 <pre class="biblio">
@@ -440,7 +451,7 @@ has defined a number of properties for itself:
       etc.)
 *   <dfn for="user agent" export>full version</dfn> - The build version (e.g.,
       "72.0.3245.12", "3.14159", or "297.70E04154A") that corresponds to the [=user agent=], or any
-      of the brands in its [=brands=] list.
+      of the brands in its [=user agent/brands=] list.
 *   <dfn for="user agent" export>model</dfn> - The [=user agent=]'s device model (e.g., "", or
       "Pixel 2 XL")
 *   <dfn for="user agent" export>mobileness</dfn> - A boolean indicating if the [=user agent=]'s
@@ -455,7 +466,7 @@ has defined a number of properties for itself:
       architecture bitness (e.g., "32" or "64")
 *   <dfn for="user agent" export>significant version</dfn> - The marketing version which includes
       distinguishable web-exposed features (e.g., "72", "3", or "12.1"), corresponding to the
-      [=user agent=], or any of the brands in its [=brands=] list (e.g., rendering engine or
+      [=user agent=], or any of the brands in its [=user agent/brands=] list (e.g., rendering engine or
       any other [=equivalence classes=] full version).
 *   <dfn for="user agent" export>wow64-ness</dfn> - A boolean indicating if the [=user agent=]'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)
 
@@ -477,14 +488,20 @@ or [=platform bitness=] unless the user's platform is one where both the followi
  * Different CPU architectures are likely to require different binary executable resources, and
      different binary executable resources are likely to be available.
 
-[=User Agents=] MUST return the empty string for [=model=] if [=mobileness=] is false. [=User
-Agents=] MUST return the empty string for [=model=] even if [=mobileness=] is true, except on
-platforms where the model is typically exposed.
+[=User agents=] MUST return the empty string for [=user agent/model=] if [=user agent/mobileness=]
+is false. [=User agents=] MUST return the empty string for [=user agent/model=] even if
+[=user agent/mobileness=] is true, except on platforms where the model is typically exposed.
 
 [=User agents=] MAY return the empty string for hints of type `sf-string`,
 `false` for hints of type `sf-boolean`, or any other fictitious value, for
 privacy, compatibility, or other reasons, given a request for any the following hints:
-[=full version=], [=platform architecture=], [=platform bitness=], [=wow64-ness=] or [=model=].
+[=user agent/full version=], [=user agent/platform architecture=], [=user agent/platform bitness=],
+[=user agent/wow64-ness=] or [=user agent/model=].
+
+If the [=user agent=]'s [=emulated client hints=] is not null, the [=user agent=] MUST
+return the corresponding value from the [=emulated client hints=] instead of the default
+value for the requested property.
+f
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
@@ -517,8 +534,8 @@ and the significant version number (both of which are fairly clearly sniffable b
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" [[Janc2014]]).
 
-Note: <a http-header>`Sec-CH-UA`</a> reveals the major version for each brand in the [=brands=]
-list. For use cases requiring the [=user agent/full version=], see
+Note: <a http-header>`Sec-CH-UA`</a> reveals the major version for each brand in the
+[=user agent/brands=] list. For use cases requiring the [=user agent/full version=], see
 <a http-header>`Sec-CH-UA-Full-Version-List`</a>.
 
 The 'Sec-CH-UA-Arch' Header Field {#sec-ch-ua-arch}
@@ -619,8 +636,8 @@ The 'Sec-CH-UA-Full-Version-List' Header Field {#sec-ch-ua-full-version-list}
 --------------------------------
 
 The <dfn http-header>`Sec-CH-UA-Full-Version-List`</dfn> request header field gives a server
-information about the [=user agent/full version=] for each brand in its [=brands=] list. It is a
-[=Structured Header=] whose value MUST be a [=structured header/list=] [[!rfc9651]].
+information about the [=user agent/full version=] for each brand in its [=user agent/brands=] list.
+It is a [=Structured Header=] whose value MUST be a [=structured header/list=] [[!rfc9651]].
 
 The header's ABNF is:
 
@@ -845,7 +862,7 @@ Every {{WindowOrWorkerGlobalScope}} object has an associated
 <dfn for="WindowOrWorkerGlobalScope">brands frozen array</dfn>, which is a
 <code><a interface>FrozenArray</a>&lt;<a dictionary>NavigatorUABrandVersion</a>></code>. It is
 initially the result of [=create a frozen array|creating a frozen array=] from the [=user agent=]'s
-[=brands=].
+[=user agent/brands=].
 
 Additionally, every {{WindowOrWorkerGlobalScope}} object has an associated
 <dfn for="WindowOrWorkerGlobalScope">full version list frozen array</dfn>, which is a
@@ -1021,6 +1038,173 @@ The <dfn method for="NavigatorUA"><code>toJSON()</code></dfn> method MUST run th
 1. Set |uaLowEntropyData|["{{UALowEntropyJSON/platform}}"] to the [=user agent=]'s [=user agent/platform brand=].
 
 1. Return |uaLowEntropyData|
+
+Automation {#automation}
+========================
+
+Definitions {#automation-definitions}
+----------------------
+
+<pre highlight="cddl" class="cddl" data-cddl-module="remote-cddl,local-cddl" export>
+UserAgentClientHintsCommand = (
+  emulation.SetClientHintsOverrideCommand
+)
+</pre>
+
+A <dfn>brand version</dfn> is a [=struct=] with:
+* [=struct/item=] named <dfn for="brand version" export>brand</dfn>, which is a string;
+* [=struct/item=] named <dfn for="brand version" export>version</dfn>, which is a string.
+
+An <dfn>user agent client hints</dfn> is a [=struct=] with:
+* [=struct/item=] named <dfn for="user agent client hints" export>brands</dfn>, which is a list of
+    [=brand version=] pairs or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>full version</dfn>, which is a string or
+    null;
+* [=struct/item=] named <dfn for="user agent client hints" export>full version list</dfn>, which is a list
+    of [=brand version=] or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>mobile</dfn>, which is a boolean or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>model</dfn>, which is a string or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>platform</dfn>, which is a string or
+    null;
+* [=struct/item=] named <dfn for="user agent client hints" export>platform version</dfn>, which is a string
+    or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>architecture</dfn>, which is a string or
+    null;
+* [=struct/item=] named <dfn for="user agent client hints" export>bitness</dfn>, which is a string or null;
+* [=struct/item=] named <dfn for="user agent client hints" export>wow64</dfn>, which is a boolean or null.
+
+A [=User agent=] has <dfn>emulated client hints</dfn>, which is a [=struct=] with:
+* [=struct/item=] named <dfn for="emulated client hints" export>default emulated client hints</dfn>, which
+    is an [=user agent client hints=] or null, initially null;
+* [=struct/item=] named <dfn for="emulated client hints" export>emulated client hints per user contexts</dfn>,
+    which is a weak map between [=user context=] and [=user agent client hints=], initially empty;
+* [=struct/item=] named <dfn for="emulated client hints" export>emulated client hints per navigables</dfn>,
+    which is a weak map between [=/navigables=] and [=user agent client hints=], initially empty.
+
+## The emulation.setClientHintsOverride command {#emulation-setclienthintsoverride}
+
+The <dfn export for=commands>emulation.setClientHintsOverride</dfn> command sets or removes
+emulated user agent client hints for a list of [=/navigables=] or [=user context=], or globally.
+
+<dl>
+   <dt>Command Type</dt>
+   <dd>
+    <pre class="cddl" data-cddl-module="remote-cddl" export>
+        emulation.SetClientHintsOverrideCommand = {
+            method: "emulation.setClientHintsOverride",
+            params: {
+                clientHints: emulation.ClientHintsMetadata / null,
+                ? contexts: [+text],
+                ? userContexts: [+text],
+            }
+        }
+
+        emulation.ClientHintsMetadata = {
+            ? brands: [* emulation.BrandVersion],
+            ? fullVersionList: [* emulation.BrandVersion],
+            ? platform: text,
+            ? platformVersion: text,
+            ? architecture: text,
+            ? model: text,
+            ? mobile: bool,
+            ? bitness: text,
+            ? wow64: bool,
+            ? formFactors: [* text];
+        }
+
+        emulation.BrandVersion = {
+            brand: text,
+            version: text
+        }
+    </pre>
+   </dd>
+   <dt>Return Type</dt>
+   <dd>
+      <pre class="cddl" data-cddl-module="local-cddl" export>
+      emulation.SetClientHintsOverrideResult = {}
+      </pre>
+   </dd>
+</dl>
+
+<div algorithm>
+To <dfn export>get emulated UA Client Hints</dfn> given [=environment settings object=]
+|environment settings|, run the following steps:
+
+1. Let |related navigables| be the result of [=get related navigables=] with
+    |environment settings|.
+
+1. For each |navigable| or |related navigables|:
+
+    1. Let |top-level navigable| be |navigable|'s [=navigable/top-level traversable=].
+
+    1. Let |user context| be |top-level navigable|'s [=associated user context=].
+
+    1. If [=emulated client hints=]'s [=emulated client hints per navigables=]
+        contains |top-level navigable|, return [=emulated client hints=]'s
+        [=emulated client hints per navigables=][|top-level navigable|].
+
+    1. If [=emulated client hints=]'s [=emulated client hints per user contexts=]
+        contains |user context|, return [=emulated client hints=]'s
+        [=emulated client hints per user contexts=][|user context|].
+
+1. Let |default emulated client hints| be [=emulated client hints=]'s
+    [=default emulated client hints=].
+
+1. If |default emulated client hints| is not null, return
+    |default emulated client hints|.
+
+1. Return null.
+
+</div>
+
+<div algorithm="remote end steps for emulation.setClientHintsOverride">
+
+The [=remote end steps=] given |command parameters| are:
+
+ 1. If |command parameters| [=map/contains=] "<code>userContexts</code>"
+    and |command parameters| [=map/contains=] "<code>contexts</code>",
+    return [=error=] with [=error code=] [=invalid argument=].
+
+ 1. Let |emulated client hints| be |command parameters|["<code>clientHints</code>"].
+
+ 1. If |command parameters| [=map/contains=] "<code>contexts</code>":
+
+   1. Let |navigables| be the result of [=trying=] to
+      [=get valid top-level traversables by ids=] with
+      |command parameters|["<code>contexts</code>"].
+
+   1. For each |navigable| of |navigables|:
+
+      1. If |emulated client hints| is null, [=map/remove=] |navigable|
+          [=emulated client hints=]'s [=emulated client hints per navigables=].
+
+      1. Otherwise, [=map/set=] [=emulated client hints=]'s
+          [=emulated client hints per navigables=][|navigable|] to |emulated client hints|.
+
+   1. Return [=success=] with data null.
+
+ 1. If |command parameters| [=map/contains=] "<code>userContexts</code>":
+
+   1. Let |user contexts| be the result of [=trying=] to [=get valid user contexts=]
+       with |command parameters|["<code>userContexts</code>"].
+
+   1. For each |user context| of |user contexts|:
+
+      1. If |emulated client hints| is null, [=map/remove=] |user context| from
+          [=emulated client hints=]'s [=emulated client hints per user contexts=].
+
+      1. Otherwise, [=map/set=] [=emulated client hints=]'s
+         [=emulated client hints per user contexts=][|user context|] to |emulated client hints|.
+
+   1. Return [=success=] with data null.
+
+ 1. [=map/Set=] [=emulated client hints=]'s [=default emulated client hints=] to
+    |emulated client hints|.
+
+ 1. Return [=success=] with data null.
+
+</div>
+
 
 Permissions-Policy Integration {#permisisons-policy-integration}
 ==============================

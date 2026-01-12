@@ -470,6 +470,10 @@ has defined a number of properties for itself:
       any other [=equivalence classes=] full version).
 *   <dfn for="user agent" export>wow64-ness</dfn> - A boolean indicating if the [=user agent=]'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)
 
+Whenever the Client Hints are requested for the given [=environment settings object=],
+|environment settings|, if [=emulated UA Client Hints=] associated with the |environment settings|
+is not null, return the corresponding value from the [=emulated UA Client Hints=] instead of the
+default value for the requested property.
 
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
@@ -1127,8 +1131,8 @@ emulated user agent client hints for a list of [=/navigables=] or [=user context
 </dl>
 
 <div algorithm>
-To <dfn export>get emulated UA Client Hints</dfn> given [=environment settings object=]
-|environment settings|, run the following steps:
+The <dfn export>emulated UA Client Hints</dfn> associated with [=environment settings object=]
+|environment settings|, are the result of running the following steps:
 
 1. Let |related navigables| be the result of [=get related navigables=] with
     |environment settings|.

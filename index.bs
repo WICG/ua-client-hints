@@ -505,7 +505,6 @@ privacy, compatibility, or other reasons, given a request for any the following 
 If the [=user agent=]'s [=emulated client hints=] is not null, the [=user agent=] MUST
 return the corresponding value from the [=emulated client hints=] instead of the default
 value for the requested property.
-f
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------

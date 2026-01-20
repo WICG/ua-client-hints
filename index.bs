@@ -26,6 +26,7 @@ spec:webidl; type:dfn; text:resolve
 spec:infra; type:dfn; text:user agent
 spec:infra; type:dfn; for:/; text:list
 spec:html; type:dfn; text:allowed to use
+spec:webdriver2; type:dfn; text:error
 spec:webdriver2; type:dfn; text:success
 </pre>
 <pre class="anchors">
@@ -58,9 +59,6 @@ urlPrefix: https://w3c.github.io/webdriver-bidi/; spec: webdriver-bidi
         text: user context; url: #user-context
         text: get valid top-level traversables by ids; url: #get-valid-top-level-traversables-by-ids
         text: get valid user contexts; url: #get-valid-user-contexts
-        text: error; url: #error
-    type: type
-        text: error; url: #error
 
 </pre>
 <pre class="biblio">

@@ -1048,7 +1048,7 @@ Definitions {#automation-definitions}
 
 <pre highlight="cddl" class="cddl" data-cddl-module="remote-cddl,local-cddl" export>
 UserAgentClientHintsCommand = (
-  emulation.SetClientHintsOverrideCommand
+  userAgentClientHints.SetClientHintsOverrideCommand
 )
 </pre>
 
@@ -1082,28 +1082,28 @@ A [=User agent=] has <dfn>emulated client hints</dfn>, which is a [=struct=] wit
 * [=struct/item=] named <dfn for="emulated client hints" export>emulated client hints per navigables</dfn>,
     which is a weak map between [=/navigables=] and [=user agent client hints=], initially empty.
 
-The emulation.setClientHintsOverride command {#emulation-setclienthintsoverride}
+The userAgentClientHints.setClientHintsOverride command {#emulation-setclienthintsoverride}
 ----------------
 
-The <dfn export for=commands>emulation.setClientHintsOverride</dfn> command sets or removes
+The <dfn export for=commands>userAgentClientHints.setClientHintsOverride</dfn> command sets or removes
 emulated user agent client hints for a list of [=/navigables=] or [=user context=], or globally.
 
 <dl>
    <dt>Command Type</dt>
    <dd>
     <pre class="cddl" data-cddl-module="remote-cddl" export>
-        emulation.SetClientHintsOverrideCommand = {
-            method: "emulation.setClientHintsOverride",
+        userAgentClientHints.SetClientHintsOverrideCommand = {
+            method: "userAgentClientHints.setClientHintsOverride",
             params: {
-                clientHints: emulation.ClientHintsMetadata / null,
+                clientHints: userAgentClientHints.ClientHintsMetadata / null,
                 ? contexts: [+text],
                 ? userContexts: [+text],
             }
         }
 
-        emulation.ClientHintsMetadata = {
-            ? brands: [* emulation.BrandVersion],
-            ? fullVersionList: [* emulation.BrandVersion],
+        userAgentClientHints.ClientHintsMetadata = {
+            ? brands: [* userAgentClientHints.BrandVersion],
+            ? fullVersionList: [* userAgentClientHints.BrandVersion],
             ? platform: text,
             ? platformVersion: text,
             ? architecture: text,
@@ -1114,7 +1114,7 @@ emulated user agent client hints for a list of [=/navigables=] or [=user context
             ? formFactors: [* text];
         }
 
-        emulation.BrandVersion = {
+        userAgentClientHints.BrandVersion = {
             brand: text,
             version: text
         }
@@ -1123,7 +1123,7 @@ emulated user agent client hints for a list of [=/navigables=] or [=user context
    <dt>Return Type</dt>
    <dd>
       <pre class="cddl" data-cddl-module="local-cddl" export>
-      emulation.SetClientHintsOverrideResult = {}
+      userAgentClientHints.SetClientHintsOverrideResult = {}
       </pre>
    </dd>
 </dl>
@@ -1159,7 +1159,7 @@ The <dfn export>emulated UA Client Hints</dfn> associated with [=environment set
 
 </div>
 
-<div algorithm="remote end steps for emulation.setClientHintsOverride">
+<div algorithm="remote end steps for userAgentClientHints.setClientHintsOverride">
 
 The [=remote end steps=] given |command parameters| are:
 

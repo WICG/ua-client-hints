@@ -468,11 +468,6 @@ has defined a number of properties for itself:
       any other [=equivalence classes=] full version).
 *   <dfn for="user agent" export>wow64-ness</dfn> - A boolean indicating if the [=user agent=]'s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)
 
-Whenever the Client Hints are requested for the given [=environment settings object=],
-|environment settings|, if [=emulated UA Client Hints=] associated with the |environment settings|
-is not null, return the corresponding value from the [=emulated UA Client Hints=] instead of the
-default value for the requested property.
-
 [=User agents=] SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the [=user agent=]'s whim.
 
@@ -500,9 +495,18 @@ privacy, compatibility, or other reasons, given a request for any the following 
 [=user agent/full version=], [=user agent/platform architecture=], [=user agent/platform bitness=],
 [=user agent/wow64-ness=] or [=user agent/model=].
 
-If the [=user agent=]'s [=emulated client hints=] is not null, the [=user agent=] MUST
-return the corresponding value from the [=emulated client hints=] instead of the default
-value for the requested property.
+<div algorithm="accessing client hints properties">
+Whenever the Client Hints property |property| is requested for the given [=environment settings object=]
+|environment settings|, run the following steps:
+
+1. Let |emulated client hints| be [=emulated UA Client Hints=] associated with for |environment settings|.
+
+1. If |emulated client hints| is not null and |emulated client hints|'s |property| is not undefined,
+    return |emulated client hints|'s |property|.
+
+1. Return the implementation-defined value of |property|.
+
+</div>
 
 The 'Sec-CH-UA' Header Field {#sec-ch-ua}
 ----------------------------
@@ -1043,6 +1047,8 @@ The <dfn method for="NavigatorUA"><code>toJSON()</code></dfn> method MUST run th
 Automation {#automation}
 ========================
 
+For the purposes of user-agent automation and application testing, this document defines extensions to the [[WebDriver-BiDi]] specification.
+
 Definitions {#automation-definitions}
 ----------------------
 
@@ -1057,22 +1063,16 @@ A <dfn>brand version</dfn> is a [=struct=] with:
 * [=struct/item=] named <dfn for="brand version" export>version</dfn>, which is a string.
 
 An <dfn>user agent client hints</dfn> is a [=struct=] with:
-* [=struct/item=] named <dfn for="user agent client hints" export>brands</dfn>, which is a list of
-    [=brand version=] pairs or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>full version</dfn>, which is a string or
-    null;
-* [=struct/item=] named <dfn for="user agent client hints" export>full version list</dfn>, which is a list
-    of [=brand version=] or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>mobile</dfn>, which is a boolean or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>model</dfn>, which is a string or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>platform</dfn>, which is a string or
-    null;
-* [=struct/item=] named <dfn for="user agent client hints" export>platform version</dfn>, which is a string
-    or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>architecture</dfn>, which is a string or
-    null;
-* [=struct/item=] named <dfn for="user agent client hints" export>bitness</dfn>, which is a string or null;
-* [=struct/item=] named <dfn for="user agent client hints" export>wow64</dfn>, which is a boolean or null.
+* [=struct/item=] named <dfn for="user agent client hints" export>brands</dfn>, which is a list of[=brand version=] pairs or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>full version</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>full version list</dfn>, which is a list of [=brand version=] or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>mobile</dfn>, which is a boolean or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>model</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>platform</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>platform version</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>architecture</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>bitness</dfn>, which is a string or undefined, initially undefined;
+* [=struct/item=] named <dfn for="user agent client hints" export>wow64</dfn>, which is a boolean or undefined, initially undefined.
 
 A [=User agent=] has <dfn>emulated client hints</dfn>, which is a [=struct=] with:
 * [=struct/item=] named <dfn for="emulated client hints" export>default emulated client hints</dfn>, which

@@ -59,6 +59,9 @@ urlPrefix: https://w3c.github.io/webdriver-bidi/; spec: webdriver-bidi
         text: user context; url: #user-context
         text: get valid top-level traversables by ids; url: #get-valid-top-level-traversables-by-ids
         text: get valid user contexts; url: #get-valid-user-contexts
+urlPrefix: https://w3c.github.io/webdriver/; spec: webdriver
+    type: dfn
+        text: remote end; url: #dfn-remote-ends
 
 </pre>
 <pre class="biblio">
@@ -1074,9 +1077,9 @@ An <dfn>user agent client hints</dfn> is a [=struct=] with:
 * [=struct/item=] named <dfn for="user agent client hints" export>bitness</dfn>, which is a string or undefined, initially undefined;
 * [=struct/item=] named <dfn for="user agent client hints" export>wow64</dfn>, which is a boolean or undefined, initially undefined.
 
-A [=User agent=] has <dfn>emulated client hints</dfn>, which is a [=struct=] with:
-* [=struct/item=] named <dfn for="emulated client hints" export>default emulated client hints</dfn>, which
-    is an [=user agent client hints=] or null, initially null;
+A [=remote end=] has associated <dfn>emulated client hints</dfn>, which is a [=struct=] with:
+* [=struct/item=] named <dfn for="emulated client hints" export>default emulated client hints</dfn>,
+    which is a [=user agent client hints=] or null, initially null;
 * [=struct/item=] named <dfn for="emulated client hints" export>emulated client hints per user contexts</dfn>,
     which is a weak map between [=user context=] and [=user agent client hints=], initially empty;
 * [=struct/item=] named <dfn for="emulated client hints" export>emulated client hints per navigables</dfn>,

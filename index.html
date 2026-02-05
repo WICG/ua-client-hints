@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 3c53a5b02, updated Thu Nov 27 17:03:30 2025 +0000" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="49e49b45ba17180d0a073bc3c95504b8cdd3bf40" name="revision">
+  <meta content="4aa9d535da0525809033322751d80da91f9b8f26" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -742,7 +742,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
   <div class="head">
    <h1 class="no-ref p-name" id="title">User-Agent Client Hints</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-01-20">20 January 2026</time></p>
+    <time class="dt-updated" datetime="2026-02-05">5 February 2026</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2032,7 +2032,7 @@ contains <var>user context</var>, return <a data-link-type="dfn" href="#emulated
      <li data-md>
       <p>If <var>command parameters</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists">contains</a> "<code>userContexts</code>"
 and <var>command parameters</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists①">contains</a> "<code>contexts</code>",
-return <a data-link-type="dfn" href="https://w3c.github.io/webdriver-bidi/#error" id="ref-for-error">error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-error-code" id="ref-for-dfn-error-code">error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-invalid-argument" id="ref-for-dfn-invalid-argument">invalid argument</a>.</p>
+return <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-error" id="ref-for-dfn-error">error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-error-code" id="ref-for-dfn-error-code">error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-invalid-argument" id="ref-for-dfn-invalid-argument">invalid argument</a>.</p>
      <li data-md>
       <p>Let <var>emulated client hints</var> be <var>command parameters</var>["<code>clientHints</code>"].</p>
      <li data-md>
@@ -2615,7 +2615,6 @@ for valuable feedback and contributions to this specification.</p>
     <a data-link-type="biblio">[WEBDRIVER-BIDI]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="a5242c83">associated user context</span>
-     <li><span class="dfn-paneled" id="32c3d7a5">error</span>
      <li><span class="dfn-paneled" id="cd448a51">get related navigables</span>
      <li><span class="dfn-paneled" id="5ad42a1d">get valid top-level traversables by ids</span>
      <li><span class="dfn-paneled" id="587a6dd8">get valid user contexts</span>
@@ -2624,6 +2623,7 @@ for valuable feedback and contributions to this specification.</p>
    <li>
     <a data-link-type="biblio">[WEBDRIVER2]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="bb4c269e">error</span>
      <li><span class="dfn-paneled" id="c8ff8493">error code</span>
      <li><span class="dfn-paneled" id="8da4d1e3">invalid argument</span>
      <li><span class="dfn-paneled" id="82c23298">remote end steps</span>
@@ -2949,7 +2949,6 @@ let dfnPanelData = {
 "15edd6b4": {"dfnID":"15edd6b4","dfnText":"active fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-active-fingerprinting"},{"id":"ref-for-dfn-active-fingerprinting\u2460"}],"title":"7.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
 "1641b9ef": {"dfnID":"1641b9ef","dfnText":"create a frozen array","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-create-frozen-array"},{"id":"ref-for-dfn-create-frozen-array\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://webidl.spec.whatwg.org/#dfn-create-frozen-array"},
 "30717154": {"dfnID":"30717154","dfnText":"top-level traversable","external":true,"refSections":[{"refs":[{"id":"ref-for-nav-top"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top"},
-"32c3d7a5": {"dfnID":"32c3d7a5","dfnText":"error","external":true,"refSections":[{"refs":[{"id":"ref-for-error"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#error"},
 "3349d69f": {"dfnID":"3349d69f","dfnText":"associated Document","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document-window"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window"},
 "3610bd67": {"dfnID":"3610bd67","dfnText":"allowed to use","external":true,"refSections":[{"refs":[{"id":"ref-for-allowed-to-use"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use"},
 "3aec4bbc": {"dfnID":"3aec4bbc","dfnText":"current realm","external":true,"refSections":[{"refs":[{"id":"ref-for-current-realm"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://tc39.es/ecma262/#current-realm"},
@@ -2998,6 +2997,7 @@ let dfnPanelData = {
 "abstract-opdef-return-the-sec-ch-ua-value-for-a-request": {"dfnID":"abstract-opdef-return-the-sec-ch-ua-value-for-a-request","dfnText":"return the Sec-CH-UA value for a request","external":false,"refSections":[],"url":"#abstract-opdef-return-the-sec-ch-ua-value-for-a-request"},
 "ae8def21": {"dfnID":"ae8def21","dfnText":"contain (for list)","external":true,"refSections":[{"refs":[{"id":"ref-for-list-contain"},{"id":"ref-for-list-contain\u2460"},{"id":"ref-for-list-contain\u2461"},{"id":"ref-for-list-contain\u2462"},{"id":"ref-for-list-contain\u2463"},{"id":"ref-for-list-contain\u2464"},{"id":"ref-for-list-contain\u2465"},{"id":"ref-for-list-contain\u2466"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://infra.spec.whatwg.org/#list-contain"},
 "b75bb3bd": {"dfnID":"b75bb3bd","dfnText":"SecureContext","external":true,"refSections":[{"refs":[{"id":"ref-for-SecureContext"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#SecureContext"},
+"bb4c269e": {"dfnID":"bb4c269e","dfnText":"error","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error"},
 "bc612dfe": {"dfnID":"bc612dfe","dfnText":"Best Practice 1","external":true,"refSections":[{"refs":[{"id":"ref-for-avoid-passive-increases"}],"title":"1. Introduction"}],"url":"https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases"},
 "bdbd19d1": {"dfnID":"bdbd19d1","dfnText":"Promise","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-promise"},{"id":"ref-for-idl-promise\u2460"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-promise"},
 "be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"4. Interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
@@ -3622,11 +3622,11 @@ let refsData = {
 "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature": {"displayText":"policy-controlled feature","export":true,"for_":[],"level":"1","normative":true,"shortname":"permissions-policy","spec":"permissions-policy-1","status":"current","text":"policy-controlled feature","type":"dfn","url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature"},
 "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist": {"displayText":"default allowlist","export":true,"for_":["policy-controlled feature"],"level":"1","normative":true,"shortname":"permissions-policy","spec":"permissions-policy-1","status":"current","text":"default allowlist","type":"dfn","url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist"},
 "https://w3c.github.io/webdriver-bidi/#associated-user-context": {"displayText":"associated user context","export":true,"for_":[],"level":"1","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"current","text":"associated user context","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#associated-user-context"},
-"https://w3c.github.io/webdriver-bidi/#error": {"displayText":"error","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"anchor-block","text":"error","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#error"},
 "https://w3c.github.io/webdriver-bidi/#get-related-navigables": {"displayText":"get related navigables","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"anchor-block","text":"get related navigables","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#get-related-navigables"},
 "https://w3c.github.io/webdriver-bidi/#get-valid-top-level-traversables-by-ids": {"displayText":"get valid top-level traversables by ids","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"anchor-block","text":"get valid top-level traversables by ids","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#get-valid-top-level-traversables-by-ids"},
 "https://w3c.github.io/webdriver-bidi/#get-valid-user-contexts": {"displayText":"get valid user contexts","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"anchor-block","text":"get valid user contexts","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#get-valid-user-contexts"},
 "https://w3c.github.io/webdriver-bidi/#user-context": {"displayText":"user context","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver-bidi","spec":"webdriver-bidi","status":"anchor-block","text":"user context","type":"dfn","url":"https://w3c.github.io/webdriver-bidi/#user-context"},
+"https://w3c.github.io/webdriver/#dfn-error": {"displayText":"error","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"error","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-error"},
 "https://w3c.github.io/webdriver/#dfn-error-code": {"displayText":"error code","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"error code","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-error-code"},
 "https://w3c.github.io/webdriver/#dfn-invalid-argument": {"displayText":"invalid argument","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"invalid argument","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-invalid-argument"},
 "https://w3c.github.io/webdriver/#dfn-remote-end-steps": {"displayText":"remote end steps","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"remote end steps","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-remote-end-steps"},

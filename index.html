@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 3c53a5b02, updated Thu Nov 27 17:03:30 2025 +0000" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="4aa9d535da0525809033322751d80da91f9b8f26" name="revision">
+  <meta content="6cf1025597fe4ee96063f32e94442613a7fa77f9" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -742,7 +742,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
   <div class="head">
    <h1 class="no-ref p-name" id="title">User-Agent Client Hints</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-02-05">5 February 2026</time></p>
+    <time class="dt-updated" datetime="2026-02-10">10 February 2026</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -861,7 +861,7 @@ perform agent-based content negotiation when necessary, while avoiding the histo
      <a href="#automation"><span class="secno">5</span> <span class="content">Automation</span></a>
      <ol class="toc">
       <li><a href="#automation-definitions"><span class="secno">5.1</span> <span class="content">Definitions</span></a>
-      <li><a href="#emulation-setclienthintsoverride"><span class="secno">5.2</span> <span class="content">The emulation.setClientHintsOverride command</span></a>
+      <li><a href="#emulation-setclienthintsoverride"><span class="secno">5.2</span> <span class="content">The userAgentClientHints.setClientHintsOverride command</span></a>
      </ol>
     <li><a href="#permisisons-policy-integration"><span class="secno">6</span> <span class="content">Permissions-Policy Integration</span></a>
     <li>
@@ -1284,10 +1284,6 @@ has defined a number of properties for itself:</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-wow64-ness">wow64-ness</dfn> - A boolean indicating if the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①①">user agent</a>’s binary is running in 32-bit mode on 64-bit Windows. (e.g., ?0 or ?1)</p>
    </ul>
-   <p>Whenever the Client Hints are requested for the given <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>,
-<var>environment settings</var>, if <a data-link-type="dfn" href="#emulated-ua-client-hints" id="ref-for-emulated-ua-client-hints">emulated UA Client Hints</a> associated with the <var>environment settings</var>
-is not null, return the corresponding value from the <a data-link-type="dfn" href="#emulated-ua-client-hints" id="ref-for-emulated-ua-client-hints①">emulated UA Client Hints</a> instead of the
-default value for the requested property.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①②">User agents</a> SHOULD keep these strings short and to the point, but servers MUST accept arbitrary
 values for each, as they are all values constructed at the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①③">user agent</a>’s whim.</p>
    <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①④">User agents</a> MUST map higher-entropy <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture">platform architecture</a> values to the following buckets:</p>
@@ -1316,15 +1312,28 @@ is false. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agen
 privacy, compatibility, or other reasons, given a request for any the following hints:
 <a data-link-type="dfn" href="#user-agent-full-version" id="ref-for-user-agent-full-version">full version</a>, <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture②">platform architecture</a>, <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness①">platform bitness</a>,
 <a data-link-type="dfn" href="#user-agent-wow64-ness" id="ref-for-user-agent-wow64-ness">wow64-ness</a> or <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model②">model</a>.</p>
-   <p>If the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>’s <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints">emulated client hints</a> is not null, the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⓪">user agent</a> MUST
-return the corresponding value from the <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints①">emulated client hints</a> instead of the default
-value for the requested property.</p>
+   <div class="algorithm" data-algorithm="accessing client hints properties">
+    
+Whenever the Client Hints property <var>property</var> is requested for the given <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>
+<var>environment settings</var>, run the following steps:
+
+
+    <ol>
+     <li data-md>
+      <p>Let <var>emulated client hints</var> be <a data-link-type="dfn" href="#emulated-ua-client-hints" id="ref-for-emulated-ua-client-hints">emulated UA Client Hints</a> associated with for <var>environment settings</var>.</p>
+     <li data-md>
+      <p>If <var>emulated client hints</var> is not null and <var>emulated client hints</var>’s <var>property</var> is not undefined,
+return <var>emulated client hints</var>’s <var>property</var>.</p>
+     <li data-md>
+      <p>Return the implementation-defined value of <var>property</var>.</p>
+    </ol>
+   </div>
    <h3 class="heading settled" data-level="3.1" id="sec-ch-ua"><span class="secno">3.1. </span><span class="content">The 'Sec-CH-UA' Header Field</span><a class="self-link" href="#sec-ch-ua"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua"><code>Sec-CH-UA</code></dfn> request header field gives a server information about a
-<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②①">user agent</a>’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a
+<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①⑨">user agent</a>’s <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand">branding</a> and <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version">significant version</a>. It is a
 <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1">list</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. The list’s
 items MUST be <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3">string</a>. The value of each item SHOULD include a "v" parameter,
-indicating the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②②">user agent</a>’s version.</p>
+indicating the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⓪">user agent</a>’s version.</p>
    <p>The header’s ABNF is:</p>
 <pre class="highlight language-abnf"><c- nc>Sec-CH-UA</c-> <c- o>=</c-> <c- nc>sf-list</c->
 </pre>
@@ -1342,7 +1351,7 @@ with <var>brands</var> and "significant version".</p>
 the <code>Sec-CH-UA</code> header will be sent by default, whether or not the server opted-into
 receiving the header via an <code>Accept-CH</code> header (although it can still be controlled by its
 <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features">policy-controlled client hints feature</a>.
-It is considered low entropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a>’s branding information,
+It is considered low entropy because it includes only the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②①">user agent</a>’s branding information,
 and the significant version number (both of which are fairly clearly sniffable by "examining the
 structure of other headers and by testing for the availability and semantics of the features
 introduced or modified between releases of a particular browser" <a data-link-type="biblio" href="#biblio-janc2014" title="Technical analysis of client identification mechanisms">[Janc2014]</a>).</p>
@@ -1351,7 +1360,7 @@ introduced or modified between releases of a particular browser" <a data-link-ty
 <a data-link-type="http-header" href="#http-headerdef-sec-ch-ua-full-version-list" id="ref-for-http-headerdef-sec-ch-ua-full-version-list"><code>Sec-CH-UA-Full-Version-List</code></a>.</p>
    <h3 class="heading settled" data-level="3.2" id="sec-ch-ua-arch"><span class="secno">3.2. </span><span class="content">The 'Sec-CH-UA-Arch' Header Field</span><a class="self-link" href="#sec-ch-ua-arch"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-arch"><code>Sec-CH-UA-Arch</code></dfn> request header field gives a server information about
-the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a> is executing. It is a
+the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②②">user agent</a> is executing. It is a
 <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something①">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3①">string</a>
 <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>.</p>
    <p>The header’s ABNF is:</p>
@@ -1359,7 +1368,7 @@ the architecture of the platform on which a given <a data-link-type="dfn" href="
 </pre>
    <h3 class="heading settled" data-level="3.3" id="sec-ch-ua-bitness"><span class="secno">3.3. </span><span class="content">The 'Sec-CH-UA-Bitness' Header Field</span><a class="self-link" href="#sec-ch-ua-bitness"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-bitness"><code>Sec-CH-UA-Bitness</code></dfn> request header field gives a server information about
-the <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness②">platform bitness</a> of the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> is
+the <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness②">platform bitness</a> of the architecture of the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②③">user agent</a> is
 executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something②">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3②">string</a>
 <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>.</p>
    <p>The header’s ABNF is:</p>
@@ -1367,7 +1376,7 @@ executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc
 </pre>
    <h3 class="heading settled" data-level="3.4" id="sec-ch-ua-form-factors"><span class="secno">3.4. </span><span class="content">The 'Sec-CH-UA-Form-Factors' Header Field</span><a class="self-link" href="#sec-ch-ua-form-factors"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-form-factors"><code>Sec-CH-UA-Form-Factors</code></dfn> request header field gives a
-server information about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑥">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors">form-factors</a>. It is a
+server information about the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②④">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors">form-factors</a>. It is a
 <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something③">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.1" id="ref-for-section-3.1①">list</a>
 <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. In order to avoid providing additional fingerprinting entropy,
 the header’s values MUST be given in lexical order, and values are
@@ -1442,7 +1451,7 @@ following steps:</p>
    </ol>
    <h3 class="heading settled" data-level="3.7" id="sec-ch-ua-mobile"><span class="secno">3.7. </span><span class="content">The 'Sec-CH-UA-Mobile' Header Field</span><a class="self-link" href="#sec-ch-ua-mobile"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-mobile"><code>Sec-CH-UA-Mobile</code></dfn> request header field gives a server information about
-whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑦">user agent</a> prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑥">Structured Header</a>
+whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑤">user agent</a> prefers a "mobile" user experience. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑥">Structured Header</a>
 whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.6" id="ref-for-section-3.3.6">boolean</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="highlight language-abnf"><c- nc>Sec-CH-UA-Mobile</c-> <c- o>=</c-> <c- nc>sf-boolean</c->
@@ -1454,14 +1463,14 @@ receiving the header via an <code>Accept-CH</code> header (although it can still
 bit of information directly controllable by the user.</p>
    <h3 class="heading settled" data-level="3.8" id="sec-ch-ua-model"><span class="secno">3.8. </span><span class="content">The 'Sec-CH-UA-Model' Header Field</span><a class="self-link" href="#sec-ch-ua-model"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-model"><code>Sec-CH-UA-Model</code></dfn> request header field gives a server information about
-the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑧">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑦">Structured Header</a> whose value
+the device on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑥">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑦">Structured Header</a> whose value
 MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3④">string</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="highlight language-abnf"><c- nc>Sec-CH-UA-Model</c-> <c- o>=</c-> <c- nc>sf-string</c->
 </pre>
    <h3 class="heading settled" data-level="3.9" id="sec-ch-ua-platform"><span class="secno">3.9. </span><span class="content">The 'Sec-CH-UA-Platform' Header Field</span><a class="self-link" href="#sec-ch-ua-platform"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform"><code>Sec-CH-UA-Platform</code></dfn> request header field gives a server information
-about the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑨">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑧">Structured Header</a>
+about the platform on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑦">user agent</a> is executing. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑧">Structured Header</a>
 whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3⑤">string</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. Its value SHOULD match one of the
 following common platform values: "Android", "Chrome OS", "Fuchsia", "iOS", "Linux", "macOS",
 "Windows", or "Unknown".</p>
@@ -1474,7 +1483,7 @@ the header via an <code>Accept-CH</code> header (although it can still be contro
 <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features" id="ref-for-policy-controlled-client-hints-features②">policy-controlled client hints feature</a>).</p>
    <h3 class="heading settled" data-level="3.10" id="sec-ch-ua-platform-version"><span class="secno">3.10. </span><span class="content">The 'Sec-CH-UA-Platform-Version' Header Field</span><a class="self-link" href="#sec-ch-ua-platform-version"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-platform-version"><code>Sec-CH-UA-Platform-Version</code></dfn> request header field gives a server
-information about the <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a> on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⓪">user agent</a> is executing.
+information about the <a data-link-type="dfn" href="#user-agent-platform-version" id="ref-for-user-agent-platform-version">platform version</a> on which a given <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑧">user agent</a> is executing.
 It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something⑨">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.3" id="ref-for-section-3.3.3⑥">string</a><a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>. Its
 value is the result of <a data-link-type="dfn" href="#get-the-platform-version" id="ref-for-get-the-platform-version">getting the platform version</a> with <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand">platform brand</a>.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-the-platform-version">get the platform version</dfn>, given a string <var>platform</var>, run the following steps:</p>
@@ -1600,7 +1609,7 @@ FULL STOP (<code>.</code>) separator.</p>
 </pre>
    <h3 class="heading settled" data-level="3.11" id="sec-ch-ua-wow64"><span class="secno">3.11. </span><span class="content">The 'Sec-CH-UA-WoW64' Header Field</span><a class="self-link" href="#sec-ch-ua-wow64"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-ch-ua-wow64"><code>Sec-CH-UA-WoW64</code></dfn> request header field gives a server information about
-whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">user agent</a> binary is running in 32-bit mode on 64-bit Windows.
+whether or not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent②⑨">user agent</a> binary is running in 32-bit mode on 64-bit Windows.
 It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="ref-for-something①⓪">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#section-3.3.6" id="ref-for-section-3.3.6①">boolean</a> <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[rfc9651]</a>.</p>
    <p>The header’s ABNF is:</p>
 <pre class="highlight language-abnf"><c- nc>Sec-CH-UA-WoW64</c-> <c- o>=</c-> <c- nc>sf-boolean</c->
@@ -1652,15 +1661,15 @@ It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc9651#" id="
 <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/workers.html#workernavigator" id="ref-for-workernavigator"><c- n>WorkerNavigator</c-></a> <c- b>includes</c-> <a data-link-type="idl-name" href="#navigatorua" id="ref-for-navigatorua①"><c- n>NavigatorUA</c-></a>;
 
 </pre>
-   <p class="note" role="note"><span class="marker">Note:</span> The high-entropy portions of the user agent information are retrieved through a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise①">Promise</a></code>, in order to give <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agents</a> the opportunity to gate their exposure behind potentially time-consuming checks (e.g. by asking the user for their permission).</p>
+   <p class="note" role="note"><span class="marker">Note:</span> The high-entropy portions of the user agent information are retrieved through a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise①">Promise</a></code>, in order to give <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⓪">user agents</a> the opportunity to gate their exposure behind potentially time-consuming checks (e.g. by asking the user for their permission).</p>
    <h3 class="heading settled" data-level="4.1" id="processing"><span class="secno">4.1. </span><span class="content">Processing model</span><a class="self-link" href="#processing"></a></h3>
    <h4 class="heading settled" data-level="4.1.1" id="monkeypatch-html-windoworworkerglobalscope"><span class="secno">4.1.1. </span><span class="content"><code>WindowOrWorkerGlobalScope</code></span><a class="self-link" href="#monkeypatch-html-windoworworkerglobalscope"></a></h4>
-   <p>Each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③③">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-brands">brands</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a>
+   <p>Each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③①">user agent</a> has an associated <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-brands">brands</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a>
 created by running <a data-link-type="dfn" href="#create-brands" id="ref-for-create-brands②">create brands</a> with <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-user-agent-significant-version①">significant version</a>.</p>
    <p>Every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> object has an associated
 <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-brands-frozen-array">brands frozen array</dfn>, which is a
 <code><a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array①">FrozenArray</a>&lt;<a class="idl-code" data-link-type="dictionary" href="#dictdef-navigatoruabrandversion" id="ref-for-dictdef-navigatoruabrandversion④">NavigatorUABrandVersion</a>></code>. It is
-initially the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③④">user agent</a>’s
+initially the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-create-frozen-array" id="ref-for-dfn-create-frozen-array">creating a frozen array</a> from the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③②">user agent</a>’s
 <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands④">brands</a>.</p>
    <p>Additionally, every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope①">WindowOrWorkerGlobalScope</a></code> object has an associated
 <dfn class="dfn-paneled" data-dfn-for="WindowOrWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</dfn>, which is a
@@ -1675,7 +1684,7 @@ the result of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-
     <li data-md>
      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-assert">Assert</a> <var>version type</var> is either "full version" or "significant version".</p>
     <li data-md>
-     <p>For each <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand①">brand</a> that represents the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agent</a>—or an <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class①">equivalence class</a>—as
+     <p>For each <a data-link-type="dfn" href="#user-agent-brand" id="ref-for-user-agent-brand①">brand</a> that represents the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③③">user agent</a>—or an <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class①">equivalence class</a>—as
 <var>brand</var>:</p>
      <ol>
       <li data-md>
@@ -1696,7 +1705,7 @@ the <a data-link-type="dfn" href="#user-agent-significant-version" id="ref-for-u
        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑥">Append</a> <var>dict</var> to <var>list</var>.</p>
      </ol>
     <li data-md>
-     <p>The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑥">user agent</a> SHOULD execute the following steps:</p>
+     <p>The <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③④">user agent</a> SHOULD execute the following steps:</p>
      <ol>
       <li data-md>
        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑦">Append</a> one additional <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-item" id="ref-for-list-item">item</a> to <var>list</var> containing a
@@ -1708,7 +1717,7 @@ set to <a data-link-type="dfn" href="#create-an-arbitrary-brand" id="ref-for-cre
        <p>Randomize the order of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-item" id="ref-for-list-item①">items</a> in <var>list</var>.</p>
      </ol>
      <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize caching variance when generating these random components could be to
-determine them at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>’s significant
+determine them at build time, and keep them identical throughout the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑤">user agent</a>’s significant
 version.</p>
      <p class="note" role="note"><span class="marker">Note:</span> See <a href="#grease">§ 8.2 GREASE-like UA Brand Lists</a> for more details on when and why these randomization steps might be appropriate.</p>
     <li data-md>
@@ -1717,7 +1726,7 @@ version.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-export id="user-agent-equivalence-class">equivalence class</dfn> represents a group of browsers believed to be compatible with
 each other. A shared rendering engine may form an <a data-link-type="dfn" href="#user-agent-equivalence-class" id="ref-for-user-agent-equivalence-class②">equivalence class</a>, for example.</p>
    <h4 class="algorithm heading settled" data-algorithm="to create arbitrary brand and version values" data-level="4.1.3" id="create-arbitrary-brands-section"><span class="secno">4.1.3. </span><span class="content">Create arbitrary brand and version values</span><a class="self-link" href="#create-arbitrary-brands-section"></a></h4>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-an-arbitrary-brand">create an arbitrary brand</dfn>, the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a> MUST run these steps:</p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-an-arbitrary-brand">create an arbitrary brand</dfn>, the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑥">user agent</a> MUST run these steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>arbitraryBrand</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string①">string</a> composed of <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ascii-alpha" id="ref-for-ascii-alpha①">ASCII alpha</a> and 0x20 (SP).
@@ -1831,8 +1840,8 @@ corresponds to the <a data-link-type="dfn" href="#user-agent-significant-version
    </ol>
    <h4 class="heading settled" data-level="4.1.5" id="getters"><span class="secno">4.1.5. </span><span class="content">Getters</span><a class="self-link" href="#getters"></a></h4>
    <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-brands" id="ref-for-dom-navigatoruadata-brands">brands</a></code> attribute MUST return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array">brands frozen array</a>.</p>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness②">mobileness</a>.</p>
-   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand①">platform brand</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-mobile" id="ref-for-dom-navigatoruadata-mobile">mobile</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑦">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness②">mobileness</a>.</p>
+   <p>On getting, the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-platform" id="ref-for-dom-navigatoruadata-platform">platform</a></code> attribute must return the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑧">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand①">platform brand</a>.</p>
    <h4 class="heading settled" data-level="4.1.6" id="getHighEntropyValues"><span class="secno">4.1.6. </span><span class="content"><code>getHighEntropyValues</code> method</span><a class="self-link" href="#getHighEntropyValues"></a></h4>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="NavigatorUA" data-dfn-type="method" data-export id="dom-navigatorua-gethighentropyvalues"><code>getHighEntropyValues(<var>hints</var>)</code></dfn> method MUST run
 these steps:</p>
@@ -1845,9 +1854,9 @@ these steps:</p>
      <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-brands" id="ref-for-dom-uadatavalues-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a>’s
 <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array①">brands frozen array</a>.</p>
     <li data-md>
-     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-mobile" id="ref-for-dom-uadatavalues-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent③⑨">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness③">mobileness</a>.</p>
     <li data-md>
-     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
+     <p>set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platform" id="ref-for-dom-uadatavalues-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⓪">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand②">platform brand</a>.</p>
     <li data-md>
      <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the
 <a data-link-type="dfn" href="#ch-ua-high-entropy-values" id="ref-for-ch-ua-high-entropy-values">ch-ua-high-entropy-values</a> feature, resolve <var>p</var> with <var>uaData</var>.</p>
@@ -1856,20 +1865,20 @@ these steps:</p>
      <ol>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "architecture", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-architecture" id="ref-for-dom-uadatavalues-architecture">architecture</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④①">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture③">platform architecture</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">contains</a> "bitness", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-bitness" id="ref-for-dom-uadatavalues-bitness">bitness</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④②">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness③">platform bitness</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain②">contains</a> "formFactors", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-formfactors" id="ref-for-dom-uadatavalues-formfactors">formFactors</a></code>"] to
-the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
+the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④③">user agent</a>’s <a data-link-type="dfn" href="#user-agent-form-factors" id="ref-for-user-agent-form-factors①">form-factors</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain③">contains</a> "fullVersionList", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-fullversionlist" id="ref-for-dom-uadatavalues-fullversionlist">fullVersionList</a></code>"]
 to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global③">relevant global object</a>’s
 <a data-link-type="dfn" href="#windoworworkerglobalscope-full-version-list-frozen-array" id="ref-for-windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain④">contains</a> "model", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-model" id="ref-for-dom-uadatavalues-model">model</a></code>"] to the
-<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
+<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④④">user agent</a>’s <a data-link-type="dfn" href="#user-agent-model" id="ref-for-user-agent-model③">model</a>.</p>
       <li data-md>
        <p>If <var>hints</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain⑤">contains</a> "platformVersion", set <var>uaData</var>["<code class="idl"><a data-link-type="idl" href="#dom-uadatavalues-platformversion" id="ref-for-dom-uadatavalues-platformversion">platformVersion</a></code>"]
 to the result of <a data-link-type="dfn" href="#get-the-platform-version" id="ref-for-get-the-platform-version①">getting the platform version</a> with <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand③">platform brand</a>.</p>
@@ -1892,16 +1901,17 @@ to the user agent’s <a data-link-type="dfn" href="#user-agent-wow64-ness" id="
     <li data-md>
      <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-brands" id="ref-for-dom-ualowentropyjson-brands">brands</a></code>"] to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this④">this</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global④">relevant global object</a>’s <a data-link-type="dfn" href="#windoworworkerglobalscope-brands-frozen-array" id="ref-for-windoworworkerglobalscope-brands-frozen-array②">brands frozen array</a>.</p>
     <li data-md>
-     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-mobile" id="ref-for-dom-ualowentropyjson-mobile">mobile</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑤">user agent</a>’s <a data-link-type="dfn" href="#user-agent-mobileness" id="ref-for-user-agent-mobileness④">mobileness</a>.</p>
     <li data-md>
-     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
+     <p>Set <var>uaLowEntropyData</var>["<code class="idl"><a data-link-type="idl" href="#dom-ualowentropyjson-platform" id="ref-for-dom-ualowentropyjson-platform">platform</a></code>"] to the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑥">user agent</a>’s <a data-link-type="dfn" href="#user-agent-platform-brand" id="ref-for-user-agent-platform-brand④">platform brand</a>.</p>
     <li data-md>
      <p>Return <var>uaLowEntropyData</var></p>
    </ol>
    <h2 class="heading settled" data-level="5" id="automation"><span class="secno">5. </span><span class="content">Automation</span><a class="self-link" href="#automation"></a></h2>
+   <p>For the purposes of user-agent automation and application testing, this document defines extensions to the <a data-link-type="biblio" href="#biblio-webdriver-bidi" title="WebDriver BiDi">[WebDriver-BiDi]</a> specification.</p>
    <h3 class="heading settled" data-level="5.1" id="automation-definitions"><span class="secno">5.1. </span><span class="content">Definitions</span><a class="self-link" href="#automation-definitions"></a></h3>
 <pre class="cddl def highlight" data-cddl-module="remote-cddl,local-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintscommand"><code class="highlight"><c- nc><c- nc>UserAgentClientHintsCommand</c-></c-></code></dfn> <c- o>=</c-> <c- p>(</c->
-  <a data-link-type="cddl" href="#cddl-type-emulationsetclienthintsoverridecommand" id="ref-for-cddl-type-emulationsetclienthintsoverridecommand"><c- nc>emulation.SetClientHintsOverrideCommand</c-></a>
+  <a data-link-type="cddl" href="#cddl-type-useragentclienthintssetclienthintsoverridecommand" id="ref-for-cddl-type-useragentclienthintssetclienthintsoverridecommand"><c- nc>userAgentClientHints.SetClientHintsOverrideCommand</c-></a>
 <c- p>)</c->
 </pre>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="brand-version">brand version</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> with:</p>
@@ -1914,37 +1924,31 @@ to the user agent’s <a data-link-type="dfn" href="#user-agent-wow64-ness" id="
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="user-agent-client-hints">user agent client hints</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct①">struct</a> with:</p>
    <ul>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item②">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-brands">brands</dfn>, which is a list of
-<a data-link-type="dfn" href="#brand-version" id="ref-for-brand-version">brand version</a> pairs or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item②">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-brands">brands</dfn>, which is a list of<a data-link-type="dfn" href="#brand-version" id="ref-for-brand-version">brand version</a> pairs or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item③">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-full-version">full version</dfn>, which is a string or
-null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item③">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-full-version">full version</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item④">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-full-version-list">full version list</dfn>, which is a list
-of <a data-link-type="dfn" href="#brand-version" id="ref-for-brand-version①">brand version</a> or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item④">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-full-version-list">full version list</dfn>, which is a list of <a data-link-type="dfn" href="#brand-version" id="ref-for-brand-version①">brand version</a> or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑤">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-mobile">mobile</dfn>, which is a boolean or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑤">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-mobile">mobile</dfn>, which is a boolean or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑥">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-model">model</dfn>, which is a string or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑥">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-model">model</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑦">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-platform">platform</dfn>, which is a string or
-null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑦">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-platform">platform</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑧">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-platform-version">platform version</dfn>, which is a string
-or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑧">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-platform-version">platform version</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑨">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-architecture">architecture</dfn>, which is a string or
-null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item⑨">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-architecture">architecture</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①⓪">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-bitness">bitness</dfn>, which is a string or null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①⓪">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-bitness">bitness</dfn>, which is a string or undefined, initially undefined;</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①①">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-wow64">wow64</dfn>, which is a boolean or null.</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①①">item</a> named <dfn class="dfn-paneled" data-dfn-for="user agent client hints" data-dfn-type="dfn" data-export id="user-agent-client-hints-wow64">wow64</dfn>, which is a boolean or undefined, initially undefined.</p>
    </ul>
-   <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">User agent</a> has <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="emulated-client-hints">emulated client hints</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct②">struct</a> with:</p>
+   <p>A <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-remote-ends" id="ref-for-dfn-remote-ends">remote end</a> has associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="emulated-client-hints">emulated client hints</dfn>, which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct②">struct</a> with:</p>
    <ul>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①②">item</a> named <dfn class="dfn-paneled" data-dfn-for="emulated client hints" data-dfn-type="dfn" data-export id="emulated-client-hints-default-emulated-client-hints">default emulated client hints</dfn>, which
-is an <a data-link-type="dfn" href="#user-agent-client-hints" id="ref-for-user-agent-client-hints">user agent client hints</a> or null, initially null;</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①②">item</a> named <dfn class="dfn-paneled" data-dfn-for="emulated client hints" data-dfn-type="dfn" data-export id="emulated-client-hints-default-emulated-client-hints">default emulated client hints</dfn>,
+which is a <a data-link-type="dfn" href="#user-agent-client-hints" id="ref-for-user-agent-client-hints">user agent client hints</a> or null, initially null;</p>
     <li data-md>
      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①③">item</a> named <dfn class="dfn-paneled" data-dfn-for="emulated client hints" data-dfn-type="dfn" data-export id="emulated-client-hints-emulated-client-hints-per-user-contexts">emulated client hints per user contexts</dfn>,
 which is a weak map between <a data-link-type="dfn" href="https://w3c.github.io/webdriver-bidi/#user-context" id="ref-for-user-context">user context</a> and <a data-link-type="dfn" href="#user-agent-client-hints" id="ref-for-user-agent-client-hints①">user agent client hints</a>, initially empty;</p>
@@ -1952,42 +1956,42 @@ which is a weak map between <a data-link-type="dfn" href="https://w3c.github.io/
      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①④">item</a> named <dfn class="dfn-paneled" data-dfn-for="emulated client hints" data-dfn-type="dfn" data-export id="emulated-client-hints-emulated-client-hints-per-navigables">emulated client hints per navigables</dfn>,
 which is a weak map between <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#navigable" id="ref-for-navigable">navigables</a> and <a data-link-type="dfn" href="#user-agent-client-hints" id="ref-for-user-agent-client-hints②">user agent client hints</a>, initially empty.</p>
    </ul>
-   <h3 class="heading settled" data-level="5.2" id="emulation-setclienthintsoverride"><span class="secno">5.2. </span><span class="content">The emulation.setClientHintsOverride command</span><a class="self-link" href="#emulation-setclienthintsoverride"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-for="commands" data-dfn-type="dfn" data-export id="commands-emulationsetclienthintsoverride">emulation.setClientHintsOverride</dfn> command sets or removes
+   <h3 class="heading settled" data-level="5.2" id="emulation-setclienthintsoverride"><span class="secno">5.2. </span><span class="content">The userAgentClientHints.setClientHintsOverride command</span><a class="self-link" href="#emulation-setclienthintsoverride"></a></h3>
+   <p>The <dfn class="dfn-paneled" data-dfn-for="commands" data-dfn-type="dfn" data-export id="commands-useragentclienthintssetclienthintsoverride">userAgentClientHints.setClientHintsOverride</dfn> command sets or removes
 emulated user agent client hints for a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#navigable" id="ref-for-navigable①">navigables</a> or <a data-link-type="dfn" href="https://w3c.github.io/webdriver-bidi/#user-context" id="ref-for-user-context①">user context</a>, or globally.</p>
    <dl>
     <dt>Command Type
     <dd>
-<pre class="cddl def highlight" data-cddl-module="remote-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-emulationsetclienthintsoverridecommand"><code>emulation.SetClientHintsOverrideCommand</code></dfn> = {
-    <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="method|&quot;method&quot;" id="cddl-key-emulationsetclienthintsoverridecommand-method"><code>method</code></dfn>: <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand/method" data-dfn-type="cddl-value" data-export data-lt="emulation.setClientHintsOverride|&quot;emulation.setClientHintsOverride&quot;" id="cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride"><code>"emulation.setClientHintsOverride"</code></dfn>,
-    <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="params|&quot;params&quot;" id="cddl-key-emulationsetclienthintsoverridecommand-params"><code>params</code></dfn>: {
-        <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="clientHints|&quot;clientHints&quot;" id="cddl-key-emulationsetclienthintsoverridecommand-params-clienthints"><code>clientHints</code></dfn>: <a data-link-type="cddl" href="#cddl-type-emulationclienthintsmetadata" id="ref-for-cddl-type-emulationclienthintsmetadata">emulation.ClientHintsMetadata</a> / <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D">null</a>,
-        ? <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="contexts|&quot;contexts&quot;" id="cddl-key-emulationsetclienthintsoverridecommand-params-contexts"><code>contexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①">text</a>],
-        ? <dfn class="dfn-paneled" data-dfn-for="emulation.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="userContexts|&quot;userContexts&quot;" id="cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts"><code>userContexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D②">text</a>],
+<pre class="cddl def highlight" data-cddl-module="remote-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintssetclienthintsoverridecommand"><code>userAgentClientHints.SetClientHintsOverrideCommand</code></dfn> = {
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="method|&quot;method&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-method"><code>method</code></dfn>: <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/method" data-dfn-type="cddl-value" data-export data-lt="userAgentClientHints.setClientHintsOverride|&quot;userAgentClientHints.setClientHintsOverride&quot;" id="cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride"><code>"userAgentClientHints.setClientHintsOverride"</code></dfn>,
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="params|&quot;params&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params"><code>params</code></dfn>: {
+        <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="clientHints|&quot;clientHints&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints"><code>clientHints</code></dfn>: <a data-link-type="cddl" href="#cddl-type-useragentclienthintsclienthintsmetadata" id="ref-for-cddl-type-useragentclienthintsclienthintsmetadata">userAgentClientHints.ClientHintsMetadata</a> / <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D">null</a>,
+        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="contexts|&quot;contexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts"><code>contexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①">text</a>],
+        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="userContexts|&quot;userContexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts"><code>userContexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D②">text</a>],
     }
 }
 
-<dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-emulationclienthintsmetadata"><code>emulation.ClientHintsMetadata</code></dfn> = {
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="brands|&quot;brands&quot;" id="cddl-key-emulationclienthintsmetadata-brands"><code>brands</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-emulationbrandversion" id="ref-for-cddl-type-emulationbrandversion">emulation.BrandVersion</a>],
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="fullVersionList|&quot;fullVersionList&quot;" id="cddl-key-emulationclienthintsmetadata-fullversionlist"><code>fullVersionList</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-emulationbrandversion" id="ref-for-cddl-type-emulationbrandversion①">emulation.BrandVersion</a>],
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platform|&quot;platform&quot;" id="cddl-key-emulationclienthintsmetadata-platform"><code>platform</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D③">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platformVersion|&quot;platformVersion&quot;" id="cddl-key-emulationclienthintsmetadata-platformversion"><code>platformVersion</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D④">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="architecture|&quot;architecture&quot;" id="cddl-key-emulationclienthintsmetadata-architecture"><code>architecture</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑤">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="model|&quot;model&quot;" id="cddl-key-emulationclienthintsmetadata-model"><code>model</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑥">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="mobile|&quot;mobile&quot;" id="cddl-key-emulationclienthintsmetadata-mobile"><code>mobile</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑦">bool</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="bitness|&quot;bitness&quot;" id="cddl-key-emulationclienthintsmetadata-bitness"><code>bitness</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑧">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="wow64|&quot;wow64&quot;" id="cddl-key-emulationclienthintsmetadata-wow64"><code>wow64</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑨">bool</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="emulation.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="formFactors|&quot;formFactors&quot;" id="cddl-key-emulationclienthintsmetadata-formfactors"><code>formFactors</code></dfn>: [* <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①⓪">text</a>];
+<dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintsclienthintsmetadata"><code>userAgentClientHints.ClientHintsMetadata</code></dfn> = {
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="brands|&quot;brands&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-brands"><code>brands</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-useragentclienthintsbrandversion" id="ref-for-cddl-type-useragentclienthintsbrandversion">userAgentClientHints.BrandVersion</a>],
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="fullVersionList|&quot;fullVersionList&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist"><code>fullVersionList</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-useragentclienthintsbrandversion" id="ref-for-cddl-type-useragentclienthintsbrandversion①">userAgentClientHints.BrandVersion</a>],
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platform|&quot;platform&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platform"><code>platform</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D③">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platformVersion|&quot;platformVersion&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platformversion"><code>platformVersion</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D④">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="architecture|&quot;architecture&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-architecture"><code>architecture</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑤">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="model|&quot;model&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-model"><code>model</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑥">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="mobile|&quot;mobile&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-mobile"><code>mobile</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑦">bool</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="bitness|&quot;bitness&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-bitness"><code>bitness</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑧">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="wow64|&quot;wow64&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-wow64"><code>wow64</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑨">bool</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="formFactors|&quot;formFactors&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-formfactors"><code>formFactors</code></dfn>: [* <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①⓪">text</a>];
 }
 
-<dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-emulationbrandversion"><code>emulation.BrandVersion</code></dfn> = {
-    <dfn class="dfn-paneled" data-dfn-for="emulation.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="brand|&quot;brand&quot;" id="cddl-key-emulationbrandversion-brand"><code>brand</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①①">text</a>,
-    <dfn class="dfn-paneled" data-dfn-for="emulation.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="version|&quot;version&quot;" id="cddl-key-emulationbrandversion-version"><code>version</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①②">text</a>
+<dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintsbrandversion"><code>userAgentClientHints.BrandVersion</code></dfn> = {
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="brand|&quot;brand&quot;" id="cddl-key-useragentclienthintsbrandversion-brand"><code>brand</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①①">text</a>,
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="version|&quot;version&quot;" id="cddl-key-useragentclienthintsbrandversion-version"><code>version</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①②">text</a>
 }
 </pre>
     <dt>Return Type
     <dd>
-<pre class="cddl def highlight" data-cddl-module="local-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-emulationsetclienthintsoverrideresult"><code>emulation.SetClientHintsOverrideResult</code></dfn> = {}
+<pre class="cddl def highlight" data-cddl-module="local-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintssetclienthintsoverrideresult"><code>userAgentClientHints.SetClientHintsOverrideResult</code></dfn> = {}
 </pre>
    </dl>
    <div class="algorithm" data-algorithm="emulated UA Client Hints">
@@ -2008,16 +2012,16 @@ The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="emulated-ua-cli
        <li data-md>
         <p>Let <var>user context</var> be <var>top-level navigable</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webdriver-bidi/#associated-user-context" id="ref-for-associated-user-context">associated user context</a>.</p>
        <li data-md>
-        <p>If <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints②">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables">emulated client hints per navigables</a>
-contains <var>top-level navigable</var>, return <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints③">emulated client hints</a>’s
+        <p>If <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables">emulated client hints per navigables</a>
+contains <var>top-level navigable</var>, return <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints①">emulated client hints</a>’s
 <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables①">emulated client hints per navigables</a>[<var>top-level navigable</var>].</p>
        <li data-md>
-        <p>If <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints④">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts">emulated client hints per user contexts</a>
-contains <var>user context</var>, return <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑤">emulated client hints</a>’s
+        <p>If <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints②">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts">emulated client hints per user contexts</a>
+contains <var>user context</var>, return <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints③">emulated client hints</a>’s
 <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts①">emulated client hints per user contexts</a>[<var>user context</var>].</p>
       </ol>
      <li data-md>
-      <p>Let <var>default emulated client hints</var> be <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑥">emulated client hints</a>’s
+      <p>Let <var>default emulated client hints</var> be <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints④">emulated client hints</a>’s
 <a data-link-type="dfn" href="#emulated-client-hints-default-emulated-client-hints" id="ref-for-emulated-client-hints-default-emulated-client-hints">default emulated client hints</a>.</p>
      <li data-md>
       <p>If <var>default emulated client hints</var> is not null, return
@@ -2026,7 +2030,7 @@ contains <var>user context</var>, return <a data-link-type="dfn" href="#emulated
       <p>Return null.</p>
     </ol>
    </div>
-   <div class="algorithm" data-algorithm="remote end steps for emulation.setClientHintsOverride">
+   <div class="algorithm" data-algorithm="remote end steps for userAgentClientHints.setClientHintsOverride">
     <p>The <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-remote-end-steps" id="ref-for-dfn-remote-end-steps">remote end steps</a> given <var>command parameters</var> are:</p>
     <ol>
      <li data-md>
@@ -2046,9 +2050,9 @@ return <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-error"
       <ol>
        <li data-md>
         <p>If <var>emulated client hints</var> is null, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id="ref-for-map-remove">remove</a> <var>navigable</var>
-  <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑦">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables②">emulated client hints per navigables</a>.</p>
+  <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑤">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables②">emulated client hints per navigables</a>.</p>
        <li data-md>
-        <p>Otherwise, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set">set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑧">emulated client hints</a>’s
+        <p>Otherwise, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set">set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑥">emulated client hints</a>’s
   <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-navigables" id="ref-for-emulated-client-hints-emulated-client-hints-per-navigables③">emulated client hints per navigables</a>[<var>navigable</var>] to <var>emulated client hints</var>.</p>
       </ol>
      <li data-md>
@@ -2063,15 +2067,15 @@ return <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-error"
       <ol>
        <li data-md>
         <p>If <var>emulated client hints</var> is null, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id="ref-for-map-remove①">remove</a> <var>user context</var> from
-  <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑨">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts②">emulated client hints per user contexts</a>.</p>
+  <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑦">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts②">emulated client hints per user contexts</a>.</p>
        <li data-md>
-        <p>Otherwise, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set①">set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints①⓪">emulated client hints</a>’s
+        <p>Otherwise, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set①">set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑧">emulated client hints</a>’s
  <a data-link-type="dfn" href="#emulated-client-hints-emulated-client-hints-per-user-contexts" id="ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts③">emulated client hints per user contexts</a>[<var>user context</var>] to <var>emulated client hints</var>.</p>
       </ol>
      <li data-md>
       <p>Return <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-success" id="ref-for-dfn-success①">success</a> with data null.</p>
      <li data-md>
-      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set②">Set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints①①">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-default-emulated-client-hints" id="ref-for-emulated-client-hints-default-emulated-client-hints①">default emulated client hints</a> to
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set②">Set</a> <a data-link-type="dfn" href="#emulated-client-hints" id="ref-for-emulated-client-hints⑨">emulated client hints</a>’s <a data-link-type="dfn" href="#emulated-client-hints-default-emulated-client-hints" id="ref-for-emulated-client-hints-default-emulated-client-hints①">default emulated client hints</a> to
 <var>emulated client hints</var>.</p>
      <li data-md>
       <p>Return <a data-link-type="dfn" href="https://w3c.github.io/webdriver/#dfn-success" id="ref-for-dfn-success②">success</a> with data null.</p>
@@ -2087,12 +2091,12 @@ via the <code class="idl"><a data-link-type="idl" href="#dom-navigatoruadata-get
    <h2 class="heading settled" data-level="7" id="security-privacy"><span class="secno">7. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-privacy"></a></h2>
    <h3 class="heading settled" data-level="7.1" id="secure-transport"><span class="secno">7.1. </span><span class="content">Secure Transport</span><a class="self-link" href="#secure-transport"></a></h3>
    <p>Client Hints will not be delivered to non-secure endpoints (see the secure transport requirements in
-Section 2.2.1 of <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">user agent</a> information will not
+Section 2.2.1 of <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a>). This means that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑦">user agent</a> information will not
 be leaked over plaintext channels, reducing the opportunity for network attackers to build a profile
 of a given agent’s behavior over time.</p>
    <h3 class="heading settled" data-level="7.2" id="delegation"><span class="secno">7.2. </span><span class="content">Delegation</span><a class="self-link" href="#delegation"></a></h3>
    <p>Client Hints will be delegated from top-level pages via Permissions Policy
-(<a data-link-type="biblio" href="#biblio-permissions-policy-1" title="Permissions Policy">[permissions-policy-1]</a>). This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agent</a> information will be
+(<a data-link-type="biblio" href="#biblio-permissions-policy-1" title="Permissions Policy">[permissions-policy-1]</a>). This reduces the likelihood that <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑧">user agent</a> information will be
 delivered along with subresource requests, which reduces the potential for
 <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting" id="ref-for-dfn-passive-fingerprinting②">passive fingerprinting</a>.</p>
    <p>That delegation is defined as part of <a data-link-type="abstract-op" href="https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a>.</p>
@@ -2100,47 +2104,47 @@ delivered along with subresource requests, which reduces the potential for
    <p>The <em>primary goal</em> of User Agent Client Hints is to reduce the amount of default entropy exposed to
 the web at large through the User-Agent header field, which may be used for
 <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting" id="ref-for-dfn-passive-fingerprinting③">passive fingerprinting</a> purposes.</p>
-   <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">user agent</a> is able to decide which hints it provides, with the expectation that no more
+   <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent④⑨">user agent</a> is able to decide which hints it provides, with the expectation that no more
 information is provided than would be included in an unredacted User-Agent header field. A
-<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤③">user agent</a> can provide an empty string for any value that it does not wish to provide, or refuse
+<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⓪">user agent</a> can provide an empty string for any value that it does not wish to provide, or refuse
 to return a hint entirely.</p>
    <p>However, it will still be possible for some, or all, hints to be requested and used for
 <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting">active fingerprinting</a> purposes by first or delegated third parties. As noted in <a href="#access">§ 7.4 Access Restrictions</a>,
-<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">user agents</a> should consider policies to restrict or reduce access to parties that are known to
+<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤①">user agents</a> should consider policies to restrict or reduce access to parties that are known to
 <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting" id="ref-for-dfn-active-fingerprinting①">actively fingerprint</a> their users.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">User agents</a> should take care to not introduce fingerprinting vectors through GREASE-like brand
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤②">User agents</a> should take care to not introduce fingerprinting vectors through GREASE-like brand
 lists that might be unique for an individual or a very small group of users. Rather, a strategy
 should be employed where the arbitrary brand is shared across many users (e.g., stable across
 major versions for all users).</p>
    <h3 class="heading settled" data-level="7.4" id="access"><span class="secno">7.4. </span><span class="content">Access Restrictions</span><a class="self-link" href="#access"></a></h3>
    <p>The information in the Client Hints defined above reveals quite a bit of information about the user
-agent and the device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">User agents</a> ought to exercise judgement before
+agent and the device upon which it runs. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤③">User agents</a> ought to exercise judgement before
 granting access to this information, and MAY impose restrictions above and beyond the secure
-transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑦">user agents</a> could choose to reveal
+transport and delegation requirements noted above. For instance, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤④">user agents</a> could choose to reveal
 <a data-link-type="dfn" href="#user-agent-platform-architecture" id="ref-for-user-agent-platform-architecture④">platform architecture</a> or <a data-link-type="dfn" href="#user-agent-platform-bitness" id="ref-for-user-agent-platform-bitness④">platform bitness</a> only on requests it intends
 to download, giving the server the opportunity to serve the right binary. Likewise, they could offer
 users control over the values revealed to servers, or gate access on explicit user interaction via a
 permission prompt or via a settings interface.</p>
    <h2 class="heading settled" data-level="8" id="impl-considerations"><span class="secno">8. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#impl-considerations"></a></h2>
    <h3 class="heading settled" data-level="8.1" id="user-agent"><span class="secno">8.1. </span><span class="content">The 'User-Agent' Header</span><a class="self-link" href="#user-agent"></a></h3>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑧">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑤">User agents</a> SHOULD deprecate usage of the <code>User-Agent</code> header by reducing its information granularity
 in favor of the Client Hints model described in this document. The header
 is likely to be impossible to remove entirely in the near-term, as existing sites' content negotiation
 code will continue to require its presence (see <a data-link-type="biblio" href="#biblio-rossi2015" title="The Microsoft Edge Rendering Engine that makes the Web just work">[Rossi2015]</a> for a recent example of a new browser’s struggles
 in this area).</p>
-   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑨">user agent</a> to lock the value of its
+   <p>One approach which might be advisable could be for each <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑥">user agent</a> to lock the value of its
 <code>User-Agent</code> header, ensuring backwards compatibility by maintaining the crufty declarations of
 "like Gecko" and "AppleWebKit/537.36" on into eternity. This can ratchet over time, first freezing
 the version number, then shifting platform and model information to something reasonably generic in
 order to reduce the fingerprint the header provides.</p>
    <h3 class="heading settled" data-level="8.2" id="grease"><span class="secno">8.2. </span><span class="content">GREASE-like UA Brand Lists</span><a class="self-link" href="#grease"></a></h3>
-   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⓪">user agents</a> to lie about their branding
+   <p>History has shown us that there are real incentives for <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑦">user agents</a> to lie about their branding
 in order to thread the needle of sites' sniffing scripts, and prevent their users from being blocked
 by UA-based allow/block lists.</p>
    <p>Resetting expectations may help to prevent abuse of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑤">brands</a> list in the short term, but
 probably won’t help in the long run. The world of network protocols introduced the notion of <abbr title="Generate Random Extensions And Sustain Extensibility">GREASE</abbr> <a data-link-type="biblio" href="#biblio-i-dietf-tls-grease" title="Applying GREASE to TLS Extensibility">[I-D.ietf-tls-grease]</a>.
 We could borrow from that concept to tackle this problem.</p>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥①">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> containing more than a single entry could encourage
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑧">User agents</a>' <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑥">brands</a> containing more than a single entry could encourage
 standardized processing of the <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑦">brands</a> list. By randomly including additional, intentionally
 incorrect, comma-separated entries with arbitrary ordering, they would reduce the chance that we
 ossify on a few required strings.</p>
@@ -2175,15 +2179,15 @@ set, enabling sites to count them.</p>
        <p><code>"Chrome"; v="73", "Xwebs mega"; v="60", "Chromium"; v="73", "(Not;Browser"; v="12"</code></p>
      </ul>
    </ul>
-   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑧">brands</a>, where one of these values is an
+   <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑤⑨">User agents</a> MUST include more than a single value in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑧">brands</a>, where one of these values is an
 arbitrary value.</p>
    <p>The value order in <a data-link-type="dfn" href="#user-agent-brands" id="ref-for-user-agent-brands⑨">brands</a> MUST change over time to prevent receivers of the header
 from relying on certain values being in certain locations in the list.</p>
-   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥③">user agents</a> SHOULD keep caching variance and analytics use
-cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥④">user agent</a> versions.</p>
+   <p>When choosing GREASE strategies, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⓪">user agents</a> SHOULD keep caching variance and analytics use
+cases in mind and minimize variance among identical <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥①">user agent</a> versions.</p>
    <p class="note" role="note"><span class="marker">Note:</span> One approach to minimize variance for caching and analytics could be to determine the GREASE
 parts of the UA set at build time, and keep them identical throughout the lifetime of the
-<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥⑤">user agent</a>’s significant version.</p>
+<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent⑥②">user agent</a>’s significant version.</p>
    <h3 class="heading settled" data-level="8.3" id="sec-ch"><span class="secno">8.3. </span><span class="content">The 'Sec-CH-' prefix</span><a class="self-link" href="#sec-ch"></a></h3>
    <p>Restricting user-land JavaScript code from influencing and modifying UA-CH headers has various
 security related advantages. At the same time, there don’t seem to be any legitimate <a href="https://github.com/WICG/ua-client-hints#use-cases">use-cases</a> which
@@ -2327,37 +2331,37 @@ for valuable feedback and contributions to this specification.</p>
   <h2 class="heading no-num no-ref settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="heading no-num no-ref settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#cddl-key-emulationclienthintsmetadata-architecture">"architecture"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-architecture">"architecture"</a><span>, in § 5.2</span>
    <li>
     architecture
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-architecture">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-architecture">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-client-hints-architecture">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-architecture">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-bitness">"bitness"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-bitness">"bitness"</a><span>, in § 5.2</span>
    <li>
     bitness
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-bitness">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-bitness">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-client-hints-bitness">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-bitness">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
-   <li><a href="#cddl-key-emulationbrandversion-brand">"brand"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsbrandversion-brand">"brand"</a><span>, in § 5.2</span>
    <li>
     brand
     <ul>
-     <li><a href="#cddl-key-emulationbrandversion-brand">cddl-key for emulation.BrandVersion</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsbrandversion-brand">cddl-key for userAgentClientHints.BrandVersion</a><span>, in § 5.2</span>
      <li><a href="#brand-version-brand">dfn for brand version</a><span>, in § 5.1</span>
      <li><a href="#user-agent-brand">dfn for user agent</a><span>, in § 3</span>
      <li><a href="#dom-navigatoruabrandversion-brand">dict-member for NavigatorUABrandVersion</a><span>, in § 4</span>
     </ul>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-brands">"brands"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-brands">"brands"</a><span>, in § 5.2</span>
    <li>
     brands
     <ul>
      <li><a href="#dom-navigatoruadata-brands">attribute for NavigatorUAData</a><span>, in § 4</span>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-brands">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-brands">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-brands">dfn for user agent</a><span>, in § 4.1.1</span>
      <li><a href="#user-agent-client-hints-brands">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-brands">dict-member for UADataValues</a><span>, in § 4</span>
@@ -2366,10 +2370,10 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#windoworworkerglobalscope-brands-frozen-array">brands frozen array</a><span>, in § 4.1.1</span>
    <li><a href="#brand-version">brand version</a><span>, in § 5.1</span>
    <li><a href="#ch-ua-high-entropy-values">ch-ua-high-entropy-values</a><span>, in § 6</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-clienthints">"clientHints"</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-clienthints">clientHints</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-contexts">"contexts"</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-contexts">contexts</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints">"clientHints"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints">clientHints</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts">"contexts"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts">contexts</a><span>, in § 5.2</span>
    <li><a href="#create-a-brand-version-list">create a brand-version list</a><span>, in § 4.1.4</span>
    <li><a href="#create-an-arbitrary-brand">create an arbitrary brand</a><span>, in § 4.1.3</span>
    <li><a href="#create-an-arbitrary-version">create an arbitrary version</a><span>, in § 4.1.3</span>
@@ -2380,24 +2384,13 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#emulated-client-hints-emulated-client-hints-per-navigables">emulated client hints per navigables</a><span>, in § 5.1</span>
    <li><a href="#emulated-client-hints-emulated-client-hints-per-user-contexts">emulated client hints per user contexts</a><span>, in § 5.1</span>
    <li><a href="#emulated-ua-client-hints">emulated UA Client Hints</a><span>, in § 5.2</span>
-   <li><a href="#cddl-type-emulationbrandversion">emulation.BrandVersion</a><span>, in § 5.2</span>
-   <li><a href="#cddl-type-emulationclienthintsmetadata">emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
-   <li><a href="#cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride">"emulation.setClientHintsOverride"</a><span>, in § 5.2</span>
-   <li>
-    emulation.setClientHintsOverride
-    <ul>
-     <li><a href="#cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride">cddl-value for emulation.SetClientHintsOverrideCommand/method</a><span>, in § 5.2</span>
-     <li><a href="#commands-emulationsetclienthintsoverride">dfn for commands</a><span>, in § 5.2</span>
-    </ul>
-   <li><a href="#cddl-type-emulationsetclienthintsoverridecommand">emulation.SetClientHintsOverrideCommand</a><span>, in § 5.2</span>
-   <li><a href="#cddl-type-emulationsetclienthintsoverrideresult">emulation.SetClientHintsOverrideResult</a><span>, in § 5.2</span>
    <li><a href="#user-agent-equivalence-class">equivalence class</a><span>, in § 4.1.2</span>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-formfactors">"formFactors"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-formfactors">"formFactors"</a><span>, in § 5.2</span>
    <li><a href="#user-agent-form-factors">form-factors</a><span>, in § 3</span>
    <li>
     formFactors
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-formfactors">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-formfactors">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#dom-uadatavalues-formfactors">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
    <li>
@@ -2406,12 +2399,12 @@ for valuable feedback and contributions to this specification.</p>
      <li><a href="#user-agent-full-version">dfn for user agent</a><span>, in § 3</span>
      <li><a href="#user-agent-client-hints-full-version">dfn for user agent client hints</a><span>, in § 5.1</span>
     </ul>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-fullversionlist">"fullVersionList"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist">"fullVersionList"</a><span>, in § 5.2</span>
    <li><a href="#user-agent-client-hints-full-version-list">full version list</a><span>, in § 5.1</span>
    <li>
     fullVersionList
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-fullversionlist">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#dom-uadatavalues-fullversionlist">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
    <li><a href="#windoworworkerglobalscope-full-version-list-frozen-array">full version list frozen array</a><span>, in § 4.1.1</span>
@@ -2423,24 +2416,24 @@ for valuable feedback and contributions to this specification.</p>
     </ul>
    <li><a href="#get-the-legacy-windows-version-number">get the legacy Windows version number</a><span>, in § 3.10</span>
    <li><a href="#get-the-platform-version">get the platform version</a><span>, in § 3.10</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-method">"method"</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-method">method</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-mobile">"mobile"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-method">"method"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-method">method</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-mobile">"mobile"</a><span>, in § 5.2</span>
    <li>
     mobile
     <ul>
      <li><a href="#dom-navigatoruadata-mobile">attribute for NavigatorUAData</a><span>, in § 4</span>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-mobile">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-mobile">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-client-hints-mobile">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-mobile">dict-member for UADataValues</a><span>, in § 4</span>
      <li><a href="#dom-ualowentropyjson-mobile">dict-member for UALowEntropyJSON</a><span>, in § 4</span>
     </ul>
    <li><a href="#user-agent-mobileness">mobileness</a><span>, in § 3</span>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-model">"model"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-model">"model"</a><span>, in § 5.2</span>
    <li>
     model
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-model">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-model">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-model">dfn for user agent</a><span>, in § 3</span>
      <li><a href="#user-agent-client-hints-model">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-model">dict-member for UADataValues</a><span>, in § 4</span>
@@ -2448,14 +2441,14 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#navigatorua">NavigatorUA</a><span>, in § 4</span>
    <li><a href="#dictdef-navigatoruabrandversion">NavigatorUABrandVersion</a><span>, in § 4</span>
    <li><a href="#navigatoruadata">NavigatorUAData</a><span>, in § 4</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params">"params"</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params">params</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-platform">"platform"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params">"params"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params">params</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-platform">"platform"</a><span>, in § 5.2</span>
    <li>
     platform
     <ul>
      <li><a href="#dom-navigatoruadata-platform">attribute for NavigatorUAData</a><span>, in § 4</span>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-platform">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-platform">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-client-hints-platform">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-platform">dict-member for UADataValues</a><span>, in § 4</span>
      <li><a href="#dom-ualowentropyjson-platform">dict-member for UALowEntropyJSON</a><span>, in § 4</span>
@@ -2463,7 +2456,7 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#user-agent-platform-architecture">platform architecture</a><span>, in § 3</span>
    <li><a href="#user-agent-platform-bitness">platform bitness</a><span>, in § 3</span>
    <li><a href="#user-agent-platform-brand">platform brand</a><span>, in § 3</span>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-platformversion">"platformVersion"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-platformversion">"platformVersion"</a><span>, in § 5.2</span>
    <li>
     platform version
     <ul>
@@ -2473,7 +2466,7 @@ for valuable feedback and contributions to this specification.</p>
    <li>
     platformVersion
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-platformversion">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-platformversion">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#dom-uadatavalues-platformversion">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
    <li><a href="#abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request">return the Sec-CH-UA-Full-Version-List value for a request</a><span>, in § 3.6</span>
@@ -2500,23 +2493,34 @@ for valuable feedback and contributions to this specification.</p>
    <li><a href="#dom-uadatavalues-uafullversion">uaFullVersion</a><span>, in § 4</span>
    <li><a href="#dictdef-ualowentropyjson">UALowEntropyJSON</a><span>, in § 4</span>
    <li><a href="#user-agent-client-hints">user agent client hints</a><span>, in § 5.1</span>
+   <li><a href="#cddl-type-useragentclienthintsbrandversion">userAgentClientHints.BrandVersion</a><span>, in § 5.2</span>
+   <li><a href="#cddl-type-useragentclienthintsclienthintsmetadata">userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
    <li><a href="#cddl-type-useragentclienthintscommand">UserAgentClientHintsCommand</a><span>, in § 5.1</span>
+   <li><a href="#cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride">"userAgentClientHints.setClientHintsOverride"</a><span>, in § 5.2</span>
+   <li>
+    userAgentClientHints.setClientHintsOverride
+    <ul>
+     <li><a href="#cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride">cddl-value for userAgentClientHints.SetClientHintsOverrideCommand/method</a><span>, in § 5.2</span>
+     <li><a href="#commands-useragentclienthintssetclienthintsoverride">dfn for commands</a><span>, in § 5.2</span>
+    </ul>
+   <li><a href="#cddl-type-useragentclienthintssetclienthintsoverridecommand">userAgentClientHints.SetClientHintsOverrideCommand</a><span>, in § 5.2</span>
+   <li><a href="#cddl-type-useragentclienthintssetclienthintsoverrideresult">userAgentClientHints.SetClientHintsOverrideResult</a><span>, in § 5.2</span>
    <li><a href="#dom-navigatorua-useragentdata">userAgentData</a><span>, in § 4</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts">"userContexts"</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts">userContexts</a><span>, in § 5.2</span>
-   <li><a href="#cddl-key-emulationbrandversion-version">"version"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts">"userContexts"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts">userContexts</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsbrandversion-version">"version"</a><span>, in § 5.2</span>
    <li>
     version
     <ul>
-     <li><a href="#cddl-key-emulationbrandversion-version">cddl-key for emulation.BrandVersion</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsbrandversion-version">cddl-key for userAgentClientHints.BrandVersion</a><span>, in § 5.2</span>
      <li><a href="#brand-version-version">dfn for brand version</a><span>, in § 5.1</span>
      <li><a href="#dom-navigatoruabrandversion-version">dict-member for NavigatorUABrandVersion</a><span>, in § 4</span>
     </ul>
-   <li><a href="#cddl-key-emulationclienthintsmetadata-wow64">"wow64"</a><span>, in § 5.2</span>
+   <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-wow64">"wow64"</a><span>, in § 5.2</span>
    <li>
     wow64
     <ul>
-     <li><a href="#cddl-key-emulationclienthintsmetadata-wow64">cddl-key for emulation.ClientHintsMetadata</a><span>, in § 5.2</span>
+     <li><a href="#cddl-key-useragentclienthintsclienthintsmetadata-wow64">cddl-key for userAgentClientHints.ClientHintsMetadata</a><span>, in § 5.2</span>
      <li><a href="#user-agent-client-hints-wow64">dfn for user agent client hints</a><span>, in § 5.1</span>
      <li><a href="#dom-uadatavalues-wow64">dict-member for UADataValues</a><span>, in § 4</span>
     </ul>
@@ -2612,13 +2616,18 @@ for valuable feedback and contributions to this specification.</p>
      <li><span class="dfn-paneled" id="70606718">structured header</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[WEBDRIVER-BIDI]</a> defines the following terms:
+    <a data-link-type="biblio">[WebDriver-BiDi]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="a5242c83">associated user context</span>
      <li><span class="dfn-paneled" id="cd448a51">get related navigables</span>
      <li><span class="dfn-paneled" id="5ad42a1d">get valid top-level traversables by ids</span>
      <li><span class="dfn-paneled" id="587a6dd8">get valid user contexts</span>
      <li><span class="dfn-paneled" id="113c4ac5">user context</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WEBDRIVER1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="35d404ee">remote end</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBDRIVER2]</a> defines the following terms:
@@ -2668,8 +2677,10 @@ for valuable feedback and contributions to this specification.</p>
    <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/rfc/rfc8942"><cite>HTTP Client Hints</cite></a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc8942">https://www.rfc-editor.org/rfc/rfc8942</a>
    <dt id="biblio-rfc9651">[RFC9651]
    <dd>M. Nottingham; P-H. Kamp. <a href="https://www.rfc-editor.org/rfc/rfc9651"><cite>Structured Field Values for HTTP</cite></a>. September 2024. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9651">https://www.rfc-editor.org/rfc/rfc9651</a>
-   <dt id="biblio-webdriver-bidi">[WEBDRIVER-BIDI]
+   <dt id="biblio-webdriver-bidi">[WebDriver-BiDi]
    <dd>James Graham; Alex Rudenko; Maksim Sadym. <a href="https://w3c.github.io/webdriver-bidi/"><cite>WebDriver BiDi</cite></a>. URL: <a href="https://w3c.github.io/webdriver-bidi/">https://w3c.github.io/webdriver-bidi/</a>
+   <dt id="biblio-webdriver1">[WEBDRIVER1]
+   <dd>Simon Stewart; David Burns. <a href="https://w3c.github.io/webdriver/"><cite>WebDriver</cite></a>. URL: <a href="https://w3c.github.io/webdriver/">https://w3c.github.io/webdriver/</a>
    <dt id="biblio-webdriver2">[WEBDRIVER2]
    <dd>Simon Stewart; David Burns. <a href="https://w3c.github.io/webdriver/"><cite>WebDriver</cite></a>. URL: <a href="https://w3c.github.io/webdriver/">https://w3c.github.io/webdriver/</a>
    <dt id="biblio-webidl">[WEBIDL]
@@ -2943,61 +2954,62 @@ let dfnPanelData = {
 "02f9bf93": {"dfnID":"02f9bf93","dfnText":"ASCII alpha","external":true,"refSections":[{"refs":[{"id":"ref-for-ascii-alpha"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-ascii-alpha\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#ascii-alpha"},
 "0407598e": {"dfnID":"0407598e","dfnText":"permission task source","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-permissions-task-source"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://w3c.github.io/permissions/#dfn-permissions-task-source"},
 "0698d556": {"dfnID":"0698d556","dfnText":"string","external":true,"refSections":[{"refs":[{"id":"ref-for-string"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-string\u2460"},{"id":"ref-for-string\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#string"},
-"0e6b2056": {"dfnID":"0e6b2056","dfnText":"set","external":true,"refSections":[{"refs":[{"id":"ref-for-map-set"},{"id":"ref-for-map-set\u2460"},{"id":"ref-for-map-set\u2461"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-set"},
-"113c4ac5": {"dfnID":"113c4ac5","dfnText":"user context","external":true,"refSections":[{"refs":[{"id":"ref-for-user-context"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-user-context\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#user-context"},
+"0e6b2056": {"dfnID":"0e6b2056","dfnText":"set","external":true,"refSections":[{"refs":[{"id":"ref-for-map-set"},{"id":"ref-for-map-set\u2460"},{"id":"ref-for-map-set\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-set"},
+"113c4ac5": {"dfnID":"113c4ac5","dfnText":"user context","external":true,"refSections":[{"refs":[{"id":"ref-for-user-context"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-user-context\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#user-context"},
 "1570624a": {"dfnID":"1570624a","dfnText":"default allowlist","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-feature-default-allowlist"}],"title":"6. Permissions-Policy Integration"}],"url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist"},
 "15edd6b4": {"dfnID":"15edd6b4","dfnText":"active fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-active-fingerprinting"},{"id":"ref-for-dfn-active-fingerprinting\u2460"}],"title":"7.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
 "1641b9ef": {"dfnID":"1641b9ef","dfnText":"create a frozen array","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-create-frozen-array"},{"id":"ref-for-dfn-create-frozen-array\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://webidl.spec.whatwg.org/#dfn-create-frozen-array"},
-"30717154": {"dfnID":"30717154","dfnText":"top-level traversable","external":true,"refSections":[{"refs":[{"id":"ref-for-nav-top"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top"},
+"30717154": {"dfnID":"30717154","dfnText":"top-level traversable","external":true,"refSections":[{"refs":[{"id":"ref-for-nav-top"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top"},
 "3349d69f": {"dfnID":"3349d69f","dfnText":"associated Document","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document-window"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window"},
+"35d404ee": {"dfnID":"35d404ee","dfnText":"remote end","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-remote-ends"}],"title":"5.1. Definitions"}],"url":"https://w3c.github.io/webdriver/#dfn-remote-ends"},
 "3610bd67": {"dfnID":"3610bd67","dfnText":"allowed to use","external":true,"refSections":[{"refs":[{"id":"ref-for-allowed-to-use"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use"},
 "3aec4bbc": {"dfnID":"3aec4bbc","dfnText":"current realm","external":true,"refSections":[{"refs":[{"id":"ref-for-current-realm"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://tc39.es/ecma262/#current-realm"},
 "3b90bdcd": {"dfnID":"3b90bdcd","dfnText":"resolve","external":true,"refSections":[{"refs":[{"id":"ref-for-resolve"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://webidl.spec.whatwg.org/#resolve"},
-"3e12e042": {"dfnID":"3e12e042","dfnText":"environment settings object","external":true,"refSections":[{"refs":[{"id":"ref-for-environment-settings-object"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-environment-settings-object\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object"},
+"3e12e042": {"dfnID":"3e12e042","dfnText":"environment settings object","external":true,"refSections":[{"refs":[{"id":"ref-for-environment-settings-object"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-environment-settings-object\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object"},
 "4013a022": {"dfnID":"4013a022","dfnText":"this","external":true,"refSections":[{"refs":[{"id":"ref-for-this"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-this\u2460"},{"id":"ref-for-this\u2461"},{"id":"ref-for-this\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-this\u2463"}],"title":"4.1.7. toJSON method"}],"url":"https://webidl.spec.whatwg.org/#this"},
 "4384386e": {"dfnID":"4384386e","dfnText":"serializing a list","external":true,"refSections":[{"refs":[{"id":"ref-for-section-4.1.1"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-4.1.1\u2460"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-4.1.1"},
-"4be6272b": {"dfnID":"4be6272b","dfnText":"success","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-success"},{"id":"ref-for-dfn-success\u2460"},{"id":"ref-for-dfn-success\u2461"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-success"},
-"523b9b71": {"dfnID":"523b9b71","dfnText":"null","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
+"4be6272b": {"dfnID":"4be6272b","dfnText":"success","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-success"},{"id":"ref-for-dfn-success\u2460"},{"id":"ref-for-dfn-success\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-success"},
+"523b9b71": {"dfnID":"523b9b71","dfnText":"null","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
 "531f1cf9": {"dfnID":"531f1cf9","dfnText":"high-entropy client hint","external":true,"refSections":[{"refs":[{"id":"ref-for-high-entropy-client-hint"}],"title":"6. Permissions-Policy Integration"}],"url":"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint"},
 "53275e46": {"dfnID":"53275e46","dfnText":"append","external":true,"refSections":[{"refs":[{"id":"ref-for-list-append"},{"id":"ref-for-list-append\u2460"},{"id":"ref-for-list-append\u2461"},{"id":"ref-for-list-append\u2462"},{"id":"ref-for-list-append\u2463"},{"id":"ref-for-list-append\u2464"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list-append\u2465"},{"id":"ref-for-list-append\u2466"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list-append\u2467"},{"id":"ref-for-list-append\u2468"},{"id":"ref-for-list-append\u2460\u24ea"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list-append\u2460\u2460"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list-append"},
 "5372cca8": {"dfnID":"5372cca8","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-boolean"},{"id":"ref-for-idl-boolean\u2460"},{"id":"ref-for-idl-boolean\u2461"},{"id":"ref-for-idl-boolean\u2462"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-boolean"},
-"587a6dd8": {"dfnID":"587a6dd8","dfnText":"get valid user contexts","external":true,"refSections":[{"refs":[{"id":"ref-for-get-valid-user-contexts"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-valid-user-contexts"},
-"5ad42a1d": {"dfnID":"5ad42a1d","dfnText":"get valid top-level traversables by ids","external":true,"refSections":[{"refs":[{"id":"ref-for-get-valid-top-level-traversables-by-ids"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-valid-top-level-traversables-by-ids"},
+"587a6dd8": {"dfnID":"587a6dd8","dfnText":"get valid user contexts","external":true,"refSections":[{"refs":[{"id":"ref-for-get-valid-user-contexts"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-valid-user-contexts"},
+"5ad42a1d": {"dfnID":"5ad42a1d","dfnText":"get valid top-level traversables by ids","external":true,"refSections":[{"refs":[{"id":"ref-for-get-valid-top-level-traversables-by-ids"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-valid-top-level-traversables-by-ids"},
 "5afbefcd": {"dfnID":"5afbefcd","dfnText":"item (for list)","external":true,"refSections":[{"refs":[{"id":"ref-for-list-item"},{"id":"ref-for-list-item\u2460"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list-item\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#list-item"},
 "5f6d392d": {"dfnID":"5f6d392d","dfnText":"WindowOrWorkerGlobalScope","external":true,"refSections":[{"refs":[{"id":"ref-for-windoworworkerglobalscope"},{"id":"ref-for-windoworworkerglobalscope\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope"},
 "617d690e": {"dfnID":"617d690e","dfnText":"ASCII byte","external":true,"refSections":[{"refs":[{"id":"ref-for-ascii-byte"},{"id":"ref-for-ascii-byte\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#ascii-byte"},
 "61efa9be": {"dfnID":"61efa9be","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.3.6"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-section-3.3.6\u2460"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.3.6"},
 "6360ebfe": {"dfnID":"6360ebfe","dfnText":"append client hints to request","external":true,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-append-client-hints-to-request"}],"title":"7.2. Delegation"}],"url":"https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request"},
 "649608b9": {"dfnID":"649608b9","dfnText":"list","external":true,"refSections":[{"refs":[{"id":"ref-for-list"},{"id":"ref-for-list\u2460"},{"id":"ref-for-list\u2461"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list\u2462"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-list\u2463"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list\u2464"},{"id":"ref-for-list\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list\u2466"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list"},
-"6a4c4f65": {"dfnID":"6a4c4f65","dfnText":"bool","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
-"6d19ac93": {"dfnID":"6d19ac93","dfnText":"user agent","external":true,"refSections":[{"refs":[{"id":"ref-for-user-agent"},{"id":"ref-for-user-agent\u2460"},{"id":"ref-for-user-agent\u2461"},{"id":"ref-for-user-agent\u2462"},{"id":"ref-for-user-agent\u2463"},{"id":"ref-for-user-agent\u2464"},{"id":"ref-for-user-agent\u2465"},{"id":"ref-for-user-agent\u2466"},{"id":"ref-for-user-agent\u2467"},{"id":"ref-for-user-agent\u2468"},{"id":"ref-for-user-agent\u2460\u24ea"},{"id":"ref-for-user-agent\u2460\u2460"},{"id":"ref-for-user-agent\u2460\u2461"},{"id":"ref-for-user-agent\u2460\u2462"},{"id":"ref-for-user-agent\u2460\u2463"},{"id":"ref-for-user-agent\u2460\u2464"},{"id":"ref-for-user-agent\u2460\u2465"},{"id":"ref-for-user-agent\u2460\u2466"},{"id":"ref-for-user-agent\u2460\u2467"},{"id":"ref-for-user-agent\u2460\u2468"},{"id":"ref-for-user-agent\u2461\u24ea"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent\u2461\u2460"},{"id":"ref-for-user-agent\u2461\u2461"},{"id":"ref-for-user-agent\u2461\u2462"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2463"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2464"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2465"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2466"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2467"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2468"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u24ea"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u2460"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u2461"}],"title":"4. Interface"},{"refs":[{"id":"ref-for-user-agent\u2462\u2462"},{"id":"ref-for-user-agent\u2462\u2463"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent\u2462\u2464"},{"id":"ref-for-user-agent\u2462\u2465"},{"id":"ref-for-user-agent\u2462\u2466"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent\u2462\u2467"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent\u2462\u2468"},{"id":"ref-for-user-agent\u2463\u24ea"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent\u2463\u2460"},{"id":"ref-for-user-agent\u2463\u2461"},{"id":"ref-for-user-agent\u2463\u2462"},{"id":"ref-for-user-agent\u2463\u2463"},{"id":"ref-for-user-agent\u2463\u2464"},{"id":"ref-for-user-agent\u2463\u2465"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2466"},{"id":"ref-for-user-agent\u2463\u2467"}],"title":"4.1.7. toJSON method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2468"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-user-agent\u2464\u24ea"}],"title":"7.1. Secure Transport"},{"refs":[{"id":"ref-for-user-agent\u2464\u2460"}],"title":"7.2. Delegation"},{"refs":[{"id":"ref-for-user-agent\u2464\u2461"},{"id":"ref-for-user-agent\u2464\u2462"},{"id":"ref-for-user-agent\u2464\u2463"},{"id":"ref-for-user-agent\u2464\u2464"}],"title":"7.3. Fingerprinting"},{"refs":[{"id":"ref-for-user-agent\u2464\u2465"},{"id":"ref-for-user-agent\u2464\u2466"}],"title":"7.4. Access Restrictions"},{"refs":[{"id":"ref-for-user-agent\u2464\u2467"},{"id":"ref-for-user-agent\u2464\u2468"}],"title":"8.1. The 'User-Agent' Header"},{"refs":[{"id":"ref-for-user-agent\u2465\u24ea"},{"id":"ref-for-user-agent\u2465\u2460"},{"id":"ref-for-user-agent\u2465\u2461"},{"id":"ref-for-user-agent\u2465\u2462"},{"id":"ref-for-user-agent\u2465\u2463"},{"id":"ref-for-user-agent\u2465\u2464"}],"title":"8.2. GREASE-like UA Brand Lists"}],"url":"https://infra.spec.whatwg.org/#user-agent"},
+"6a4c4f65": {"dfnID":"6a4c4f65","dfnText":"bool","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
+"6d19ac93": {"dfnID":"6d19ac93","dfnText":"user agent","external":true,"refSections":[{"refs":[{"id":"ref-for-user-agent"},{"id":"ref-for-user-agent\u2460"},{"id":"ref-for-user-agent\u2461"},{"id":"ref-for-user-agent\u2462"},{"id":"ref-for-user-agent\u2463"},{"id":"ref-for-user-agent\u2464"},{"id":"ref-for-user-agent\u2465"},{"id":"ref-for-user-agent\u2466"},{"id":"ref-for-user-agent\u2467"},{"id":"ref-for-user-agent\u2468"},{"id":"ref-for-user-agent\u2460\u24ea"},{"id":"ref-for-user-agent\u2460\u2460"},{"id":"ref-for-user-agent\u2460\u2461"},{"id":"ref-for-user-agent\u2460\u2462"},{"id":"ref-for-user-agent\u2460\u2463"},{"id":"ref-for-user-agent\u2460\u2464"},{"id":"ref-for-user-agent\u2460\u2465"},{"id":"ref-for-user-agent\u2460\u2466"},{"id":"ref-for-user-agent\u2460\u2467"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent\u2460\u2468"},{"id":"ref-for-user-agent\u2461\u24ea"},{"id":"ref-for-user-agent\u2461\u2460"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2461"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2462"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2463"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2464"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2465"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2466"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2467"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2468"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u24ea"}],"title":"4. Interface"},{"refs":[{"id":"ref-for-user-agent\u2462\u2460"},{"id":"ref-for-user-agent\u2462\u2461"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent\u2462\u2462"},{"id":"ref-for-user-agent\u2462\u2463"},{"id":"ref-for-user-agent\u2462\u2464"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent\u2462\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent\u2462\u2466"},{"id":"ref-for-user-agent\u2462\u2467"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent\u2462\u2468"},{"id":"ref-for-user-agent\u2463\u24ea"},{"id":"ref-for-user-agent\u2463\u2460"},{"id":"ref-for-user-agent\u2463\u2461"},{"id":"ref-for-user-agent\u2463\u2462"},{"id":"ref-for-user-agent\u2463\u2463"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2464"},{"id":"ref-for-user-agent\u2463\u2465"}],"title":"4.1.7. toJSON method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2466"}],"title":"7.1. Secure Transport"},{"refs":[{"id":"ref-for-user-agent\u2463\u2467"}],"title":"7.2. Delegation"},{"refs":[{"id":"ref-for-user-agent\u2463\u2468"},{"id":"ref-for-user-agent\u2464\u24ea"},{"id":"ref-for-user-agent\u2464\u2460"},{"id":"ref-for-user-agent\u2464\u2461"}],"title":"7.3. Fingerprinting"},{"refs":[{"id":"ref-for-user-agent\u2464\u2462"},{"id":"ref-for-user-agent\u2464\u2463"}],"title":"7.4. Access Restrictions"},{"refs":[{"id":"ref-for-user-agent\u2464\u2464"},{"id":"ref-for-user-agent\u2464\u2465"}],"title":"8.1. The 'User-Agent' Header"},{"refs":[{"id":"ref-for-user-agent\u2464\u2466"},{"id":"ref-for-user-agent\u2464\u2467"},{"id":"ref-for-user-agent\u2464\u2468"},{"id":"ref-for-user-agent\u2465\u24ea"},{"id":"ref-for-user-agent\u2465\u2460"},{"id":"ref-for-user-agent\u2465\u2461"}],"title":"8.2. GREASE-like UA Brand Lists"}],"url":"https://infra.spec.whatwg.org/#user-agent"},
 "70606718": {"dfnID":"70606718","dfnText":"structured header","external":true,"refSections":[{"refs":[{"id":"ref-for-something"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-something\u2460"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-something\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-something\u2462"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-something\u2463"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2464"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-something\u2465"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-something\u2466"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-something\u2467"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-something\u2468"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u24ea"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://tools.ietf.org/html/rfc9651#"},
 "77b4c09a": {"dfnID":"77b4c09a","dfnText":"assert","external":true,"refSections":[{"refs":[{"id":"ref-for-assert"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-assert\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-assert\u2461"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#assert"},
 "7a3dbdb1": {"dfnID":"7a3dbdb1","dfnText":"strictly split a string","external":true,"refSections":[{"refs":[{"id":"ref-for-strictly-split"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"https://infra.spec.whatwg.org/#strictly-split"},
-"7aa9c8e0": {"dfnID":"7aa9c8e0","dfnText":"trying","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-try"},{"id":"ref-for-dfn-try\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-try"},
+"7aa9c8e0": {"dfnID":"7aa9c8e0","dfnText":"trying","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-try"},{"id":"ref-for-dfn-try\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-try"},
 "7c3de606": {"dfnID":"7c3de606","dfnText":"push","external":true,"refSections":[{"refs":[{"id":"ref-for-stack-push"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#stack-push"},
-"7d4424b2": {"dfnID":"7d4424b2","dfnText":"remove","external":true,"refSections":[{"refs":[{"id":"ref-for-map-remove"},{"id":"ref-for-map-remove\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-remove"},
-"82c23298": {"dfnID":"82c23298","dfnText":"remote end steps","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-remote-end-steps"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-remote-end-steps"},
+"7d4424b2": {"dfnID":"7d4424b2","dfnText":"remove","external":true,"refSections":[{"refs":[{"id":"ref-for-map-remove"},{"id":"ref-for-map-remove\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-remove"},
+"82c23298": {"dfnID":"82c23298","dfnText":"remote end steps","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-remote-end-steps"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-remote-end-steps"},
 "8855a9aa": {"dfnID":"8855a9aa","dfnText":"DOMString","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-DOMString"},{"id":"ref-for-idl-DOMString\u2460"},{"id":"ref-for-idl-DOMString\u2461"},{"id":"ref-for-idl-DOMString\u2462"},{"id":"ref-for-idl-DOMString\u2463"},{"id":"ref-for-idl-DOMString\u2464"},{"id":"ref-for-idl-DOMString\u2465"},{"id":"ref-for-idl-DOMString\u2466"},{"id":"ref-for-idl-DOMString\u2467"},{"id":"ref-for-idl-DOMString\u2468"},{"id":"ref-for-idl-DOMString\u2460\u24ea"},{"id":"ref-for-idl-DOMString\u2460\u2460"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-DOMString"},
 "889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
-"8da4d1e3": {"dfnID":"8da4d1e3","dfnText":"invalid argument","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-invalid-argument"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-invalid-argument"},
+"8da4d1e3": {"dfnID":"8da4d1e3","dfnText":"invalid argument","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-invalid-argument"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-invalid-argument"},
 "95f13c2d": {"dfnID":"95f13c2d","dfnText":"list","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.1"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-3.1\u2460"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-section-3.1\u2461"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.1"},
 "966ed8e9": {"dfnID":"966ed8e9","dfnText":"deviceCompat","external":true,"refSections":[{"refs":[{"id":"ref-for-devicecompat"}],"title":"3. User Agent Hints"}],"url":"https://compat.spec.whatwg.org/#devicecompat"},
 "984221ca": {"dfnID":"984221ca","dfnText":"struct","external":true,"refSections":[{"refs":[{"id":"ref-for-struct"},{"id":"ref-for-struct\u2460"},{"id":"ref-for-struct\u2461"}],"title":"5.1. Definitions"}],"url":"https://infra.spec.whatwg.org/#struct"},
 "9a517a7d": {"dfnID":"9a517a7d","dfnText":"queue a task","external":true,"refSections":[{"refs":[{"id":"ref-for-queue-a-task"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task"},
-"9c19b7fc": {"dfnID":"9c19b7fc","dfnText":"navigable","external":true,"refSections":[{"refs":[{"id":"ref-for-navigable"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-navigable\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#navigable"},
+"9c19b7fc": {"dfnID":"9c19b7fc","dfnText":"navigable","external":true,"refSections":[{"refs":[{"id":"ref-for-navigable"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-navigable\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#navigable"},
 "9cce47fd": {"dfnID":"9cce47fd","dfnText":"sequence","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-sequence"},{"id":"ref-for-idl-sequence\u2460"},{"id":"ref-for-idl-sequence\u2461"},{"id":"ref-for-idl-sequence\u2462"},{"id":"ref-for-idl-sequence\u2463"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-sequence"},
-"a326add7": {"dfnID":"a326add7","dfnText":"contain (for map)","external":true,"refSections":[{"refs":[{"id":"ref-for-map-exists"},{"id":"ref-for-map-exists\u2460"},{"id":"ref-for-map-exists\u2461"},{"id":"ref-for-map-exists\u2462"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-exists"},
+"a326add7": {"dfnID":"a326add7","dfnText":"contain (for map)","external":true,"refSections":[{"refs":[{"id":"ref-for-map-exists"},{"id":"ref-for-map-exists\u2460"},{"id":"ref-for-map-exists\u2461"},{"id":"ref-for-map-exists\u2462"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-exists"},
 "a37f05fd": {"dfnID":"a37f05fd","dfnText":"strip leading and trailing ASCII whitespace","external":true,"refSections":[{"refs":[{"id":"ref-for-strip-leading-and-trailing-ascii-whitespace"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#strip-leading-and-trailing-ascii-whitespace"},
 "a4785085": {"dfnID":"a4785085","dfnText":"WorkerNavigator","external":true,"refSections":[{"refs":[{"id":"ref-for-workernavigator"}],"title":"4. Interface"}],"url":"https://html.spec.whatwg.org/multipage/workers.html#workernavigator"},
-"a5242c83": {"dfnID":"a5242c83","dfnText":"associated user context","external":true,"refSections":[{"refs":[{"id":"ref-for-associated-user-context"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#associated-user-context"},
+"a5242c83": {"dfnID":"a5242c83","dfnText":"associated user context","external":true,"refSections":[{"refs":[{"id":"ref-for-associated-user-context"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#associated-user-context"},
 "a682cc44": {"dfnID":"a682cc44","dfnText":"split on ASCII whitespace","external":true,"refSections":[{"refs":[{"id":"ref-for-split-on-ascii-whitespace"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#split-on-ascii-whitespace"},
 "a72449dd": {"dfnID":"a72449dd","dfnText":"in parallel","external":true,"refSections":[{"refs":[{"id":"ref-for-in-parallel"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel"},
 "abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request": {"dfnID":"abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request","dfnText":"return the Sec-CH-UA-Full-Version-List value for a request","external":false,"refSections":[],"url":"#abstract-opdef-return-the-sec-ch-ua-full-version-list-value-for-a-request"},
 "abstract-opdef-return-the-sec-ch-ua-value-for-a-request": {"dfnID":"abstract-opdef-return-the-sec-ch-ua-value-for-a-request","dfnText":"return the Sec-CH-UA value for a request","external":false,"refSections":[],"url":"#abstract-opdef-return-the-sec-ch-ua-value-for-a-request"},
 "ae8def21": {"dfnID":"ae8def21","dfnText":"contain (for list)","external":true,"refSections":[{"refs":[{"id":"ref-for-list-contain"},{"id":"ref-for-list-contain\u2460"},{"id":"ref-for-list-contain\u2461"},{"id":"ref-for-list-contain\u2462"},{"id":"ref-for-list-contain\u2463"},{"id":"ref-for-list-contain\u2464"},{"id":"ref-for-list-contain\u2465"},{"id":"ref-for-list-contain\u2466"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://infra.spec.whatwg.org/#list-contain"},
 "b75bb3bd": {"dfnID":"b75bb3bd","dfnText":"SecureContext","external":true,"refSections":[{"refs":[{"id":"ref-for-SecureContext"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#SecureContext"},
-"bb4c269e": {"dfnID":"bb4c269e","dfnText":"error","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error"},
+"bb4c269e": {"dfnID":"bb4c269e","dfnText":"error","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error"},
 "bc612dfe": {"dfnID":"bc612dfe","dfnText":"Best Practice 1","external":true,"refSections":[{"refs":[{"id":"ref-for-avoid-passive-increases"}],"title":"1. Introduction"}],"url":"https://w3c.github.io/fingerprinting-guidance/#avoid-passive-increases"},
 "bdbd19d1": {"dfnID":"bdbd19d1","dfnText":"Promise","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-promise"},{"id":"ref-for-idl-promise\u2460"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-promise"},
 "be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"4. Interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
@@ -3005,39 +3017,39 @@ let dfnPanelData = {
 "brand-version": {"dfnID":"brand-version","dfnText":"brand version","external":false,"refSections":[{"refs":[{"id":"ref-for-brand-version"},{"id":"ref-for-brand-version\u2460"}],"title":"5.1. Definitions"}],"url":"#brand-version"},
 "brand-version-brand": {"dfnID":"brand-version-brand","dfnText":"brand","external":false,"refSections":[],"url":"#brand-version-brand"},
 "brand-version-version": {"dfnID":"brand-version-version","dfnText":"version","external":false,"refSections":[],"url":"#brand-version-version"},
-"c3bd1df0": {"dfnID":"c3bd1df0","dfnText":"text","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
+"c3bd1df0": {"dfnID":"c3bd1df0","dfnText":"text","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
 "c7a20f42": {"dfnID":"c7a20f42","dfnText":"low entropy hint table","external":true,"refSections":[{"refs":[{"id":"ref-for-low-entropy-hint-table"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2460"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2461"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table"},
 "c88f3887": {"dfnID":"c88f3887","dfnText":"item (for struct)","external":true,"refSections":[{"refs":[{"id":"ref-for-struct-item"},{"id":"ref-for-struct-item\u2460"},{"id":"ref-for-struct-item\u2461"},{"id":"ref-for-struct-item\u2462"},{"id":"ref-for-struct-item\u2463"},{"id":"ref-for-struct-item\u2464"},{"id":"ref-for-struct-item\u2465"},{"id":"ref-for-struct-item\u2466"},{"id":"ref-for-struct-item\u2467"},{"id":"ref-for-struct-item\u2468"},{"id":"ref-for-struct-item\u2460\u24ea"},{"id":"ref-for-struct-item\u2460\u2460"},{"id":"ref-for-struct-item\u2460\u2461"},{"id":"ref-for-struct-item\u2460\u2462"},{"id":"ref-for-struct-item\u2460\u2463"}],"title":"5.1. Definitions"}],"url":"https://infra.spec.whatwg.org/#struct-item"},
-"c8ff8493": {"dfnID":"c8ff8493","dfnText":"error code","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error-code"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error-code"},
+"c8ff8493": {"dfnID":"c8ff8493","dfnText":"error code","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error-code"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error-code"},
 "c9898e54": {"dfnID":"c9898e54","dfnText":"passive fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-passive-fingerprinting"}],"title":"Unnumbered Section"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2460"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2461"}],"title":"7.2. Delegation"},{"refs":[{"id":"ref-for-dfn-passive-fingerprinting\u2462"}],"title":"7.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-passive-fingerprinting"},
 "cc890cc1": {"dfnID":"cc890cc1","dfnText":"policy-controlled feature","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-feature"}],"title":"6. Permissions-Policy Integration"}],"url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature"},
-"cd448a51": {"dfnID":"cd448a51","dfnText":"get related navigables","external":true,"refSections":[{"refs":[{"id":"ref-for-get-related-navigables"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-related-navigables"},
-"cddl-key-emulationbrandversion-brand": {"dfnID":"cddl-key-emulationbrandversion-brand","dfnText":"brand","external":false,"refSections":[],"url":"#cddl-key-emulationbrandversion-brand"},
-"cddl-key-emulationbrandversion-version": {"dfnID":"cddl-key-emulationbrandversion-version","dfnText":"version","external":false,"refSections":[],"url":"#cddl-key-emulationbrandversion-version"},
-"cddl-key-emulationclienthintsmetadata-architecture": {"dfnID":"cddl-key-emulationclienthintsmetadata-architecture","dfnText":"architecture","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-architecture"},
-"cddl-key-emulationclienthintsmetadata-bitness": {"dfnID":"cddl-key-emulationclienthintsmetadata-bitness","dfnText":"bitness","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-bitness"},
-"cddl-key-emulationclienthintsmetadata-brands": {"dfnID":"cddl-key-emulationclienthintsmetadata-brands","dfnText":"brands","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-brands"},
-"cddl-key-emulationclienthintsmetadata-formfactors": {"dfnID":"cddl-key-emulationclienthintsmetadata-formfactors","dfnText":"formFactors","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-formfactors"},
-"cddl-key-emulationclienthintsmetadata-fullversionlist": {"dfnID":"cddl-key-emulationclienthintsmetadata-fullversionlist","dfnText":"fullVersionList","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-fullversionlist"},
-"cddl-key-emulationclienthintsmetadata-mobile": {"dfnID":"cddl-key-emulationclienthintsmetadata-mobile","dfnText":"mobile","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-mobile"},
-"cddl-key-emulationclienthintsmetadata-model": {"dfnID":"cddl-key-emulationclienthintsmetadata-model","dfnText":"model","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-model"},
-"cddl-key-emulationclienthintsmetadata-platform": {"dfnID":"cddl-key-emulationclienthintsmetadata-platform","dfnText":"platform","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-platform"},
-"cddl-key-emulationclienthintsmetadata-platformversion": {"dfnID":"cddl-key-emulationclienthintsmetadata-platformversion","dfnText":"platformVersion","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-platformversion"},
-"cddl-key-emulationclienthintsmetadata-wow64": {"dfnID":"cddl-key-emulationclienthintsmetadata-wow64","dfnText":"wow64","external":false,"refSections":[],"url":"#cddl-key-emulationclienthintsmetadata-wow64"},
-"cddl-key-emulationsetclienthintsoverridecommand-method": {"dfnID":"cddl-key-emulationsetclienthintsoverridecommand-method","dfnText":"method","external":false,"refSections":[],"url":"#cddl-key-emulationsetclienthintsoverridecommand-method"},
-"cddl-key-emulationsetclienthintsoverridecommand-params": {"dfnID":"cddl-key-emulationsetclienthintsoverridecommand-params","dfnText":"params","external":false,"refSections":[],"url":"#cddl-key-emulationsetclienthintsoverridecommand-params"},
-"cddl-key-emulationsetclienthintsoverridecommand-params-clienthints": {"dfnID":"cddl-key-emulationsetclienthintsoverridecommand-params-clienthints","dfnText":"clientHints","external":false,"refSections":[],"url":"#cddl-key-emulationsetclienthintsoverridecommand-params-clienthints"},
-"cddl-key-emulationsetclienthintsoverridecommand-params-contexts": {"dfnID":"cddl-key-emulationsetclienthintsoverridecommand-params-contexts","dfnText":"contexts","external":false,"refSections":[],"url":"#cddl-key-emulationsetclienthintsoverridecommand-params-contexts"},
-"cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts": {"dfnID":"cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts","dfnText":"userContexts","external":false,"refSections":[],"url":"#cddl-key-emulationsetclienthintsoverridecommand-params-usercontexts"},
-"cddl-type-emulationbrandversion": {"dfnID":"cddl-type-emulationbrandversion","dfnText":"emulation.BrandVersion","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-emulationbrandversion"},{"id":"ref-for-cddl-type-emulationbrandversion\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#cddl-type-emulationbrandversion"},
-"cddl-type-emulationclienthintsmetadata": {"dfnID":"cddl-type-emulationclienthintsmetadata","dfnText":"emulation.ClientHintsMetadata","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-emulationclienthintsmetadata"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#cddl-type-emulationclienthintsmetadata"},
-"cddl-type-emulationsetclienthintsoverridecommand": {"dfnID":"cddl-type-emulationsetclienthintsoverridecommand","dfnText":"emulation.SetClientHintsOverrideCommand","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-emulationsetclienthintsoverridecommand"}],"title":"5.1. Definitions"}],"url":"#cddl-type-emulationsetclienthintsoverridecommand"},
-"cddl-type-emulationsetclienthintsoverrideresult": {"dfnID":"cddl-type-emulationsetclienthintsoverrideresult","dfnText":"emulation.SetClientHintsOverrideResult","external":false,"refSections":[],"url":"#cddl-type-emulationsetclienthintsoverrideresult"},
+"cd448a51": {"dfnID":"cd448a51","dfnText":"get related navigables","external":true,"refSections":[{"refs":[{"id":"ref-for-get-related-navigables"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#get-related-navigables"},
+"cddl-key-useragentclienthintsbrandversion-brand": {"dfnID":"cddl-key-useragentclienthintsbrandversion-brand","dfnText":"brand","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsbrandversion-brand"},
+"cddl-key-useragentclienthintsbrandversion-version": {"dfnID":"cddl-key-useragentclienthintsbrandversion-version","dfnText":"version","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsbrandversion-version"},
+"cddl-key-useragentclienthintsclienthintsmetadata-architecture": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-architecture","dfnText":"architecture","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-architecture"},
+"cddl-key-useragentclienthintsclienthintsmetadata-bitness": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-bitness","dfnText":"bitness","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-bitness"},
+"cddl-key-useragentclienthintsclienthintsmetadata-brands": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-brands","dfnText":"brands","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-brands"},
+"cddl-key-useragentclienthintsclienthintsmetadata-formfactors": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-formfactors","dfnText":"formFactors","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-formfactors"},
+"cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist","dfnText":"fullVersionList","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist"},
+"cddl-key-useragentclienthintsclienthintsmetadata-mobile": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-mobile","dfnText":"mobile","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-mobile"},
+"cddl-key-useragentclienthintsclienthintsmetadata-model": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-model","dfnText":"model","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-model"},
+"cddl-key-useragentclienthintsclienthintsmetadata-platform": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-platform","dfnText":"platform","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-platform"},
+"cddl-key-useragentclienthintsclienthintsmetadata-platformversion": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-platformversion","dfnText":"platformVersion","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-platformversion"},
+"cddl-key-useragentclienthintsclienthintsmetadata-wow64": {"dfnID":"cddl-key-useragentclienthintsclienthintsmetadata-wow64","dfnText":"wow64","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintsclienthintsmetadata-wow64"},
+"cddl-key-useragentclienthintssetclienthintsoverridecommand-method": {"dfnID":"cddl-key-useragentclienthintssetclienthintsoverridecommand-method","dfnText":"method","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintssetclienthintsoverridecommand-method"},
+"cddl-key-useragentclienthintssetclienthintsoverridecommand-params": {"dfnID":"cddl-key-useragentclienthintssetclienthintsoverridecommand-params","dfnText":"params","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintssetclienthintsoverridecommand-params"},
+"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints": {"dfnID":"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints","dfnText":"clientHints","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints"},
+"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts": {"dfnID":"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts","dfnText":"contexts","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts"},
+"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts": {"dfnID":"cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts","dfnText":"userContexts","external":false,"refSections":[],"url":"#cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts"},
+"cddl-type-useragentclienthintsbrandversion": {"dfnID":"cddl-type-useragentclienthintsbrandversion","dfnText":"userAgentClientHints.BrandVersion","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-useragentclienthintsbrandversion"},{"id":"ref-for-cddl-type-useragentclienthintsbrandversion\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#cddl-type-useragentclienthintsbrandversion"},
+"cddl-type-useragentclienthintsclienthintsmetadata": {"dfnID":"cddl-type-useragentclienthintsclienthintsmetadata","dfnText":"userAgentClientHints.ClientHintsMetadata","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-useragentclienthintsclienthintsmetadata"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#cddl-type-useragentclienthintsclienthintsmetadata"},
 "cddl-type-useragentclienthintscommand": {"dfnID":"cddl-type-useragentclienthintscommand","dfnText":"UserAgentClientHintsCommand","external":false,"refSections":[],"url":"#cddl-type-useragentclienthintscommand"},
-"cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride": {"dfnID":"cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride","dfnText":"\"emulation.setClientHintsOverride\"","external":false,"refSections":[],"url":"#cddl-value-emulationsetclienthintsoverridecommand-method-emulationsetclienthintsoverride"},
+"cddl-type-useragentclienthintssetclienthintsoverridecommand": {"dfnID":"cddl-type-useragentclienthintssetclienthintsoverridecommand","dfnText":"userAgentClientHints.SetClientHintsOverrideCommand","external":false,"refSections":[{"refs":[{"id":"ref-for-cddl-type-useragentclienthintssetclienthintsoverridecommand"}],"title":"5.1. Definitions"}],"url":"#cddl-type-useragentclienthintssetclienthintsoverridecommand"},
+"cddl-type-useragentclienthintssetclienthintsoverrideresult": {"dfnID":"cddl-type-useragentclienthintssetclienthintsoverrideresult","dfnText":"userAgentClientHints.SetClientHintsOverrideResult","external":false,"refSections":[],"url":"#cddl-type-useragentclienthintssetclienthintsoverrideresult"},
+"cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride": {"dfnID":"cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride","dfnText":"\"userAgentClientHints.setClientHintsOverride\"","external":false,"refSections":[],"url":"#cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride"},
 "ceacaa1c": {"dfnID":"ceacaa1c","dfnText":"stack","external":true,"refSections":[{"refs":[{"id":"ref-for-stack"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#stack"},
 "ch-ua-high-entropy-values": {"dfnID":"ch-ua-high-entropy-values","dfnText":"ch-ua-high-entropy-values","external":false,"refSections":[{"refs":[{"id":"ref-for-ch-ua-high-entropy-values"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"#ch-ua-high-entropy-values"},
-"commands-emulationsetclienthintsoverride": {"dfnID":"commands-emulationsetclienthintsoverride","dfnText":"emulation.setClientHintsOverride","external":false,"refSections":[],"url":"#commands-emulationsetclienthintsoverride"},
+"commands-useragentclienthintssetclienthintsoverride": {"dfnID":"commands-useragentclienthintssetclienthintsoverride","dfnText":"userAgentClientHints.setClientHintsOverride","external":false,"refSections":[],"url":"#commands-useragentclienthintssetclienthintsoverride"},
 "create-a-brand-version-list": {"dfnID":"create-a-brand-version-list","dfnText":"create a brand-version list","external":false,"refSections":[{"refs":[{"id":"ref-for-create-a-brand-version-list"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-create-a-brand-version-list\u2460"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"#create-a-brand-version-list"},
 "create-a-unified-platform-version-string": {"dfnID":"create-a-unified-platform-version-string","dfnText":"create a unified platform version string","external":false,"refSections":[{"refs":[{"id":"ref-for-create-a-unified-platform-version-string"},{"id":"ref-for-create-a-unified-platform-version-string\u2460"},{"id":"ref-for-create-a-unified-platform-version-string\u2461"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"#create-a-unified-platform-version-string"},
 "create-an-arbitrary-brand": {"dfnID":"create-an-arbitrary-brand","dfnText":"create an arbitrary brand","external":false,"refSections":[{"refs":[{"id":"ref-for-create-an-arbitrary-brand"}],"title":"4.1.2. Create brands"}],"url":"#create-an-arbitrary-brand"},
@@ -3078,11 +3090,11 @@ let dfnPanelData = {
 "e99bd18e": {"dfnID":"e99bd18e","dfnText":"relevant global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-global"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-concept-relevant-global\u2460"},{"id":"ref-for-concept-relevant-global\u2461"},{"id":"ref-for-concept-relevant-global\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-concept-relevant-global\u2463"}],"title":"4.1.7. toJSON method"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
 "ea0ecaa0": {"dfnID":"ea0ecaa0","dfnText":"client hints token","external":true,"refSections":[{"refs":[{"id":"ref-for-client-hints-token"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#client-hints-token"},
 "ec293c42": {"dfnID":"ec293c42","dfnText":"string","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.3.3"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2460"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2462"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2463"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2464"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2465"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-section-3.3.3\u2466"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.3.3"},
-"emulated-client-hints": {"dfnID":"emulated-client-hints","dfnText":"emulated client hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints"},{"id":"ref-for-emulated-client-hints\u2460"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-emulated-client-hints\u2461"},{"id":"ref-for-emulated-client-hints\u2462"},{"id":"ref-for-emulated-client-hints\u2463"},{"id":"ref-for-emulated-client-hints\u2464"},{"id":"ref-for-emulated-client-hints\u2465"},{"id":"ref-for-emulated-client-hints\u2466"},{"id":"ref-for-emulated-client-hints\u2467"},{"id":"ref-for-emulated-client-hints\u2468"},{"id":"ref-for-emulated-client-hints\u2460\u24ea"},{"id":"ref-for-emulated-client-hints\u2460\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#emulated-client-hints"},
-"emulated-client-hints-default-emulated-client-hints": {"dfnID":"emulated-client-hints-default-emulated-client-hints","dfnText":"default emulated client hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-default-emulated-client-hints"},{"id":"ref-for-emulated-client-hints-default-emulated-client-hints\u2460"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#emulated-client-hints-default-emulated-client-hints"},
-"emulated-client-hints-emulated-client-hints-per-navigables": {"dfnID":"emulated-client-hints-emulated-client-hints-per-navigables","dfnText":"emulated client hints per navigables","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2460"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2461"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2462"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#emulated-client-hints-emulated-client-hints-per-navigables"},
-"emulated-client-hints-emulated-client-hints-per-user-contexts": {"dfnID":"emulated-client-hints-emulated-client-hints-per-user-contexts","dfnText":"emulated client hints per user contexts","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2460"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2461"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2462"}],"title":"5.2. The emulation.setClientHintsOverride command"}],"url":"#emulated-client-hints-emulated-client-hints-per-user-contexts"},
-"emulated-ua-client-hints": {"dfnID":"emulated-ua-client-hints","dfnText":"emulated UA Client Hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-ua-client-hints"},{"id":"ref-for-emulated-ua-client-hints\u2460"}],"title":"3. User Agent Hints"}],"url":"#emulated-ua-client-hints"},
+"emulated-client-hints": {"dfnID":"emulated-client-hints","dfnText":"emulated client hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints"},{"id":"ref-for-emulated-client-hints\u2460"},{"id":"ref-for-emulated-client-hints\u2461"},{"id":"ref-for-emulated-client-hints\u2462"},{"id":"ref-for-emulated-client-hints\u2463"},{"id":"ref-for-emulated-client-hints\u2464"},{"id":"ref-for-emulated-client-hints\u2465"},{"id":"ref-for-emulated-client-hints\u2466"},{"id":"ref-for-emulated-client-hints\u2467"},{"id":"ref-for-emulated-client-hints\u2468"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#emulated-client-hints"},
+"emulated-client-hints-default-emulated-client-hints": {"dfnID":"emulated-client-hints-default-emulated-client-hints","dfnText":"default emulated client hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-default-emulated-client-hints"},{"id":"ref-for-emulated-client-hints-default-emulated-client-hints\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#emulated-client-hints-default-emulated-client-hints"},
+"emulated-client-hints-emulated-client-hints-per-navigables": {"dfnID":"emulated-client-hints-emulated-client-hints-per-navigables","dfnText":"emulated client hints per navigables","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2460"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2461"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-navigables\u2462"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#emulated-client-hints-emulated-client-hints-per-navigables"},
+"emulated-client-hints-emulated-client-hints-per-user-contexts": {"dfnID":"emulated-client-hints-emulated-client-hints-per-user-contexts","dfnText":"emulated client hints per user contexts","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2460"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2461"},{"id":"ref-for-emulated-client-hints-emulated-client-hints-per-user-contexts\u2462"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"#emulated-client-hints-emulated-client-hints-per-user-contexts"},
+"emulated-ua-client-hints": {"dfnID":"emulated-ua-client-hints","dfnText":"emulated UA Client Hints","external":false,"refSections":[{"refs":[{"id":"ref-for-emulated-ua-client-hints"}],"title":"3. User Agent Hints"}],"url":"#emulated-ua-client-hints"},
 "f391224b": {"dfnID":"f391224b","dfnText":"policy-controlled client hints features","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-client-hints-features"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-policy-controlled-client-hints-features\u2460"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-policy-controlled-client-hints-features\u2461"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features"},
 "fca74142": {"dfnID":"fca74142","dfnText":"pop","external":true,"refSections":[{"refs":[{"id":"ref-for-stack-pop"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#stack-pop"},
 "get-the-legacy-windows-version-number": {"dfnID":"get-the-legacy-windows-version-number","dfnText":"get the legacy Windows version number","external":false,"refSections":[{"refs":[{"id":"ref-for-get-the-legacy-windows-version-number"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"}],"url":"#get-the-legacy-windows-version-number"},
@@ -3515,9 +3527,9 @@ function genLinkingSyntaxes(dfn) {
 {
 let refsData = {
 "#brand-version": {"displayText":"brand version","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"brand version","type":"dfn","url":"#brand-version"},
-"#cddl-type-emulationbrandversion": {"displayText":"emulation.BrandVersion","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"emulation.BrandVersion","type":"cddl-type","url":"#cddl-type-emulationbrandversion"},
-"#cddl-type-emulationclienthintsmetadata": {"displayText":"emulation.ClientHintsMetadata","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"emulation.ClientHintsMetadata","type":"cddl-type","url":"#cddl-type-emulationclienthintsmetadata"},
-"#cddl-type-emulationsetclienthintsoverridecommand": {"displayText":"emulation.SetClientHintsOverrideCommand","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"emulation.SetClientHintsOverrideCommand","type":"cddl-type","url":"#cddl-type-emulationsetclienthintsoverridecommand"},
+"#cddl-type-useragentclienthintsbrandversion": {"displayText":"userAgentClientHints.BrandVersion","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"userAgentClientHints.BrandVersion","type":"cddl-type","url":"#cddl-type-useragentclienthintsbrandversion"},
+"#cddl-type-useragentclienthintsclienthintsmetadata": {"displayText":"userAgentClientHints.ClientHintsMetadata","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"userAgentClientHints.ClientHintsMetadata","type":"cddl-type","url":"#cddl-type-useragentclienthintsclienthintsmetadata"},
+"#cddl-type-useragentclienthintssetclienthintsoverridecommand": {"displayText":"userAgentClientHints.SetClientHintsOverrideCommand","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"userAgentClientHints.SetClientHintsOverrideCommand","type":"cddl-type","url":"#cddl-type-useragentclienthintssetclienthintsoverridecommand"},
 "#ch-ua-high-entropy-values": {"displayText":"ch-ua-high-entropy-values","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"ch-ua-high-entropy-values","type":"dfn","url":"#ch-ua-high-entropy-values"},
 "#create-a-brand-version-list": {"displayText":"create a brand-version list","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"create a brand-version list","type":"dfn","url":"#create-a-brand-version-list"},
 "#create-a-unified-platform-version-string": {"displayText":"create a unified platform version string","export":true,"for_":[],"level":"","normative":true,"shortname":"ua-client-hints","spec":"ua-client-hints","status":"local","text":"create a unified platform version string","type":"dfn","url":"#create-a-unified-platform-version-string"},
@@ -3630,6 +3642,7 @@ let refsData = {
 "https://w3c.github.io/webdriver/#dfn-error-code": {"displayText":"error code","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"error code","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-error-code"},
 "https://w3c.github.io/webdriver/#dfn-invalid-argument": {"displayText":"invalid argument","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"invalid argument","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-invalid-argument"},
 "https://w3c.github.io/webdriver/#dfn-remote-end-steps": {"displayText":"remote end steps","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"remote end steps","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-remote-end-steps"},
+"https://w3c.github.io/webdriver/#dfn-remote-ends": {"displayText":"remote end","export":true,"for_":[],"level":"","normative":true,"shortname":"webdriver","spec":"webdriver","status":"anchor-block","text":"remote end","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-remote-ends"},
 "https://w3c.github.io/webdriver/#dfn-success": {"displayText":"success","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"success","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-success"},
 "https://w3c.github.io/webdriver/#dfn-try": {"displayText":"trying","export":true,"for_":[],"level":"2","normative":true,"shortname":"webdriver","spec":"webdriver2","status":"current","text":"trying","type":"dfn","url":"https://w3c.github.io/webdriver/#dfn-try"},
 "https://webidl.spec.whatwg.org/#Exposed": {"displayText":"Exposed","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},

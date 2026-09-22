@@ -4,9 +4,9 @@
   <title>User-Agent Client Hints</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 3c53a5b02, updated Thu Nov 27 17:03:30 2025 +0000" name="generator">
+  <meta content="Bikeshed version ea4009a02, updated Thu Sep 17 15:24:44 2026 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="6cf1025597fe4ee96063f32e94442613a7fa77f9" name="revision">
+  <meta content="aa02e61058e0c8f73223d46c6b898c7c10be4ecd" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -307,7 +307,7 @@ pre.cddl.highlight {
 </style>
 <style>/* Boilerplate: style-counters */
 body {
-    counter-reset: example figure issue;
+    counter-reset: example figure issue table;
 }
 .issue {
     counter-increment: issue;
@@ -332,6 +332,13 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
+}
+
+figure.table figcaption {
+    counter-increment: table;
+}
+figure.table figcaption:not(.no-marker)::before {
+    content: "Table " counter(table) " ";
 }
 </style>
 <style>/* Boilerplate: style-dfn-panel */
@@ -694,6 +701,30 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     c-[vm] { color: #cb4b16 } /* Name.Variable.Magic */
     c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
 }
+
+@media print {
+    /* Darken colors for print that would otherwise print too faintly */
+    c-[c]  { color: #555555 } /* Comment */
+    c-[d]  { color: #555555 } /* Comment.Multiline */
+    c-[cp] { color: #555555 } /* Comment.Preproc */
+    c-[c1] { color: #555555 } /* Comment.Single */
+    c-[cs] { color: #555555 } /* Comment.Special */
+    c-[o]  { color: #222222 } /* Operator */
+    c-[p]  { color: #222222 } /* Punctuation */
+    c-[ow] { color: #222222 } /* Operator.Word */
+    c-[s]  { color: #664400 } /* Literal.String */
+    c-[t]  { color: #664400 } /* Literal.String.Single */
+    c-[u]  { color: #664400 } /* Literal.String.Double */
+    c-[sb] { color: #664400 } /* Literal.String.Backtick */
+    c-[sc] { color: #664400 } /* Literal.String.Char */
+    c-[sd] { color: #664400 } /* Literal.String.Doc */
+    c-[se] { color: #664400 } /* Literal.String.Escape */
+    c-[sh] { color: #664400 } /* Literal.String.Heredoc */
+    c-[si] { color: #664400 } /* Literal.String.Interpol */
+    c-[sx] { color: #664400 } /* Literal.String.Other */
+    c-[sr] { color: #664400 } /* Literal.String.Regex */
+    c-[ss] { color: #664400 } /* Literal.String.Symbol */
+}
 </style>
 <style>/* Boilerplate: style-var-click-highlighting */
 /*
@@ -742,16 +773,17 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
   <div class="head">
    <h1 class="no-ref p-name" id="title">User-Agent Client Hints</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-02-10">10 February 2026</time></p>
+    <time class="dt-updated" datetime="2026-09-22">22 September 2026</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/ua-client-hints/">https://wicg.github.io/ua-client-hints/</a>
      <dt class="editor">Editors:
-     <dd class="editor h-card p-author vcard" data-editor-id="90704"><a class="email fn p-name u-email" href="mailto:miketaylr@google.com">Mike Taylor</a> (<span class="org p-org">Google LLC</span>)
-     <dd class="editor h-card p-author vcard" data-editor-id="58673"><a class="email fn p-name u-email" href="mailto:yoav@yoav.ws">Yoav Weiss</a> (<span class="org p-org">Google LLC</span>)
-     <dt class="editor">Former Editor:
-     <dd class="editor h-card p-author vcard" data-editor-id="56384"><a class="email fn p-name u-email" href="mailto:mkwst@google.com">Mike West</a> (<span class="org p-org">Google LLC</span>)
+     <dd class="editor h-card p-author vcard" data-editor-id="90704"><a class="email fn p-name u-email" href="mailto:miketaylr@google.com">Mike Taylor</a> (<a class="org p-org" href="https://google.org">Google</a>)
+     <dd class="editor h-card p-author vcard" data-editor-id="132484"><a class="email fn p-name u-email" href="mailto:arichiv@google.com">Ari Chivukula</a> (<a class="org p-org" href="https://google.org">Google</a>)
+     <dt class="editor">Former Editors:
+     <dd class="editor h-card p-author vcard" data-editor-id="56384"><a class="email fn p-name u-email" href="mailto:mkwst@google.com">Mike West</a> (<a class="org p-org" href="https://google.org">Google</a>)
+     <dd class="editor h-card p-author vcard" data-editor-id="58673"><a class="fn p-name u-url url" href="https://blog.yoav.ws">Yoav Weiss</a> (<a class="org p-org" href="https://www.shopify.com">Shopify</a>) <a class="email u-email" href="mailto:yoav@yoav.ws">yoav@yoav.ws</a>
      <dt>Participate:
      <dd><a href="https://github.com/WICG/ua-client-hints/issues/new">File an issue</a> (<a href="https://github.com/WICG/ua-client-hints/issues">open issues</a>)
     </dl>
@@ -911,7 +943,7 @@ perform agent-based content negotiation when necessary, while avoiding the histo
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Non-Normative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
     <li><a href="#cddl-index"><span class="secno"></span> <span class="content">CDDL Index</span></a>
@@ -1965,28 +1997,28 @@ emulated user agent client hints for a list of <a data-link-type="dfn" href="htt
 <pre class="cddl def highlight" data-cddl-module="remote-cddl"><dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintssetclienthintsoverridecommand"><code>userAgentClientHints.SetClientHintsOverrideCommand</code></dfn> = {
     <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="method|&quot;method&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-method"><code>method</code></dfn>: <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/method" data-dfn-type="cddl-value" data-export data-lt="userAgentClientHints.setClientHintsOverride|&quot;userAgentClientHints.setClientHintsOverride&quot;" id="cddl-value-useragentclienthintssetclienthintsoverridecommand-method-useragentclienthintssetclienthintsoverride"><code>"userAgentClientHints.setClientHintsOverride"</code></dfn>,
     <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand" data-dfn-type="cddl-key" data-export data-lt="params|&quot;params&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params"><code>params</code></dfn>: {
-        <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="clientHints|&quot;clientHints&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints"><code>clientHints</code></dfn>: <a data-link-type="cddl" href="#cddl-type-useragentclienthintsclienthintsmetadata" id="ref-for-cddl-type-useragentclienthintsclienthintsmetadata">userAgentClientHints.ClientHintsMetadata</a> / <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D">null</a>,
-        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="contexts|&quot;contexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts"><code>contexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①">text</a>],
-        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="userContexts|&quot;userContexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts"><code>userContexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D②">text</a>],
+        <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="clientHints|&quot;clientHints&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-clienthints"><code>clientHints</code></dfn>: <a data-link-type="cddl" href="#cddl-type-useragentclienthintsclienthintsmetadata" id="ref-for-cddl-type-useragentclienthintsclienthintsmetadata">userAgentClientHints.ClientHintsMetadata</a> / <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D">null</a>,
+        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="contexts|&quot;contexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-contexts"><code>contexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D①">text</a>],
+        ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.SetClientHintsOverrideCommand/params" data-dfn-type="cddl-key" data-export data-lt="userContexts|&quot;userContexts&quot;" id="cddl-key-useragentclienthintssetclienthintsoverridecommand-params-usercontexts"><code>userContexts</code></dfn>: [+<a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D②">text</a>],
     }
 }
 
 <dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintsclienthintsmetadata"><code>userAgentClientHints.ClientHintsMetadata</code></dfn> = {
     ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="brands|&quot;brands&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-brands"><code>brands</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-useragentclienthintsbrandversion" id="ref-for-cddl-type-useragentclienthintsbrandversion">userAgentClientHints.BrandVersion</a>],
     ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="fullVersionList|&quot;fullVersionList&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-fullversionlist"><code>fullVersionList</code></dfn>: [* <a data-link-type="cddl" href="#cddl-type-useragentclienthintsbrandversion" id="ref-for-cddl-type-useragentclienthintsbrandversion①">userAgentClientHints.BrandVersion</a>],
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platform|&quot;platform&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platform"><code>platform</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D③">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platformVersion|&quot;platformVersion&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platformversion"><code>platformVersion</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D④">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="architecture|&quot;architecture&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-architecture"><code>architecture</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑤">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="model|&quot;model&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-model"><code>model</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑥">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="mobile|&quot;mobile&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-mobile"><code>mobile</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑦">bool</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="bitness|&quot;bitness&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-bitness"><code>bitness</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑧">text</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="wow64|&quot;wow64&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-wow64"><code>wow64</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D⑨">bool</a>,
-    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="formFactors|&quot;formFactors&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-formfactors"><code>formFactors</code></dfn>: [* <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①⓪">text</a>];
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platform|&quot;platform&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platform"><code>platform</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D③">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="platformVersion|&quot;platformVersion&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-platformversion"><code>platformVersion</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D④">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="architecture|&quot;architecture&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-architecture"><code>architecture</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D⑤">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="model|&quot;model&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-model"><code>model</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D⑥">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="mobile|&quot;mobile&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-mobile"><code>mobile</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D⑦">bool</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="bitness|&quot;bitness&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-bitness"><code>bitness</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D⑧">text</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="wow64|&quot;wow64&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-wow64"><code>wow64</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D⑨">bool</a>,
+    ? <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.ClientHintsMetadata" data-dfn-type="cddl-key" data-export data-lt="formFactors|&quot;formFactors&quot;" id="cddl-key-useragentclienthintsclienthintsmetadata-formfactors"><code>formFactors</code></dfn>: [* <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D①⓪">text</a>];
 }
 
 <dfn class="dfn-paneled" data-dfn-type="cddl-type" data-export id="cddl-type-useragentclienthintsbrandversion"><code>userAgentClientHints.BrandVersion</code></dfn> = {
-    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="brand|&quot;brand&quot;" id="cddl-key-useragentclienthintsbrandversion-brand"><code>brand</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①①">text</a>,
-    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="version|&quot;version&quot;" id="cddl-key-useragentclienthintsbrandversion-version"><code>version</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/rfc/rfc8610#appendix-D" id="ref-for-appendix-D①②">text</a>
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="brand|&quot;brand&quot;" id="cddl-key-useragentclienthintsbrandversion-brand"><code>brand</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D①①">text</a>,
+    <dfn class="dfn-paneled" data-dfn-for="userAgentClientHints.BrandVersion" data-dfn-type="cddl-key" data-export data-lt="version|&quot;version&quot;" id="cddl-key-useragentclienthintsbrandversion-version"><code>version</code></dfn>: <a data-link-type="cddl-type" href="https://www.rfc-editor.org/info/rfc8610/#appendix-D" id="ref-for-appendix-D①②">text</a>
 }
 </pre>
     <dt>Return Type
@@ -2602,9 +2634,9 @@ for valuable feedback and contributions to this specification.</p>
    <li>
     <a data-link-type="biblio">[RFC8610]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="6a4c4f65">bool</span>
-     <li><span class="dfn-paneled" id="523b9b71">null</span>
-     <li><span class="dfn-paneled" id="c3bd1df0">text</span>
+     <li><span class="dfn-paneled" id="40276321">bool</span>
+     <li><span class="dfn-paneled" id="23690420">null</span>
+     <li><span class="dfn-paneled" id="0cc62772">text</span>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC9651]</a> defines the following terms:
@@ -2625,16 +2657,12 @@ for valuable feedback and contributions to this specification.</p>
      <li><span class="dfn-paneled" id="113c4ac5">user context</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[WEBDRIVER1]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="35d404ee">remote end</span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[WEBDRIVER2]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="bb4c269e">error</span>
      <li><span class="dfn-paneled" id="c8ff8493">error code</span>
      <li><span class="dfn-paneled" id="8da4d1e3">invalid argument</span>
+     <li><span class="dfn-paneled" id="35d404ee">remote end</span>
      <li><span class="dfn-paneled" id="82c23298">remote end steps</span>
      <li><span class="dfn-paneled" id="4be6272b">success</span>
      <li><span class="dfn-paneled" id="7aa9c8e0">trying</span>
@@ -2672,21 +2700,19 @@ for valuable feedback and contributions to this specification.</p>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc8610">[RFC8610]
-   <dd>H. Birkholz; C. Vigano; C. Bormann. <a href="https://www.rfc-editor.org/rfc/rfc8610"><cite>Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures</cite></a>. June 2019. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>
+   <dd>H. Birkholz; C. Vigano; C. Bormann. <a href="https://www.rfc-editor.org/info/rfc8610/"><cite>Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures</cite></a>. June 2019. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc8610/">https://www.rfc-editor.org/info/rfc8610/</a>
    <dt id="biblio-rfc8942">[RFC8942]
-   <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/rfc/rfc8942"><cite>HTTP Client Hints</cite></a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc8942">https://www.rfc-editor.org/rfc/rfc8942</a>
+   <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/info/rfc8942/"><cite>HTTP Client Hints</cite></a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/info/rfc8942/">https://www.rfc-editor.org/info/rfc8942/</a>
    <dt id="biblio-rfc9651">[RFC9651]
-   <dd>M. Nottingham; P-H. Kamp. <a href="https://www.rfc-editor.org/rfc/rfc9651"><cite>Structured Field Values for HTTP</cite></a>. September 2024. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9651">https://www.rfc-editor.org/rfc/rfc9651</a>
+   <dd>M. Nottingham; P-H. Kamp. <a href="https://www.rfc-editor.org/info/rfc9651/"><cite>Structured Field Values for HTTP</cite></a>. September 2024. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc9651/">https://www.rfc-editor.org/info/rfc9651/</a>
    <dt id="biblio-webdriver-bidi">[WebDriver-BiDi]
    <dd>James Graham; Alex Rudenko; Maksim Sadym. <a href="https://w3c.github.io/webdriver-bidi/"><cite>WebDriver BiDi</cite></a>. URL: <a href="https://w3c.github.io/webdriver-bidi/">https://w3c.github.io/webdriver-bidi/</a>
-   <dt id="biblio-webdriver1">[WEBDRIVER1]
-   <dd>Simon Stewart; David Burns. <a href="https://w3c.github.io/webdriver/"><cite>WebDriver</cite></a>. URL: <a href="https://w3c.github.io/webdriver/">https://w3c.github.io/webdriver/</a>
    <dt id="biblio-webdriver2">[WEBDRIVER2]
    <dd>Simon Stewart; David Burns. <a href="https://w3c.github.io/webdriver/"><cite>WebDriver</cite></a>. URL: <a href="https://w3c.github.io/webdriver/">https://w3c.github.io/webdriver/</a>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
-  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-css-values-4">[CSS-VALUES-4]
    <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://drafts.csswg.org/css-values-4/"><cite>CSS Values and Units Module Level 4</cite></a>. URL: <a href="https://drafts.csswg.org/css-values-4/">https://drafts.csswg.org/css-values-4/</a>
@@ -2699,7 +2725,7 @@ for valuable feedback and contributions to this specification.</p>
    <dt id="biblio-janc2014">[Janc2014]
    <dd>Artur Janc; Michal Zalweski. <a href="https://dev.chromium.org/Home/chromium-security/client-identification-mechanisms#TOC-Browser-level-fingerprints"><cite>Technical analysis of client identification mechanisms</cite></a>. URL: <a href="https://dev.chromium.org/Home/chromium-security/client-identification-mechanisms#TOC-Browser-level-fingerprints">https://dev.chromium.org/Home/chromium-security/client-identification-mechanisms#TOC-Browser-level-fingerprints</a>
    <dt id="biblio-rfc3864">[RFC3864]
-   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://www.rfc-editor.org/rfc/rfc3864"><cite>Registration Procedures for Message Header Fields</cite></a>. September 2004. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc3864">https://www.rfc-editor.org/rfc/rfc3864</a>
+   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://www.rfc-editor.org/info/rfc3864/"><cite>Registration Procedures for Message Header Fields</cite></a>. September 2004. Best Current Practice. URL: <a href="https://www.rfc-editor.org/info/rfc3864/">https://www.rfc-editor.org/info/rfc3864/</a>
    <dt id="biblio-rfc9110">[RFC9110]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc9110.html"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://httpwg.org/specs/rfc9110.html">https://httpwg.org/specs/rfc9110.html</a>
    <dt id="biblio-rossi2015">[Rossi2015]
@@ -2954,11 +2980,13 @@ let dfnPanelData = {
 "02f9bf93": {"dfnID":"02f9bf93","dfnText":"ASCII alpha","external":true,"refSections":[{"refs":[{"id":"ref-for-ascii-alpha"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-ascii-alpha\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#ascii-alpha"},
 "0407598e": {"dfnID":"0407598e","dfnText":"permission task source","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-permissions-task-source"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://w3c.github.io/permissions/#dfn-permissions-task-source"},
 "0698d556": {"dfnID":"0698d556","dfnText":"string","external":true,"refSections":[{"refs":[{"id":"ref-for-string"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-string\u2460"},{"id":"ref-for-string\u2461"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://infra.spec.whatwg.org/#string"},
+"0cc62772": {"dfnID":"0cc62772","dfnText":"text","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/info/rfc8610/#appendix-D"},
 "0e6b2056": {"dfnID":"0e6b2056","dfnText":"set","external":true,"refSections":[{"refs":[{"id":"ref-for-map-set"},{"id":"ref-for-map-set\u2460"},{"id":"ref-for-map-set\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://infra.spec.whatwg.org/#map-set"},
 "113c4ac5": {"dfnID":"113c4ac5","dfnText":"user context","external":true,"refSections":[{"refs":[{"id":"ref-for-user-context"}],"title":"5.1. Definitions"},{"refs":[{"id":"ref-for-user-context\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver-bidi/#user-context"},
 "1570624a": {"dfnID":"1570624a","dfnText":"default allowlist","external":true,"refSections":[{"refs":[{"id":"ref-for-policy-controlled-feature-default-allowlist"}],"title":"6. Permissions-Policy Integration"}],"url":"https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist"},
 "15edd6b4": {"dfnID":"15edd6b4","dfnText":"active fingerprinting","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-active-fingerprinting"},{"id":"ref-for-dfn-active-fingerprinting\u2460"}],"title":"7.3. Fingerprinting"}],"url":"https://w3c.github.io/fingerprinting-guidance/#dfn-active-fingerprinting"},
 "1641b9ef": {"dfnID":"1641b9ef","dfnText":"create a frozen array","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-create-frozen-array"},{"id":"ref-for-dfn-create-frozen-array\u2460"}],"title":"4.1.1. WindowOrWorkerGlobalScope"}],"url":"https://webidl.spec.whatwg.org/#dfn-create-frozen-array"},
+"23690420": {"dfnID":"23690420","dfnText":"null","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/info/rfc8610/#appendix-D"},
 "30717154": {"dfnID":"30717154","dfnText":"top-level traversable","external":true,"refSections":[{"refs":[{"id":"ref-for-nav-top"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top"},
 "3349d69f": {"dfnID":"3349d69f","dfnText":"associated Document","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document-window"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window"},
 "35d404ee": {"dfnID":"35d404ee","dfnText":"remote end","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-remote-ends"}],"title":"5.1. Definitions"}],"url":"https://w3c.github.io/webdriver/#dfn-remote-ends"},
@@ -2967,9 +2995,9 @@ let dfnPanelData = {
 "3b90bdcd": {"dfnID":"3b90bdcd","dfnText":"resolve","external":true,"refSections":[{"refs":[{"id":"ref-for-resolve"}],"title":"4.1.6. getHighEntropyValues method"}],"url":"https://webidl.spec.whatwg.org/#resolve"},
 "3e12e042": {"dfnID":"3e12e042","dfnText":"environment settings object","external":true,"refSections":[{"refs":[{"id":"ref-for-environment-settings-object"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-environment-settings-object\u2460"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object"},
 "4013a022": {"dfnID":"4013a022","dfnText":"this","external":true,"refSections":[{"refs":[{"id":"ref-for-this"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-this\u2460"},{"id":"ref-for-this\u2461"},{"id":"ref-for-this\u2462"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-this\u2463"}],"title":"4.1.7. toJSON method"}],"url":"https://webidl.spec.whatwg.org/#this"},
+"40276321": {"dfnID":"40276321","dfnText":"bool","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/info/rfc8610/#appendix-D"},
 "4384386e": {"dfnID":"4384386e","dfnText":"serializing a list","external":true,"refSections":[{"refs":[{"id":"ref-for-section-4.1.1"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-section-4.1.1\u2460"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-4.1.1"},
 "4be6272b": {"dfnID":"4be6272b","dfnText":"success","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-success"},{"id":"ref-for-dfn-success\u2460"},{"id":"ref-for-dfn-success\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-success"},
-"523b9b71": {"dfnID":"523b9b71","dfnText":"null","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
 "531f1cf9": {"dfnID":"531f1cf9","dfnText":"high-entropy client hint","external":true,"refSections":[{"refs":[{"id":"ref-for-high-entropy-client-hint"}],"title":"6. Permissions-Policy Integration"}],"url":"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint"},
 "53275e46": {"dfnID":"53275e46","dfnText":"append","external":true,"refSections":[{"refs":[{"id":"ref-for-list-append"},{"id":"ref-for-list-append\u2460"},{"id":"ref-for-list-append\u2461"},{"id":"ref-for-list-append\u2462"},{"id":"ref-for-list-append\u2463"},{"id":"ref-for-list-append\u2464"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list-append\u2465"},{"id":"ref-for-list-append\u2466"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list-append\u2467"},{"id":"ref-for-list-append\u2468"},{"id":"ref-for-list-append\u2460\u24ea"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list-append\u2460\u2460"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list-append"},
 "5372cca8": {"dfnID":"5372cca8","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-boolean"},{"id":"ref-for-idl-boolean\u2460"},{"id":"ref-for-idl-boolean\u2461"},{"id":"ref-for-idl-boolean\u2462"}],"title":"4. Interface"}],"url":"https://webidl.spec.whatwg.org/#idl-boolean"},
@@ -2981,7 +3009,6 @@ let dfnPanelData = {
 "61efa9be": {"dfnID":"61efa9be","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.3.6"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-section-3.3.6\u2460"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"}],"url":"https://tools.ietf.org/html/rfc9651#section-3.3.6"},
 "6360ebfe": {"dfnID":"6360ebfe","dfnText":"append client hints to request","external":true,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-append-client-hints-to-request"}],"title":"7.2. Delegation"}],"url":"https://wicg.github.io/client-hints-infrastructure/#abstract-opdef-append-client-hints-to-request"},
 "649608b9": {"dfnID":"649608b9","dfnText":"list","external":true,"refSections":[{"refs":[{"id":"ref-for-list"},{"id":"ref-for-list\u2460"},{"id":"ref-for-list\u2461"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-list\u2462"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-list\u2463"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-list\u2464"},{"id":"ref-for-list\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-list\u2466"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#list"},
-"6a4c4f65": {"dfnID":"6a4c4f65","dfnText":"bool","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
 "6d19ac93": {"dfnID":"6d19ac93","dfnText":"user agent","external":true,"refSections":[{"refs":[{"id":"ref-for-user-agent"},{"id":"ref-for-user-agent\u2460"},{"id":"ref-for-user-agent\u2461"},{"id":"ref-for-user-agent\u2462"},{"id":"ref-for-user-agent\u2463"},{"id":"ref-for-user-agent\u2464"},{"id":"ref-for-user-agent\u2465"},{"id":"ref-for-user-agent\u2466"},{"id":"ref-for-user-agent\u2467"},{"id":"ref-for-user-agent\u2468"},{"id":"ref-for-user-agent\u2460\u24ea"},{"id":"ref-for-user-agent\u2460\u2460"},{"id":"ref-for-user-agent\u2460\u2461"},{"id":"ref-for-user-agent\u2460\u2462"},{"id":"ref-for-user-agent\u2460\u2463"},{"id":"ref-for-user-agent\u2460\u2464"},{"id":"ref-for-user-agent\u2460\u2465"},{"id":"ref-for-user-agent\u2460\u2466"},{"id":"ref-for-user-agent\u2460\u2467"}],"title":"3. User Agent Hints"},{"refs":[{"id":"ref-for-user-agent\u2460\u2468"},{"id":"ref-for-user-agent\u2461\u24ea"},{"id":"ref-for-user-agent\u2461\u2460"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2461"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2462"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2463"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2464"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2465"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2466"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2467"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2461\u2468"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-user-agent\u2462\u24ea"}],"title":"4. Interface"},{"refs":[{"id":"ref-for-user-agent\u2462\u2460"},{"id":"ref-for-user-agent\u2462\u2461"}],"title":"4.1.1. WindowOrWorkerGlobalScope"},{"refs":[{"id":"ref-for-user-agent\u2462\u2462"},{"id":"ref-for-user-agent\u2462\u2463"},{"id":"ref-for-user-agent\u2462\u2464"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-user-agent\u2462\u2465"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-user-agent\u2462\u2466"},{"id":"ref-for-user-agent\u2462\u2467"}],"title":"4.1.5. Getters"},{"refs":[{"id":"ref-for-user-agent\u2462\u2468"},{"id":"ref-for-user-agent\u2463\u24ea"},{"id":"ref-for-user-agent\u2463\u2460"},{"id":"ref-for-user-agent\u2463\u2461"},{"id":"ref-for-user-agent\u2463\u2462"},{"id":"ref-for-user-agent\u2463\u2463"}],"title":"4.1.6. getHighEntropyValues method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2464"},{"id":"ref-for-user-agent\u2463\u2465"}],"title":"4.1.7. toJSON method"},{"refs":[{"id":"ref-for-user-agent\u2463\u2466"}],"title":"7.1. Secure Transport"},{"refs":[{"id":"ref-for-user-agent\u2463\u2467"}],"title":"7.2. Delegation"},{"refs":[{"id":"ref-for-user-agent\u2463\u2468"},{"id":"ref-for-user-agent\u2464\u24ea"},{"id":"ref-for-user-agent\u2464\u2460"},{"id":"ref-for-user-agent\u2464\u2461"}],"title":"7.3. Fingerprinting"},{"refs":[{"id":"ref-for-user-agent\u2464\u2462"},{"id":"ref-for-user-agent\u2464\u2463"}],"title":"7.4. Access Restrictions"},{"refs":[{"id":"ref-for-user-agent\u2464\u2464"},{"id":"ref-for-user-agent\u2464\u2465"}],"title":"8.1. The 'User-Agent' Header"},{"refs":[{"id":"ref-for-user-agent\u2464\u2466"},{"id":"ref-for-user-agent\u2464\u2467"},{"id":"ref-for-user-agent\u2464\u2468"},{"id":"ref-for-user-agent\u2465\u24ea"},{"id":"ref-for-user-agent\u2465\u2460"},{"id":"ref-for-user-agent\u2465\u2461"}],"title":"8.2. GREASE-like UA Brand Lists"}],"url":"https://infra.spec.whatwg.org/#user-agent"},
 "70606718": {"dfnID":"70606718","dfnText":"structured header","external":true,"refSections":[{"refs":[{"id":"ref-for-something"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-something\u2460"}],"title":"3.2. The 'Sec-CH-UA-Arch' Header Field"},{"refs":[{"id":"ref-for-something\u2461"}],"title":"3.3. The 'Sec-CH-UA-Bitness' Header Field"},{"refs":[{"id":"ref-for-something\u2462"}],"title":"3.4. The 'Sec-CH-UA-Form-Factors' Header Field"},{"refs":[{"id":"ref-for-something\u2463"}],"title":"3.5. The 'Sec-CH-UA-Full-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2464"}],"title":"3.6. The 'Sec-CH-UA-Full-Version-List' Header Field"},{"refs":[{"id":"ref-for-something\u2465"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-something\u2466"}],"title":"3.8. The 'Sec-CH-UA-Model' Header Field"},{"refs":[{"id":"ref-for-something\u2467"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"},{"refs":[{"id":"ref-for-something\u2468"}],"title":"3.10. The 'Sec-CH-UA-Platform-Version' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u24ea"}],"title":"3.11. The 'Sec-CH-UA-WoW64' Header Field"},{"refs":[{"id":"ref-for-something\u2460\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"}],"url":"https://tools.ietf.org/html/rfc9651#"},
 "77b4c09a": {"dfnID":"77b4c09a","dfnText":"assert","external":true,"refSections":[{"refs":[{"id":"ref-for-assert"}],"title":"4.1.2. Create brands"},{"refs":[{"id":"ref-for-assert\u2460"}],"title":"4.1.3. Create arbitrary brand and version values"},{"refs":[{"id":"ref-for-assert\u2461"}],"title":"4.1.4. Create a brand-version list"}],"url":"https://infra.spec.whatwg.org/#assert"},
@@ -3017,7 +3044,6 @@ let dfnPanelData = {
 "brand-version": {"dfnID":"brand-version","dfnText":"brand version","external":false,"refSections":[{"refs":[{"id":"ref-for-brand-version"},{"id":"ref-for-brand-version\u2460"}],"title":"5.1. Definitions"}],"url":"#brand-version"},
 "brand-version-brand": {"dfnID":"brand-version-brand","dfnText":"brand","external":false,"refSections":[],"url":"#brand-version-brand"},
 "brand-version-version": {"dfnID":"brand-version-version","dfnText":"version","external":false,"refSections":[],"url":"#brand-version-version"},
-"c3bd1df0": {"dfnID":"c3bd1df0","dfnText":"text","external":true,"refSections":[{"refs":[{"id":"ref-for-appendix-D"},{"id":"ref-for-appendix-D\u2460"},{"id":"ref-for-appendix-D\u2461"},{"id":"ref-for-appendix-D\u2462"},{"id":"ref-for-appendix-D\u2463"},{"id":"ref-for-appendix-D\u2464"},{"id":"ref-for-appendix-D\u2465"},{"id":"ref-for-appendix-D\u2466"},{"id":"ref-for-appendix-D\u2467"},{"id":"ref-for-appendix-D\u2468"},{"id":"ref-for-appendix-D\u2460\u24ea"},{"id":"ref-for-appendix-D\u2460\u2460"},{"id":"ref-for-appendix-D\u2460\u2461"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
 "c7a20f42": {"dfnID":"c7a20f42","dfnText":"low entropy hint table","external":true,"refSections":[{"refs":[{"id":"ref-for-low-entropy-hint-table"}],"title":"3.1. The 'Sec-CH-UA' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2460"}],"title":"3.7. The 'Sec-CH-UA-Mobile' Header Field"},{"refs":[{"id":"ref-for-low-entropy-hint-table\u2461"}],"title":"3.9. The 'Sec-CH-UA-Platform' Header Field"}],"url":"https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table"},
 "c88f3887": {"dfnID":"c88f3887","dfnText":"item (for struct)","external":true,"refSections":[{"refs":[{"id":"ref-for-struct-item"},{"id":"ref-for-struct-item\u2460"},{"id":"ref-for-struct-item\u2461"},{"id":"ref-for-struct-item\u2462"},{"id":"ref-for-struct-item\u2463"},{"id":"ref-for-struct-item\u2464"},{"id":"ref-for-struct-item\u2465"},{"id":"ref-for-struct-item\u2466"},{"id":"ref-for-struct-item\u2467"},{"id":"ref-for-struct-item\u2468"},{"id":"ref-for-struct-item\u2460\u24ea"},{"id":"ref-for-struct-item\u2460\u2460"},{"id":"ref-for-struct-item\u2460\u2461"},{"id":"ref-for-struct-item\u2460\u2462"},{"id":"ref-for-struct-item\u2460\u2463"}],"title":"5.1. Definitions"}],"url":"https://infra.spec.whatwg.org/#struct-item"},
 "c8ff8493": {"dfnID":"c8ff8493","dfnText":"error code","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-error-code"}],"title":"5.2. The userAgentClientHints.setClientHintsOverride command"}],"url":"https://w3c.github.io/webdriver/#dfn-error-code"},
@@ -3662,7 +3688,7 @@ let refsData = {
 "https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint": {"displayText":"high-entropy client hint","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"high-entropy client hint","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#high-entropy-client-hint"},
 "https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table": {"displayText":"low entropy hint table","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"low entropy hint table","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#low-entropy-hint-table"},
 "https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features": {"displayText":"policy-controlled client hints features","export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"policy-controlled client hints features","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#policy-controlled-client-hints-features"},
-"https://www.rfc-editor.org/rfc/rfc8610#appendix-D": {"displayText":"null","export":true,"for_":[],"level":"1","normative":true,"shortname":"rfc8610","spec":"rfc8610","status":"current","text":"null","type":"cddl-type","url":"https://www.rfc-editor.org/rfc/rfc8610#appendix-D"},
+"https://www.rfc-editor.org/info/rfc8610/#appendix-D": {"displayText":"null","export":true,"for_":[],"level":"1","normative":true,"shortname":"rfc8610","spec":"rfc8610","status":"current","text":"null","type":"cddl-type","url":"https://www.rfc-editor.org/info/rfc8610/#appendix-D"},
 };
 
 function mkRefHint(link, ref) {

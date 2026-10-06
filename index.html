@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version ea4009a02, updated Thu Sep 17 15:24:44 2026 -0700" name="generator">
   <link href="https://wicg.github.io/ua-client-hints/" rel="canonical">
-  <meta content="aa02e61058e0c8f73223d46c6b898c7c10be4ecd" name="revision">
+  <meta content="7e880c58f22824325afda38eae2ab875bf25c6ba" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -773,7 +773,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
   <div class="head">
    <h1 class="no-ref p-name" id="title">User-Agent Client Hints</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-09-22">22 September 2026</time></p>
+    <time class="dt-updated" datetime="2026-10-06">6 October 2026</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1240,15 +1240,12 @@ preserve.  With UA-CH this will be initially enabled by active collection of the
 
 
    <p>We hope that alternative methods or APIs will exist to address the spam filtering and bot detection
-use cases in the future, as browsers may decide to intervene on behalf of their users by limiting
-the collection of user-identifying entropy (e.g., the
-<a href="https://github.com/bslassey/privacy-budget">Privacy Budget</a> proposal).</p>
+use cases in the future.</p>
    <h5 class="heading settled" data-level="1.2.9.2" id="persistent-user-tracking"><span class="secno">1.2.9.2. </span><span class="content">Persistent user tracking</span><a class="self-link" href="#persistent-user-tracking"></a></h5>
    
 This is a case of fingerprinting that this proposal <em>explicitly tries to make harder</em>.  Like the
 case of "spam filtering", it would still be feasible to actively collect all the hints about the
-user as bits of entropy. Unlike the above case, this is something that proposals such as the Privacy
-Budget aim to prevent, without providing any alternative mechanisms for persistent user tracking.
+user as bits of entropy.
 
 
    <h5 class="heading settled" data-level="1.2.9.3" id="blocking-known-bots-crawlers-use-case"><span class="secno">1.2.9.3. </span><span class="content">Blocking known bots and crawlers</span><a class="self-link" href="#blocking-known-bots-crawlers-use-case"></a></h5>
@@ -2696,7 +2693,7 @@ for valuable feedback and contributions to this specification.</p>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-permissions-policy-1">[PERMISSIONS-POLICY-1]
-   <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
+   <dd>Ian Clelland; Ari Chivukula. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc8610">[RFC8610]

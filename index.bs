@@ -997,7 +997,7 @@ On getting, the {{NavigatorUAData/platform}} attribute must return the [=user ag
 The <dfn method for="NavigatorUA"><code>getHighEntropyValues(|hints|)</code></dfn> method MUST run
 these steps:
 
-1. Let |p| be a [=a new promise=] created in the [=current realm=].
+1. Let |p| be [=a new promise=] created in the [=current realm=].
 
 1. Let |uaData| be a new {{UADataValues}}.
 
